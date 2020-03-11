@@ -3,6 +3,37 @@
   
     
     <entry>
+      <title>使用 Go 實現「插入排序」</title>
+      <link href="/2020/03/11/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E3%80%8D/"/>
+      <url>/2020/03/11/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E3%80%8D/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>把未排序的元素，在已排序的陣列裡頭，從後向前比對，找到相應的位置後插入。</p><h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(items []<span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line"><span class="comment">// 從第二個元素開始疊代</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(items); i++ &#123;</span><br><span class="line"><span class="comment">// 記錄當前元素</span></span><br><span class="line">temp := items[i]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 從後向前比對</span></span><br><span class="line">        j := i - <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> ; j &gt;= <span class="number">0</span> &amp;&amp; temp &lt; items[j]; j-- &#123;</span><br><span class="line"><span class="comment">// 將已排序的陣列中的元素向後複製</span></span><br><span class="line">items[j+<span class="number">1</span>] = items[j]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將當前元素插入</span></span><br><span class="line">items[j+<span class="number">1</span>] = temp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> items</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> Go </category>
+          
+          <category> 演算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> 演算法 </tag>
+            
+            <tag> 排序 </tag>
+            
+            <tag> Go </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>使用 Go 實現「選擇排序」</title>
       <link href="/2020/03/10/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E9%81%B8%E6%93%87%E6%8E%92%E5%BA%8F%E3%80%8D/"/>
       <url>/2020/03/10/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E9%81%B8%E6%93%87%E6%8E%92%E5%BA%8F%E3%80%8D/</url>
@@ -340,11 +371,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -483,9 +514,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -1466,9 +1497,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> Mix </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Vue </tag>
             
@@ -1559,9 +1590,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -1644,9 +1675,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -1858,15 +1889,15 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -2055,9 +2086,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -2490,9 +2521,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Laradock </tag>
             
@@ -3022,9 +3053,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -3053,9 +3084,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -3103,9 +3134,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -3136,9 +3167,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -3169,9 +3200,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -3200,17 +3231,17 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
-            <tag> Linux </tag>
+            <tag> Laravel </tag>
             
-            <tag> Ubuntu </tag>
+            <tag> Linux </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -3933,9 +3964,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
@@ -4679,9 +4710,9 @@
             
             <tag> MySQL </tag>
             
-            <tag> 其他 </tag>
-            
             <tag> phpMyAdmin </tag>
+            
+            <tag> 其他 </tag>
             
         </tags>
       
@@ -6513,13 +6544,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -6548,13 +6579,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -8055,9 +8086,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -8090,9 +8121,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Windows </tag>
             
             <tag> Ubuntu </tag>
             
@@ -8187,11 +8218,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Hexo </tag>
             
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
         </tags>
       
