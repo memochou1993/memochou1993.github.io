@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法把未排序的元素，在已排序的陣列裡頭，從後向前比對，找到相應的位置後插入。 實作12345678910111213141516171819func InsertionSort(items []int) []int &amp;#123;	// 從第二個元素開始疊代	for i := 1; i &amp;lt; len(items); i++ &amp;#123;		// 記錄當前元素		temp := items[i]">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-11T13:49:37.819Z">
+<meta property="og:updated_time" content="2020-03-12T10:26:32.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Go 實現「插入排序」">
 <meta name="twitter:description" content="做法把未排序的元素，在已排序的陣列裡頭，從後向前比對，找到相應的位置後插入。 實作12345678910111213141516171819func InsertionSort(items []int) []int &amp;#123;	// 從第二個元素開始疊代	for i := 1; i &amp;lt; len(items); i++ &amp;#123;		// 記錄當前元素		temp := items[i]">
@@ -113,7 +113,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -174,6 +174,7 @@
     <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>把未排序的元素，在已排序的陣列裡頭，從後向前比對，找到相應的位置後插入。</p>
 <h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(items []<span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="comment">// 從第二個元素開始疊代</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(items); i++ &#123;</span><br><span class="line">		<span class="comment">// 記錄當前元素</span></span><br><span class="line">		temp := items[i]</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 從後向前比對</span></span><br><span class="line">        j := i - <span class="number">1</span></span><br><span class="line">		<span class="keyword">for</span> ; j &gt;= <span class="number">0</span> &amp;&amp; temp &lt; items[j]; j-- &#123;</span><br><span class="line">			<span class="comment">// 將已排序的陣列中的元素向後複製</span></span><br><span class="line">			items[j+<span class="number">1</span>] = items[j]</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 將當前元素插入</span></span><br><span class="line">		items[j+<span class="number">1</span>] = temp</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> items</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/sorting-algorithms-go" target="_blank" rel="noopener">GitHub</a></p>
 
   </div>
 </article>
@@ -210,7 +211,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
