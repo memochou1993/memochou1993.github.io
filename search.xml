@@ -3,6 +3,37 @@
   
     
     <entry>
+      <title>使用 Go 實現「合併排序」</title>
+      <link href="/2020/03/13/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E5%90%88%E4%BD%B5%E6%8E%92%E5%BA%8F%E3%80%8D/"/>
+      <url>/2020/03/13/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E5%90%88%E4%BD%B5%E6%8E%92%E5%BA%8F%E3%80%8D/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>將陣列分割後排序，再將兩個已排序的陣列合併成一個陣列。</p><h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">MergeSort</span><span class="params">(items []<span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</span><br><span class="line"><span class="comment">// 當元素的數量只剩一個，則返回自己</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(items) &lt;= <span class="number">1</span> &#123;</span><br><span class="line"><span class="keyword">return</span> items</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將陣列一分為二</span></span><br><span class="line">half := <span class="built_in">len</span>(items) / <span class="number">2</span></span><br><span class="line">left := MergeSort(items[:half])</span><br><span class="line">right := MergeSort(items[half:])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宣告一個新陣列</span></span><br><span class="line">result := []<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 疊代直到左切片和右切片的元素都被抽出</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">len</span>(left) &gt; <span class="number">0</span> &amp;&amp; <span class="built_in">len</span>(right) &gt; <span class="number">0</span> &#123;</span><br><span class="line"><span class="comment">// 判斷左切片的第一個元素是否小於右切片的第一個元素</span></span><br><span class="line"><span class="keyword">if</span> left[<span class="number">0</span>] &lt; right[<span class="number">0</span>] &#123;</span><br><span class="line"><span class="comment">// 將左切片的第一個元素抽出</span></span><br><span class="line">item := left[<span class="number">0</span>]</span><br><span class="line">left = left[<span class="number">1</span>:]</span><br><span class="line"><span class="comment">// 推進至新陣列</span></span><br><span class="line">result = <span class="built_in">append</span>(result, item)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">// 將右切片的第一個元素抽出</span></span><br><span class="line">item := right[<span class="number">0</span>]</span><br><span class="line">right = right[<span class="number">1</span>:]</span><br><span class="line"><span class="comment">// 推進至新陣列</span></span><br><span class="line">result = <span class="built_in">append</span>(result, item)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將左切片推進至新陣列</span></span><br><span class="line">result = <span class="built_in">append</span>(result, left...)</span><br><span class="line"><span class="comment">// 將右切片推進至新陣列</span></span><br><span class="line">result = <span class="built_in">append</span>(result, right...)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/sorting-algorithms-go" target="_blank" rel="noopener">GitHub</a></p>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> Go </category>
+          
+          <category> 演算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> 演算法 </tag>
+            
+            <tag> 排序 </tag>
+            
+            <tag> Go </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>使用 Go 實現「插入排序」</title>
       <link href="/2020/03/11/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E3%80%8D/"/>
       <url>/2020/03/11/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E3%80%8D/</url>
@@ -1893,11 +1924,11 @@
             
             <tag> Laravel </tag>
             
+            <tag> Windows </tag>
+            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
-            
-            <tag> Windows </tag>
             
         </tags>
       
@@ -3053,9 +3084,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Ubuntu </tag>
+            
+            <tag> Docker </tag>
             
             <tag> GitLab </tag>
             
@@ -3084,9 +3115,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Ubuntu </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -3237,11 +3268,11 @@
             
             <tag> Linux </tag>
             
+            <tag> Ubuntu </tag>
+            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
-            
-            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -5224,9 +5255,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 物件導向 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 物件導向 </tag>
             
         </tags>
       
@@ -5280,9 +5311,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 物件導向 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 物件導向 </tag>
             
         </tags>
       
@@ -8121,9 +8152,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Linux </tag>
-            
             <tag> Windows </tag>
+            
+            <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
             
