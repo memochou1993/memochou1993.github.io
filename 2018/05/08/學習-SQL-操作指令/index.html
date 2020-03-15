@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言由於最近的 Laravel 專案都直接在 Homestead 環境裡開發，因此沒有 phpMyAdmin 等圖形化介面的幫忙，需要從指令列直接對資料庫進行操作。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;">
-<meta name="keywords" content="程式設計,MySQL,SQL,資料庫">
+    <meta name="description" content="前言以 MySQL 為例。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 直接輸入帳號密碼登入  資料庫操作建立資料庫。 1mysql&amp;gt; CREATE DATABASE [DATABA">
+<meta name="keywords" content="資料庫,MySQL,SQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="學習 SQL 操作指令">
 <meta property="og:url" content="https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言由於最近的 Laravel 專案都直接在 Homestead 環境裡開發，因此沒有 phpMyAdmin 等圖形化介面的幫忙，需要從指令列直接對資料庫進行操作。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;">
+<meta property="og:description" content="前言以 MySQL 為例。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 直接輸入帳號密碼登入  資料庫操作建立資料庫。 1mysql&amp;gt; CREATE DATABASE [DATABA">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.778Z">
+<meta property="og:updated_time" content="2020-03-15T10:20:13.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="學習 SQL 操作指令">
-<meta name="twitter:description" content="前言由於最近的 Laravel 專案都直接在 Homestead 環境裡開發，因此沒有 phpMyAdmin 等圖形化介面的幫忙，需要從指令列直接對資料庫進行操作。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;">
+<meta name="twitter:description" content="前言以 MySQL 為例。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 直接輸入帳號密碼登入  資料庫操作建立資料庫。 1mysql&amp;gt; CREATE DATABASE [DATABA">
     
     
         
@@ -153,7 +153,7 @@
             
         
             
-                <a href="/categories/程式設計/SQL/">SQL</a>
+                <a href="/categories/資料庫/SQL/">SQL</a>
             
         
     </div>
@@ -162,7 +162,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/SQL/">SQL</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>, <a class="tag-link" href="/tags/資料庫/">資料庫</a>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/SQL/">SQL</a>, <a class="tag-link" href="/tags/資料庫/">資料庫</a>
     </div>
 
 
@@ -171,7 +171,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由於最近的 Laravel 專案都直接在 Homestead 環境裡開發，因此沒有 phpMyAdmin 等圖形化介面的幫忙，需要從指令列直接對資料庫進行操作。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以 MySQL 為例。</p>
 <h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql // 直接登入</span><br><span class="line">mysql -u -p // 詢問密碼登入</span><br><span class="line">mysql -u --password=<span class="string">"secret"</span> // 直接輸入密碼登入</span><br><span class="line">mysql --user=<span class="string">"homestead"</span> --password=<span class="string">"secret"</span> // 直接輸入帳號密碼登入</span><br></pre></td></tr></table></figure>
 
 <h2 id="資料庫操作"><a href="#資料庫操作" class="headerlink" title="資料庫操作"></a>資料庫操作</h2><p>建立資料庫。</p>
