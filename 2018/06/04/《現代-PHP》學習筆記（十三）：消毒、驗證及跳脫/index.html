@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  良好習慣PHP 語言仍然包含了許多過時的工具，一不小心，有可能使用了這些工具做出效能差且不安全的應用程式。 所以必須要知道那些工具可以使用，哪些必須忽略。 消毒、驗證及跳脫永遠不要相信任何來源不明的資料，一些外部的來源如下：  $_GET $_POST $_REQUEST $_COOKIE $argv">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.784Z">
+<meta property="og:updated_time" content="2020-03-17T14:16:14.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《現代 PHP》學習筆記（十三）：消毒、驗證及跳脫">
 <meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  良好習慣PHP 語言仍然包含了許多過時的工具，一不小心，有可能使用了這些工具做出效能差且不安全的應用程式。 所以必須要知道那些工具可以使用，哪些必須忽略。 消毒、驗證及跳脫永遠不要相信任何來源不明的資料，一些外部的來源如下：  $_GET $_POST $_REQUEST $_COOKIE $argv">
@@ -195,7 +195,7 @@
 </ul>
 <p>所有上述的外部資料來源都有可能是攻擊的源頭。</p>
 <h2 id="消毒使用者輸入"><a href="#消毒使用者輸入" class="headerlink" title="消毒使用者輸入"></a>消毒使用者輸入</h2><p>假如網頁允許使用 <code>HTML</code> 下評論，在原始設定中，沒有任何東西會阻止使用者在評論中使用不合理的 <code>&lt;script&gt;</code> 標籤，例如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    This is a helpful article!</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">window</span>.location.href=<span class="string">'http://example.com'</span>;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    This is a helpful article!</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">window.location.href='http://example.com';</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>如果沒有消毒這個評論，惡意的程式碼將會被注入到資料庫中。</p>
 <h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><p>可以利用 <code>htmlentities()</code> 函式，將 <code>HTML</code> 的特殊字元消毒成對應的 <code>HTML</code> 代表字元，這個函式會將字串轉化成對應用程式儲存層較安全的型態。</p>

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Windows 10 Homestead  建立專案1laravel new jwt  安裝套件1composer require tymon/jwt-auth 1.*  發布資源1php artisan vendor:publish --provider=&quot;Tymon\JWTAuth\Providers\LaravelServiceProvider&quot;  生成密鑰1php artisan j">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.796Z">
+<meta property="og:updated_time" content="2020-03-17T14:16:14.583Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 5.7 使用 JSON Web Token 實作 API 認證">
 <meta name="twitter:description" content="環境 Windows 10 Homestead  建立專案1laravel new jwt  安裝套件1composer require tymon/jwt-auth 1.*  發布資源1php artisan vendor:publish --provider=&quot;Tymon\JWTAuth\Providers\LaravelServiceProvider&quot;  生成密鑰1php artisan j">
@@ -213,10 +213,10 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Route::prefix(<span class="string">'auth'</span>)-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Route::post(<span class="string">'login'</span>, <span class="string">'AuthController@login'</span>)-&gt;name(<span class="string">'login'</span>);</span><br><span class="line">    Route::post(<span class="string">'logout'</span>, <span class="string">'AuthController@logout'</span>)-&gt;name(<span class="string">'logout'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Route::middleware(<span class="string">'auth:api'</span>)-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Route::get(<span class="string">'users'</span>, <span class="string">'UserController@index'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <h2 id="發起-HTTP-請求"><a href="#發起-HTTP-請求" class="headerlink" title="發起 HTTP 請求"></a>發起 HTTP 請求</h2><p>向 <a href="http://jwt.test/api/users" target="_blank" rel="noopener">http://jwt.test/api/users</a> 發起 <code>GET</code> 請求，得到回應如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[MethodNotAllowedHttpException] No message</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[MethodNotAllowedHttpException] No message</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>Accept</code> 輸入 <code>application/json</code> 可以得到以下回應：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;message&quot;:&quot;Unauthenticated.&quot;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"message"</span>: <span class="string">"Unauthenticated."</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>Body</code> 輸入以下鍵値向 <a href="http://jwt.test/auth/login" target="_blank" rel="noopener">http://jwt.test/auth/login</a> 發起 <code>POST</code> 請求：</p>
 <table>
@@ -236,7 +236,7 @@
 </tr>
 </tbody></table>
 <p>得到回應如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;token&quot;:&quot;eyJ0e……bnWfg&quot;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"token"</span>: <span class="string">"eyJ0e……bnWfg"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>最後在 <code>Headers</code> 輸入以下鍵値，再向 <a href="http://jwt.test/users" target="_blank" rel="noopener">http://jwt.test/users</a> 發起 <code>GET</code> 請求。<br>（Value 的部分為：Bearer + 空一格 + Token）</p>
 <table>
@@ -252,7 +252,7 @@
 </tr>
 </tbody></table>
 <p>結果得到回應如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;test&quot;,&quot;email&quot;:&quot;test@gmail.com&quot;,&quot;email_verified_at&quot;:null,&quot;created_at&quot;:&quot;2018-11-02 17:34:07&quot;,&quot;updated_at&quot;:&quot;2018-11-02 17:34:07&quot;&#125;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"test"</span>,</span><br><span class="line">    <span class="attr">"email"</span>: <span class="string">"test@gmail.com"</span>,</span><br><span class="line">    <span class="attr">"email_verified_at"</span>: <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">"created_at"</span>: <span class="string">"2018-11-02 17:34:07"</span>,</span><br><span class="line">    <span class="attr">"updated_at"</span>: <span class="string">"2018-11-02 17:34:07"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/laravel-jwt" target="_blank" rel="noopener">GitHub</a></p>
 

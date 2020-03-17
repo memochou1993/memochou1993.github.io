@@ -9,14 +9,14 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh://git@xxx/lar">
-<meta name="keywords" content="Laravel,環境部署,Linux,Ubuntu,CI&#x2F;CD,GitLab">
+<meta name="keywords" content="環境部署,Laravel,Linux,Ubuntu,CI&#x2F;CD,GitLab">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案實現自動化測試與部署">
 <meta property="og:url" content="https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化測試與部署/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh://git@xxx/lar">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.803Z">
+<meta property="og:updated_time" content="2020-03-17T14:16:14.584Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案實現自動化測試與部署">
 <meta name="twitter:description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh://git@xxx/lar">
@@ -188,7 +188,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/sudoers</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>sudoers</code> 檔：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># User privilege specification</span><br><span class="line">root    ALL=(ALL:ALL) ALL</span><br><span class="line">deployer ALL=(ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># User privilege specification</span></span><br><span class="line">root    ALL=(ALL:ALL) ALL</span><br><span class="line">deployer ALL=(ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure>
 
 <h3 id="連線設定"><a href="#連線設定" class="headerlink" title="連線設定"></a>連線設定</h3><p>登入 <code>deployer</code> 使用者，新增 <code>~/.ssh</code> 資料夾，並設定權限。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su - deployer</span><br><span class="line">mkdir ~/.ssh</span><br><span class="line">chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure>
