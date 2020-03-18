@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="咩某的部落格">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《白話區塊鏈》一書的學習筆記。 概念區塊鏈在本質上就是一種記帳方法，不是透過人來記帳，而是透過軟體，暫且簡稱為「區塊鏈用戶端」。一個個的區塊鏈用戶端軟體，它們在不同設備上運作，彼此之間獨立作業。通常我們把運作中的用戶端軟體稱為「節點」。 這些節點運作後，彼此之間會認識一下。就跟新聞轉發差不多，不需要依靠某一個人，大家就能互通訊息了。在區塊鏈軟體的結構中，這種相互通訊的功能稱為「網路路由」">
+<meta name="keywords" content="區塊鏈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《白話區塊鏈》學習筆記（一）：初識區塊鏈">
+<meta property="og:url" content="https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《白話區塊鏈》一書的學習筆記。 概念區塊鏈在本質上就是一種記帳方法，不是透過人來記帳，而是透過軟體，暫且簡稱為「區塊鏈用戶端」。一個個的區塊鏈用戶端軟體，它們在不同設備上運作，彼此之間獨立作業。通常我們把運作中的用戶端軟體稱為「節點」。 這些節點運作後，彼此之間會認識一下。就跟新聞轉發差不多，不需要依靠某一個人，大家就能互通訊息了。在區塊鏈軟體的結構中，這種相互通訊的功能稱為「網路路由」">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-18T14:08:06.112Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《白話區塊鏈》學習筆記（一）：初識區塊鏈">
+<meta name="twitter:description" content="前言本文為《白話區塊鏈》一書的學習筆記。 概念區塊鏈在本質上就是一種記帳方法，不是透過人來記帳，而是透過軟體，暫且簡稱為「區塊鏈用戶端」。一個個的區塊鏈用戶端軟體，它們在不同設備上運作，彼此之間獨立作業。通常我們把運作中的用戶端軟體稱為「節點」。 這些節點運作後，彼此之間會認識一下。就跟新聞轉發差不多，不需要依靠某一個人，大家就能互通訊息了。在區塊鏈軟體的結構中，這種相互通訊的功能稱為「網路路由」">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《白話區塊鏈》學習筆記（一）：初識區塊鏈</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/17/學習-HTTP-超文本傳輸協定（三）：狀態碼/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&text=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&is_video=false&description=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《白話區塊鏈》學習筆記（一）：初識區塊鏈&body=Check out this article: https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&name=《白話區塊鏈》學習筆記（一）：初識區塊鏈&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈帳本"><span class="toc-number">2.1.</span> <span class="toc-text">區塊鏈帳本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共識機制"><span class="toc-number">2.2.</span> <span class="toc-text">共識機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密碼演算法"><span class="toc-number">2.3.</span> <span class="toc-text">密碼演算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#腳本系統"><span class="toc-number">2.4.</span> <span class="toc-text">腳本系統</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#網路路由"><span class="toc-number">2.5.</span> <span class="toc-text">網路路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架構"><span class="toc-number">3.</span> <span class="toc-text">架構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈-1-0-架構"><span class="toc-number">3.1.</span> <span class="toc-text">區塊鏈 1.0 架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈-2-0-架構"><span class="toc-number">3.2.</span> <span class="toc-text">區塊鏈 2.0 架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈-3-0-架構"><span class="toc-number">3.3.</span> <span class="toc-text">區塊鏈 3.0 架構</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分類"><span class="toc-number">4.</span> <span class="toc-text">分類</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#根據網路範圍"><span class="toc-number">4.1.</span> <span class="toc-text">根據網路範圍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公有鏈"><span class="toc-number">4.1.1.</span> <span class="toc-text">公有鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私有鏈"><span class="toc-number">4.1.2.</span> <span class="toc-text">私有鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聯盟鏈"><span class="toc-number">4.1.3.</span> <span class="toc-text">聯盟鏈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根據部署環境"><span class="toc-number">4.2.</span> <span class="toc-text">根據部署環境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#主鏈"><span class="toc-number">4.2.1.</span> <span class="toc-text">主鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#測試鏈"><span class="toc-number">4.2.2.</span> <span class="toc-text">測試鏈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根據對接類型"><span class="toc-number">4.3.</span> <span class="toc-text">根據對接類型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#單鏈"><span class="toc-number">4.3.1.</span> <span class="toc-text">單鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#側鏈"><span class="toc-number">4.3.2.</span> <span class="toc-text">側鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#互聯鏈"><span class="toc-number">4.3.3.</span> <span class="toc-text">互聯鏈</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《白話區塊鏈》學習筆記（一）：初識區塊鏈
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-03-18T09:43:04.000Z" itemprop="datePublished">2020-03-18</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/區塊鏈/《白話區塊鏈》學習筆記/">《白話區塊鏈》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《白話區塊鏈》一書的學習筆記。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>區塊鏈在本質上就是一種記帳方法，不是透過人來記帳，而是透過軟體，暫且簡稱為「區塊鏈用戶端」。一個個的區塊鏈用戶端軟體，它們在不同設備上運作，彼此之間獨立作業。通常我們把運作中的用戶端軟體稱為「節點」。</p>
+<p>這些節點運作後，彼此之間會認識一下。就跟新聞轉發差不多，不需要依靠某一個人，大家就能互通訊息了。在區塊鏈軟體的結構中，這種相互通訊的功能稱為「網路路由」。</p>
+<p>事實上，區塊鏈是一整套技術組合的代表。區塊鏈系統結構的基本組成為：區塊鏈帳本、共識機制、密碼演算法、網路路由和腳本系統。這些「零件」裝配在一起，組成一個區塊鏈軟體，運作後就稱之為一個節點，多個這樣的節點在不同的計算機設備上運作，就組成了一個網路。在這個網路中每個節點都是平等的，大家互相為對方提供服務，這種網路被稱為點對點的「對等網路」。</p>
+<h3 id="區塊鏈帳本"><a href="#區塊鏈帳本" class="headerlink" title="區塊鏈帳本"></a>區塊鏈帳本</h3><p>區塊鏈就是「區塊」加上「鏈」，所謂區塊就是指資料塊，每一個資料塊之間透過某個標誌連接，進而形成一條鏈。區塊資料在邏輯上分為區塊頭和區塊體，每個區塊頭中透過梅克爾根連結區塊中眾多的交易事務，而每個區塊之間經由區塊頭雜湊值串連起來。</p>
+<h3 id="共識機制"><a href="#共識機制" class="headerlink" title="共識機制"></a>共識機制</h3><p>所謂共識，是指大家都達成一致的觀念。共識演算法其實就是一個規則，每個節點都按照這個規則去確認各自的資料。在區塊鏈系統中，存在著多種這樣的篩選方案，例如 Pow（Proof of Work，工作量證明）、PoS（Proof of Stake，權益證明）、DPos（Delegate Proof of Stake，委託權益證明）、PBFT（Practical Byzantine Fault Tolerance，實用拜占庭容錯演算法）等。</p>
+<h3 id="密碼演算法"><a href="#密碼演算法" class="headerlink" title="密碼演算法"></a>密碼演算法</h3><p>在資料結構中，有一種變數叫指標，它是可以用來指向某個資料的位址。然而，區塊之間的連接，往往不是靠資料位址來做關聯的，而是以一種叫做雜湊值的資料來做關聯。它是透過密碼演算法中的雜湊演算法計算得出的。區塊鏈帳本對每個區塊都會計算出一個雜湊值，稱為區塊雜湊，並以區塊雜湊來串連區塊。除了整個區塊會被計算雜湊值外，區塊中包含的每一筆事務資料也會被計算出一個雜湊值，稱為「事物雜湊」，每一個事物雜湊都可以唯一地表示一個事務。</p>
+<h3 id="腳本系統"><a href="#腳本系統" class="headerlink" title="腳本系統"></a>腳本系統</h3><p>所謂腳本，就是指一組程式規則。在區塊鏈系統，有些系統中的程式規則是固定的，例如在比特幣系統只能進行比特幣的發送與接收，這個發送與接收的過程就是透過實作在比特幣中的一組腳本程式來完成的；而以太坊就是透過實作一套可以自訂功能的腳本系統，進而達成智慧合約的功能。腳本系統使得在區塊鏈中可以實作各式各樣的業務功能。</p>
+<h3 id="網路路由"><a href="#網路路由" class="headerlink" title="網路路由"></a>網路路由</h3><p>在區塊鏈系統中，網路中的結點依靠彼此聯繫並傳播訊息，這個功能一般會定義成一種協定，稱為「節點發現協定」。網路路由可以說是區塊鏈系統中的觸角，經由大量的觸角將每個節點連入網路，形成一個功能強大的區塊鏈共識網路。</p>
+<h2 id="架構"><a href="#架構" class="headerlink" title="架構"></a>架構</h2><h3 id="區塊鏈-1-0-架構"><a href="#區塊鏈-1-0-架構" class="headerlink" title="區塊鏈 1.0 架構"></a>區塊鏈 1.0 架構</h3><p>這個階段的區塊鏈系統主要是用來實作數位貨幣。首先，透過競爭獲得區塊資料的打包權後，將記憶集區中的交易資料打包進區塊，並且廣播給其他節點；其次，接受系統對打包行為的數位貨幣獎勵，系統透過這種獎勵方式完成新增貨幣的發行。</p>
+<h3 id="區塊鏈-2-0-架構"><a href="#區塊鏈-2-0-架構" class="headerlink" title="區塊鏈 2.0 架構"></a>區塊鏈 2.0 架構</h3><p>代表產品是以太坊，與 1.0 架構相比，最大的特點就是支援智慧合約。在以太坊中，我們使用智慧合約開發工具開發合約程式，並且編譯為位元組碼，最終部署到以太坊的區塊鏈帳本中。部署後的智慧合約是運作在虛擬機上的，稱為「以太坊虛擬機」。正是透過智慧合約的實作，擴充區塊鏈系統的功能。</p>
+<h3 id="區塊鏈-3-0-架構"><a href="#區塊鏈-3-0-架構" class="headerlink" title="區塊鏈 3.0 架構"></a>區塊鏈 3.0 架構</h3><p>在 3.0 的架構中，超越了對數位貨幣或者金融的應用範圍，而將區塊鏈技術作為一種泛解決方案，可以廣用在極為廣泛的領域，例如行政管理、文化藝術、企業供應鏈、醫療健康、物聯網、產權登記等。與先前的架構相比，最大的特點就是增加了一個閘道控制，實際上即為增加對安全保密的需求支援，並且透過資料審計加強管理資料的可靠性。在 3.0 架構中可以看成是一套框架，對框架做不同的設定和二次開發，即可適應各行各業的需求。</p>
+<h2 id="分類"><a href="#分類" class="headerlink" title="分類"></a>分類</h2><h3 id="根據網路範圍"><a href="#根據網路範圍" class="headerlink" title="根據網路範圍"></a>根據網路範圍</h3><h4 id="公有鏈"><a href="#公有鏈" class="headerlink" title="公有鏈"></a>公有鏈</h4><p>所謂公有就是完全對外開放，任何人都可以任意使用，沒有權限的設定，也沒有身份認證之類，不但可以任意參與使用，而且發生的所有資料都可以任意查看，完全公開透明。比特幣就是一個公有鏈網路系統，在使用比特幣系統時，只需要下載相對應的軟體用戶端，建立錢包位址、轉帳交易、挖礦等操作，這些功能都能自由使用。</p>
+<h4 id="私有鏈"><a href="#私有鏈" class="headerlink" title="私有鏈"></a>私有鏈</h4><p>私有就是指不對外開放，僅僅在組織內部使用的系統，例如企業的票據管理、帳務審計、供應鏈管理等，或者一些政務管理系統。私有鏈在使用過程中，通常是會要求註冊，也就是需要提交身份認證，而且具備一套權限管理體系。在私有環境中，節點數量和節點的狀態通常是可控的，因此在私有鏈環境中，一般不需要透過競爭的方式來篩選區塊資料的打包者，可以採用更加節能環保的方式，例如上述提到的 PoS 或 PBFT 等。</p>
+<h4 id="聯盟鏈"><a href="#聯盟鏈" class="headerlink" title="聯盟鏈"></a>聯盟鏈</h4><p>聯盟鏈的網路範圍介於公有鏈和私有鏈之間，通常使用在多個成員角色的環境中，例如銀行之間的支付結算、企業之間的物流等，這些情境下往往都是由不同權限的成員參與。與私有鏈一樣，聯盟鏈系統一般也是具有身份認證和權限設定的，而且節點的數量往往也是確定的，對於企業或者機構之間的事務處理很合適。聯盟鏈不一定要完全管控，例如政務系統，有些可以對外公開的資料，就可以部分開放。</p>
+<h3 id="根據部署環境"><a href="#根據部署環境" class="headerlink" title="根據部署環境"></a>根據部署環境</h3><h4 id="主鏈"><a href="#主鏈" class="headerlink" title="主鏈"></a>主鏈</h4><p>主鏈就是部署在生產環境的真正的區塊鏈系統。</p>
+<h4 id="測試鏈"><a href="#測試鏈" class="headerlink" title="測試鏈"></a>測試鏈</h4><p>測試鏈就是為了方便大家學習使用而提供的測試用途之區塊鏈網路，例如比特幣測試鏈、以太坊測試鏈等。</p>
+<h3 id="根據對接類型"><a href="#根據對接類型" class="headerlink" title="根據對接類型"></a>根據對接類型</h3><h4 id="單鏈"><a href="#單鏈" class="headerlink" title="單鏈"></a>單鏈</h4><p>能夠單獨運作的區塊鏈系統都可以稱為「單鏈」，例如比特幣主鏈、測試鏈；以太坊主鏈、測試鏈。</p>
+<h4 id="側鏈"><a href="#側鏈" class="headerlink" title="側鏈"></a>側鏈</h4><p>側鏈屬於一種區塊鏈系統的跨鏈系統，這個概念主要由比特幣側鏈發起的。簡單來說，側鏈是以錨定比特幣為基礎的新型區塊鏈。錨定比特幣的側鏈，目前有 CosenSys 的 BTRelay、Rootstock 和 BlockStream 的元素鏈等。區塊鏈系統與側鏈系統都是一個獨立的鏈系統，兩者之間可以按照一定的協定進行資料互動，透過這種方式，側鏈能發揮一個對主鏈功能擴充的作用，很多在主鏈中不方便實作的功能可以實作在側鏈中，而側鏈再與主鏈的資料互動，增強自己的可靠性。</p>
+<h4 id="互聯鏈"><a href="#互聯鏈" class="headerlink" title="互聯鏈"></a>互聯鏈</h4><p>如果說每一條鏈都是一條神經的話，一旦互聯，就會像是神經系統一般，為我們的社會發展帶來更新層次的智慧化。從技術角度來講，區塊鏈系統之間的互聯，可以彼此互補。每一類系統都會有長處和不足之處，彼此進行功能上的互補，甚至可以彼此進行互相的驗證，可以大大加強系統的可靠性及效能。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈帳本"><span class="toc-number">2.1.</span> <span class="toc-text">區塊鏈帳本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#共識機制"><span class="toc-number">2.2.</span> <span class="toc-text">共識機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密碼演算法"><span class="toc-number">2.3.</span> <span class="toc-text">密碼演算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#腳本系統"><span class="toc-number">2.4.</span> <span class="toc-text">腳本系統</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#網路路由"><span class="toc-number">2.5.</span> <span class="toc-text">網路路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架構"><span class="toc-number">3.</span> <span class="toc-text">架構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈-1-0-架構"><span class="toc-number">3.1.</span> <span class="toc-text">區塊鏈 1.0 架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈-2-0-架構"><span class="toc-number">3.2.</span> <span class="toc-text">區塊鏈 2.0 架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#區塊鏈-3-0-架構"><span class="toc-number">3.3.</span> <span class="toc-text">區塊鏈 3.0 架構</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分類"><span class="toc-number">4.</span> <span class="toc-text">分類</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#根據網路範圍"><span class="toc-number">4.1.</span> <span class="toc-text">根據網路範圍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公有鏈"><span class="toc-number">4.1.1.</span> <span class="toc-text">公有鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私有鏈"><span class="toc-number">4.1.2.</span> <span class="toc-text">私有鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聯盟鏈"><span class="toc-number">4.1.3.</span> <span class="toc-text">聯盟鏈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根據部署環境"><span class="toc-number">4.2.</span> <span class="toc-text">根據部署環境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#主鏈"><span class="toc-number">4.2.1.</span> <span class="toc-text">主鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#測試鏈"><span class="toc-number">4.2.2.</span> <span class="toc-text">測試鏈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根據對接類型"><span class="toc-number">4.3.</span> <span class="toc-text">根據對接類型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#單鏈"><span class="toc-number">4.3.1.</span> <span class="toc-text">單鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#側鏈"><span class="toc-number">4.3.2.</span> <span class="toc-text">側鏈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#互聯鏈"><span class="toc-number">4.3.3.</span> <span class="toc-text">互聯鏈</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&text=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&is_video=false&description=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《白話區塊鏈》學習筆記（一）：初識區塊鏈&body=Check out this article: https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&title=《白話區塊鏈》學習筆記（一）：初識區塊鏈"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/18/《白話區塊鏈》學習筆記（一）：初識區塊鏈/&name=《白話區塊鏈》學習筆記（一）：初識區塊鏈&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-117292723-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
