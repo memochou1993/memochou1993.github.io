@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="咩某的部落格">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《白話區塊鏈》一書的學習筆記。 技術論文比特幣技術論文的大名是 Bitcoin: A Peer-to-Peer Electronic Cash System，譯名：〈比特幣：一種點對點的電子現金系統〉。這份文件是在 2008 年 11 月由一位名為 Satoshi Nakamoto 的人發布。 正文主要介紹幾個關鍵點：  簡介：提出一個如何不透過所謂的權威第三方結構建構一個可信的交易網路">
+<meta name="keywords" content="區塊鏈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《白話區塊鏈》學習筆記（二）：比特幣">
+<meta property="og:url" content="https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《白話區塊鏈》一書的學習筆記。 技術論文比特幣技術論文的大名是 Bitcoin: A Peer-to-Peer Electronic Cash System，譯名：〈比特幣：一種點對點的電子現金系統〉。這份文件是在 2008 年 11 月由一位名為 Satoshi Nakamoto 的人發布。 正文主要介紹幾個關鍵點：  簡介：提出一個如何不透過所謂的權威第三方結構建構一個可信的交易網路">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-20T15:29:56.532Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《白話區塊鏈》學習筆記（二）：比特幣">
+<meta name="twitter:description" content="前言本文為《白話區塊鏈》一書的學習筆記。 技術論文比特幣技術論文的大名是 Bitcoin: A Peer-to-Peer Electronic Cash System，譯名：〈比特幣：一種點對點的電子現金系統〉。這份文件是在 2008 年 11 月由一位名為 Satoshi Nakamoto 的人發布。 正文主要介紹幾個關鍵點：  簡介：提出一個如何不透過所謂的權威第三方結構建構一個可信的交易網路">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《白話區塊鏈》學習筆記（二）：比特幣</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&text=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&is_video=false&description=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《白話區塊鏈》學習筆記（二）：比特幣&body=Check out this article: https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&name=《白話區塊鏈》學習筆記（二）：比特幣&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技術論文"><span class="toc-number">2.</span> <span class="toc-text">技術論文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比特幣的發行：挖礦"><span class="toc-number">3.</span> <span class="toc-text">比特幣的發行：挖礦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比特幣錢包"><span class="toc-number">4.</span> <span class="toc-text">比特幣錢包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比特幣帳戶模型：UTXO"><span class="toc-number">5.</span> <span class="toc-text">比特幣帳戶模型：UTXO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《白話區塊鏈》學習筆記（二）：比特幣
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-03-20T06:52:41.000Z" itemprop="datePublished">2020-03-20</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/區塊鏈/《白話區塊鏈》學習筆記/">《白話區塊鏈》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《白話區塊鏈》一書的學習筆記。</p>
+<h2 id="技術論文"><a href="#技術論文" class="headerlink" title="技術論文"></a>技術論文</h2><p>比特幣技術論文的大名是 Bitcoin: A Peer-to-Peer Electronic Cash System，譯名：〈比特幣：一種點對點的電子現金系統〉。這份文件是在 2008 年 11 月由一位名為 Satoshi Nakamoto 的人發布。</p>
+<p>正文主要介紹幾個關鍵點：</p>
+<ul>
+<li>簡介：提出一個如何不透過所謂的權威第三方結構建構一個可信的交易網路的問題。</li>
+<li>交易：描述一種透過密鑰簽名進行交易驗證的方式，實際上就是電腦密碼學在比特幣中的應用。</li>
+<li>時間戳記伺服器：利用時間戳記運算連結成一條鍊的概念。</li>
+<li>工作量證明：介紹一種在點對點網路中如何對各自的資料進行一致性確認的演算法。</li>
+<li>網路：介紹了交易確認的過程，實際上就是比特幣網路的應用協定。</li>
+<li>激勵：比特幣軟體的資料一致性確認，需要耗費 CPU 運算力，系統會獎勵比特幣，和別人交易的手續費。</li>
+<li>回收硬碟空間：刪除過老的一些交易資料，同時不破壞區塊的隨機雜湊值，透過這種方式壓縮區塊資料。</li>
+<li>簡化的支付確認：提出一個主要是為比特幣的支付服務的模型。</li>
+<li>價值的組合與分割：介紹的是比特幣中的交易事務組成方式。</li>
+<li>隱私：比特幣系統不依賴誰，每個人在比特幣系統中不用登記身分證，就是一個位址。</li>
+<li>計算：主要是站在機率統計的角度計算攻擊者成功的機率，以及經過多少個區塊後還能攻擊成功的機率。</li>
+</ul>
+<h2 id="比特幣的發行：挖礦"><a href="#比特幣的發行：挖礦" class="headerlink" title="比特幣的發行：挖礦"></a>比特幣的發行：挖礦</h2><p>挖礦在比特幣軟體中主要有以下用途：</p>
+<ul>
+<li>搶奪區塊打包權</li>
+<li>驗證交易事務</li>
+<li>獎勵發行新幣</li>
+<li>廣播新區塊</li>
+</ul>
+<p>比特幣中實行一種規則，被稱為工作量證明（PoW），其實就是類似於擲骰子的一種遊戲，誰先擲出符合要求的數字出來，誰就奪得打包權（記帳權）。</p>
+<p>簡單地說，挖礦就是重複計算區塊頭的雜湊值，不斷修改此參數，直到與難度目標值匹配的一個過程。一旦比對成功，就可以廣播一個新的區塊，其他用戶端會驗證接收到的新區塊是否合法，如果驗證通過，就會寫入到自己的區塊鍊帳本資料中。</p>
+<p>礦工成功算出一個區塊就能得到比特幣作為獎勵，這個交易一般是位於區塊的第一條，稱為 coinbase 交易。這個獎勵不是無限的，值到 2140 年，所有的比特幣（20,999,999.98）將全部發行完畢。</p>
+<p>早期用於挖礦的硬體設施主要是一般 CPU 挖礦，難度越來越大，於是出現了 GPU 挖礦，利用顯示卡來進行挖礦計算。接著又出現裝有積體電路的設備，是專門為了挖礦而設計的礦機。</p>
+<h2 id="比特幣錢包"><a href="#比特幣錢包" class="headerlink" title="比特幣錢包"></a>比特幣錢包</h2><p>錢包是屬於比特幣系統中的一個前端工具，其最基本的功能就是用來管理使用者的比特幣位址、發起轉帳交易、查看交易記錄等。透過錢包轉帳，就是將比特幣從一個位址轉移到另一個位址，比特幣位址的生成與公開密鑰演算法密切相關。</p>
+<p>公開密鑰演算法屬於一種不對稱加密演算法，擁有兩個密鑰：一個是私鑰，一個是公鑰。使用私鑰加密的資料可以用公鑰解密，而使用公鑰加密的資料可以用私鑰解密，兩者是互相匹配的。目前比較廣泛的公開密鑰演算法主要有 RSA 演算法和橢圓曲線加密演算法（ECC）。</p>
+<h2 id="比特幣帳戶模型：UTXO"><a href="#比特幣帳戶模型：UTXO" class="headerlink" title="比特幣帳戶模型：UTXO"></a>比特幣帳戶模型：UTXO</h2><p>UTXO（Unspent Transaction Output，未花費事務輸出）是交易事務的資料結構：</p>
+<ol>
+<li><p>比特幣的交易不是透過帳戶的增減來實作的，而是一筆筆關聯的輸入與輸出交易事務。</p>
+</li>
+<li><p>每一筆的交易都要花費「輸入」，然後產生「輸出」，這個產生的「輸出」就是所謂的「未花費過的交易輸出」，也就是 UTXO。</p>
+</li>
+<li><p>由於沒有帳戶的概念，因此當「輸入」部分的金額大於所需的「輸出」時，必須給自己找零，這個找零也是作為交易的一部分包含在「輸出」中。</p>
+</li>
+</ol>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>蔣勇、文延、嘉文（2018）。白話區塊鏈。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技術論文"><span class="toc-number">2.</span> <span class="toc-text">技術論文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比特幣的發行：挖礦"><span class="toc-number">3.</span> <span class="toc-text">比特幣的發行：挖礦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比特幣錢包"><span class="toc-number">4.</span> <span class="toc-text">比特幣錢包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比特幣帳戶模型：UTXO"><span class="toc-number">5.</span> <span class="toc-text">比特幣帳戶模型：UTXO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&text=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&is_video=false&description=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《白話區塊鏈》學習筆記（二）：比特幣&body=Check out this article: https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&title=《白話區塊鏈》學習筆記（二）：比特幣"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/&name=《白話區塊鏈》學習筆記（二）：比特幣&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-117292723-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
