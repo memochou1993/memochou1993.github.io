@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="咩某的部落格">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《精通 Go 程式設計》一書的學習筆記。 Hello, World「Hello, World」出現在 1978 年出版的 The C Programming Language 一書的開頭。C 對 Go 有直接的影響。 1234567package mainimport &quot;fmt&quot;func main() &amp;#123;	fmt.Println(&quot;Hello&quot;, &quot;世界&quot;)&amp;#125;  Go">
+<meta name="keywords" content="程式設計,Go,《精通 Go 程式設計》學習筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《精通 Go 程式設計》學習筆記（一）：入門">
+<meta property="og:url" content="https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《精通 Go 程式設計》一書的學習筆記。 Hello, World「Hello, World」出現在 1978 年出版的 The C Programming Language 一書的開頭。C 對 Go 有直接的影響。 1234567package mainimport &quot;fmt&quot;func main() &amp;#123;	fmt.Println(&quot;Hello&quot;, &quot;世界&quot;)&amp;#125;  Go">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-21T06:53:25.448Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《精通 Go 程式設計》學習筆記（一）：入門">
+<meta name="twitter:description" content="前言本文為《精通 Go 程式設計》一書的學習筆記。 Hello, World「Hello, World」出現在 1978 年出版的 The C Programming Language 一書的開頭。C 對 Go 有直接的影響。 1234567package mainimport &quot;fmt&quot;func main() &amp;#123;	fmt.Println(&quot;Hello&quot;, &quot;世界&quot;)&amp;#125;  Go">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《精通 Go 程式設計》學習筆記（一）：入門</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/20/《白話區塊鏈》學習筆記（二）：比特幣/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&text=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&is_video=false&description=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《精通 Go 程式設計》學習筆記（一）：入門&body=Check out this article: https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&name=《精通 Go 程式設計》學習筆記（一）：入門&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-number">2.</span> <span class="toc-text">Hello, World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令列參數"><span class="toc-number">3.</span> <span class="toc-text">命令列參數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#找出重複行"><span class="toc-number">4.</span> <span class="toc-text">找出重複行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#動態-GIF"><span class="toc-number">5.</span> <span class="toc-text">動態 GIF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抓取-URL-內容"><span class="toc-number">6.</span> <span class="toc-text">抓取 URL 內容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#並行抓取-URL-內容"><span class="toc-number">7.</span> <span class="toc-text">並行抓取 URL 內容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#網頁伺服器"><span class="toc-number">8.</span> <span class="toc-text">網頁伺服器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《精通 Go 程式設計》學習筆記（一）：入門
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-03-22T15:02:58.000Z" itemprop="datePublished">2020-03-22</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Go/《精通-Go-程式設計》學習筆記/">《精通 Go 程式設計》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/《精通-Go-程式設計》學習筆記/">《精通 Go 程式設計》學習筆記</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《精通 Go 程式設計》一書的學習筆記。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello, World"></a>Hello, World</h2><p>「Hello, World」出現在 1978 年出版的 The C Programming Language 一書的開頭。C 對 Go 有直接的影響。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Hello"</span>, <span class="string">"世界"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Go 是編譯語言，Go 工具組將原始碼與相關內容轉換成電腦原生機械碼指令。這些工具都是透過具有子命令並稱為 <code>go</code> 的單一命令操作。最簡單的命令是 <code>run</code>，它將一或多個副檔名為 <code>.go</code> 的原始檔案編譯並連結函式庫，然後執行所產生的可執行檔案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+<p>Go 預設就是處理 Unicode，因此它可以處理各種語言文字。</p>
+<p>Go 程式以套件（package）組織，它類似其他語言的函式庫或模組。套件由定義此套件功能的一個目錄下的一或多個 <code>.go</code> 原始檔案組成。每個原始檔的開頭是 <code>package</code> 宣告，表示檔案所屬的套件，後面接著是一列它要匯入的其他套件，然後是此檔案所儲存的程式的宣告。</p>
+<p><code>main</code> 套件比較特別，它定義獨立的可執行程式而非函式庫。<code>main</code> 套件中的 <code>function main</code> 也比較特殊——它是程式執行的起點。</p>
+<p>Go 不需要在陳述或宣告後面加上分號，除非兩個或以上放在同一行。實際上，特定單元後面的換行會被轉換成分號，因此換行對 Go 程式碼解析有影響。</p>
+<p>Go 對程式碼格式有很高的要求，<code>gofmt</code> 工具會將程式碼重新排列成標準格式，許多文字編輯器可以設定在每次存檔時執行 <code>gofmt</code>，因此可以讓你的程式一直保持正確的格式。</p>
+<h2 id="命令列參數"><a href="#命令列參數" class="headerlink" title="命令列參數"></a>命令列參數</h2><p>大部分的程式處理一些輸入以產生一些輸出；這大概就是電腦運算的定義。</p>
+<p><code>os</code> 套件以平台無關的方式提供處理作業系統的函式與其他值。命令列參數在程式中可透過稱為 <code>Args</code> 的變數取得，它是 <code>os</code> 套件的一部分；因此在 <code>os</code> 套件之外，它的全名是 <code>os.Args</code>。</p>
+<p>以下是 Unix 的 echo 命令的實作，它以單行輸出它的命令列參數。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> s, sep <span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="built_in">len</span>(os.Args); i++ &#123;</span><br><span class="line">		s += sep + os.Args[i]</span><br><span class="line">		sep = <span class="string">" "</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(os.Args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>for</code> 迴圈是 Go 唯一的迴圈陳述，它具有多種形式，其中一個如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> initialization; condition; post &#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果沒有 initialization 與 post，分號可以省略：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> condition &#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果在各種形式完全省略條件，則此迴圈為無限，必須以 <code>break</code> 或 <code>return</code> 結束。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下以第二個 echo 來示範：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s, sep := <span class="string">""</span>, <span class="string">""</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, arg := <span class="keyword">range</span> os.Args[<span class="number">1</span>:] &#123;</span><br><span class="line">		s += sep + arg</span><br><span class="line">		sep = <span class="string">" "</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>空識別符（<code>_</code>）可用於語法需要但程式邏輯不需要變數名稱的情況，例如在只需要元素值時使用來拋棄不需要的迴圈索引。</p>
+<p>字串變數宣吿有幾種方式；它們都相等：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s := <span class="string">""</span></span><br><span class="line"><span class="keyword">var</span> s <span class="keyword">string</span></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">""</span></span><br><span class="line"><span class="keyword">var</span> s <span class="keyword">string</span> = <span class="string">""</span></span><br></pre></td></tr></table></figure>
+
+<p>實務上，一般應該使用前兩種形式，明確的初始化已表明初始值很重要。</p>
+<p>如果牽涉的資料量很大，其成本可能會很高。更簡單與有效率的解決方案是用 <code>strings</code> 套件的 <code>Join()</code> 函式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(strings.Join(os.Args[<span class="number">1</span>:], <span class="string">" "</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="找出重複行"><a href="#找出重複行" class="headerlink" title="找出重複行"></a>找出重複行</h2><p>以下展示稱為 dup 的程式的三種變化；它受到 Unix 的 uniq 命令啟發，用來找尋相鄰的重複行。</p>
+<p>dup 的第一個版本輸出標準輸入中出現超過一次的行，前面加上次數。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	counts := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">	input := bufio.NewScanner(os.Stdin)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> input.Scan() &#123;</span><br><span class="line">		counts[input.Text()]++</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> line, n := <span class="keyword">range</span> counts &#123;</span><br><span class="line">		<span class="keyword">if</span> n &gt; <span class="number">1</span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"%d\t%s\n"</span>, n, line)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>map</code> 保存一組鍵值對並提供儲存、讀取、檢測元素的操作。再來是 <code>bufio</code> 套件，它幫助輸出入的效率與方便性。它的最重要功能之一是讀取輸入並將其拆分成多行的 <code>Scanner</code> 型別；它是處理多行輸入最簡單的方式。</p>
+<p>scanner 從程式的標準輸入讀取。每次呼叫 <code>input.Scan()</code> 讀取下一行並移除後面的換行字元；其結果可透過呼叫 <code>input.Text()</code> 取得。<code>Scan()</code> 函式在有下一行的時候回傳 <code>true</code>，在沒有更多的輸入時回傳 <code>false</code>。</p>
+<p>下一個版本的 dup 可從標準輸入讀取，或以 <code>os.Open</code> 開啟處理一系列檔案：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	counts := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">	files := os.Args[<span class="number">1</span>:]</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(files) == <span class="number">0</span> &#123;</span><br><span class="line">		countLines(os.Stdin, counts)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> _, arg := <span class="keyword">range</span> files &#123;</span><br><span class="line">			f, err := os.Open(arg)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">				fmt.Fprintf(os.Stderr, <span class="string">"dup: %v\n"</span>, err)</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			countLines(f, counts)</span><br><span class="line">			f.Close()</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> line, n := <span class="keyword">range</span> counts &#123;</span><br><span class="line">			<span class="keyword">if</span> n &gt; <span class="number">1</span> &#123;</span><br><span class="line">				fmt.Printf(<span class="string">"%d\t%s\n"</span>, n, line)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">countLines</span><span class="params">(f *os.File, counts <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	input := bufio.NewScanner(f)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> input.Scan() &#123;</span><br><span class="line">		counts[input.Text()]++</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>os.Open()</code> 函式回傳兩個值，第一個是開啟的檔案，用於後續 scanner 的讀取；第二個是內建的 <code>error</code> 型別。</p>
+<p>以下的 dup 版本是一次讀取完整的輸入到記憶體中，一次將行全部拆開，然後處理這些行。它使用 <code>ReadFile()</code> 函式讀取檔案的全部內容，與 <code>strings.Split()</code> 拆解字串到 slice 中。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	counts := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, filename := <span class="keyword">range</span> os.Args[<span class="number">1</span>:] &#123;</span><br><span class="line">		data, err := ioutil.ReadFile(filename)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Fprintf(os.Stderr, <span class="string">"dup: %v\n"</span>, err)</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> _, line := <span class="keyword">range</span> strings.Split(<span class="keyword">string</span>(data), <span class="string">"\n"</span>) &#123;</span><br><span class="line">			counts[line]++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> line, n := <span class="keyword">range</span> counts &#123;</span><br><span class="line">		<span class="keyword">if</span> n &gt; <span class="number">1</span> &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"%d\t%s\n"</span>, n, line)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ReadFile()</code> 回傳位元組的 slice，必須轉換成 string 以便由 <code>strings.Split()</code> 拆開。</p>
+<h2 id="動態-GIF"><a href="#動態-GIF" class="headerlink" title="動態 GIF"></a>動態 GIF</h2><p>以下示範使用 Go 的標準圖形套件，來建構一系列的點陣圖然後組成一個動態 GIF 圖。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"image"</span></span><br><span class="line">	<span class="string">"image/color"</span></span><br><span class="line">	<span class="string">"image/gif"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"math"</span></span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> palette = []color.Color&#123;color.White, color.Black&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	whiteIndex = <span class="number">0</span></span><br><span class="line">	blackIndex = <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	lissajous(os.Stdout)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">lissajous</span><span class="params">(out io.Writer)</span></span> &#123;</span><br><span class="line">	<span class="keyword">const</span> (</span><br><span class="line">		cycles  = <span class="number">5</span>     <span class="comment">// x 振盪旋轉數</span></span><br><span class="line">		res     = <span class="number">0.001</span> <span class="comment">// 角解析度</span></span><br><span class="line">		size    = <span class="number">100</span>   <span class="comment">// 畫布大小</span></span><br><span class="line">		nframes = <span class="number">64</span>    <span class="comment">// 幀數</span></span><br><span class="line">		delay   = <span class="number">8</span>     <span class="comment">// 以 10ms 為單位的幀間隔</span></span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	freq := rand.Float64() * <span class="number">3.0</span> <span class="comment">// y 振盪相對頻率</span></span><br><span class="line">	anim := gif.GIF&#123;LoopCount: nframes&#125;</span><br><span class="line">	phase := <span class="number">0.0</span> <span class="comment">// 相位差</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; nframes; i++ &#123;</span><br><span class="line">		rect := image.Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>*size+<span class="number">1</span>, <span class="number">2</span>*size+<span class="number">1</span>)</span><br><span class="line">		img := image.NewPaletted(rect, palette)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> t := <span class="number">0.0</span>; t &lt; cycles*<span class="number">2</span>*math.Pi; t += res &#123;</span><br><span class="line">			x := math.Sin(t)</span><br><span class="line">			y := math.Sin(t*freq + phase)</span><br><span class="line">			img.SetColorIndex(size+<span class="keyword">int</span>(x*size+<span class="number">0.5</span>), size+<span class="keyword">int</span>(y*size+<span class="number">0.5</span>), blackIndex)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		phase += <span class="number">0.1</span></span><br><span class="line">		anim.Delay = <span class="built_in">append</span>(anim.Delay, delay)</span><br><span class="line">		anim.Image = <span class="built_in">append</span>(anim.Image, img)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	gif.EncodeAll(out, &amp;anim)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>const</code> 宣吿賦予常數名稱，也就是在編譯期固定的值。常數值必須是數字、字串或布林。</p>
+<p><code>lissajous</code> 函式有兩個套疊迴圈。外面的迴圈執行 64 輪，每一輪產生一幀。它建構出新的 201×201 大小黑白兩色圖形。所有像素一開始設為調色盤的零值（調色盤的第零個顏色），也就是我們所設定的白色。外層迴圈在每一輪設定一些像素為黑色以產生新的圖形，其結果使用內建的 <code>append</code> 函式疊加到 <code>anim</code> 的幀列中，間隔為 80ms。最後幀列與間隔被編成 GIF 格式寫入輸出串流 <code>out</code> 中。<code>out</code> 的型別是 <code>io.Writer</code>，它讓我們可以輸出到各種目標上。</p>
+<p>內迴圈跑二維振盪。x 振盪只是個正弦函式，而 y 振盪也是個正弦波，但其頻率與 x 振盪是介於 0 到 3 的隨機關係，且與 x 振盪的相位關係初始為零且隨著幀遞增。迴圈持續執行直到 x 振盪完成五個循環。它在每個步驟中呼叫 <code>SetColorIndex</code> 以設定相對應像素為調色盤位置一的黑色。</p>
+<p>以下命令產生動態 GIF：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go build main.go &amp;&amp; ./main &gt; out.gif</span><br></pre></td></tr></table></figure>
+
+<h2 id="抓取-URL-內容"><a href="#抓取-URL-內容" class="headerlink" title="抓取 URL 內容"></a>抓取 URL 內容</h2><p>Go 提供一群集合於 <code>net</code> 之下的套件讓發送和接收網路資料、低階網路連線、設置伺服器變得容易。以下稱為 fetch 的簡單程式能夠抓取指定 URL 的內容並原封不動的輸出。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> _, url := <span class="keyword">range</span> os.Args[<span class="number">1</span>:] &#123;</span><br><span class="line">		resp, err := http.Get(url)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Fprintf(os.Stderr, <span class="string">"fetch: %v\n"</span>, err)</span><br><span class="line">			os.Exit(<span class="number">1</span>)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		b, err := ioutil.ReadAll(resp.Body)</span><br><span class="line">		resp.Body.Close()</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Fprintf(os.Stderr, <span class="string">"fetch: reading %s %v\n"</span>, url, err)</span><br><span class="line">			os.Exit(<span class="number">1</span>)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		fmt.Printf(<span class="string">"%s"</span>, b)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此程式使用 <code>net/http</code> 和 <code>io/ioutil</code> 兩個套件的函式。<code>http.Get()</code> 函式發出 HTTP 請求，從 <code>resp</code> 這個 struct 回傳結果。接下來 <code>ioutil.ReadAll()</code> 讀取整個回應；其結果儲存於 <code>b</code>。<code>Body</code> 串流關閉以避免資源洩漏。而 <code>Printf</code> 將回應寫到標準輸出。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> run main.<span class="keyword">go</span> http:<span class="comment">//gopl.io</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 HTTP 請求失敗， fetch 會回報失敗：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> run main.<span class="keyword">go</span> http:<span class="comment">//bad.gopl.io</span></span><br><span class="line">fetch: Get http:<span class="comment">//bad.gopl.io: dial tcp: lookup bad.gopl.io: no such host</span></span><br><span class="line">exit status <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="並行抓取-URL-內容"><a href="#並行抓取-URL-內容" class="headerlink" title="並行抓取 URL 內容"></a>並行抓取 URL 內容</h2><h2 id="網頁伺服器"><a href="#網頁伺服器" class="headerlink" title="網頁伺服器"></a>網頁伺服器</h2><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>Alan A. A. Donovan, Brian W. Kernighan。白話區塊鏈。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hello-World"><span class="toc-number">2.</span> <span class="toc-text">Hello, World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令列參數"><span class="toc-number">3.</span> <span class="toc-text">命令列參數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#找出重複行"><span class="toc-number">4.</span> <span class="toc-text">找出重複行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#動態-GIF"><span class="toc-number">5.</span> <span class="toc-text">動態 GIF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抓取-URL-內容"><span class="toc-number">6.</span> <span class="toc-text">抓取 URL 內容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#並行抓取-URL-內容"><span class="toc-number">7.</span> <span class="toc-text">並行抓取 URL 內容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#網頁伺服器"><span class="toc-number">8.</span> <span class="toc-text">網頁伺服器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&text=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&is_video=false&description=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《精通 Go 程式設計》學習筆記（一）：入門&body=Check out this article: https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&title=《精通 Go 程式設計》學習筆記（一）：入門"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/22/《精通-Go-程式設計》學習筆記（一）：入門/&name=《精通 Go 程式設計》學習筆記（一）：入門&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-117292723-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
