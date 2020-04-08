@@ -84,10 +84,10 @@
     </entry>
     
     <entry>
-      <title>在 Laravel 7.0 使用 Airlock 實作 API 認證</title>
-      <link href="/2020/03/19/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-Airlock-%E5%AF%A6%E4%BD%9C-API-%E8%AA%8D%E8%AD%89/"/>
-      <url>/2020/03/19/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-Airlock-%E5%AF%A6%E4%BD%9C-API-%E8%AA%8D%E8%AD%89/</url>
-      <content type="html"><![CDATA[<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new airlock</span><br></pre></td></tr></table></figure><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require laravel/airlock</span><br></pre></td></tr></table></figure><h2 id="發布資源"><a href="#發布資源" class="headerlink" title="發布資源"></a>發布資源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --provider=<span class="string">"Laravel\Airlock\AirlockServiceProvider"</span></span><br></pre></td></tr></table></figure><h2 id="執行遷移"><a href="#執行遷移" class="headerlink" title="執行遷移"></a>執行遷移</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure><h2 id="註冊中介層"><a href="#註冊中介層" class="headerlink" title="註冊中介層"></a>註冊中介層</h2><p>修改 <code>app\Http\Kernel.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $middlewareGroups = [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="string">'api'</span> =&gt; [</span><br><span class="line">        <span class="string">'throttle:60,1'</span>,</span><br><span class="line">        \Illuminate\Routing\Middleware\SubstituteBindings::class,</span><br><span class="line">        \Laravel\Airlock\Http\Middleware\EnsureFrontendRequestsAreStateful::class,</span><br><span class="line">    ],</span><br><span class="line">];</span><br></pre></td></tr></table></figure><h2 id="修改模型"><a href="#修改模型" class="headerlink" title="修改模型"></a>修改模型</h2><p>修改 <code>app\User.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Airlock</span>\<span class="title">HasApiTokens</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">HasApiTokens</span>, <span class="title">Notifiable</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="修改路由"><a href="#修改路由" class="headerlink" title="修改路由"></a>修改路由</h2><p>修改 <code>routes\api.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Route::prefix(<span class="string">'auth'</span>)-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Route::post(<span class="string">'/login'</span>, <span class="string">'AuthController@login'</span>);</span><br><span class="line"></span><br><span class="line">    Route::middleware(<span class="string">'auth:airlock'</span>)-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">($group)</span> </span>&#123;</span><br><span class="line">        Route::get(<span class="string">'/user'</span>, <span class="string">'AuthController@user'</span>);</span><br><span class="line">        Route::post(<span class="string">'/logout'</span>, <span class="string">'AuthController@logout'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="建立控制器"><a href="#建立控制器" class="headerlink" title="建立控制器"></a>建立控制器</h2><p>建立控制器。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:controller AuthController</span><br></pre></td></tr></table></figure><p>修改 <code>app\Http\Controllers\AuthController.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">Controller</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>\<span class="title">AuthenticationException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Auth</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Hash</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">user</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Auth::user();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span><span class="params">(Request $request)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $user = User::where(<span class="string">'email'</span>, $request-&gt;email)-&gt;first();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (! $user || ! Hash::check($request-&gt;password, $user-&gt;password)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AuthenticationException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response([</span><br><span class="line">            <span class="string">'access_token'</span> =&gt; $user-&gt;createToken($request-&gt;device_name)-&gt;plainTextToken,</span><br><span class="line">        ]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Auth::user()-&gt;tokens()-&gt;delete();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response(<span class="keyword">null</span>, <span class="number">204</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/airlock-example" target="_blank" rel="noopener">GitHub</a></p><h2 id="參考文件"><a href="#參考文件" class="headerlink" title="參考文件"></a>參考文件</h2><ul><li><a href="https://laravel.com/docs/master/airlock" target="_blank" rel="noopener">Laravel Airlock</a></li></ul>]]></content>
+      <title>在 Laravel 7.0 使用 Sanctum 實作 API 認證</title>
+      <link href="/2020/03/19/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-Sanctum-%E5%AF%A6%E4%BD%9C-API-%E8%AA%8D%E8%AD%89/"/>
+      <url>/2020/03/19/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-Sanctum-%E5%AF%A6%E4%BD%9C-API-%E8%AA%8D%E8%AD%89/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Laravel Sanctum 原來的名字是 Laravel Airlock，因商標爭議改名。</p><h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new airlock</span><br></pre></td></tr></table></figure><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require laravel/airlock</span><br></pre></td></tr></table></figure><h2 id="發布資源"><a href="#發布資源" class="headerlink" title="發布資源"></a>發布資源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --provider=<span class="string">"Laravel\Airlock\AirlockServiceProvider"</span></span><br></pre></td></tr></table></figure><h2 id="執行遷移"><a href="#執行遷移" class="headerlink" title="執行遷移"></a>執行遷移</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure><h2 id="註冊中介層"><a href="#註冊中介層" class="headerlink" title="註冊中介層"></a>註冊中介層</h2><p>修改 <code>app\Http\Kernel.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $middlewareGroups = [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="string">'api'</span> =&gt; [</span><br><span class="line">        <span class="string">'throttle:60,1'</span>,</span><br><span class="line">        \Illuminate\Routing\Middleware\SubstituteBindings::class,</span><br><span class="line">        \Laravel\Airlock\Http\Middleware\EnsureFrontendRequestsAreStateful::class,</span><br><span class="line">    ],</span><br><span class="line">];</span><br></pre></td></tr></table></figure><h2 id="修改模型"><a href="#修改模型" class="headerlink" title="修改模型"></a>修改模型</h2><p>修改 <code>app\User.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Airlock</span>\<span class="title">HasApiTokens</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">HasApiTokens</span>, <span class="title">Notifiable</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="修改路由"><a href="#修改路由" class="headerlink" title="修改路由"></a>修改路由</h2><p>修改 <code>routes\api.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Route::prefix(<span class="string">'auth'</span>)-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    Route::post(<span class="string">'/login'</span>, <span class="string">'AuthController@login'</span>);</span><br><span class="line"></span><br><span class="line">    Route::middleware(<span class="string">'auth:airlock'</span>)-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">($group)</span> </span>&#123;</span><br><span class="line">        Route::get(<span class="string">'/user'</span>, <span class="string">'AuthController@user'</span>);</span><br><span class="line">        Route::post(<span class="string">'/logout'</span>, <span class="string">'AuthController@logout'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="建立控制器"><a href="#建立控制器" class="headerlink" title="建立控制器"></a>建立控制器</h2><p>建立控制器。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:controller AuthController</span><br></pre></td></tr></table></figure><p>修改 <code>app\Http\Controllers\AuthController.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">Controller</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>\<span class="title">AuthenticationException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Auth</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Hash</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">user</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Auth::user();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">login</span><span class="params">(Request $request)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $user = User::where(<span class="string">'email'</span>, $request-&gt;email)-&gt;first();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (! $user || ! Hash::check($request-&gt;password, $user-&gt;password)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AuthenticationException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response([</span><br><span class="line">            <span class="string">'access_token'</span> =&gt; $user-&gt;createToken($request-&gt;device_name)-&gt;plainTextToken,</span><br><span class="line">        ]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Auth::user()-&gt;tokens()-&gt;delete();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response(<span class="keyword">null</span>, <span class="number">204</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/airlock-example" target="_blank" rel="noopener">GitHub</a></p><h2 id="參考文件"><a href="#參考文件" class="headerlink" title="參考文件"></a>參考文件</h2><ul><li><a href="https://laravel.com/docs/master/airlock" target="_blank" rel="noopener">Laravel Airlock</a></li></ul>]]></content>
       
       <categories>
           
@@ -109,8 +109,6 @@
             <tag> Laravel </tag>
             
             <tag> API </tag>
-            
-            <tag> Airlock </tag>
             
         </tags>
       
@@ -212,11 +210,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> Go </tag>
+            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> Go </tag>
             
         </tags>
       
@@ -243,11 +241,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> Go </tag>
+            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> Go </tag>
             
         </tags>
       
@@ -274,11 +272,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> Go </tag>
+            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> Go </tag>
             
         </tags>
       
@@ -305,11 +303,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> Go </tag>
+            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
-            
-            <tag> Go </tag>
             
         </tags>
       
@@ -336,9 +334,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 演算法 </tag>
-            
             <tag> Go </tag>
+            
+            <tag> 演算法 </tag>
             
         </tags>
       
@@ -431,7 +429,7 @@
       <title>使用 Go 建立 WebSocket 伺服器</title>
       <link href="/2020/02/19/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-WebSocket-%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
       <url>/2020/02/19/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-WebSocket-%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
-      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch main.go</span><br></pre></td></tr></table></figure><p>在專案目錄底下初始化。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/memochou1993/go-websocket-example</span><br></pre></td></tr></table></figure><p>下載 <code>gorilla/websocket</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/gorilla/websocket</span><br></pre></td></tr></table></figure><p>修改 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"github.com/gorilla/websocket"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">upgrader = websocket.Upgrader&#123;</span><br><span class="line">ReadBufferSize:  <span class="number">1024</span>,</span><br><span class="line">WriteBufferSize: <span class="number">1024</span>,</span><br><span class="line">&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.HandleFunc(<span class="string">"/"</span>, index)</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">upgrader.CheckOrigin = <span class="function"><span class="keyword">func</span><span class="params">(r *http.Request)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 伺服端接受客戶端連線的接口</span></span><br><span class="line">conn, err := upgrader.Upgrade(w, r, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="string">"Connected..."</span>)</span><br><span class="line"></span><br><span class="line">handle(conn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handle</span><span class="params">(conn *websocket.Conn)</span></span> &#123;</span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line"><span class="comment">// ReadMessage() 方法是一個輔助函式，其內部調用 NextReader() 方法</span></span><br><span class="line">messageType, p, err := conn.ReadMessage()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="keyword">string</span>(p))</span><br><span class="line"></span><br><span class="line"><span class="comment">// WriteMessage() 方法是一個輔助函式，其內部調用 NextWriter() 方法</span></span><br><span class="line"><span class="keyword">if</span> err := conn.WriteMessage(messageType, p); err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>新增 <code>index.html</code> 檔：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 建立 WebSocket 實例</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">'Attempting Connection...'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當 WebSocket 連線的 readyState 切換至 OPEN 時呼叫的事件監聽器，表示連線已準備傳送、接收資料</span></span></span><br><span class="line"><span class="javascript">    socket.onopen = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'Connection Opened...'</span>, event);</span></span><br><span class="line"><span class="javascript">        socket.send(<span class="string">'Hi...'</span>);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當 WebSocket 連線的 readyState 切換至 CLOSED 時呼叫的事件監聽器</span></span></span><br><span class="line"><span class="javascript">    socket.onclose = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'Connection Closed...'</span>, event);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當瀏覽器接收伺服器的訊息時呼叫的事件監聽器</span></span></span><br><span class="line"><span class="javascript">    socket.onmessage = <span class="function">(<span class="params">message</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(message);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當錯誤發生時呼叫的事件監聽器</span></span></span><br><span class="line"><span class="javascript">    socket.onerror = <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'Connection Error: '</span>, error);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/go-websocket-example" target="_blank" rel="noopener">GitHub</a></p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://www.youtube.com/watch?v=dniVs0xKYKk" target="_blank" rel="noopener">Go WebSocket Tutorial with the gorilla/websocket Package</a></li><li><a href="https://developer.mozilla.org/zh-TW/docs/WebSockets/WebSockets_reference/WebSocket" target="_blank" rel="noopener">WebSocket</a></li><li><a href="https://blog.piasy.com/2018/06/10/WebSocket-Go/index.html" target="_blank" rel="noopener">WebSocket Go</a></li><li><a href="https://www.gorillatoolkit.org/pkg/websocket" target="_blank" rel="noopener">Gorilla web toolkit - WebSocket</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch main.go</span><br></pre></td></tr></table></figure><p>在專案目錄底下初始化。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/memochou1993/go-websocket-example</span><br></pre></td></tr></table></figure><p>下載 <code>gorilla/websocket</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/gorilla/websocket</span><br></pre></td></tr></table></figure><p>修改 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"github.com/gorilla/websocket"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">upgrader = websocket.Upgrader&#123;</span><br><span class="line">ReadBufferSize:  <span class="number">1024</span>,</span><br><span class="line">WriteBufferSize: <span class="number">1024</span>,</span><br><span class="line">&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.HandleFunc(<span class="string">"/"</span>, index)</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">upgrader.CheckOrigin = <span class="function"><span class="keyword">func</span><span class="params">(r *http.Request)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 伺服端接受客戶端連線的接口</span></span><br><span class="line">conn, err := upgrader.Upgrade(w, r, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="string">"Connected..."</span>)</span><br><span class="line"></span><br><span class="line">handle(conn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handle</span><span class="params">(conn *websocket.Conn)</span></span> &#123;</span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line"><span class="comment">// ReadMessage() 方法是一個輔助函式，其內部調用 NextReader() 方法</span></span><br><span class="line">messageType, p, err := conn.ReadMessage()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="keyword">string</span>(p))</span><br><span class="line"></span><br><span class="line"><span class="comment">// WriteMessage() 方法是一個輔助函式，其內部調用 NextWriter() 方法</span></span><br><span class="line"><span class="keyword">if</span> err := conn.WriteMessage(messageType, p); err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>新增 <code>index.html</code> 檔：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 建立 WebSocket 實例</span></span><br><span class="line"><span class="undefined">    const socket = new WebSocket('ws://localhost:8080');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    console.log('Attempting Connection...');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當 WebSocket 連線的 readyState 切換至 OPEN 時呼叫的事件監聽器，表示連線已準備傳送、接收資料</span></span><br><span class="line"><span class="undefined">    socket.onopen = (event) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log('Connection Opened...', event);</span></span><br><span class="line"><span class="undefined">        socket.send('Hi...');</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當 WebSocket 連線的 readyState 切換至 CLOSED 時呼叫的事件監聽器</span></span><br><span class="line"><span class="undefined">    socket.onclose = (event) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log('Connection Closed...', event);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當瀏覽器接收伺服器的訊息時呼叫的事件監聽器</span></span><br><span class="line"><span class="undefined">    socket.onmessage = (message) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log(message);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當錯誤發生時呼叫的事件監聽器</span></span><br><span class="line"><span class="undefined">    socket.onerror = (error) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log('Connection Error: ', error);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/go-websocket-example" target="_blank" rel="noopener">GitHub</a></p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://www.youtube.com/watch?v=dniVs0xKYKk" target="_blank" rel="noopener">Go WebSocket Tutorial with the gorilla/websocket Package</a></li><li><a href="https://developer.mozilla.org/zh-TW/docs/WebSockets/WebSockets_reference/WebSocket" target="_blank" rel="noopener">WebSocket</a></li><li><a href="https://blog.piasy.com/2018/06/10/WebSocket-Go/index.html" target="_blank" rel="noopener">WebSocket Go</a></li><li><a href="https://www.gorillatoolkit.org/pkg/websocket" target="_blank" rel="noopener">Gorilla web toolkit - WebSocket</a></li></ul>]]></content>
       
       <categories>
           
@@ -504,9 +502,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 測試 </tag>
-            
             <tag> Go </tag>
+            
+            <tag> 測試 </tag>
             
         </tags>
       
@@ -533,9 +531,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 演算法 </tag>
-            
             <tag> Go </tag>
+            
+            <tag> 演算法 </tag>
             
             <tag> LeetCode </tag>
             
@@ -651,9 +649,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Node </tag>
             
@@ -707,11 +705,11 @@
       
         <tags>
             
+            <tag> Go </tag>
+            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
-            
-            <tag> Go </tag>
             
         </tags>
       
@@ -734,17 +732,17 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
             
-            <tag> Linux </tag>
-            
             <tag> Docker </tag>
             
-            <tag> Laradock </tag>
-            
             <tag> CentOS </tag>
+            
+            <tag> Laradock </tag>
             
         </tags>
       
@@ -767,11 +765,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Caddy </tag>
             
@@ -831,11 +829,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> Go </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> Go </tag>
             
         </tags>
       
@@ -862,13 +860,13 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 資料庫 </tag>
-            
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
+            
+            <tag> 資料庫 </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -905,7 +903,7 @@
       <title>使用 Go 讀取 XML 檔案</title>
       <link href="/2020/01/05/%E4%BD%BF%E7%94%A8-Go-%E8%AE%80%E5%8F%96-XML-%E6%AA%94%E6%A1%88/"/>
       <url>/2020/01/05/%E4%BD%BF%E7%94%A8-Go-%E8%AE%80%E5%8F%96-XML-%E6%AA%94%E6%A1%88/</url>
-      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>MacOS</li><li>Go 1.13.4</li></ul><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增一個 <code>users.xml</code> 檔作為範例 ：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">users</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"admin"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Elliot<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"reader"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Fraser<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">users</span>&gt;</span></span><br></pre></td></tr></table></figure><p>建立 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"encoding/xml"</span></span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"io/ioutil"</span></span><br><span class="line"><span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Users 結構體</span></span><br><span class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"users"`</span></span><br><span class="line">Users   []User   <span class="string">`xml:"user"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// User 結構體</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"user"`</span></span><br><span class="line">Type    <span class="keyword">string</span>   <span class="string">`xml:"type,attr"`</span></span><br><span class="line">Name    <span class="keyword">string</span>   <span class="string">`xml:"name"`</span></span><br><span class="line">Social  Social   <span class="string">`xml:"social"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Social 結構體</span></span><br><span class="line"><span class="keyword">type</span> Social <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName  xml.Name <span class="string">`xml:"social"`</span></span><br><span class="line">Facebook <span class="keyword">string</span>   <span class="string">`xml:"facebook"`</span></span><br><span class="line">Twitter  <span class="keyword">string</span>   <span class="string">`xml:"twitter"`</span></span><br><span class="line">Youtube  <span class="keyword">string</span>   <span class="string">`xml:"youtube"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="comment">// 開啟檔案</span></span><br><span class="line">xmlFile, err := os.Open(<span class="string">"users.xml"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理錯誤</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">fmt.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 關閉檔案</span></span><br><span class="line"><span class="keyword">defer</span> xmlFile.Close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 讀取檔案</span></span><br><span class="line">byteValue, _ := ioutil.ReadAll(xmlFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宣告一個 users 變數，型別為 Users 結構體</span></span><br><span class="line"><span class="keyword">var</span> users Users</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將檔案內容解析至 users 變數</span></span><br><span class="line">xml.Unmarshal(byteValue, &amp;users)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍歷 users 變數，並將內容輸出</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(users.Users); i++ &#123;</span><br><span class="line">fmt.Println(<span class="string">"User Type: "</span> + users.Users[i].Type)</span><br><span class="line">fmt.Println(<span class="string">"User Name: "</span> + users.Users[i].Name)</span><br><span class="line">fmt.Println(<span class="string">"Facebook Url: "</span> + users.Users[i].Social.Facebook)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">User Type: admin</span><br><span class="line">User Name: Elliot</span><br><span class="line">Facebook Url: https://facebook.com</span><br><span class="line">User Type: reader</span><br><span class="line">User Name: Fraser</span><br><span class="line">Facebook Url: https://facebook.com</span><br></pre></td></tr></table></figure><p>參考資料：</p><ul><li><a href="https://tutorialedge.net/golang/parsing-xml-with-golang/" target="_blank" rel="noopener">Parsing XML Files With Golang</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>MacOS</li><li>Go 1.13.4</li></ul><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增一個 <code>users.xml</code> 檔作為範例 ：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">users</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"admin"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Elliot<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"reader"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Fraser<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">users</span>&gt;</span></span><br></pre></td></tr></table></figure><p>建立 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"encoding/xml"</span></span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"io/ioutil"</span></span><br><span class="line"><span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Users 結構體</span></span><br><span class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"users"`</span></span><br><span class="line">Users   []User   <span class="string">`xml:"user"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// User 結構體</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"user"`</span></span><br><span class="line">Type    <span class="keyword">string</span>   <span class="string">`xml:"type,attr"`</span></span><br><span class="line">Name    <span class="keyword">string</span>   <span class="string">`xml:"name"`</span></span><br><span class="line">Social  Social   <span class="string">`xml:"social"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Social 結構體</span></span><br><span class="line"><span class="keyword">type</span> Social <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName  xml.Name <span class="string">`xml:"social"`</span></span><br><span class="line">Facebook <span class="keyword">string</span>   <span class="string">`xml:"facebook"`</span></span><br><span class="line">Twitter  <span class="keyword">string</span>   <span class="string">`xml:"twitter"`</span></span><br><span class="line">Youtube  <span class="keyword">string</span>   <span class="string">`xml:"youtube"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="comment">// 開啟檔案</span></span><br><span class="line">xmlFile, err := os.Open(<span class="string">"users.xml"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理錯誤</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">fmt.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 關閉檔案</span></span><br><span class="line"><span class="keyword">defer</span> xmlFile.Close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 讀取檔案</span></span><br><span class="line">byteValue, _ := ioutil.ReadAll(xmlFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宣告一個 users 變數，型別為 Users 結構體</span></span><br><span class="line"><span class="keyword">var</span> users Users</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將檔案內容解析至 users 變數</span></span><br><span class="line">xml.Unmarshal(byteValue, &amp;users)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍歷 users 變數，並將內容輸出</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(users.Users); i++ &#123;</span><br><span class="line">fmt.Println(<span class="string">"User Type: "</span> + users.Users[i].Type)</span><br><span class="line">fmt.Println(<span class="string">"User Name: "</span> + users.Users[i].Name)</span><br><span class="line">fmt.Println(<span class="string">"Facebook Url: "</span> + users.Users[i].Social.Facebook)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">User Type: admin</span><br><span class="line">User Name: Elliot</span><br><span class="line">Facebook Url: https://facebook.com</span><br><span class="line">User Type: reader</span><br><span class="line">User Name: Fraser</span><br><span class="line">Facebook Url: https://facebook.com</span><br></pre></td></tr></table></figure><p>參考資料：</p><ul><li><a href="https://tutorialedge.net/golang/parsing-xml-with-golang/" target="_blank" rel="noopener">Parsing XML Files With Golang</a></li></ul>]]></content>
       
       <categories>
           
@@ -978,13 +976,13 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 資料庫 </tag>
-            
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
+            
+            <tag> 資料庫 </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1038,9 +1036,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 演算法 </tag>
-            
             <tag> Go </tag>
+            
+            <tag> 演算法 </tag>
             
         </tags>
       
@@ -1065,13 +1063,13 @@
             
             <tag> 環境部署 </tag>
             
+            <tag> Caddy </tag>
+            
             <tag> Laradock </tag>
             
             <tag> SSL </tag>
             
             <tag> HTTPS </tag>
-            
-            <tag> Caddy </tag>
             
         </tags>
       
@@ -1163,39 +1161,6 @@
     </entry>
     
     <entry>
-      <title>在 Laravel 6.0 處理大量資料庫記錄</title>
-      <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/"/>
-      <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/</url>
-      <content type="html"><![CDATA[<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new eloquent-chunking</span><br></pre></td></tr></table></figure><h2 id="新增資料庫"><a href="#新增資料庫" class="headerlink" title="新增資料庫"></a>新增資料庫</h2><p>為求方便，使用 SQLite 資料庫。</p><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>由於需要查看記憶體使用量、執行時間以及資料庫查詢，需要安裝 Telescope 套件。</p><h2 id="新增模型"><a href="#新增模型" class="headerlink" title="新增模型"></a>新增模型</h2><p>新增 <code>Book</code> 模型，使用 <code>-a</code> 參數同時新增遷移檔、工廠和控制器。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:model Book -a</span><br></pre></td></tr></table></figure><p>在遷移檔新增欄位。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateBooksTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'books'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;bigIncrements(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'author'</span>);</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'books'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="資料填充"><a href="#資料填充" class="headerlink" title="資料填充"></a>資料填充</h2><p>修改 <code>database/factories/BookFactory.php</code> 檔，使工廠產生不重複的資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Faker</span>\<span class="title">Generator</span> <span class="title">as</span> <span class="title">Faker</span>;</span><br><span class="line"></span><br><span class="line">$factory-&gt;define(Book::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'title'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;sentence(), rand()),</span><br><span class="line">        <span class="string">'author'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;name(), rand()),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>新增 <code>BooksTableSeeder</code> 資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed BooksTableSeeder</span><br></pre></td></tr></table></figure><p>分批插入共 10 萬筆資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BooksTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the database seeds.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= <span class="number">100</span>; $i++) &#123;</span><br><span class="line">            $books = factory(Book::class)-&gt;times(<span class="number">1000</span>)-&gt;make()-&gt;toArray();</span><br><span class="line"></span><br><span class="line">            Book::insert($books);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>database/seeds/DatabaseSeeder.php</code> 檔註冊資料填充。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DatabaseSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Seed the application's database.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;call(BooksTableSeeder::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>執行資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate --seed</span><br></pre></td></tr></table></figure><h2 id="新增路由"><a href="#新增路由" class="headerlink" title="新增路由"></a>新增路由</h2><p>在 <code>routes/api.php</code> 檔新增路由。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'books'</span>, <span class="string">'BookController@index'</span>);</span><br></pre></td></tr></table></figure><h2 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h2><p>從 10 萬筆資料中找到一筆已存在的資料：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查詢已存在的資料</span></span><br><span class="line">$books = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;get();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 檢驗是否已存在</span></span><br><span class="line">$isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1037 ms</td><td>119.9 MB</td><td>2</td></tr><tr><td>1040 ms</td><td>117.9 MB</td><td>2</td></tr><tr><td>1092 ms</td><td>113.9 MB</td><td>2</td></tr><tr><td>1151 ms</td><td>111.9 MB</td><td>2</td></tr><tr><td>1084 ms</td><td>103.9 MB</td><td>2</td></tr></tbody></table><h2 id="優化"><a href="#優化" class="headerlink" title="優化"></a>優化</h2><h3 id="分塊"><a href="#分塊" class="headerlink" title="分塊"></a>分塊</h3><p>在處理大型結果集時，為了節省記憶體使用量，可以使用 <code>chunk()</code> 方法來查詢 Eloquent 模型中的「分塊」，將它們提供給指定的閉包處理。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分 10 次查詢已存在的資料</span></span><br><span class="line">Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;chunk($max / <span class="number">10</span>, <span class="function"><span class="keyword">function</span> <span class="params">($books)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook, &amp;$isExisting)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 檢驗是否已存在</span></span><br><span class="line">    $isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果存在就停止查詢</span></span><br><span class="line">    <span class="keyword">return</span> ! $isExisting;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1053 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1112 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1145 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1114 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1120 ms</td><td>18 MB</td><td>11</td></tr></tbody></table><p>使用 <code>chunkById()</code> 方法可以更快速地查詢資料庫，但僅限用於主鍵為 <code>AUTO_INCREMENT</code> 的資料表，並且在有 <code>join</code> 的情況下可能不能使用。</p><h3 id="游標"><a href="#游標" class="headerlink" title="游標"></a>游標</h3><p>使用 <code>cursor()</code> 方法可以藉由游標遍歷資料庫，並且只會執行一次的查詢。處理大量的數據時，可以減少記憶體使用量。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;cursor()-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>2168 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2166 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2214 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2178 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2165 ms</td><td>4 MB</td><td>2</td></tr></tbody></table><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>如果只是要避免重複插入資料而產生錯誤，可以考慮使用 <code>insertOrIgnore()</code> 方法，但是這個方法只會檢查主鍵而已。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">Book::insertOrIgnore([</span><br><span class="line">    [</span><br><span class="line">        <span class="string">"id"</span> =&gt; $max,</span><br><span class="line">        <span class="string">"title"</span> =&gt; <span class="string">"New Book"</span>,</span><br><span class="line">        <span class="string">"author"</span> =&gt; <span class="string">"Memo Chou"</span>,</span><br><span class="line">    ],</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">dump(Book::count());</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">100000</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/eloquent-chunking-example" target="_blank" rel="noopener">eloquent-chunking-example</a></p>]]></content>
-      
-      <categories>
-          
-          <category> 程式設計 </category>
-          
-          <category> PHP </category>
-          
-          <category> Laravel </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 程式設計 </tag>
-            
-            <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
-            
-            <tag> 資料庫 </tag>
-            
-            <tag> ORM </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>在 Laravel 6.0 處理資料庫大量資料查詢</title>
       <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E5%BA%AB%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2/"/>
       <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E5%BA%AB%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2/</url>
@@ -1216,13 +1181,46 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> 資料庫 </tag>
+            
+            <tag> ORM </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
             
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>在 Laravel 6.0 處理大量資料庫記錄</title>
+      <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/"/>
+      <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/</url>
+      <content type="html"><![CDATA[<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new eloquent-chunking</span><br></pre></td></tr></table></figure><h2 id="新增資料庫"><a href="#新增資料庫" class="headerlink" title="新增資料庫"></a>新增資料庫</h2><p>為求方便，使用 SQLite 資料庫。</p><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>由於需要查看記憶體使用量、執行時間以及資料庫查詢，需要安裝 Telescope 套件。</p><h2 id="新增模型"><a href="#新增模型" class="headerlink" title="新增模型"></a>新增模型</h2><p>新增 <code>Book</code> 模型，使用 <code>-a</code> 參數同時新增遷移檔、工廠和控制器。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:model Book -a</span><br></pre></td></tr></table></figure><p>在遷移檔新增欄位。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateBooksTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'books'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;bigIncrements(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'author'</span>);</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'books'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="資料填充"><a href="#資料填充" class="headerlink" title="資料填充"></a>資料填充</h2><p>修改 <code>database/factories/BookFactory.php</code> 檔，使工廠產生不重複的資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Faker</span>\<span class="title">Generator</span> <span class="title">as</span> <span class="title">Faker</span>;</span><br><span class="line"></span><br><span class="line">$factory-&gt;define(Book::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'title'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;sentence(), rand()),</span><br><span class="line">        <span class="string">'author'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;name(), rand()),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>新增 <code>BooksTableSeeder</code> 資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed BooksTableSeeder</span><br></pre></td></tr></table></figure><p>分批插入共 10 萬筆資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BooksTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the database seeds.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= <span class="number">100</span>; $i++) &#123;</span><br><span class="line">            $books = factory(Book::class)-&gt;times(<span class="number">1000</span>)-&gt;make()-&gt;toArray();</span><br><span class="line"></span><br><span class="line">            Book::insert($books);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>database/seeds/DatabaseSeeder.php</code> 檔註冊資料填充。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DatabaseSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Seed the application's database.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;call(BooksTableSeeder::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>執行資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate --seed</span><br></pre></td></tr></table></figure><h2 id="新增路由"><a href="#新增路由" class="headerlink" title="新增路由"></a>新增路由</h2><p>在 <code>routes/api.php</code> 檔新增路由。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'books'</span>, <span class="string">'BookController@index'</span>);</span><br></pre></td></tr></table></figure><h2 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h2><p>從 10 萬筆資料中找到一筆已存在的資料：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查詢已存在的資料</span></span><br><span class="line">$books = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;get();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 檢驗是否已存在</span></span><br><span class="line">$isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1037 ms</td><td>119.9 MB</td><td>2</td></tr><tr><td>1040 ms</td><td>117.9 MB</td><td>2</td></tr><tr><td>1092 ms</td><td>113.9 MB</td><td>2</td></tr><tr><td>1151 ms</td><td>111.9 MB</td><td>2</td></tr><tr><td>1084 ms</td><td>103.9 MB</td><td>2</td></tr></tbody></table><h2 id="優化"><a href="#優化" class="headerlink" title="優化"></a>優化</h2><h3 id="分塊"><a href="#分塊" class="headerlink" title="分塊"></a>分塊</h3><p>在處理大型結果集時，為了節省記憶體使用量，可以使用 <code>chunk()</code> 方法來查詢 Eloquent 模型中的「分塊」，將它們提供給指定的閉包處理。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分 10 次查詢已存在的資料</span></span><br><span class="line">Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;chunk($max / <span class="number">10</span>, <span class="function"><span class="keyword">function</span> <span class="params">($books)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook, &amp;$isExisting)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 檢驗是否已存在</span></span><br><span class="line">    $isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果存在就停止查詢</span></span><br><span class="line">    <span class="keyword">return</span> ! $isExisting;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1053 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1112 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1145 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1114 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1120 ms</td><td>18 MB</td><td>11</td></tr></tbody></table><p>使用 <code>chunkById()</code> 方法可以更快速地查詢資料庫，但僅限用於主鍵為 <code>AUTO_INCREMENT</code> 的資料表，並且在有 <code>join</code> 的情況下可能不能使用。</p><h3 id="游標"><a href="#游標" class="headerlink" title="游標"></a>游標</h3><p>使用 <code>cursor()</code> 方法可以藉由游標遍歷資料庫，並且只會執行一次的查詢。處理大量的數據時，可以減少記憶體使用量。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;cursor()-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>2168 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2166 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2214 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2178 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2165 ms</td><td>4 MB</td><td>2</td></tr></tbody></table><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>如果只是要避免重複插入資料而產生錯誤，可以考慮使用 <code>insertOrIgnore()</code> 方法，但是這個方法只會檢查主鍵而已。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">Book::insertOrIgnore([</span><br><span class="line">    [</span><br><span class="line">        <span class="string">"id"</span> =&gt; $max,</span><br><span class="line">        <span class="string">"title"</span> =&gt; <span class="string">"New Book"</span>,</span><br><span class="line">        <span class="string">"author"</span> =&gt; <span class="string">"Memo Chou"</span>,</span><br><span class="line">    ],</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">dump(Book::count());</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">100000</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/eloquent-chunking-example" target="_blank" rel="noopener">eloquent-chunking-example</a></p>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
             <tag> 資料庫 </tag>
             
             <tag> ORM </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> Laravel </tag>
             
         </tags>
       
@@ -1278,11 +1276,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> 資料庫 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 資料庫 </tag>
             
             <tag> SQLite </tag>
             
@@ -1651,9 +1649,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> API </tag>
-            
             <tag> 測試 </tag>
+            
+            <tag> API </tag>
             
             <tag> PHPUnit </tag>
             
@@ -1717,9 +1715,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Mix </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> Mix </tag>
             
             <tag> Vue </tag>
             
@@ -2115,11 +2113,11 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -2308,13 +2306,13 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Wordpress </tag>
             
@@ -2416,9 +2414,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linode </tag>
             
@@ -2747,9 +2745,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Guzzle </tag>
-            
             <tag> Laradock </tag>
+            
+            <tag> Guzzle </tag>
             
             <tag> Nginx </tag>
             
@@ -3271,11 +3269,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -3302,11 +3300,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -3356,13 +3354,13 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> CI/CD </tag>
             
@@ -3389,13 +3387,13 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> MySQL </tag>
             
@@ -3422,13 +3420,13 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> CI/CD </tag>
             
@@ -3453,13 +3451,13 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -3511,9 +3509,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> AWS </tag>
             
@@ -3904,9 +3902,9 @@
             
             <tag> JavaScript </tag>
             
-            <tag> Nuxt </tag>
-            
             <tag> Node </tag>
+            
+            <tag> Nuxt </tag>
             
             <tag> AdonisJs </tag>
             
@@ -4343,11 +4341,11 @@
             
             <tag> 程式設計 </tag>
             
+            <tag> 資料庫 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 資料庫 </tag>
             
             <tag> UUID </tag>
             
@@ -4872,11 +4870,11 @@
       
         <tags>
             
+            <tag> 資料庫 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 資料庫 </tag>
             
             <tag> PostgreSQL </tag>
             
@@ -4934,11 +4932,11 @@
       
         <tags>
             
+            <tag> 其他 </tag>
+            
             <tag> MySQL </tag>
             
             <tag> phpMyAdmin </tag>
-            
-            <tag> 其他 </tag>
             
         </tags>
       
@@ -4961,11 +4959,11 @@
       
         <tags>
             
+            <tag> 資料庫 </tag>
+            
             <tag> 環境部署 </tag>
             
             <tag> Homestead </tag>
-            
-            <tag> 資料庫 </tag>
             
             <tag> phpMyAdmin </tag>
             
@@ -6774,9 +6772,9 @@
             
             <tag> PHP </tag>
             
-            <tag> GitHub </tag>
-            
             <tag> API </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -6809,9 +6807,9 @@
             
             <tag> PHP </tag>
             
-            <tag> GitHub </tag>
-            
             <tag> API </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -8090,9 +8088,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Lumen </tag>
-            
             <tag> API </tag>
+            
+            <tag> Lumen </tag>
             
         </tags>
       
@@ -8310,17 +8308,17 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
             
-            <tag> Linux </tag>
-            
-            <tag> elementary OS </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> elementary OS </tag>
             
         </tags>
       
@@ -8343,13 +8341,13 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 環境部署 </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -8380,9 +8378,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Lumen </tag>
-            
             <tag> API </tag>
+            
+            <tag> Lumen </tag>
             
             <tag> JWT </tag>
             
@@ -8415,9 +8413,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Lumen </tag>
-            
             <tag> API </tag>
+            
+            <tag> Lumen </tag>
             
             <tag> JWT </tag>
             
@@ -8442,11 +8440,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> Hexo </tag>
             
             <tag> GitHub </tag>
-            
-            <tag> 環境部署 </tag>
             
         </tags>
       

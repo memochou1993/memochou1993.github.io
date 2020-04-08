@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="建立專案1laravel new airlock  安裝套件1composer require laravel/airlock  發布資源1php artisan vendor:publish --provider=&quot;Laravel\Airlock\AirlockServiceProvider&quot;  執行遷移1php artisan migrate  註冊中介層修改 app\Http\Kernel.">
-<meta name="keywords" content="程式設計,PHP,Laravel,API,Airlock">
+    <meta name="description" content="前言Laravel Sanctum 原來的名字是 Laravel Airlock，因商標爭議改名。 建立專案1laravel new airlock  安裝套件1composer require laravel/airlock  發布資源1php artisan vendor:publish --provider=&quot;Laravel\Airlock\AirlockServiceProvider&quot;">
+<meta name="keywords" content="程式設計,PHP,Laravel,API">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 Laravel 7.0 使用 Airlock 實作 API 認證">
-<meta property="og:url" content="https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/index.html">
+<meta property="og:title" content="在 Laravel 7.0 使用 Sanctum 實作 API 認證">
+<meta property="og:url" content="https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="建立專案1laravel new airlock  安裝套件1composer require laravel/airlock  發布資源1php artisan vendor:publish --provider=&quot;Laravel\Airlock\AirlockServiceProvider&quot;  執行遷移1php artisan migrate  註冊中介層修改 app\Http\Kernel.">
+<meta property="og:description" content="前言Laravel Sanctum 原來的名字是 Laravel Airlock，因商標爭議改名。 建立專案1laravel new airlock  安裝套件1composer require laravel/airlock  發布資源1php artisan vendor:publish --provider=&quot;Laravel\Airlock\AirlockServiceProvider&quot;">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-19T13:10:22.947Z">
+<meta property="og:updated_time" content="2020-04-08T14:07:45.938Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laravel 7.0 使用 Airlock 實作 API 認證">
-<meta name="twitter:description" content="建立專案1laravel new airlock  安裝套件1composer require laravel/airlock  發布資源1php artisan vendor:publish --provider=&quot;Laravel\Airlock\AirlockServiceProvider&quot;  執行遷移1php artisan migrate  註冊中介層修改 app\Http\Kernel.">
+<meta name="twitter:title" content="在 Laravel 7.0 使用 Sanctum 實作 API 認證">
+<meta name="twitter:description" content="前言Laravel Sanctum 原來的名字是 Laravel Airlock，因商標爭議改名。 建立專案1laravel new airlock  安裝套件1composer require laravel/airlock  發布資源1php artisan vendor:publish --provider=&quot;Laravel\Airlock\AirlockServiceProvider&quot;">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 Laravel 7.0 使用 Airlock 實作 API 認證</title>
+    <title>在 Laravel 7.0 使用 Sanctum 實作 API 認證</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&text=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&is_video=false&description=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 使用 Airlock 實作 API 認證&body=Check out this article: https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&name=在 Laravel 7.0 使用 Airlock 實作 API 認證&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&text=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&is_video=false&description=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 使用 Sanctum 實作 API 認證&body=Check out this article: https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&name=在 Laravel 7.0 使用 Sanctum 實作 API 認證&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">2.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#發布資源"><span class="toc-number">3.</span> <span class="toc-text">發布資源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#執行遷移"><span class="toc-number">4.</span> <span class="toc-text">執行遷移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊中介層"><span class="toc-number">5.</span> <span class="toc-text">註冊中介層</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改模型"><span class="toc-number">6.</span> <span class="toc-text">修改模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改路由"><span class="toc-number">7.</span> <span class="toc-text">修改路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立控制器"><span class="toc-number">8.</span> <span class="toc-text">建立控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考文件"><span class="toc-number">10.</span> <span class="toc-text">參考文件</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">3.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#發布資源"><span class="toc-number">4.</span> <span class="toc-text">發布資源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#執行遷移"><span class="toc-number">5.</span> <span class="toc-text">執行遷移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊中介層"><span class="toc-number">6.</span> <span class="toc-text">註冊中介層</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改模型"><span class="toc-number">7.</span> <span class="toc-text">修改模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改路由"><span class="toc-number">8.</span> <span class="toc-text">修改路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立控制器"><span class="toc-number">9.</span> <span class="toc-text">建立控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">10.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考文件"><span class="toc-number">11.</span> <span class="toc-text">參考文件</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 Laravel 7.0 使用 Airlock 實作 API 認證
+        在 Laravel 7.0 使用 Sanctum 實作 API 認證
     </h1>
 
 
@@ -164,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/API/">API</a>, <a class="tag-link" href="/tags/Airlock/">Airlock</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/API/">API</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
     </div>
 
 
@@ -173,7 +173,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new airlock</span><br></pre></td></tr></table></figure>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Laravel Sanctum 原來的名字是 Laravel Airlock，因商標爭議改名。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new airlock</span><br></pre></td></tr></table></figure>
 
 <h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require laravel/airlock</span><br></pre></td></tr></table></figure>
 
@@ -236,21 +237,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">2.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#發布資源"><span class="toc-number">3.</span> <span class="toc-text">發布資源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#執行遷移"><span class="toc-number">4.</span> <span class="toc-text">執行遷移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊中介層"><span class="toc-number">5.</span> <span class="toc-text">註冊中介層</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改模型"><span class="toc-number">6.</span> <span class="toc-text">修改模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改路由"><span class="toc-number">7.</span> <span class="toc-text">修改路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立控制器"><span class="toc-number">8.</span> <span class="toc-text">建立控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考文件"><span class="toc-number">10.</span> <span class="toc-text">參考文件</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">3.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#發布資源"><span class="toc-number">4.</span> <span class="toc-text">發布資源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#執行遷移"><span class="toc-number">5.</span> <span class="toc-text">執行遷移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊中介層"><span class="toc-number">6.</span> <span class="toc-text">註冊中介層</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改模型"><span class="toc-number">7.</span> <span class="toc-text">修改模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改路由"><span class="toc-number">8.</span> <span class="toc-text">修改路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立控制器"><span class="toc-number">9.</span> <span class="toc-text">建立控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">10.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考文件"><span class="toc-number">11.</span> <span class="toc-text">參考文件</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&text=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&is_video=false&description=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 使用 Airlock 實作 API 認證&body=Check out this article: https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&title=在 Laravel 7.0 使用 Airlock 實作 API 認證"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Airlock-實作-API-認證/&name=在 Laravel 7.0 使用 Airlock 實作 API 認證&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&text=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&is_video=false&description=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 使用 Sanctum 實作 API 認證&body=Check out this article: https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&title=在 Laravel 7.0 使用 Sanctum 實作 API 認證"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/03/19/在-Laravel-7-0-使用-Sanctum-實作-API-認證/&name=在 Laravel 7.0 使用 Sanctum 實作 API 認證&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
