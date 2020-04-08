@@ -3,6 +3,33 @@
   
     
     <entry>
+      <title>使用 Fetch 發送 HTTP 請求</title>
+      <link href="/2020/04/08/%E4%BD%BF%E7%94%A8-Fetch-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/"/>
+      <url>/2020/04/08/%E4%BD%BF%E7%94%A8-Fetch-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/</url>
+      <content type="html"><![CDATA[<h2 id="發送請求"><a href="#發送請求" class="headerlink" title="發送請求"></a>發送請求</h2><p><code>fetch()</code> 方法的第一個參數是 URI，它回傳一個包含 <code>Body</code> 的 <code>Promise</code> 物件。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'http://example.com/movies.json'</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> response.json();</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure><p><code>fetch()</code> 方法的第二個參數是選用的，可以傳送一個物件來設定請求。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fetch(url, &#123;</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(data),</span><br><span class="line">    cache: <span class="string">'no-cache'</span>,</span><br><span class="line">    credentials: <span class="string">'same-origin'</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">'content-type'</span>: <span class="string">'application/json'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    mode: <span class="string">'cors'</span>,</span><br><span class="line">    redirect: <span class="string">'follow'</span>,</span><br><span class="line">    referrer: <span class="string">'no-referrer'</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br></pre></td></tr></table></figure><p>可以使用以下 <code>Body</code> 的不同方法輸出不同類型格式的內容：</p><ul><li>Body.arrayBuffer()</li><li>Body.blob()</li><li>Body.formData()</li><li>Body.json()</li><li>Body.text()</li></ul><h2 id="中斷請求"><a href="#中斷請求" class="headerlink" title="中斷請求"></a>中斷請求</h2><p><code>AbortController</code> 是一個控制器物件，其 <code>signal</code> 屬性回傳一個 <code>AbortSignal</code> 物件，與 DOM 請求溝通，使用 <code>AbortController.abort()</code> 方法可以將請求中斷。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timeout = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> controller = <span class="keyword">new</span> AbortController();</span><br><span class="line"><span class="keyword">const</span> &#123; signal &#125; = controller;</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> controller.abort(), timeout * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'http://example.com/movies.json'</span>, &#123; signal &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> response.json();</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err.name === <span class="string">'AbortError'</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Promise Aborted'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API" target="_blank" rel="noopener">Fetch API</a></li><li><a href="https://developer.mozilla.org/zh-TW/docs/Web/API/AbortController" target="_blank" rel="noopener">AbortController</a></li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> JavaScript </category>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>使用 Go 實作「URL 短網址爬蟲」</title>
       <link href="/2020/03/30/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E4%BD%9C%E3%80%8CURL-%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%88%AC%E8%9F%B2%E3%80%8D/"/>
       <url>/2020/03/30/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E4%BD%9C%E3%80%8CURL-%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%88%AC%E8%9F%B2%E3%80%8D/</url>
@@ -624,9 +651,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Node </tag>
             
@@ -2720,9 +2747,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Laradock </tag>
-            
             <tag> Guzzle </tag>
+            
+            <tag> Laradock </tag>
             
             <tag> Nginx </tag>
             
