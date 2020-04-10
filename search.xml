@@ -3,6 +3,33 @@
   
     
     <entry>
+      <title>使用 minikube 學習 Kubernetes 容器管理平台</title>
+      <link href="/2020/04/10/%E4%BD%BF%E7%94%A8-minikube-%E5%AD%B8%E7%BF%92-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"/>
+      <url>/2020/04/10/%E4%BD%BF%E7%94%A8-minikube-%E5%AD%B8%E7%BF%92-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/</url>
+      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>MacOS</li></ul><h2 id="名詞解釋"><a href="#名詞解釋" class="headerlink" title="名詞解釋"></a>名詞解釋</h2><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。</p><h3 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h3><p>主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。</p><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>節點，負責監控並匯報容器的狀態，同時根據 Master 的要求管理容器的生命周期。</p><h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h3><p>豆莢，是 Kubernetes 的最小調度單位，每個 Pod 包含一或多個容器。Pod 中的容器會作為一個整體被 Master 調度到一個 Node 上運行。</p><h2 id="環境設定"><a href="#環境設定" class="headerlink" title="環境設定"></a>環境設定</h2><p>首先安裝 minikube，minikube 可以將 Kubernetes 運行在本地端，方便學習與開發。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install minikube</span><br></pre></td></tr></table></figure><p>查看 minikube 的版本。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube version</span><br></pre></td></tr></table></figure><p>使用管理員權限啟動一個 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br></pre></td></tr></table></figure><p>查看 cluster 資訊。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl cluster-info</span><br></pre></td></tr></table></figure><p>查看 minikube 狀態。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube status</span><br></pre></td></tr></table></figure><p>啟動 Kubernetes 圖形化介面。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube dashboard</span><br></pre></td></tr></table></figure><h2 id="部署應用程式"><a href="#部署應用程式" class="headerlink" title="部署應用程式"></a>部署應用程式</h2><p>部署一個 hello-minikube 範例。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4</span><br></pre></td></tr></table></figure><ul><li><code>--image</code> 參數代表 Docker image 的位址和版本。</li></ul><p>將其暴露在 8080 埠，並將服務類型設為 <code>NodePort</code>，使服務可以從集群的外部被訪問。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment hello-minikube --<span class="built_in">type</span>=NodePort --port=8080</span><br></pre></td></tr></table></figure><ul><li><code>--type</code> 參數用來指定服務的類型。</li><li><code>--port</code> 參數代表 container 對外的埠號。</li></ul><p>查看 pod 列表。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure><p>查看 cluster 的 IP。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube ip</span><br></pre></td></tr></table></figure><p>查看服務列表。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services</span><br><span class="line">NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE</span><br><span class="line">hello-minikube   NodePort    10.103.2.111   &lt;none&gt;        8080:31220/TCP   3m48s</span><br><span class="line">kubernetes       ClusterIP   10.96.0.1      &lt;none&gt;        443/TCP          16m</span><br></pre></td></tr></table></figure><p>開啟 hello-minikube 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube service hello-minikube</span><br></pre></td></tr></table></figure><h2 id="管理叢集"><a href="#管理叢集" class="headerlink" title="管理叢集"></a>管理叢集</h2><p>暫停 Kubernetes。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube pause</span><br></pre></td></tr></table></figure><p>停止 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube stop</span><br></pre></td></tr></table></figure><p>增加預設記憶體限制（需要重新啟動）。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube config <span class="built_in">set</span> memory 16384</span><br></pre></td></tr></table></figure><p>查看附加元件列表。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube addons list</span><br></pre></td></tr></table></figure><p>刪除所有 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube delete --all</span><br></pre></td></tr></table></figure><h2 id="擴充應用"><a href="#擴充應用" class="headerlink" title="擴充應用"></a>擴充應用</h2><p>查看副本數。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br></pre></td></tr></table></figure><p>將 hello-minikube 的副本數設定成 3。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale deployments/hello-minikube --replicas=3</span><br></pre></td></tr></table></figure><h2 id="基礎指令"><a href="#基礎指令" class="headerlink" title="基礎指令"></a>基礎指令</h2><p>用 minikube 啟動一個 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br></pre></td></tr></table></figure><p>用 minikube 開啟 Kubernetes 圖形化介面。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube dashboard</span><br></pre></td></tr></table></figure><p>建立一個服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4</span><br></pre></td></tr></table></figure><p>暴露一個 NodePort 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment hello-minikube --<span class="built_in">type</span>=NodePort --port=8080</span><br></pre></td></tr></table></figure><p>在瀏覽器打開一個服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube service hello-minikube</span><br></pre></td></tr></table></figure><p>更新 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start --kubernetes-version=latest</span><br></pre></td></tr></table></figure><p>啟動第二個 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start -p cluster2</span><br></pre></td></tr></table></figure><p>停止 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube stop</span><br></pre></td></tr></table></figure><p>刪除 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube delete</span><br></pre></td></tr></table></figure><p>刪除所有 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube delete --all</span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://kubernetes.io/zh/docs/home/" target="_blank" rel="noopener">Kubernetes Documentation</a></li><li><a href="https://minikube.sigs.k8s.io/docs/" target="_blank" rel="noopener">minikube Documentation</a></li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 環境部署 </category>
+          
+          <category> Kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 環境部署 </tag>
+            
+            <tag> Docker </tag>
+            
+            <tag> Kubernetes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>使用 Fetch 發送 HTTP 請求</title>
       <link href="/2020/04/08/%E4%BD%BF%E7%94%A8-Fetch-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/"/>
       <url>/2020/04/08/%E4%BD%BF%E7%94%A8-Fetch-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/</url>
@@ -210,11 +237,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -241,11 +268,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -272,11 +299,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -303,11 +330,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
             
             <tag> 排序 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -334,9 +361,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -429,7 +456,7 @@
       <title>使用 Go 建立 WebSocket 伺服器</title>
       <link href="/2020/02/19/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-WebSocket-%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
       <url>/2020/02/19/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-WebSocket-%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
-      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch main.go</span><br></pre></td></tr></table></figure><p>在專案目錄底下初始化。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/memochou1993/go-websocket-example</span><br></pre></td></tr></table></figure><p>下載 <code>gorilla/websocket</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/gorilla/websocket</span><br></pre></td></tr></table></figure><p>修改 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"github.com/gorilla/websocket"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">upgrader = websocket.Upgrader&#123;</span><br><span class="line">ReadBufferSize:  <span class="number">1024</span>,</span><br><span class="line">WriteBufferSize: <span class="number">1024</span>,</span><br><span class="line">&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.HandleFunc(<span class="string">"/"</span>, index)</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">upgrader.CheckOrigin = <span class="function"><span class="keyword">func</span><span class="params">(r *http.Request)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 伺服端接受客戶端連線的接口</span></span><br><span class="line">conn, err := upgrader.Upgrade(w, r, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="string">"Connected..."</span>)</span><br><span class="line"></span><br><span class="line">handle(conn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handle</span><span class="params">(conn *websocket.Conn)</span></span> &#123;</span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line"><span class="comment">// ReadMessage() 方法是一個輔助函式，其內部調用 NextReader() 方法</span></span><br><span class="line">messageType, p, err := conn.ReadMessage()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="keyword">string</span>(p))</span><br><span class="line"></span><br><span class="line"><span class="comment">// WriteMessage() 方法是一個輔助函式，其內部調用 NextWriter() 方法</span></span><br><span class="line"><span class="keyword">if</span> err := conn.WriteMessage(messageType, p); err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>新增 <code>index.html</code> 檔：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 建立 WebSocket 實例</span></span><br><span class="line"><span class="undefined">    const socket = new WebSocket('ws://localhost:8080');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    console.log('Attempting Connection...');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當 WebSocket 連線的 readyState 切換至 OPEN 時呼叫的事件監聽器，表示連線已準備傳送、接收資料</span></span><br><span class="line"><span class="undefined">    socket.onopen = (event) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log('Connection Opened...', event);</span></span><br><span class="line"><span class="undefined">        socket.send('Hi...');</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當 WebSocket 連線的 readyState 切換至 CLOSED 時呼叫的事件監聽器</span></span><br><span class="line"><span class="undefined">    socket.onclose = (event) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log('Connection Closed...', event);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當瀏覽器接收伺服器的訊息時呼叫的事件監聽器</span></span><br><span class="line"><span class="undefined">    socket.onmessage = (message) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log(message);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    // 當錯誤發生時呼叫的事件監聽器</span></span><br><span class="line"><span class="undefined">    socket.onerror = (error) =&gt; &#123;</span></span><br><span class="line"><span class="undefined">        console.log('Connection Error: ', error);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/go-websocket-example" target="_blank" rel="noopener">GitHub</a></p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://www.youtube.com/watch?v=dniVs0xKYKk" target="_blank" rel="noopener">Go WebSocket Tutorial with the gorilla/websocket Package</a></li><li><a href="https://developer.mozilla.org/zh-TW/docs/WebSockets/WebSockets_reference/WebSocket" target="_blank" rel="noopener">WebSocket</a></li><li><a href="https://blog.piasy.com/2018/06/10/WebSocket-Go/index.html" target="_blank" rel="noopener">WebSocket Go</a></li><li><a href="https://www.gorillatoolkit.org/pkg/websocket" target="_blank" rel="noopener">Gorilla web toolkit - WebSocket</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch main.go</span><br></pre></td></tr></table></figure><p>在專案目錄底下初始化。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/memochou1993/go-websocket-example</span><br></pre></td></tr></table></figure><p>下載 <code>gorilla/websocket</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/gorilla/websocket</span><br></pre></td></tr></table></figure><p>修改 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line"></span><br><span class="line"><span class="string">"github.com/gorilla/websocket"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">upgrader = websocket.Upgrader&#123;</span><br><span class="line">ReadBufferSize:  <span class="number">1024</span>,</span><br><span class="line">WriteBufferSize: <span class="number">1024</span>,</span><br><span class="line">&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.HandleFunc(<span class="string">"/"</span>, index)</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">upgrader.CheckOrigin = <span class="function"><span class="keyword">func</span><span class="params">(r *http.Request)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 伺服端接受客戶端連線的接口</span></span><br><span class="line">conn, err := upgrader.Upgrade(w, r, <span class="literal">nil</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="string">"Connected..."</span>)</span><br><span class="line"></span><br><span class="line">handle(conn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handle</span><span class="params">(conn *websocket.Conn)</span></span> &#123;</span><br><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line"><span class="comment">// ReadMessage() 方法是一個輔助函式，其內部調用 NextReader() 方法</span></span><br><span class="line">messageType, p, err := conn.ReadMessage()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log.Println(<span class="keyword">string</span>(p))</span><br><span class="line"></span><br><span class="line"><span class="comment">// WriteMessage() 方法是一個輔助函式，其內部調用 NextWriter() 方法</span></span><br><span class="line"><span class="keyword">if</span> err := conn.WriteMessage(messageType, p); err != <span class="literal">nil</span> &#123;</span><br><span class="line">log.Println(err.Error())</span><br><span class="line"><span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>新增 <code>index.html</code> 檔：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 建立 WebSocket 實例</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">'Attempting Connection...'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當 WebSocket 連線的 readyState 切換至 OPEN 時呼叫的事件監聽器，表示連線已準備傳送、接收資料</span></span></span><br><span class="line"><span class="javascript">    socket.onopen = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'Connection Opened...'</span>, event);</span></span><br><span class="line"><span class="javascript">        socket.send(<span class="string">'Hi...'</span>);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當 WebSocket 連線的 readyState 切換至 CLOSED 時呼叫的事件監聽器</span></span></span><br><span class="line"><span class="javascript">    socket.onclose = <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'Connection Closed...'</span>, event);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當瀏覽器接收伺服器的訊息時呼叫的事件監聽器</span></span></span><br><span class="line"><span class="javascript">    socket.onmessage = <span class="function">(<span class="params">message</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(message);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 當錯誤發生時呼叫的事件監聽器</span></span></span><br><span class="line"><span class="javascript">    socket.onerror = <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'Connection Error: '</span>, error);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/go-websocket-example" target="_blank" rel="noopener">GitHub</a></p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://www.youtube.com/watch?v=dniVs0xKYKk" target="_blank" rel="noopener">Go WebSocket Tutorial with the gorilla/websocket Package</a></li><li><a href="https://developer.mozilla.org/zh-TW/docs/WebSockets/WebSockets_reference/WebSocket" target="_blank" rel="noopener">WebSocket</a></li><li><a href="https://blog.piasy.com/2018/06/10/WebSocket-Go/index.html" target="_blank" rel="noopener">WebSocket Go</a></li><li><a href="https://www.gorillatoolkit.org/pkg/websocket" target="_blank" rel="noopener">Gorilla web toolkit - WebSocket</a></li></ul>]]></content>
       
       <categories>
           
@@ -502,9 +529,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 測試 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -531,9 +558,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
+            
+            <tag> Go </tag>
             
             <tag> LeetCode </tag>
             
@@ -705,11 +732,11 @@
       
         <tags>
             
-            <tag> Go </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -732,17 +759,17 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Docker </tag>
             
-            <tag> CentOS </tag>
-            
             <tag> Laradock </tag>
+            
+            <tag> CentOS </tag>
             
         </tags>
       
@@ -765,11 +792,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> 環境部署 </tag>
             
             <tag> Caddy </tag>
             
@@ -829,11 +856,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -860,13 +887,13 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
-            <tag> MongoDB </tag>
-            
             <tag> 資料庫 </tag>
             
+            <tag> Go </tag>
+            
             <tag> ORM </tag>
+            
+            <tag> MongoDB </tag>
             
         </tags>
       
@@ -903,7 +930,7 @@
       <title>使用 Go 讀取 XML 檔案</title>
       <link href="/2020/01/05/%E4%BD%BF%E7%94%A8-Go-%E8%AE%80%E5%8F%96-XML-%E6%AA%94%E6%A1%88/"/>
       <url>/2020/01/05/%E4%BD%BF%E7%94%A8-Go-%E8%AE%80%E5%8F%96-XML-%E6%AA%94%E6%A1%88/</url>
-      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>MacOS</li><li>Go 1.13.4</li></ul><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增一個 <code>users.xml</code> 檔作為範例 ：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">users</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"admin"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Elliot<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"reader"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Fraser<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">users</span>&gt;</span></span><br></pre></td></tr></table></figure><p>建立 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"encoding/xml"</span></span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"io/ioutil"</span></span><br><span class="line"><span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Users 結構體</span></span><br><span class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"users"`</span></span><br><span class="line">Users   []User   <span class="string">`xml:"user"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// User 結構體</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"user"`</span></span><br><span class="line">Type    <span class="keyword">string</span>   <span class="string">`xml:"type,attr"`</span></span><br><span class="line">Name    <span class="keyword">string</span>   <span class="string">`xml:"name"`</span></span><br><span class="line">Social  Social   <span class="string">`xml:"social"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Social 結構體</span></span><br><span class="line"><span class="keyword">type</span> Social <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName  xml.Name <span class="string">`xml:"social"`</span></span><br><span class="line">Facebook <span class="keyword">string</span>   <span class="string">`xml:"facebook"`</span></span><br><span class="line">Twitter  <span class="keyword">string</span>   <span class="string">`xml:"twitter"`</span></span><br><span class="line">Youtube  <span class="keyword">string</span>   <span class="string">`xml:"youtube"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="comment">// 開啟檔案</span></span><br><span class="line">xmlFile, err := os.Open(<span class="string">"users.xml"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理錯誤</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">fmt.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 關閉檔案</span></span><br><span class="line"><span class="keyword">defer</span> xmlFile.Close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 讀取檔案</span></span><br><span class="line">byteValue, _ := ioutil.ReadAll(xmlFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宣告一個 users 變數，型別為 Users 結構體</span></span><br><span class="line"><span class="keyword">var</span> users Users</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將檔案內容解析至 users 變數</span></span><br><span class="line">xml.Unmarshal(byteValue, &amp;users)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍歷 users 變數，並將內容輸出</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(users.Users); i++ &#123;</span><br><span class="line">fmt.Println(<span class="string">"User Type: "</span> + users.Users[i].Type)</span><br><span class="line">fmt.Println(<span class="string">"User Name: "</span> + users.Users[i].Name)</span><br><span class="line">fmt.Println(<span class="string">"Facebook Url: "</span> + users.Users[i].Social.Facebook)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">User Type: admin</span><br><span class="line">User Name: Elliot</span><br><span class="line">Facebook Url: https://facebook.com</span><br><span class="line">User Type: reader</span><br><span class="line">User Name: Fraser</span><br><span class="line">Facebook Url: https://facebook.com</span><br></pre></td></tr></table></figure><p>參考資料：</p><ul><li><a href="https://tutorialedge.net/golang/parsing-xml-with-golang/" target="_blank" rel="noopener">Parsing XML Files With Golang</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>MacOS</li><li>Go 1.13.4</li></ul><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增一個 <code>users.xml</code> 檔作為範例 ：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">users</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"admin"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Elliot<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">type</span>=<span class="string">"reader"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Fraser<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">social</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">facebook</span>&gt;</span>https://facebook.com<span class="tag">&lt;/<span class="name">facebook</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">twitter</span>&gt;</span>https://twitter.com<span class="tag">&lt;/<span class="name">twitter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">youtube</span>&gt;</span>https://youtube.com<span class="tag">&lt;/<span class="name">youtube</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">social</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">users</span>&gt;</span></span><br></pre></td></tr></table></figure><p>建立 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"encoding/xml"</span></span><br><span class="line"><span class="string">"fmt"</span></span><br><span class="line"><span class="string">"io/ioutil"</span></span><br><span class="line"><span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Users 結構體</span></span><br><span class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"users"`</span></span><br><span class="line">Users   []User   <span class="string">`xml:"user"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// User 結構體</span></span><br><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName xml.Name <span class="string">`xml:"user"`</span></span><br><span class="line">Type    <span class="keyword">string</span>   <span class="string">`xml:"type,attr"`</span></span><br><span class="line">Name    <span class="keyword">string</span>   <span class="string">`xml:"name"`</span></span><br><span class="line">Social  Social   <span class="string">`xml:"social"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Social 結構體</span></span><br><span class="line"><span class="keyword">type</span> Social <span class="keyword">struct</span> &#123;</span><br><span class="line">XMLName  xml.Name <span class="string">`xml:"social"`</span></span><br><span class="line">Facebook <span class="keyword">string</span>   <span class="string">`xml:"facebook"`</span></span><br><span class="line">Twitter  <span class="keyword">string</span>   <span class="string">`xml:"twitter"`</span></span><br><span class="line">Youtube  <span class="keyword">string</span>   <span class="string">`xml:"youtube"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"><span class="comment">// 開啟檔案</span></span><br><span class="line">xmlFile, err := os.Open(<span class="string">"users.xml"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理錯誤</span></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">fmt.Println(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 關閉檔案</span></span><br><span class="line"><span class="keyword">defer</span> xmlFile.Close()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 讀取檔案</span></span><br><span class="line">byteValue, _ := ioutil.ReadAll(xmlFile)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 宣告一個 users 變數，型別為 Users 結構體</span></span><br><span class="line"><span class="keyword">var</span> users Users</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將檔案內容解析至 users 變數</span></span><br><span class="line">xml.Unmarshal(byteValue, &amp;users)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍歷 users 變數，並將內容輸出</span></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(users.Users); i++ &#123;</span><br><span class="line">fmt.Println(<span class="string">"User Type: "</span> + users.Users[i].Type)</span><br><span class="line">fmt.Println(<span class="string">"User Name: "</span> + users.Users[i].Name)</span><br><span class="line">fmt.Println(<span class="string">"Facebook Url: "</span> + users.Users[i].Social.Facebook)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">User Type: admin</span><br><span class="line">User Name: Elliot</span><br><span class="line">Facebook Url: https://facebook.com</span><br><span class="line">User Type: reader</span><br><span class="line">User Name: Fraser</span><br><span class="line">Facebook Url: https://facebook.com</span><br></pre></td></tr></table></figure><p>參考資料：</p><ul><li><a href="https://tutorialedge.net/golang/parsing-xml-with-golang/" target="_blank" rel="noopener">Parsing XML Files With Golang</a></li></ul>]]></content>
       
       <categories>
           
@@ -976,13 +1003,13 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
-            <tag> MongoDB </tag>
-            
             <tag> 資料庫 </tag>
             
+            <tag> Go </tag>
+            
             <tag> ORM </tag>
+            
+            <tag> MongoDB </tag>
             
         </tags>
       
@@ -1036,9 +1063,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> Go </tag>
-            
             <tag> 演算法 </tag>
+            
+            <tag> Go </tag>
             
         </tags>
       
@@ -1063,13 +1090,13 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Caddy </tag>
-            
             <tag> Laradock </tag>
             
             <tag> SSL </tag>
             
             <tag> HTTPS </tag>
+            
+            <tag> Caddy </tag>
             
         </tags>
       
@@ -1181,13 +1208,13 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 資料庫 </tag>
-            
-            <tag> ORM </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 資料庫 </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1214,13 +1241,13 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 資料庫 </tag>
-            
-            <tag> ORM </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 資料庫 </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1276,11 +1303,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 資料庫 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 資料庫 </tag>
             
             <tag> SQLite </tag>
             
@@ -1649,9 +1676,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> 測試 </tag>
-            
             <tag> API </tag>
+            
+            <tag> 測試 </tag>
             
             <tag> PHPUnit </tag>
             
@@ -1715,9 +1742,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> Mix </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Vue </tag>
             
@@ -2306,13 +2333,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> PHP </tag>
             
             <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Wordpress </tag>
             
@@ -2414,9 +2441,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
             
             <tag> Linode </tag>
             
@@ -3269,13 +3296,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> 環境部署 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -3300,13 +3327,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> 環境部署 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -3354,13 +3381,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> CI/CD </tag>
             
@@ -3387,13 +3414,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> PHP </tag>
             
             <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> MySQL </tag>
             
@@ -3420,13 +3447,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> CI/CD </tag>
             
@@ -3451,17 +3478,17 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -3509,9 +3536,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
             
             <tag> AWS </tag>
             
@@ -3902,9 +3929,9 @@
             
             <tag> JavaScript </tag>
             
-            <tag> Node </tag>
-            
             <tag> Nuxt </tag>
+            
+            <tag> Node </tag>
             
             <tag> AdonisJs </tag>
             
@@ -4341,11 +4368,11 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 資料庫 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 資料庫 </tag>
             
             <tag> UUID </tag>
             
@@ -4870,11 +4897,11 @@
       
         <tags>
             
-            <tag> 資料庫 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 資料庫 </tag>
             
             <tag> PostgreSQL </tag>
             
@@ -4932,11 +4959,11 @@
       
         <tags>
             
-            <tag> 其他 </tag>
-            
             <tag> MySQL </tag>
             
             <tag> phpMyAdmin </tag>
+            
+            <tag> 其他 </tag>
             
         </tags>
       
@@ -4959,11 +4986,11 @@
       
         <tags>
             
-            <tag> 資料庫 </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Homestead </tag>
+            
+            <tag> 資料庫 </tag>
             
             <tag> phpMyAdmin </tag>
             
@@ -5448,9 +5475,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 物件導向 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 物件導向 </tag>
             
         </tags>
       
@@ -5504,9 +5531,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 物件導向 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 物件導向 </tag>
             
         </tags>
       
@@ -6772,9 +6799,9 @@
             
             <tag> PHP </tag>
             
-            <tag> API </tag>
-            
             <tag> GitHub </tag>
+            
+            <tag> API </tag>
             
             <tag> 元件 </tag>
             
@@ -6807,9 +6834,9 @@
             
             <tag> PHP </tag>
             
-            <tag> API </tag>
-            
             <tag> GitHub </tag>
+            
+            <tag> API </tag>
             
             <tag> 元件 </tag>
             
@@ -8088,9 +8115,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> API </tag>
-            
             <tag> Lumen </tag>
+            
+            <tag> API </tag>
             
         </tags>
       
@@ -8308,17 +8335,17 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Laravel </tag>
             
             <tag> 環境部署 </tag>
             
+            <tag> Linux </tag>
+            
+            <tag> elementary OS </tag>
+            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
-            
-            <tag> elementary OS </tag>
             
         </tags>
       
@@ -8341,13 +8368,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
-            <tag> Ubuntu </tag>
-            
             <tag> 環境部署 </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Windows </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -8378,9 +8405,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> API </tag>
-            
             <tag> Lumen </tag>
+            
+            <tag> API </tag>
             
             <tag> JWT </tag>
             
@@ -8413,9 +8440,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> API </tag>
-            
             <tag> Lumen </tag>
+            
+            <tag> API </tag>
             
             <tag> JWT </tag>
             
@@ -8440,11 +8467,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Hexo </tag>
             
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
         </tags>
       
