@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文實作一個可以讀取 YouTube API 的元件。 專案目錄12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |- youtub">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.796Z">
+<meta property="og:updated_time" content="2020-04-11T16:23:15.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="實作「YouTube API」元件在 Laravel 專案中使用（一）">
 <meta name="twitter:description" content="前言本文實作一個可以讀取 YouTube API 的元件。 專案目錄12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |- youtub">
@@ -199,7 +199,9 @@
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>在 <code>example</code> 資料夾新增一個 <code>index.php</code> 檔。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'../vendor/autoload.php'</span>;</span><br><span class="line"><span class="keyword">require</span> <span class="string">'../src/Youtube.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Memo</span>\<span class="title">Youtube</span>\<span class="title">Youtube</span>;</span><br><span class="line"></span><br><span class="line">$youtube = <span class="keyword">new</span> Youtube(<span class="string">'API Key'</span>);</span><br><span class="line"></span><br><span class="line">var_dump($youtube-&gt;getChannelByName(<span class="string">'Google'</span>));</span><br></pre></td></tr></table></figure>
 
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/youtube-api" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/youtube-api" target="_blank" rel="noopener">youtube-api</a></li>
+</ul>
 
   </div>
 </article>

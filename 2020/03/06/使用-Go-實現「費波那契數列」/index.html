@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="方法一使用動態規劃。時間複雜度為 O(n)，實際上為 O(n/2)。 1234567891011121314151617181920package mainimport (	&quot;fmt&quot;)func main() &amp;#123;	fmt.Println(fibonacci(10)) // 55&amp;#125;func fibonacci(n int) int &amp;#123;	a, b := n%2, 1	fo">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.818Z">
+<meta property="og:updated_time" content="2020-04-11T16:34:29.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Go 實現「費波那契數列」">
 <meta name="twitter:description" content="方法一使用動態規劃。時間複雜度為 O(n)，實際上為 O(n/2)。 1234567891011121314151617181920package mainimport (	&quot;fmt&quot;)func main() &amp;#123;	fmt.Println(fibonacci(10)) // 55&amp;#125;func fibonacci(n int) int &amp;#123;	a, b := n%2, 1	fo">
@@ -182,7 +182,9 @@
 <h2 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h2><p>使用遞迴函式。時間複雜度為 <code>O(2^n)</code>，實際上為 <code>O(1.6180339887^n)</code>。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(fibonacci(<span class="number">10</span>)) <span class="comment">// 55</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacci</span><span class="params">(n <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> n &lt; <span class="number">2</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> n</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> fibonacci(n<span class="number">-2</span>) + fibonacci(n<span class="number">-1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://gist.github.com/memochou1993/f88b675d4833bb10c966fae7ba9cd477" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://gist.github.com/memochou1993/f88b675d4833bb10c966fae7ba9cd477" target="_blank" rel="noopener">fibonacci</a></li>
+</ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="http://www.csie.ntnu.edu.tw/~u91029/DynamicProgramming.html" target="_blank" rel="noopener">Dynamic Programming</a></li>
 </ul>

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法將陣列分割後排序，再將兩個已排序的陣列合併成一個陣列。 實作原始陣列。 1$items = [74, 52, 91, 13, 6, 69, 31, 24];  先試著把陣列分割成左陣列和右陣列。 123$half = (int) floor(count($items) / 2); // 找出陣列的中間位置$left = array_slice($items, 0, $half); // 用中間">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T12:10:31.687Z">
+<meta property="og:updated_time" content="2020-04-11T16:21:26.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 PHP 實現「合併排序」">
 <meta name="twitter:description" content="做法將陣列分割後排序，再將兩個已排序的陣列合併成一個陣列。 實作原始陣列。 1$items = [74, 52, 91, 13, 6, 69, 31, 24];  先試著把陣列分割成左陣列和右陣列。 123$half = (int) floor(count($items) / 2); // 找出陣列的中間位置$left = array_slice($items, 0, $half); // 用中間">
@@ -201,7 +201,9 @@
 <p>最終可合併為：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span><span class="params">($items)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (count($items) &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> $items;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $half = (int) floor(count($items) / <span class="number">2</span>);</span><br><span class="line">    $left = mergeSort(array_slice($items, <span class="number">0</span>, $half));</span><br><span class="line">    $right = mergeSort(array_slice($items, $half));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (count($left) &amp;&amp; count($right)) &#123;</span><br><span class="line">        <span class="keyword">if</span> ($left[<span class="number">0</span>] &lt; $right[<span class="number">0</span>]) &#123;</span><br><span class="line">            $reg[] = array_shift($left);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            $reg[] = array_shift($right);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> array_merge($reg, $left, $right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/sorting-algorithms-php" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/sorting-algorithms-php" target="_blank" rel="noopener">sorting-algorithms-php</a></li>
+</ul>
 
   </div>
 </article>

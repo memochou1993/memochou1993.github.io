@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文將對先前〈使用 Lumen 5.6 實作 RESTful API〉一文所做之 API 進行 HTTP 請求測試。 安裝1composer require guzzlehttp/guzzle  設定路由1Route::resource(&apos;/journals&apos;, &apos;JournalController&apos;);  使用在控制器調用 GuzzleHttp\Client 套件。 1use GuzzleH">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.777Z">
+<meta property="og:updated_time" content="2020-04-11T16:20:43.972Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 5.6 使用 Guzzle HTTP 請求套件">
 <meta name="twitter:description" content="前言本文將對先前〈使用 Lumen 5.6 實作 RESTful API〉一文所做之 API 進行 HTTP 請求測試。 安裝1composer require guzzlehttp/guzzle  設定路由1Route::resource(&apos;/journals&apos;, &apos;JournalController&apos;);  使用在控制器調用 GuzzleHttp\Client 套件。 1use GuzzleH">
@@ -196,7 +196,9 @@
 <p>更新期刊</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">edit</span><span class="params">($id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $client = <span class="keyword">new</span> Client();</span><br><span class="line"></span><br><span class="line">    $response = $client-&gt;post(<span class="string">'journal.test/api/journals/'</span>.$id, [</span><br><span class="line">        <span class="string">'form_params'</span> =&gt; $request-&gt;all()</span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect()-&gt;route(<span class="string">'journals.show'</span>, $id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/doaj" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/doaj" target="_blank" rel="noopener">doaj</a></li>
+</ul>
 
   </div>
 </article>

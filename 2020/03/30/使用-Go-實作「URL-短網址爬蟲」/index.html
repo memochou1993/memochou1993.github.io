@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文使用網路上的短網址服務來實作一個並行的爬蟲。 此服務的短網址有兩個特性：  有效期限  由非會員所生成的短網址只有 14 天的有效期限。 這個特性導致了一種可能性，比方說 /a 短網址所儲存的圖片為一隻貓，過了 14 天後，由於 a 這個代碼被釋放了，下一個使用者上傳了一隻狗的圖片，剛好又被分配到了 a 這個代碼，於是 /a 這個短網址所儲存的圖片就變成了狗。 使用者應該注意這個特性，在必">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-30T15:54:13.222Z">
+<meta property="og:updated_time" content="2020-04-11T16:28:24.877Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Go 實作「URL 短網址爬蟲」">
 <meta name="twitter:description" content="前言本文使用網路上的短網址服務來實作一個並行的爬蟲。 此服務的短網址有兩個特性：  有效期限  由非會員所生成的短網址只有 14 天的有效期限。 這個特性導致了一種可能性，比方說 /a 短網址所儲存的圖片為一隻貓，過了 14 天後，由於 a 這個代碼被釋放了，下一個使用者上傳了一隻狗的圖片，剛好又被分配到了 a 這個代碼，於是 /a 這個短網址所儲存的圖片就變成了狗。 使用者應該注意這個特性，在必">
@@ -228,7 +228,9 @@
 <li>警告標語</li>
 </ol>
 <p>為了保護使用者，應該明確提醒使用者應該加上密碼，以避免一些含有個人資料的圖片遭他人存取。</p>
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/url-shortener-crawler" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/url-shortener-crawler" target="_blank" rel="noopener">url-shortener-crawler</a></li>
+</ul>
 
   </div>
 </article>

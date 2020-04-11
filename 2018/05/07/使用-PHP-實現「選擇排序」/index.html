@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法首先在未排序的陣列中找到最小的元素，然後移動到已排序陣列的末端。 實作原始陣列。 1$items = [33, 75, 26, 5, 51];  一開始假定最小値是 33。 12$i = 0;$min = $i;  先做一次迴圈。 12345for ($j = $i + 1; $j &amp;lt; count($items); $j++) &amp;#123;    if ($items[$min] &amp;gt">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T12:10:37.791Z">
+<meta property="og:updated_time" content="2020-04-11T16:20:52.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 PHP 實現「選擇排序」">
 <meta name="twitter:description" content="做法首先在未排序的陣列中找到最小的元素，然後移動到已排序陣列的末端。 實作原始陣列。 1$items = [33, 75, 26, 5, 51];  一開始假定最小値是 33。 12$i = 0;$min = $i;  先做一次迴圈。 12345for ($j = $i + 1; $j &amp;lt; count($items); $j++) &amp;#123;    if ($items[$min] &amp;gt">
@@ -195,7 +195,9 @@
 <p>最終可寫為：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">selectionSort</span><span class="params">($items)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($items) - <span class="number">1</span>; $i++) &#123;</span><br><span class="line">        $min = $i;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> ($j = $i + <span class="number">1</span>; $j &lt; count($items); $j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ($items[$min] &gt; $items[$j]) &#123;</span><br><span class="line">                $min = $j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $temp = $items[$min];</span><br><span class="line">        $items[$min] = $items[$i];</span><br><span class="line">        $items[$i] = $temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $items;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/sorting-algorithms-php" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/sorting-algorithms-php" target="_blank" rel="noopener">sorting-algorithms-php</a></li>
+</ul>
 
   </div>
 </article>

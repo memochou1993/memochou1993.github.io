@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言Adonis 是 Node.js 框架中的 Laravel，使用起來幾乎一模一樣。 安裝123npm i -g @adonisjs/cliadonis --version4.0.11  建立專案建立專案。 1adonis new adonis  啟動伺服器。 12cd adonisadonis serve --dev  環境變數建立 .env 檔。 1cp .env.example .env">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-19T13:10:22.946Z">
+<meta property="og:updated_time" content="2020-04-11T16:25:39.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 AdonisJs 4.0 建立 Web 應用程式">
 <meta name="twitter:description" content="前言Adonis 是 Node.js 框架中的 Laravel，使用起來幾乎一模一樣。 安裝123npm i -g @adonisjs/cliadonis --version4.0.11  建立專案建立專案。 1adonis new adonis  啟動伺服器。 12cd adonisadonis serve --dev  環境變數建立 .env 檔。 1cp .env.example .env">
@@ -218,7 +218,9 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Database = use(<span class="string">'Database'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> show() &#123;</span><br><span class="line">    <span class="keyword">const</span> users = <span class="keyword">await</span> Database.table(<span class="string">'users'</span>)</span><br><span class="line">    <span class="keyword">return</span> users</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = UserController</span><br></pre></td></tr></table></figure>
 
 <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><p>前往：<a href="http://127.0.0.1:3333/api/users" target="_blank" rel="noopener">http://127.0.0.1:3333/api/users</a></p>
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/adonis-example" target="_blank" rel="noopener">GitHub</a></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/adonis-example" target="_blank" rel="noopener">adonis-example</a></li>
+</ul>
 
   </div>
 </article>
