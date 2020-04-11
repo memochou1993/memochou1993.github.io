@@ -9,16 +9,16 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh://git@xxx/lar">
-<meta name="keywords" content="環境部署,Laravel,Linux,Ubuntu,CI&#x2F;CD,GitLab">
+<meta name="keywords" content="Laravel,環境部署,Linux,Ubuntu,CI&#x2F;CD,GitLab">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案實現自動化部署">
-<meta property="og:url" content="https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/index.html">
+<meta property="og:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案建立自動化部署">
+<meta property="og:url" content="https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh://git@xxx/lar">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T07:43:33.396Z">
+<meta property="og:updated_time" content="2020-04-11T13:15:34.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案實現自動化部署">
+<meta name="twitter:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案建立自動化部署">
 <meta name="twitter:description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh://git@xxx/lar">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署</title>
+    <title>使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&text=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&is_video=false&description=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署&body=Check out this article: https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&name=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&text=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&is_video=false&description=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&body=Check out this article: https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&name=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署
+        使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署
     </h1>
 
 
@@ -339,16 +339,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&text=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&is_video=false&description=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署&body=Check out this article: https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案實現自動化部署/&name=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&text=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&is_video=false&description=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&body=Check out this article: https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/07/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/&name=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

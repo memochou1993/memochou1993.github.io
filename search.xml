@@ -3,9 +3,9 @@
   
     
     <entry>
-      <title>使用 Kubernetes 和 Jenkins 建立 CI/CD 自動化部署流程</title>
-      <link href="/2020/04/11/%E4%BD%BF%E7%94%A8-Kubernetes-%E5%92%8C-Jenkins-%E5%BB%BA%E7%AB%8B-CI-CD-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/"/>
-      <url>/2020/04/11/%E4%BD%BF%E7%94%A8-Kubernetes-%E5%92%8C-Jenkins-%E5%BB%BA%E7%AB%8B-CI-CD-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/</url>
+      <title>使用 Kubernetes 和 Jenkins 為應用程式建立自動化部署（一）</title>
+      <link href="/2020/04/11/%E4%BD%BF%E7%94%A8-Kubernetes-%E5%92%8C-Jenkins-%E7%82%BA%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+      <url>/2020/04/11/%E4%BD%BF%E7%94%A8-Kubernetes-%E5%92%8C-Jenkins-%E7%82%BA%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%EF%BC%88%E4%B8%80%EF%BC%89/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章的學習筆記。</p><h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>MacOS</li><li>Docker (with HyperKit)</li></ul><h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>使用 Kubernetes 和 Jenkins 為一個範例應用程式 Kr8sswordz Puzzle 建立 CI/CD 自動化部署流程。</p><h2 id="環境設定"><a href="#環境設定" class="headerlink" title="環境設定"></a>環境設定</h2><p>安裝 minikube。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install minikube</span><br></pre></td></tr></table></figure><p>查看 minikube 版本。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube version</span><br></pre></td></tr></table></figure><p>安裝 kubectl。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install kubernetes-cli</span><br></pre></td></tr></table></figure><p>查看 kubectl 版本。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl version</span><br></pre></td></tr></table></figure><p>安裝 Helm 管理工具。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install kubernetes-helm</span><br></pre></td></tr></table></figure><p>查看 Helm 版本。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm version</span><br></pre></td></tr></table></figure><p>為了從頭開始，使用以下指令將先前使用過的 minikube 痕跡清除。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube stop; minikube delete; sudo rm -rf ~/.minikube; sudo rm -rf ~/.kube</span><br></pre></td></tr></table></figure><h2 id="範例專案"><a href="#範例專案" class="headerlink" title="範例專案"></a>範例專案</h2><p>複製一份 <a href="https://github.com/kenzanlabs/kubernetes-ci-cd" target="_blank" rel="noopener">kenzanlabs/kubernetes-ci-cd</a> 專案到自己的儲存庫，並下載到工作目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:&lt;YOUR_REPOSITORY&gt;/kubernetes-ci-cd.git</span><br></pre></td></tr></table></figure><h2 id="啟動叢集"><a href="#啟動叢集" class="headerlink" title="啟動叢集"></a>啟動叢集</h2><p>啟動一個 cluster。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br></pre></td></tr></table></figure><ul><li>使用 <code>--memory</code> 參數可以指定分配的記憶體。</li><li>使用 <code>--cpus</code> 參數可以指定分配的處理器。</li></ul><p>啟用 <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/" target="_blank" rel="noopener">Ingress</a> 附加元件，用來管理 cluster 中服務的外部存取。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube addons <span class="built_in">enable</span> ingress</span><br></pre></td></tr></table></figure><p>檢查 cluster 內所有的 pods。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods --all-namespaces</span><br></pre></td></tr></table></figure><p>使用另一個終端機視窗輸入以下指令，開啟圖形化介面。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube dashboard</span><br></pre></td></tr></table></figure><p>試著將一個 Nginx 的 image 部署到一個 pod。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl run --generator=run-pod/v1 --image=nginx nginx-app --port=80</span><br></pre></td></tr></table></figure><p>暴露這個 Nginx 的 pod。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment nginx --<span class="built_in">type</span> NodePort --port 80</span><br></pre></td></tr></table></figure><p>開啟 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube service nginx</span><br></pre></td></tr></table></figure><p>刪除 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete service nginx</span><br></pre></td></tr></table></figure><p>刪除 Nginx 部署。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployment nginx</span><br></pre></td></tr></table></figure><h2 id="本地映像檔儲存庫"><a href="#本地映像檔儲存庫" class="headerlink" title="本地映像檔儲存庫"></a>本地映像檔儲存庫</h2><p>為了建立一個本地的映像檔儲存庫，進到 kubernetes-ci-cd 專案，透過寫好的 YAML 文件啟動一個 pod。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f manifests/registry.yaml</span><br></pre></td></tr></table></figure><ul><li>如果出現錯誤，到原專案查看 <a href="https://github.com/kenzanlabs/kubernetes-ci-cd/pulls" target="_blank" rel="noopener">Pull Request</a> 改動項目。</li></ul><p>查看儲存庫的部署狀態。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout status deployments/registry</span><br></pre></td></tr></table></figure><p>開啟 registry-ui 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube service registry-ui</span><br></pre></td></tr></table></figure><p>試著更新一個應用程式，修改 <code>applications/hello-kenzan/index.html</code> 檔：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello from Me!</span><br></pre></td></tr></table></figure><p>建立一個帶有域名前綴的 Docker image。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t 127.0.0.1:30400/hello-kenzan:latest -f applications/hello-kenzan/Dockerfile applications/hello-kenzan</span><br></pre></td></tr></table></figure><p>在推送 image 之前，需要先啟動一個用來處理 proxy 的容器。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e <span class="string">"REG_IP=`minikube ip`"</span> -e <span class="string">"REG_PORT=30400"</span> --name socat-registry -p 30400:5000 socat-registry</span><br></pre></td></tr></table></figure><p>把 image 推送到儲存庫，並重新查看儲存庫的網頁，多了一個 hello-kenzan。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push 127.0.0.1:30400/hello-kenzan:latest</span><br></pre></td></tr></table></figure><p>將用來處理 proxy 的容器停止。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop socat-registry</span><br></pre></td></tr></table></figure><p>透過另一個寫好的 YAML 文件部署 hello-kenzan 這個應用程式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f applications/hello-kenzan/k8s/manual-deployment.yaml</span><br></pre></td></tr></table></figure><p>開啟 hello-kenzan 服務，發現先前對應用程式修改的部分。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube service hello-kenzan</span><br></pre></td></tr></table></figure><p>刪除 hello-kenzan 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete service hello-kenzan</span><br></pre></td></tr></table></figure><p>刪除 hello-kenzan 部署。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployment hello-kenzan</span><br></pre></td></tr></table></figure><p>告一段落，停止 minikube。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube stop</span><br></pre></td></tr></table></figure><h2 id="參考文件"><a href="#參考文件" class="headerlink" title="參考文件"></a>參考文件</h2><ul><li><a href="https://www.linux.com/audience/enterprise/set-cicd-pipeline-kubernetes-part-1-overview/" target="_blank" rel="noopener">Set Up A CI/CD Pipeline With Kubernetes Part 1: Overview</a></li></ul>]]></content>
       
       <categories>
@@ -645,11 +645,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -788,9 +788,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -1864,9 +1864,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -1949,9 +1949,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2165,15 +2165,15 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
             
-            <tag> Windows </tag>
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -2362,9 +2362,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -2797,9 +2797,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Laradock </tag>
             
@@ -3329,9 +3329,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -3360,9 +3360,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -3394,9 +3394,9 @@
     </entry>
     
     <entry>
-      <title>使用 GitLab CI/CD 和 Envoy 為 Laravel 專案實現自動化部署</title>
-      <link href="/2019/02/07/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%AF%A6%E7%8F%BE%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
-      <url>/2019/02/07/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%AF%A6%E7%8F%BE%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</url>
+      <title>使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署</title>
+      <link href="/2019/02/07/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
+      <url>/2019/02/07/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</url>
       <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>Ubuntu（遠端伺服器）</li><li>macOS（本機）</li></ul><h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">laravel new laravel-envoy</span><br><span class="line"><span class="built_in">cd</span> laravel-envoy</span><br><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"Initial Commit"</span></span><br><span class="line">git remote add origin ssh://git@xxx/laravel-envoy.git</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure><h2 id="遠端伺服器"><a href="#遠端伺服器" class="headerlink" title="遠端伺服器"></a>遠端伺服器</h2><h3 id="新增使用者"><a href="#新增使用者" class="headerlink" title="新增使用者"></a>新增使用者</h3><p>新增 <code>deployer</code> 使用者。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser deployer --disabled-password</span><br></pre></td></tr></table></figure><h3 id="設定權限"><a href="#設定權限" class="headerlink" title="設定權限"></a>設定權限</h3><p>讓 <code>deployer</code> 使用者可以存取 <code>/var/www</code> 資料夾。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo setfacl -R -m u:deployer:rwx /var/www</span><br></pre></td></tr></table></figure><p>為 <code>deployer</code> 使用者添加 sudo 權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/sudoers</span><br></pre></td></tr></table></figure><p>修改 <code>sudoers</code> 檔：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># User privilege specification</span></span><br><span class="line">root    ALL=(ALL:ALL) ALL</span><br><span class="line">deployer ALL=(ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure><h3 id="連線設定"><a href="#連線設定" class="headerlink" title="連線設定"></a>連線設定</h3><p>登入 <code>deployer</code> 使用者，新增 <code>~/.ssh</code> 資料夾，並設定權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su - deployer</span><br><span class="line">mkdir ~/.ssh</span><br><span class="line">chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure><p>新增 <code>authorized_keys</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure><p>將遠端伺服器的公有金鑰的內容複製到 <code>authorized_keys</code> 檔。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa ...</span><br></pre></td></tr></table></figure><p>設定金鑰權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure><h3 id="建立儲存庫連線金鑰"><a href="#建立儲存庫連線金鑰" class="headerlink" title="建立儲存庫連線金鑰"></a>建立儲存庫連線金鑰</h3><p>新增 <code>id_rsa</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure><p>將本機的私有金鑰 <code>aws.pem</code> 檔的內容複製到 <code>~/.ssh/id_rsa</code> 檔。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN OPENSSH PRIVATE KEY-----</span><br><span class="line">...</span><br><span class="line">-----END OPENSSH PRIVATE KEY-----</span><br></pre></td></tr></table></figure><p>新增 <code>id_rsa.pub</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><p>將 <code>authorized_keys</code> 檔的內容複製到 <code>~/.ssh/id_rsa.pub</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/authorized_keys &gt;&gt; ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><p>設定金鑰權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><h3 id="設定-Nginx"><a href="#設定-Nginx" class="headerlink" title="設定 Nginx"></a>設定 Nginx</h3><p>新增 <code>laravel-envoy.xxx.com.conf</code> 檔：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  listen [::]:80;</span><br><span class="line"></span><br><span class="line">  root /var/www/laravel-envoy/current/public;</span><br><span class="line"></span><br><span class="line">  index index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line">  server_name laravel-envoy.xxx.com;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    try_files $uri $uri/ /index.php?$query_string;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location ~ \.php$ &#123;</span><br><span class="line">    fastcgi_pass   unix:/run/php/php7.2-fpm.sock;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME $realpath_root$fastcgi_script_name;</span><br><span class="line">    fastcgi_param  DOCUMENT_ROOT $realpath_root;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>為了讓 Nginx 可以透過軟連結找到文件，<code>document_root</code> 需改為 <code>realpath_root</code>。</li></ul><p>建立軟連結。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /etc/nginx/sites-available/laravel-envoy.xxx.com.conf /etc/nginx/sites-enabled/laravel-envoy.xxx.com.conf</span><br></pre></td></tr></table></figure><p>重啟 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><h3 id="設定專案目錄"><a href="#設定專案目錄" class="headerlink" title="設定專案目錄"></a>設定專案目錄</h3><p>建立專案目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/www/laravel-envoy</span><br></pre></td></tr></table></figure><p>複製一個 Laravel 專案的 <code>.env</code> 檔，或複製 <code>.env.production</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /var/www/laravel/.env /var/www/laravel-envoy/.env</span><br></pre></td></tr></table></figure><p>複製一個 Laravel 專案的 <code>storage</code> 資料夾。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -r /var/www/laravel/storage /var/www/laravel-envoy/storage</span><br></pre></td></tr></table></figure><p>建立 <code>releases</code> 資料夾並初始化 Git。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /var/www/laravel-envoy/releases</span><br><span class="line"><span class="built_in">cd</span> /var/www/laravel-envoy/releases</span><br><span class="line">git init</span><br></pre></td></tr></table></figure><h2 id="設定-GitLab-連線"><a href="#設定-GitLab-連線" class="headerlink" title="設定 GitLab 連線"></a>設定 GitLab 連線</h2><h3 id="新增變數"><a href="#新增變數" class="headerlink" title="新增變數"></a>新增變數</h3><p>在「Settings」的「CI/CD」新增一組變數。</p><table><thead><tr><th>KEY</th><th>VALUE</th></tr></thead><tbody><tr><td>SSH_PRIVATE_KEY</td><td>私有金鑰<code>id_rsa</code> 檔的內容</td></tr></tbody></table><h3 id="儲存庫-SSH-設定"><a href="#儲存庫-SSH-設定" class="headerlink" title="儲存庫 SSH 設定"></a>儲存庫 SSH 設定</h3><p>將 <code>id_rsa.pub</code> 檔的內容複製到儲存庫 SSH 設定。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><h3 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h3><p>登入 <code>deployer</code> 使用者，下載儲存庫的專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www</span><br><span class="line">git <span class="built_in">clone</span> ssh://git@xxx/laravel-envoy.git</span><br></pre></td></tr></table></figure><h2 id="安裝-Envoy"><a href="#安裝-Envoy" class="headerlink" title="安裝 Envoy"></a>安裝 Envoy</h2><p>在本機使用 Composer 安裝 Envoy。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer global require laravel/envoy</span><br></pre></td></tr></table></figure><p>在 <code>~/.ssh</code> 資料夾新增 <code>config</code> 檔。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host xxx.com</span><br><span class="line">    HostName xx.xxx.xxx.xxx</span><br><span class="line">    User deployer</span><br><span class="line">    IdentityFile ~/.ssh/aws.pem</span><br></pre></td></tr></table></figure><p>在專案根目錄新增 <code>Envoy.blade.php</code> 檔。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">@servers([<span class="string">'web'</span> =&gt; <span class="string">'deployer@xx.xxx.xxx.xxx'</span>])</span><br><span class="line"></span><br><span class="line">@setup</span><br><span class="line">    $repository = <span class="string">'ssh://git@xxx/laravel-envoy.git'</span>;</span><br><span class="line">    $app_dir = <span class="string">'/var/www/laravel-envoy'</span>;</span><br><span class="line">    $releases_dir = <span class="string">'/var/www/laravel-envoy/releases'</span>;</span><br><span class="line">    $release = date(<span class="string">'YmdHis'</span>);</span><br><span class="line">    $new_release_dir = $releases_dir.<span class="string">'/'</span>.$release;</span><br><span class="line">@endsetup</span><br><span class="line"></span><br><span class="line">@story(<span class="string">'deploy'</span>)</span><br><span class="line">    clone_repository</span><br><span class="line">    run_composer</span><br><span class="line">    update_symlinks</span><br><span class="line">    update_permissions</span><br><span class="line">@endstory</span><br><span class="line"></span><br><span class="line">@task(<span class="string">'clone_repository'</span>)</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Cloning repository...'</span></span><br><span class="line">    [ -d &#123;&#123; $releases_dir &#125;&#125; ] || mkdir &#123;&#123; $releases_dir &#125;&#125;</span><br><span class="line">    git <span class="keyword">clone</span> --depth <span class="number">1</span> &#123;&#123; $repository &#125;&#125; &#123;&#123; $new_release_dir &#125;&#125;</span><br><span class="line">@endtask</span><br><span class="line"></span><br><span class="line">@task(<span class="string">'run_composer'</span>)</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Starting deployment (&#123;&#123; $release &#125;&#125;)...'</span></span><br><span class="line">    cd &#123;&#123; $new_release_dir &#125;&#125;</span><br><span class="line">    composer install --prefer-dist --no-dev  --no-scripts --no-suggest --optimize-autoloader</span><br><span class="line">@endtask</span><br><span class="line"></span><br><span class="line">@task(<span class="string">'update_symlinks'</span>)</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Linking storage directory...'</span></span><br><span class="line">    rm -rf &#123;&#123; $new_release_dir &#125;&#125;/storage</span><br><span class="line">    ln -nfs &#123;&#123; $app_dir &#125;&#125;/storage storage.tmp</span><br><span class="line">    mv -fT storage.tmp &#123;&#123; $new_release_dir &#125;&#125;/storage</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Linking .env file...'</span></span><br><span class="line">    ln -nfs &#123;&#123; $app_dir &#125;&#125;/.env .env.tmp</span><br><span class="line">    mv -fT .env.tmp &#123;&#123; $new_release_dir &#125;&#125;/.env</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Linking current release...'</span></span><br><span class="line">    ln -nfs &#123;&#123; $new_release_dir &#125;&#125; current.tmp</span><br><span class="line">    mv -fT current.tmp &#123;&#123; $app_dir &#125;&#125;/current</span><br><span class="line">@endtask</span><br><span class="line"></span><br><span class="line">@task(<span class="string">'update_permissions'</span>)</span><br><span class="line">    sudo setfacl -R -m u:www-data:rwx &#123;&#123; $new_release_dir &#125;&#125;/storage &#123;&#123; $new_release_dir &#125;&#125;/bootstrap/cache</span><br><span class="line">@endtask</span><br></pre></td></tr></table></figure><p>推送至 GitLab 儲存庫。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add Envoy.blade.php</span><br><span class="line">git commit -m <span class="string">"Add Envoy"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><h2 id="設定-GitLab-CI-CD"><a href="#設定-GitLab-CI-CD" class="headerlink" title="設定 GitLab CI/CD"></a>設定 GitLab CI/CD</h2><h3 id="建立-Docker-映像檔"><a href="#建立-Docker-映像檔" class="headerlink" title="建立 Docker 映像檔"></a>建立 Docker 映像檔</h3><p>在專案根目錄新增 <code>Dockerfile</code> 檔。</p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set the base image for subsequent instructions</span></span><br><span class="line"><span class="keyword">FROM</span> php:<span class="number">7.2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update packages</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Install PHP and composer dependencies</span></span></span><br><span class="line"><span class="bash">RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Clear out the local repository of retrieved package files</span></span></span><br><span class="line"><span class="bash">RUN apt-get clean</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Install needed extensions</span></span></span><br><span class="line"><span class="bash"><span class="comment"># Here you can install any other extension that you need during the test and deployment process</span></span></span><br><span class="line"><span class="bash">RUN docker-php-ext-install pdo_mysql zip</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Install Composer</span></span></span><br><span class="line"><span class="bash">RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/<span class="built_in">local</span>/bin --filename=composer</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Install Laravel Envoy</span></span></span><br><span class="line"><span class="bash">RUN composer global require <span class="string">"laravel/envoy=~1.0"</span></span></span><br></pre></td></tr></table></figure><p>登入 Docker。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure><p>建立 Docker 映像檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t &lt;USERNAME&gt;/laravel-envoy:latest .</span><br></pre></td></tr></table></figure><p>推送至 Docker Hub。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push &lt;USERNAME&gt;/laravel-envoy:latest</span><br></pre></td></tr></table></figure><p>推送至 GitLab 儲存庫。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add Dockerfile</span><br><span class="line">git commit -m <span class="string">"Add Dockerfile"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><h3 id="建立-CI-CD-設定檔"><a href="#建立-CI-CD-設定檔" class="headerlink" title="建立 CI/CD 設定檔"></a>建立 CI/CD 設定檔</h3><p>在專案根目錄新增 <code>.gitlab-ci.yml</code> 檔。</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="string">registry.hub.docker.com/&lt;USERNAME&gt;/laravel-envoy:latest</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  - mysql:</span><span class="number">5.7</span></span><br><span class="line"></span><br><span class="line"><span class="attr">variables:</span></span><br><span class="line"><span class="attr">  MYSQL_DATABASE:</span> <span class="string">homestead</span></span><br><span class="line"><span class="attr">  MYSQL_ROOT_PASSWORD:</span> <span class="string">secret</span></span><br><span class="line"><span class="attr">  DB_HOST:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">  DB_USERNAME:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">test</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">unit_test:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">cp</span> <span class="string">.env.example</span> <span class="string">.env</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">composer</span> <span class="string">install</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">php</span> <span class="string">artisan</span> <span class="attr">key:generate</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">php</span> <span class="string">artisan</span> <span class="string">migrate</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">vendor/bin/phpunit</span></span><br><span class="line"></span><br><span class="line"><span class="attr">deploy_production:</span></span><br><span class="line"><span class="attr">  stage:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">'which ssh-agent || ( apt-get update -y &amp;&amp; apt-get install openssh-client -y )'</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">eval</span> <span class="string">$(ssh-agent</span> <span class="bullet">-s)</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">ssh-add</span> <span class="string">&lt;(echo</span> <span class="string">"$SSH_PRIVATE_KEY"</span><span class="string">)</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">mkdir</span> <span class="bullet">-p</span> <span class="string">~/.ssh</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">'[[ -f /.dockerenv ]] &amp;&amp; echo -e "Host *\n\tStrictHostKeyChecking no\n\n" &gt; ~/.ssh/config'</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">~/.composer/vendor/bin/envoy</span> <span class="string">run</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">  environment:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">production</span></span><br><span class="line"><span class="attr">    url:</span> <span class="attr">http://laravel-envoy.xxx.com</span></span><br><span class="line"><span class="attr">  when:</span> <span class="string">manual</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">master</span></span><br></pre></td></tr></table></figure><p>推送至 GitLab 儲存庫。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .gitlab-ci.yml</span><br><span class="line">git commit -m <span class="string">"Add gitlab-ci"</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><p>GitLab 將會開始執行自動化測試與部署。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://docs.gitlab.com/ee/ci/examples/laravel_with_gitlab_and_envoy/" target="_blank" rel="noopener">Test and deploy Laravel applications with GitLab CI/CD and Envoy</a></li><li><a href="https://huoding.com/2016/05/27/515" target="_blank" rel="noopener">如何正确发布 PHP 代码</a></li></ul>]]></content>
       
       <categories>
@@ -3410,9 +3410,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3443,9 +3443,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3460,9 +3460,9 @@
     </entry>
     
     <entry>
-      <title>使用 Deployer 為 Laravel 專案實現自動化部署</title>
-      <link href="/2019/02/06/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%AF%A6%E7%8F%BE%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
-      <url>/2019/02/06/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%AF%A6%E7%8F%BE%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</url>
+      <title>使用 Deployer 為 Laravel 專案建立自動化部署</title>
+      <link href="/2019/02/06/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
+      <url>/2019/02/06/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</url>
       <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>Ubuntu（遠端伺服器）</li><li>macOS（本機）</li></ul><h2 id="遠端伺服器"><a href="#遠端伺服器" class="headerlink" title="遠端伺服器"></a>遠端伺服器</h2><h3 id="連線"><a href="#連線" class="headerlink" title="連線"></a>連線</h3><p>連線至遠端伺服器。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ec2.sh</span><br></pre></td></tr></table></figure><h3 id="新增使用者"><a href="#新增使用者" class="headerlink" title="新增使用者"></a>新增使用者</h3><p>新增 <code>deployer</code> 使用者。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser deployer --disabled-password</span><br></pre></td></tr></table></figure><ul><li>參數 <code>--disabled-password</code> 讓使用者無法使用密碼登入。</li></ul><p>將 <code>deployer</code> 使用者加進 <code>nginx</code> 使用者所待的 <code>www-data</code> 群組。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser deployer www-data</span><br></pre></td></tr></table></figure><h3 id="設定權限"><a href="#設定權限" class="headerlink" title="設定權限"></a>設定權限</h3><p>切換到 <code>deployer</code> 使用者，設定基礎權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su - deployer</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"umask 022"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure><p>為 <code>deployer</code> 使用者添加 sudo 權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/sudoers</span><br></pre></td></tr></table></figure><p>修改 <code>sudoers</code> 檔：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># User privilege specification</span><br><span class="line">root    ALL=(ALL:ALL) ALL</span><br><span class="line">deployer ALL=(ALL) NOPASSWD: ALL</span><br></pre></td></tr></table></figure><p>切換回 <code>deployer</code> 使用者，修改專案目錄權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su - deployer</span><br><span class="line">sudo chown deployer:www-data /var/www</span><br><span class="line">sudo chmod g+s /var/www</span><br></pre></td></tr></table></figure><h3 id="連線設定"><a href="#連線設定" class="headerlink" title="連線設定"></a>連線設定</h3><p>新增 <code>~/.ssh</code> 資料夾，並設定權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.ssh</span><br><span class="line">chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure><p>新增 <code>authorized_keys</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure><p>將遠端伺服器的公有金鑰的內容複製到 <code>authorized_keys</code> 檔。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa ...</span><br></pre></td></tr></table></figure><p>設定金鑰權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure><h3 id="建立儲存庫連線金鑰"><a href="#建立儲存庫連線金鑰" class="headerlink" title="建立儲存庫連線金鑰"></a>建立儲存庫連線金鑰</h3><p>新增 <code>id_rsa</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure><p>將本機的私有金鑰 <code>aws.pem</code> 檔的內容複製到 <code>~/.ssh/id_rsa</code> 檔。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN OPENSSH PRIVATE KEY-----</span><br><span class="line">...</span><br><span class="line">-----END OPENSSH PRIVATE KEY-----</span><br></pre></td></tr></table></figure><p>新增 <code>id_rsa.pub</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure><p>將 <code>authorized_keys</code> 檔的內容複製到 <code>~/.ssh/id_rsa.pub</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/authorized_keys &gt;&gt; ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><p>設定金鑰權限。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~/.ssh/id_rsa</span><br><span class="line">chmod 600 ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><h3 id="儲存庫-SSH-設定"><a href="#儲存庫-SSH-設定" class="headerlink" title="儲存庫 SSH 設定"></a>儲存庫 SSH 設定</h3><p>將 <code>id_rsa.pub</code> 檔的內容複製到儲存庫 SSH 設定。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure><h2 id="本機"><a href="#本機" class="headerlink" title="本機"></a>本機</h2><h3 id="安裝-Deployer"><a href="#安裝-Deployer" class="headerlink" title="安裝 Deployer"></a>安裝 Deployer</h3><p>使用 Composer 安裝 Deployer。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer global require deployer/deployer -vvv</span><br></pre></td></tr></table></figure><h3 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h3><p>建立專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new laravel</span><br></pre></td></tr></table></figure><p>初始化 Deployer。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> laravel</span><br><span class="line">dep init</span><br></pre></td></tr></table></figure><p>修改初始化 Deployer 後所生成的 <code>deploy.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">set(<span class="string">'repository'</span>, <span class="string">'git@xxx/laravel.git'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">host(<span class="string">'xx.xxx.xxx.xxx'</span>)</span><br><span class="line">    -&gt;user(<span class="string">'deployer'</span>)</span><br><span class="line">    -&gt;identityFile(<span class="string">'~/.ssh/aws.pem'</span>)</span><br><span class="line">    -&gt;set(<span class="string">'deploy_path'</span>, <span class="string">'/var/www/laravel'</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure><h3 id="執行部署"><a href="#執行部署" class="headerlink" title="執行部署"></a>執行部署</h3><p>在本機端的專案目錄執行以下指令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dep deploy -vvv</span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
@@ -3476,9 +3476,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3507,17 +3507,17 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
             
-            <tag> Linux </tag>
+            <tag> 環境部署 </tag>
             
-            <tag> Ubuntu </tag>
+            <tag> Linux </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -4242,9 +4242,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -4500,9 +4500,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> macOS </tag>
-            
             <tag> Xdebug </tag>
+            
+            <tag> macOS </tag>
             
         </tags>
       
@@ -6824,13 +6824,13 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -6859,13 +6859,13 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -8364,9 +8364,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -8399,9 +8399,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Windows </tag>
             
             <tag> Ubuntu </tag>
             
