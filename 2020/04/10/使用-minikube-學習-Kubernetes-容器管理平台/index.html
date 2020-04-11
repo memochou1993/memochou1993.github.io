@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 MacOS  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容器的狀態，同時根據 Master 的要求管理容">
+    <meta name="description" content="環境 MacOS Docker (with HyperKit)  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容">
 <meta name="keywords" content="環境部署,Docker,Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 minikube 學習 Kubernetes 容器管理平台">
 <meta property="og:url" content="https://memochou1993.github.io/2020/04/10/使用-minikube-學習-Kubernetes-容器管理平台/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 MacOS  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容器的狀態，同時根據 Master 的要求管理容">
+<meta property="og:description" content="環境 MacOS Docker (with HyperKit)  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-10T15:05:27.808Z">
+<meta property="og:updated_time" content="2020-04-11T09:23:08.240Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 minikube 學習 Kubernetes 容器管理平台">
-<meta name="twitter:description" content="環境 MacOS  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容器的狀態，同時根據 Master 的要求管理容">
+<meta name="twitter:description" content="環境 MacOS Docker (with HyperKit)  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容">
     
     
         
@@ -87,6 +87,8 @@
         
         <li><a class="icon" href="/2020/04/08/使用-Fetch-發送-HTTP-請求/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
+        
+        <li><a class="icon" href="/2020/04/11/使用-Kubernetes-和-Jenkins-建立-CI-CD-自動化部署流程/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -171,6 +173,7 @@
   <div class="content" itemprop="articleBody">
     <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
 <li>MacOS</li>
+<li>Docker (with HyperKit)</li>
 </ul>
 <h2 id="名詞解釋"><a href="#名詞解釋" class="headerlink" title="名詞解釋"></a>名詞解釋</h2><h3 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h3><p>叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。</p>
 <h3 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h3><p>主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。</p>
@@ -185,6 +188,9 @@
 <p>使用管理員權限啟動一個 cluster。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>使用 <code>--driver</code> 參數可以指定虛擬機器。</li>
+</ul>
 <p>查看 cluster 資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl cluster-info</span><br></pre></td></tr></table></figure>
 
