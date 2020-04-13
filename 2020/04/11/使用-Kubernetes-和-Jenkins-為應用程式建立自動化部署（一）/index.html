@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章的學習筆記。 環境 MacOS Docker (with HyperKit)  目標使用 Kubernetes 和 Jenkins 為一個範例應用程式 Kr8sswordz Puzzle 建立 CI/CD 自動化部署流程。 環境設定安裝 minikube。 1brew install minikub">
+    <meta name="description" content="前言本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章（deprecated）的學習筆記。 環境 MacOS Docker (with HyperKit)  目標使用 Kubernetes 和 Jenkins 為範例應用程式建立 CI/CD 自動化部署流程。 環境設定安裝 minikube。 1brew install minikube  查看 min">
 <meta name="keywords" content="環境部署,Docker,Kubernetes,CI&#x2F;CD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Kubernetes 和 Jenkins 為應用程式建立自動化部署（一）">
 <meta property="og:url" content="https://memochou1993.github.io/2020/04/11/使用-Kubernetes-和-Jenkins-為應用程式建立自動化部署（一）/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章的學習筆記。 環境 MacOS Docker (with HyperKit)  目標使用 Kubernetes 和 Jenkins 為一個範例應用程式 Kr8sswordz Puzzle 建立 CI/CD 自動化部署流程。 環境設定安裝 minikube。 1brew install minikub">
+<meta property="og:description" content="前言本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章（deprecated）的學習筆記。 環境 MacOS Docker (with HyperKit)  目標使用 Kubernetes 和 Jenkins 為範例應用程式建立 CI/CD 自動化部署流程。 環境設定安裝 minikube。 1brew install minikube  查看 min">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T13:15:09.045Z">
+<meta property="og:updated_time" content="2020-04-13T12:26:12.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Kubernetes 和 Jenkins 為應用程式建立自動化部署（一）">
-<meta name="twitter:description" content="前言本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章的學習筆記。 環境 MacOS Docker (with HyperKit)  目標使用 Kubernetes 和 Jenkins 為一個範例應用程式 Kr8sswordz Puzzle 建立 CI/CD 自動化部署流程。 環境設定安裝 minikube。 1brew install minikub">
+<meta name="twitter:description" content="前言本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章（deprecated）的學習筆記。 環境 MacOS Docker (with HyperKit)  目標使用 Kubernetes 和 Jenkins 為範例應用程式建立 CI/CD 自動化部署流程。 環境設定安裝 minikube。 1brew install minikube  查看 min">
     
     
         
@@ -87,6 +87,8 @@
         
         <li><a class="icon" href="/2020/04/10/使用-minikube-學習-Kubernetes-容器管理平台/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
+        
+        <li><a class="icon" href="/2020/04/12/使用-Kubernetes-和-Jenkins-為應用程式建立自動化部署（二）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -169,12 +171,12 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈Set Up A CI/CD Pipeline With Kubernetes〉系列文章的學習筆記。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://www.linux.com/audience/enterprise/set-cicd-pipeline-kubernetes-part-1-overview/" target="_blank" rel="noopener">Set Up A CI/CD Pipeline With Kubernetes</a>〉系列文章（deprecated）的學習筆記。</p>
 <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
 <li>MacOS</li>
 <li>Docker (with HyperKit)</li>
 </ul>
-<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>使用 Kubernetes 和 Jenkins 為一個範例應用程式 Kr8sswordz Puzzle 建立 CI/CD 自動化部署流程。</p>
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>使用 Kubernetes 和 Jenkins 為範例應用程式建立 CI/CD 自動化部署流程。</p>
 <h2 id="環境設定"><a href="#環境設定" class="headerlink" title="環境設定"></a>環境設定</h2><p>安裝 minikube。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install minikube</span><br></pre></td></tr></table></figure>
 
@@ -234,7 +236,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f manifests/registry.yaml</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>如果出現錯誤，到原專案查看 <a href="https://github.com/kenzanlabs/kubernetes-ci-cd/pulls" target="_blank" rel="noopener">Pull Request</a> 改動項目。</li>
+<li>如果出現錯誤，到原專案查看 <a href="https://github.com/kenzanlabs/kubernetes-ci-cd/pulls" target="_blank" rel="noopener">Pull Request</a> 可能需要被修正的項目。</li>
 </ul>
 <p>查看儲存庫的部署狀態。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout status deployments/registry</span><br></pre></td></tr></table></figure>
@@ -251,7 +253,7 @@
 <p>在推送 image 之前，需要先啟動一個用來處理 proxy 的容器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e <span class="string">"REG_IP=`minikube ip`"</span> -e <span class="string">"REG_PORT=30400"</span> --name socat-registry -p 30400:5000 socat-registry</span><br></pre></td></tr></table></figure>
 
-<p>把 image 推送到儲存庫，並重新查看儲存庫的網頁，多了一個 hello-kenzan。</p>
+<p>把 image 推送到儲存庫，並重新查看儲存庫的頁面，多了一個 hello-kenzan。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push 127.0.0.1:30400/hello-kenzan:latest</span><br></pre></td></tr></table></figure>
 
 <p>將用來處理 proxy 的容器停止。</p>
@@ -273,7 +275,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube stop</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考文件"><a href="#參考文件" class="headerlink" title="參考文件"></a>參考文件</h2><ul>
-<li><a href="https://www.linux.com/audience/enterprise/set-cicd-pipeline-kubernetes-part-1-overview/" target="_blank" rel="noopener">Set Up A CI/CD Pipeline With Kubernetes Part 1: Overview</a></li>
+<li><a href="https://www.linux.com/audience/enterprise/set-cicd-pipeline-kubernetes-part-1-overview/" target="_blank" rel="noopener">Set Up A CI/CD Pipeline With Kubernetes Part 1: Overview (deprecated)</a></li>
 </ul>
 
   </div>
