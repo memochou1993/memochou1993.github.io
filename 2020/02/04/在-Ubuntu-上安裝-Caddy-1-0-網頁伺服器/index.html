@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法下載 Caddy。 1curl https://getcaddy.com | bash -s personal  查看版本。 1caddy --version  修改 Caddy 執行檔的權限： 123sudo chown root:root /usr/local/bin/caddysudo chmod 755 /usr/local/bin/caddysudo setcap &apos;cap_net_">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-18T09:16:07.982Z">
+<meta property="og:updated_time" content="2020-04-18T11:06:16.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Ubuntu 上安裝 Caddy 1.0 網頁伺服器">
 <meta name="twitter:description" content="做法下載 Caddy。 1curl https://getcaddy.com | bash -s personal  查看版本。 1caddy --version  修改 Caddy 執行檔的權限： 123sudo chown root:root /usr/local/bin/caddysudo chmod 755 /usr/local/bin/caddysudo setcap &apos;cap_net_">
@@ -201,7 +201,7 @@
 <p>下載 Caddy 的 systemd 設定檔，並修改檔案權限。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/caddyserver/caddy/master/dist/init/linux-systemd/caddy.service</span><br><span class="line">sudo mv caddy.service /etc/systemd/system/</span><br><span class="line">sudo chmod 644 /etc/systemd/system/caddy.service</span><br></pre></td></tr></table></figure>
 
-<p>重新載入服務設定檔。</p>
+<p>載入服務設定檔。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
 
 <p>啟動 Caddy 服務</p>
