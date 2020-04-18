@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Ubuntu 18.04 LTS  安裝到 Caddy 的 GitHub 查看最新版本，下載 Caddy。 1wget https://github.com/caddyserver/caddy/releases/download/v2.0.0-rc.3/caddy_2.0.0-rc.3_linux_amd64.tar.gz  解壓縮。 1tar zxvf caddy_2.0.0-rc.3_l">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-18T11:06:57.519Z">
+<meta property="og:updated_time" content="2020-04-18T11:26:23.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Ubuntu 上安裝 Caddy 2.0 網頁伺服器">
 <meta name="twitter:description" content="環境 Ubuntu 18.04 LTS  安裝到 Caddy 的 GitHub 查看最新版本，下載 Caddy。 1wget https://github.com/caddyserver/caddy/releases/download/v2.0.0-rc.3/caddy_2.0.0-rc.3_linux_amd64.tar.gz  解壓縮。 1tar zxvf caddy_2.0.0-rc.3_l">
@@ -196,7 +196,7 @@
 <h2 id="Caddyfile"><a href="#Caddyfile" class="headerlink" title="Caddyfile"></a>Caddyfile</h2><p>新增 <code>/etc/caddy</code> 資料夾。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/caddy</span><br></pre></td></tr></table></figure>
 
-<p>在 <code>/etc/caddy</code> 資料夾新增 <code>Caddyfile</code> 檔：</p>
+<p>以 Laravel 專案為例，在 <code>/etc/caddy</code> 資料夾新增 <code>Caddyfile</code> 檔：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">laravel.epoch.tw &#123;</span><br><span class="line">    root * /var/www/laravel/public</span><br><span class="line"></span><br><span class="line">    php_fastcgi 127.0.0.1:9000</span><br><span class="line"></span><br><span class="line">    encode gzip</span><br><span class="line">    file_server</span><br><span class="line"></span><br><span class="line">    <span class="built_in">log</span> &#123;</span><br><span class="line">        output file /var/<span class="built_in">log</span>/caddy/laravel_access.log</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tls email@gmail.com</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
