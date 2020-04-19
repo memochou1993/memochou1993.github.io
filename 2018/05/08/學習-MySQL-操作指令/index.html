@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言以 MySQL 為例。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 直接輸入帳號密碼登入  資料庫操作建立資料庫。 1mysql&amp;gt; CREATE DATABASE [DATABA">
+    <meta name="description" content="前言以 MySQL 為例。 登入使用 mysql 指令登入。 1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 指定密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 指定使用者和密碼登入  資料庫操作列出所有資料庫。 1SHOW DATABASES;  使">
 <meta name="keywords" content="資料庫,MySQL,SQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="學習 SQL 操作指令">
-<meta property="og:url" content="https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/index.html">
+<meta property="og:title" content="學習 MySQL 操作指令">
+<meta property="og:url" content="https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言以 MySQL 為例。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 直接輸入帳號密碼登入  資料庫操作建立資料庫。 1mysql&amp;gt; CREATE DATABASE [DATABA">
+<meta property="og:description" content="前言以 MySQL 為例。 登入使用 mysql 指令登入。 1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 指定密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 指定使用者和密碼登入  資料庫操作列出所有資料庫。 1SHOW DATABASES;  使">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-17T14:16:14.578Z">
+<meta property="og:updated_time" content="2020-04-19T09:02:51.562Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="學習 SQL 操作指令">
-<meta name="twitter:description" content="前言以 MySQL 為例。 登入1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 直接輸入密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 直接輸入帳號密碼登入  資料庫操作建立資料庫。 1mysql&amp;gt; CREATE DATABASE [DATABA">
+<meta name="twitter:title" content="學習 MySQL 操作指令">
+<meta name="twitter:description" content="前言以 MySQL 為例。 登入使用 mysql 指令登入。 1234mysql // 直接登入mysql -u -p // 詢問密碼登入mysql -u --password=&quot;secret&quot; // 指定密碼登入mysql --user=&quot;homestead&quot; --password=&quot;secret&quot; // 指定使用者和密碼登入  資料庫操作列出所有資料庫。 1SHOW DATABASES;  使">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>學習 SQL 操作指令</title>
+    <title>學習 MySQL 操作指令</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&text=學習 SQL 操作指令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&is_video=false&description=學習 SQL 操作指令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=學習 SQL 操作指令&body=Check out this article: https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&name=學習 SQL 操作指令&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&text=學習 MySQL 操作指令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&is_video=false&description=學習 MySQL 操作指令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=學習 MySQL 操作指令&body=Check out this article: https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&name=學習 MySQL 操作指令&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        學習 SQL 操作指令
+        學習 MySQL 操作指令
     </h1>
 
 
@@ -153,7 +153,7 @@
             
         
             
-                <a href="/categories/資料庫/SQL/">SQL</a>
+                <a href="/categories/資料庫/MySQL/">MySQL</a>
             
         
     </div>
@@ -172,43 +172,47 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以 MySQL 為例。</p>
-<h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql // 直接登入</span><br><span class="line">mysql -u -p // 詢問密碼登入</span><br><span class="line">mysql -u --password=<span class="string">"secret"</span> // 直接輸入密碼登入</span><br><span class="line">mysql --user=<span class="string">"homestead"</span> --password=<span class="string">"secret"</span> // 直接輸入帳號密碼登入</span><br></pre></td></tr></table></figure>
+<h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><p>使用 <code>mysql</code> 指令登入。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql // 直接登入</span><br><span class="line">mysql -u -p // 詢問密碼登入</span><br><span class="line">mysql -u --password=<span class="string">"secret"</span> // 指定密碼登入</span><br><span class="line">mysql --user=<span class="string">"homestead"</span> --password=<span class="string">"secret"</span> // 指定使用者和密碼登入</span><br></pre></td></tr></table></figure>
 
-<h2 id="資料庫操作"><a href="#資料庫操作" class="headerlink" title="資料庫操作"></a>資料庫操作</h2><p>建立資料庫。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure>
-
-<p>列出所有資料庫。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW DATABASES:</span><br></pre></td></tr></table></figure>
-
-<p>刪除資料庫。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DROP DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure>
+<h2 id="資料庫操作"><a href="#資料庫操作" class="headerlink" title="資料庫操作"></a>資料庫操作</h2><p>列出所有資料庫。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW DATABASES;</span><br></pre></td></tr></table></figure>
 
 <p>使用資料庫。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE [DATABASE NAME];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE [DATABASE NAME];</span><br></pre></td></tr></table></figure>
+
+<p>顯示當前使用的資料庫。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DATABASE();</span><br></pre></td></tr></table></figure>
+
+<p>建立資料庫。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure>
+
+<p>刪除資料庫。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure>
 
 <h2 id="資料表操作"><a href="#資料表操作" class="headerlink" title="資料表操作"></a>資料表操作</h2><p>列出所有資料表。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW TABLES;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES;</span><br></pre></td></tr></table></figure>
 
 <p>列出資料表所有欄位。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESCRIBE [TABLE NAME];</span><br><span class="line">mysql&gt; SHOW COLUMNS FROM [TABLE NAME]; // 結果同上</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DESCRIBE [TABLE NAME];</span><br><span class="line">SHOW COLUMNS FROM [TABLE NAME]; // 結果同上</span><br></pre></td></tr></table></figure>
 
 <p>列出欄位所有索引。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW INDEX FROM [TABLE NAME];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW INDEX FROM [TABLE NAME];</span><br></pre></td></tr></table></figure>
 
-<h2 id="新增資料"><a href="#新增資料" class="headerlink" title="新增資料"></a>新增資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO [TABLE NAME] ([COLUMN NAME 1], [COLUMN NAME 2]) VALUES ([VALUE 1], [VALUE 2]);</span><br></pre></td></tr></table></figure>
+<h2 id="新增資料"><a href="#新增資料" class="headerlink" title="新增資料"></a>新增資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [TABLE NAME] ([COLUMN NAME 1], [COLUMN NAME 2]) VALUES ([VALUE 1], [VALUE 2]);</span><br></pre></td></tr></table></figure>
 
 <h2 id="査詢資料"><a href="#査詢資料" class="headerlink" title="査詢資料"></a>査詢資料</h2><p>査詢所有資料。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM [TABLE NAME];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM [TABLE NAME];</span><br></pre></td></tr></table></figure>
 
 <p>査詢特定欄位資料。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT [COLUMN NAME 1], [COLUMN NAME 2] FROM [TABLE NAME];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT [COLUMN NAME 1], [COLUMN NAME 2] FROM [TABLE NAME];</span><br></pre></td></tr></table></figure>
 
 <p>査詢特定條件資料。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT [COLUMN NAME] FROM [TABLE NAME] [Where Clause];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT [COLUMN NAME] FROM [TABLE NAME] [Where Clause];</span><br></pre></td></tr></table></figure>
 
-<h2 id="更新資料"><a href="#更新資料" class="headerlink" title="更新資料"></a>更新資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE [TABLE NAME] SET [COLUMN NAME 1] = [VALUE 1], [COLUMN NAME 2] = [VALUE 2] [WHERE Clause];</span><br></pre></td></tr></table></figure>
+<h2 id="更新資料"><a href="#更新資料" class="headerlink" title="更新資料"></a>更新資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE [TABLE NAME] SET [COLUMN NAME 1] = [VALUE 1], [COLUMN NAME 2] = [VALUE 2] [WHERE Clause];</span><br></pre></td></tr></table></figure>
 
-<h2 id="刪除資料"><a href="#刪除資料" class="headerlink" title="刪除資料"></a>刪除資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELETE FROM [TABLE NAME] [WHERE Clause];</span><br></pre></td></tr></table></figure>
+<h2 id="刪除資料"><a href="#刪除資料" class="headerlink" title="刪除資料"></a>刪除資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM [TABLE NAME] [WHERE Clause];</span><br></pre></td></tr></table></figure>
 
 <h2 id="WHERE-子句"><a href="#WHERE-子句" class="headerlink" title="WHERE 子句"></a>WHERE 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME 1] = [VALUE 1] [=, &gt;, =&gt;, &lt;, =&lt;, &lt;&gt;, !=, AND, OR, NOT] [COLUMN NAME 2] = [VALUE 2]</span><br></pre></td></tr></table></figure>
 
@@ -289,16 +293,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&text=學習 SQL 操作指令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&is_video=false&description=學習 SQL 操作指令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=學習 SQL 操作指令&body=Check out this article: https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&title=學習 SQL 操作指令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/05/08/學習-SQL-操作指令/&name=學習 SQL 操作指令&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&text=學習 MySQL 操作指令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&is_video=false&description=學習 MySQL 操作指令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=學習 MySQL 操作指令&body=Check out this article: https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&title=學習 MySQL 操作指令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/05/08/學習-MySQL-操作指令/&name=學習 MySQL 操作指令&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

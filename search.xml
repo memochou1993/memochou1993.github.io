@@ -3,6 +3,33 @@
   
     
     <entry>
+      <title>學習 MongoDB 操作指令</title>
+      <link href="/2020/04/19/%E5%AD%B8%E7%BF%92-MongoDB-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/"/>
+      <url>/2020/04/19/%E5%AD%B8%E7%BF%92-MongoDB-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mongo // 登入</span><br><span class="line">mongo --host mongodb.example.com --port 28015 // 登入並指定連線的主機和埠號</span><br><span class="line">mongo --username alice --password --authenticationDatabase admin // 登入並指定使用者、密碼和資料庫</span><br></pre></td></tr></table></figure><h2 id="資料庫操作"><a href="#資料庫操作" class="headerlink" title="資料庫操作"></a>資料庫操作</h2><p>列出所有資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show dbs</span><br></pre></td></tr></table></figure><p>使用資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use myDatabase</span><br></pre></td></tr></table></figure><p>顯示當前使用的資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db</span><br></pre></td></tr></table></figure><p>建立資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use myNewDatabase</span><br><span class="line">db.myNewCollection.insertOne( &#123; x: 1 &#125; );</span><br></pre></td></tr></table></figure><p>刪除資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.dropDatabase()</span><br></pre></td></tr></table></figure><h2 id="集合操作"><a href="#集合操作" class="headerlink" title="集合操作"></a>集合操作</h2><p>列出所有集合。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show collections</span><br></pre></td></tr></table></figure><p>建立集合。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createCollection(&quot;myNewCollection&quot;)</span><br></pre></td></tr></table></figure><p>刪除集合。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.myCollection.drop()</span><br></pre></td></tr></table></figure><h2 id="査詢資料"><a href="#査詢資料" class="headerlink" title="査詢資料"></a>査詢資料</h2><p>査詢所有資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.myCollection.find(&#123;&#125;)</span><br></pre></td></tr></table></figure><p>查詢資料筆數。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.myCollection.count()</span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://docs.mongodb.com/manual/" target="_blank" rel="noopener">The MongoDB 4.2 Manual</a></li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 資料庫 </category>
+          
+          <category> MongoDB </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 資料庫 </tag>
+            
+            <tag> MongoDB </tag>
+            
+            <tag> NoSQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>在 Ubuntu 上安裝 Caddy 2.0 網頁伺服器</title>
       <link href="/2020/04/17/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%AE%89%E8%A3%9D-Caddy-2-0-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
       <url>/2020/04/17/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%AE%89%E8%A3%9D-Caddy-2-0-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
@@ -141,9 +168,9 @@
             
             <tag> Docker </tag>
             
-            <tag> CI/CD </tag>
-            
             <tag> Kubernetes </tag>
+            
+            <tag> CI/CD </tag>
             
         </tags>
       
@@ -170,9 +197,9 @@
             
             <tag> Docker </tag>
             
-            <tag> CI/CD </tag>
-            
             <tag> Kubernetes </tag>
+            
+            <tag> CI/CD </tag>
             
         </tags>
       
@@ -1069,9 +1096,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
+            
+            <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1185,9 +1214,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
+            
+            <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1270,11 +1301,11 @@
             
             <tag> Laradock </tag>
             
+            <tag> Caddy </tag>
+            
             <tag> SSL </tag>
             
             <tag> HTTPS </tag>
-            
-            <tag> Caddy </tag>
             
         </tags>
       
@@ -2320,9 +2351,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Laradock </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -4649,9 +4680,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Xdebug </tag>
-            
             <tag> macOS </tag>
+            
+            <tag> Xdebug </tag>
             
         </tags>
       
@@ -8066,16 +8097,16 @@
     </entry>
     
     <entry>
-      <title>學習 SQL 操作指令</title>
-      <link href="/2018/05/08/%E5%AD%B8%E7%BF%92-SQL-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/"/>
-      <url>/2018/05/08/%E5%AD%B8%E7%BF%92-SQL-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/</url>
-      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以 MySQL 為例。</p><h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql // 直接登入</span><br><span class="line">mysql -u -p // 詢問密碼登入</span><br><span class="line">mysql -u --password=<span class="string">"secret"</span> // 直接輸入密碼登入</span><br><span class="line">mysql --user=<span class="string">"homestead"</span> --password=<span class="string">"secret"</span> // 直接輸入帳號密碼登入</span><br></pre></td></tr></table></figure><h2 id="資料庫操作"><a href="#資料庫操作" class="headerlink" title="資料庫操作"></a>資料庫操作</h2><p>建立資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure><p>列出所有資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW DATABASES:</span><br></pre></td></tr></table></figure><p>刪除資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DROP DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure><p>使用資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE [DATABASE NAME];</span><br></pre></td></tr></table></figure><h2 id="資料表操作"><a href="#資料表操作" class="headerlink" title="資料表操作"></a>資料表操作</h2><p>列出所有資料表。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW TABLES;</span><br></pre></td></tr></table></figure><p>列出資料表所有欄位。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESCRIBE [TABLE NAME];</span><br><span class="line">mysql&gt; SHOW COLUMNS FROM [TABLE NAME]; // 結果同上</span><br></pre></td></tr></table></figure><p>列出欄位所有索引。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW INDEX FROM [TABLE NAME];</span><br></pre></td></tr></table></figure><h2 id="新增資料"><a href="#新增資料" class="headerlink" title="新增資料"></a>新增資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO [TABLE NAME] ([COLUMN NAME 1], [COLUMN NAME 2]) VALUES ([VALUE 1], [VALUE 2]);</span><br></pre></td></tr></table></figure><h2 id="査詢資料"><a href="#査詢資料" class="headerlink" title="査詢資料"></a>査詢資料</h2><p>査詢所有資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM [TABLE NAME];</span><br></pre></td></tr></table></figure><p>査詢特定欄位資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT [COLUMN NAME 1], [COLUMN NAME 2] FROM [TABLE NAME];</span><br></pre></td></tr></table></figure><p>査詢特定條件資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT [COLUMN NAME] FROM [TABLE NAME] [Where Clause];</span><br></pre></td></tr></table></figure><h2 id="更新資料"><a href="#更新資料" class="headerlink" title="更新資料"></a>更新資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE [TABLE NAME] SET [COLUMN NAME 1] = [VALUE 1], [COLUMN NAME 2] = [VALUE 2] [WHERE Clause];</span><br></pre></td></tr></table></figure><h2 id="刪除資料"><a href="#刪除資料" class="headerlink" title="刪除資料"></a>刪除資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DELETE FROM [TABLE NAME] [WHERE Clause];</span><br></pre></td></tr></table></figure><h2 id="WHERE-子句"><a href="#WHERE-子句" class="headerlink" title="WHERE 子句"></a>WHERE 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME 1] = [VALUE 1] [=, &gt;, =&gt;, &lt;, =&lt;, &lt;&gt;, !=, AND, OR, NOT] [COLUMN NAME 2] = [VALUE 2]</span><br></pre></td></tr></table></figure><h2 id="LIKE-子句"><a href="#LIKE-子句" class="headerlink" title="LIKE 子句"></a>LIKE 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME 1] LIKE [VALUE]</span><br></pre></td></tr></table></figure><table><thead><tr><th>模糊匹配</th><th>範圍</th></tr></thead><tbody><tr><td>‘%a’</td><td>以 a 結尾的資料</td></tr><tr><td>‘a%’</td><td>以 a 開頭的資料</td></tr><tr><td>‘%a%’</td><td>含有 a 的資料</td></tr><tr><td>‘<em>a</em>’</td><td>三位且中間字母是 a 的資料</td></tr><tr><td>‘_a’</td><td>兩位且結尾字母是 a 的資料</td></tr><tr><td>‘a_’</td><td>兩位且開頭字母是 a 的資料</td></tr></tbody></table><h2 id="BETWEEN-子句"><a href="#BETWEEN-子句" class="headerlink" title="BETWEEN 子句"></a>BETWEEN 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME] BETWEEN [VALUE 1] AND [VALUE 2];</span><br></pre></td></tr></table></figure>]]></content>
+      <title>學習 MySQL 操作指令</title>
+      <link href="/2018/05/08/%E5%AD%B8%E7%BF%92-MySQL-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/"/>
+      <url>/2018/05/08/%E5%AD%B8%E7%BF%92-MySQL-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以 MySQL 為例。</p><h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><p>使用 <code>mysql</code> 指令登入。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql // 直接登入</span><br><span class="line">mysql -u -p // 詢問密碼登入</span><br><span class="line">mysql -u --password=<span class="string">"secret"</span> // 指定密碼登入</span><br><span class="line">mysql --user=<span class="string">"homestead"</span> --password=<span class="string">"secret"</span> // 指定使用者和密碼登入</span><br></pre></td></tr></table></figure><h2 id="資料庫操作"><a href="#資料庫操作" class="headerlink" title="資料庫操作"></a>資料庫操作</h2><p>列出所有資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW DATABASES;</span><br></pre></td></tr></table></figure><p>使用資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE [DATABASE NAME];</span><br></pre></td></tr></table></figure><p>顯示當前使用的資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DATABASE();</span><br></pre></td></tr></table></figure><p>建立資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure><p>刪除資料庫。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE [DATABASE NAME];</span><br></pre></td></tr></table></figure><h2 id="資料表操作"><a href="#資料表操作" class="headerlink" title="資料表操作"></a>資料表操作</h2><p>列出所有資料表。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES;</span><br></pre></td></tr></table></figure><p>列出資料表所有欄位。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DESCRIBE [TABLE NAME];</span><br><span class="line">SHOW COLUMNS FROM [TABLE NAME]; // 結果同上</span><br></pre></td></tr></table></figure><p>列出欄位所有索引。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW INDEX FROM [TABLE NAME];</span><br></pre></td></tr></table></figure><h2 id="新增資料"><a href="#新增資料" class="headerlink" title="新增資料"></a>新增資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [TABLE NAME] ([COLUMN NAME 1], [COLUMN NAME 2]) VALUES ([VALUE 1], [VALUE 2]);</span><br></pre></td></tr></table></figure><h2 id="査詢資料"><a href="#査詢資料" class="headerlink" title="査詢資料"></a>査詢資料</h2><p>査詢所有資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM [TABLE NAME];</span><br></pre></td></tr></table></figure><p>査詢特定欄位資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT [COLUMN NAME 1], [COLUMN NAME 2] FROM [TABLE NAME];</span><br></pre></td></tr></table></figure><p>査詢特定條件資料。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT [COLUMN NAME] FROM [TABLE NAME] [Where Clause];</span><br></pre></td></tr></table></figure><h2 id="更新資料"><a href="#更新資料" class="headerlink" title="更新資料"></a>更新資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE [TABLE NAME] SET [COLUMN NAME 1] = [VALUE 1], [COLUMN NAME 2] = [VALUE 2] [WHERE Clause];</span><br></pre></td></tr></table></figure><h2 id="刪除資料"><a href="#刪除資料" class="headerlink" title="刪除資料"></a>刪除資料</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM [TABLE NAME] [WHERE Clause];</span><br></pre></td></tr></table></figure><h2 id="WHERE-子句"><a href="#WHERE-子句" class="headerlink" title="WHERE 子句"></a>WHERE 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME 1] = [VALUE 1] [=, &gt;, =&gt;, &lt;, =&lt;, &lt;&gt;, !=, AND, OR, NOT] [COLUMN NAME 2] = [VALUE 2]</span><br></pre></td></tr></table></figure><h2 id="LIKE-子句"><a href="#LIKE-子句" class="headerlink" title="LIKE 子句"></a>LIKE 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME 1] LIKE [VALUE]</span><br></pre></td></tr></table></figure><table><thead><tr><th>模糊匹配</th><th>範圍</th></tr></thead><tbody><tr><td>‘%a’</td><td>以 a 結尾的資料</td></tr><tr><td>‘a%’</td><td>以 a 開頭的資料</td></tr><tr><td>‘%a%’</td><td>含有 a 的資料</td></tr><tr><td>‘<em>a</em>’</td><td>三位且中間字母是 a 的資料</td></tr><tr><td>‘_a’</td><td>兩位且結尾字母是 a 的資料</td></tr><tr><td>‘a_’</td><td>兩位且開頭字母是 a 的資料</td></tr></tbody></table><h2 id="BETWEEN-子句"><a href="#BETWEEN-子句" class="headerlink" title="BETWEEN 子句"></a>BETWEEN 子句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE [COLUMN NAME] BETWEEN [VALUE 1] AND [VALUE 2];</span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
           <category> 資料庫 </category>
           
-          <category> SQL </category>
+          <category> MySQL </category>
           
       </categories>
       
