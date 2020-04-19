@@ -3,6 +3,37 @@
   
     
     <entry>
+      <title>使用 Docker 搭建 Harbor 映像檔儲存庫</title>
+      <link href="/2020/04/20/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Harbor-%E6%98%A0%E5%83%8F%E6%AA%94%E5%84%B2%E5%AD%98%E5%BA%AB/"/>
+      <url>/2020/04/20/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Harbor-%E6%98%A0%E5%83%8F%E6%AA%94%E5%84%B2%E5%AD%98%E5%BA%AB/</url>
+      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>Ubuntu 18.04.1 LTS</li><li>Docker 18.09.1</li><li>docker-compose 1.23.2</li><li>Caddy 2</li></ul><h2 id="下載"><a href="#下載" class="headerlink" title="下載"></a>下載</h2><p>下載 Harbor 的<a href="https://github.com/caddyserver/caddy/releases" target="_blank" rel="noopener">最新版本</a>。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/goharbor/harbor/releases/download/v1.10.2/harbor-offline-installer-v1.10.2.tgz</span><br></pre></td></tr></table></figure><p>解壓縮。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf harbor-offline-installer-v1.10.2.tgz</span><br></pre></td></tr></table></figure><p>進到 Harbor 目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> harbor</span><br></pre></td></tr></table></figure><h2 id="憑證設定"><a href="#憑證設定" class="headerlink" title="憑證設定"></a>憑證設定</h2><p>建立一個資料夾，提供 Harbor 和 Docker 存取憑證。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /data/cert/</span><br></pre></td></tr></table></figure><p>進到 <code>/data/cert/</code> 目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /data/cert/</span><br></pre></td></tr></table></figure><p>建立一個 CA (Certification Authority) 憑證私鑰。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out ca.key 4096</span><br></pre></td></tr></table></figure><p>建立一個 <code>.rnd</code> 亂數種子。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -writerand /root/.rnd</span><br></pre></td></tr></table></figure><p>建立一個 CA 憑證。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -new -nodes -sha512 -days 3650 \</span><br><span class="line"> -subj <span class="string">"/C=TW/ST=Taiwan/L=Taipei/O=Epoch/OU=Personal/CN=yourdomain.com"</span> \</span><br><span class="line"> -key ca.key \</span><br><span class="line"> -out ca.crt</span><br></pre></td></tr></table></figure><ul><li><code>-subj</code> 參數填入個人資訊。</li></ul><p>將伺服器憑證（例如 Caddy 產生的憑證和金鑰）複製到指定目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /var/lib/caddy/.<span class="built_in">local</span>/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/yourdomain.com/yourdomain.com.crt /data/cert/yourdomain.com.crt</span><br><span class="line">cp /var/lib/caddy/.<span class="built_in">local</span>/share/caddy/certificates/acme-v02.api.letsencrypt.org-directory/yourdomain.com/yourdomain.com.key /data/cert/yourdomain.com.key</span><br></pre></td></tr></table></figure><p>轉換憑證格式以供 Docker 使用。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform PEM -<span class="keyword">in</span> yourdomain.com.crt -out yourdomain.com.cert</span><br></pre></td></tr></table></figure><p>建立一個 Docker 的憑證目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/docker/certs.d/yourdomain.com</span><br></pre></td></tr></table></figure><p>將 CA 憑證、伺服器憑證和金鑰複製到 Docker 的憑證目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp /data/cert/yourdomain.com.cert /etc/docker/certs.d/yourdomain.com/</span><br><span class="line">cp /data/cert/yourdomain.com.key /etc/docker/certs.d/yourdomain.com/</span><br><span class="line">cp /data/cert/ca.crt /etc/docker/certs.d/yourdomain.com/</span><br></pre></td></tr></table></figure><p>重新啟動 Docker 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure><p>以下是 Docker 憑證目錄的資料夾結構：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/docker/certs.d/</span><br><span class="line">    └── yourdomain.com:port</span><br><span class="line">       ├── yourdomain.com.cert  &lt;-- Server certificate signed by CA</span><br><span class="line">       ├── yourdomain.com.key   &lt;-- Server key signed by CA</span><br><span class="line">       └── ca.crt               &lt;-- Certificate authority that signed the registry certificate</span><br></pre></td></tr></table></figure><h2 id="修改設定"><a href="#修改設定" class="headerlink" title="修改設定"></a>修改設定</h2><p>進到 Harbor 目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> harbor</span><br></pre></td></tr></table></figure><p>修改 <code>harbor.yml</code> 設定檔：</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hostname:</span> <span class="string">yourdomain.com</span></span><br><span class="line"><span class="attr">http:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">80</span> <span class="comment"># HTTP 埠號</span></span><br><span class="line"><span class="attr">https:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">443</span> <span class="comment"># HTTPS 埠號</span></span><br><span class="line"><span class="attr">  certificate:</span> <span class="string">/data/cert/yourdomain.com.crt</span> <span class="comment"># 伺服器憑證</span></span><br><span class="line"><span class="attr">  private_key:</span> <span class="string">/data/cert/yourdomain.com.key</span> <span class="comment"># 伺服器憑證金鑰</span></span><br><span class="line"><span class="attr">database:</span></span><br><span class="line"><span class="attr">  password:</span> <span class="string">secret</span> <span class="comment"># 資料庫密碼</span></span><br></pre></td></tr></table></figure><h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>執行預備腳本，將產生重要檔案在 <code>/data</code> 目錄。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./prepare</span><br></pre></td></tr></table></figure><p>執行安裝腳本，啟動 Harbor 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./install.sh</span><br></pre></td></tr></table></figure><p>停止 Harbor 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose down</span><br></pre></td></tr></table></figure><p>啟動 Harbor 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure><h2 id="認證"><a href="#認證" class="headerlink" title="認證"></a>認證</h2><p>初始帳號及密碼如下：</p><ul><li>username: admin</li><li>password: Harbor12345</li></ul><p>使用圖形化介面，前往：<a href="https://yourdomain.com" target="_blank" rel="noopener">https://yourdomain.com</a></p><p>使用 <code>docker</code> 指令登入：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login yourdomain.com</span><br></pre></td></tr></table></figure><p>使用 <code>docker</code> 指令登出：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">logout</span> yourdomain.com</span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://goharbor.io/docs/1.10/install-config/" target="_blank" rel="noopener">Harbor</a></li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 環境部署 </category>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 環境部署 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
+            
+            <tag> Harbor </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>學習 MongoDB 操作指令</title>
       <link href="/2020/04/19/%E5%AD%B8%E7%BF%92-MongoDB-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/"/>
       <url>/2020/04/19/%E5%AD%B8%E7%BF%92-MongoDB-%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4/</url>
@@ -133,11 +164,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> CI/CD </tag>
             
@@ -168,9 +199,9 @@
             
             <tag> Docker </tag>
             
-            <tag> Kubernetes </tag>
-            
             <tag> CI/CD </tag>
+            
+            <tag> Kubernetes </tag>
             
         </tags>
       
@@ -197,9 +228,9 @@
             
             <tag> Docker </tag>
             
-            <tag> Kubernetes </tag>
-            
             <tag> CI/CD </tag>
+            
+            <tag> Kubernetes </tag>
             
         </tags>
       
@@ -821,11 +852,11 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> Docker </tag>
             
         </tags>
       
@@ -966,11 +997,11 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
-            <tag> Laravel </tag>
+            <tag> Docker </tag>
             
             <tag> Laradock </tag>
             
@@ -1059,11 +1090,11 @@
       
         <tags>
             
+            <tag> 程式設計 </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> 程式設計 </tag>
             
             <tag> Go </tag>
             
@@ -1096,11 +1127,11 @@
             
             <tag> Go </tag>
             
+            <tag> ORM </tag>
+            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
-            
-            <tag> ORM </tag>
             
         </tags>
       
@@ -1214,11 +1245,11 @@
             
             <tag> Go </tag>
             
+            <tag> ORM </tag>
+            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
-            
-            <tag> ORM </tag>
             
         </tags>
       
@@ -1301,11 +1332,11 @@
             
             <tag> Laradock </tag>
             
-            <tag> Caddy </tag>
-            
             <tag> SSL </tag>
             
             <tag> HTTPS </tag>
+            
+            <tag> Caddy </tag>
             
         </tags>
       
@@ -2046,9 +2077,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Nginx </tag>
             
@@ -2131,9 +2162,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Laradock </tag>
             
@@ -2347,9 +2378,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Laradock </tag>
             
@@ -2544,11 +2575,11 @@
             
             <tag> 環境部署 </tag>
             
+            <tag> PHP </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> PHP </tag>
             
             <tag> Wordpress </tag>
             
@@ -3507,9 +3538,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3538,9 +3569,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Ubuntu </tag>
             
@@ -3592,11 +3623,11 @@
             
             <tag> 環境部署 </tag>
             
+            <tag> Laravel </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> CI/CD </tag>
             
@@ -3625,11 +3656,11 @@
             
             <tag> 環境部署 </tag>
             
+            <tag> PHP </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> PHP </tag>
             
             <tag> MySQL </tag>
             
@@ -3658,11 +3689,11 @@
             
             <tag> 環境部署 </tag>
             
+            <tag> Laravel </tag>
+            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> CI/CD </tag>
             
@@ -3689,15 +3720,15 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
-            <tag> Laravel </tag>
+            <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -4424,9 +4455,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Laradock </tag>
             
@@ -4680,9 +4711,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> macOS </tag>
-            
             <tag> Xdebug </tag>
+            
+            <tag> macOS </tag>
             
         </tags>
       
@@ -5044,9 +5075,9 @@
             
             <tag> 元件 </tag>
             
-            <tag> Packagist </tag>
-            
             <tag> YouTube </tag>
+            
+            <tag> Packagist </tag>
             
         </tags>
       
@@ -5081,9 +5112,9 @@
             
             <tag> 元件 </tag>
             
-            <tag> Packagist </tag>
-            
             <tag> YouTube </tag>
+            
+            <tag> Packagist </tag>
             
         </tags>
       
@@ -5232,9 +5263,9 @@
             
             <tag> Vue </tag>
             
-            <tag> Bootstrap Vue </tag>
-            
             <tag> Nuxt </tag>
+            
+            <tag> Bootstrap Vue </tag>
             
         </tags>
       
@@ -7004,13 +7035,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -7039,13 +7070,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -8546,13 +8577,13 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Docker </tag>
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
-            <tag> Laravel </tag>
-            
             <tag> elementary OS </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Laradock </tag>
             
@@ -8581,9 +8612,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Windows </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -8676,11 +8707,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Hexo </tag>
             
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
         </tags>
       
