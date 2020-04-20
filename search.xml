@@ -122,7 +122,7 @@
       <title>在 Laravel 7.0 使用 View Composer 視圖組件</title>
       <link href="/2020/04/15/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-View-Composer-%E8%A6%96%E5%9C%96%E7%B5%84%E4%BB%B6/"/>
       <url>/2020/04/15/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-View-Composer-%E8%A6%96%E5%9C%96%E7%B5%84%E4%BB%B6/</url>
-      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>以 <code>User</code> 模型為例，在 <code>app\Http\ViewComposers\</code> 資料夾新增一個 <code>UserComposer.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">ViewComposers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">View</span>\<span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserComposer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The user model.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> User</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> $user;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Create a new user composer.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  User  $user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(User $user)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;user = $user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Bind data to the view.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  View  $view</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">compose</span><span class="params">(View $view)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $view-&gt;with(<span class="string">'count'</span>, <span class="keyword">$this</span>-&gt;user-&gt;count());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>app\Providers</code> 資料夾新增一個 <code>app\Providers\ComposerServiceProvider.php</code> 服務提供者：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Providers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">View</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">ServiceProvider</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ComposerServiceProvider</span> <span class="keyword">extends</span> <span class="title">ServiceProvider</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Register bindings in the container.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        View::composer(</span><br><span class="line">            [<span class="string">'layouts.app'</span>],</span><br><span class="line">            \App\Http\ViewComposers\UserComposer::class</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Register the service provider.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>composer()</code> 方法的第 1 個參數，可以使用「<code>*</code>」萬用字元將資料傳遞給所有視圖。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">View::composer(</span><br><span class="line">    <span class="string">'*'</span>, \App\Http\ViewComposers\ProfileComposer::class</span><br><span class="line">);</span><br></pre></td></tr></table></figure><p>將服務提供者註冊到 <code>config\app.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line"></span><br><span class="line">    <span class="string">'providers'</span> =&gt; [</span><br><span class="line"></span><br><span class="line">        \\ ...</span><br><span class="line">        App\Providers\ComposerServiceProvider::class,</span><br><span class="line"></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">];</span><br></pre></td></tr></table></figure><p>在視圖中使用變數：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; count &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://laravel.com/docs/master/views" target="_blank" rel="noopener">Laravel Views</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>以 <code>User</code> 模型為例，在 <code>app\Http\ViewComposers\</code> 資料夾新增一個 <code>UserComposer.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">ViewComposers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">User</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">View</span>\<span class="title">View</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserComposer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The user model.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> User</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> $user;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Create a new user composer.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  User  $user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(User $user)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;user = $user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Bind data to the view.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  View  $view</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">compose</span><span class="params">(View $view)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $view-&gt;with(<span class="string">'count'</span>, <span class="keyword">$this</span>-&gt;user-&gt;count());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>app\Providers</code> 資料夾新增一個 <code>app\Providers\ComposerServiceProvider.php</code> 服務提供者：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Providers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">View</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">ServiceProvider</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ComposerServiceProvider</span> <span class="keyword">extends</span> <span class="title">ServiceProvider</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Register bindings in the container.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        View::composer(</span><br><span class="line">            [<span class="string">'layouts.app'</span>],</span><br><span class="line">            \App\Http\ViewComposers\UserComposer::class</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Register the service provider.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>composer()</code> 方法的第 1 個參數，可以使用「<code>*</code>」萬用字元將資料傳遞給所有視圖。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">View::composer(</span><br><span class="line">    <span class="string">'*'</span>, \App\Http\ViewComposers\UserComposer::class</span><br><span class="line">);</span><br></pre></td></tr></table></figure><p>將服務提供者註冊到 <code>config\app.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line"></span><br><span class="line">    <span class="string">'providers'</span> =&gt; [</span><br><span class="line"></span><br><span class="line">        \\ ...</span><br><span class="line">        App\Providers\ComposerServiceProvider::class,</span><br><span class="line"></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">];</span><br></pre></td></tr></table></figure><p>在視圖中使用變數：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; count &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://laravel.com/docs/master/views" target="_blank" rel="noopener">Laravel Views</a></li></ul>]]></content>
       
       <categories>
           
@@ -199,9 +199,9 @@
             
             <tag> Docker </tag>
             
-            <tag> CI/CD </tag>
-            
             <tag> Kubernetes </tag>
+            
+            <tag> CI/CD </tag>
             
         </tags>
       
@@ -228,9 +228,9 @@
             
             <tag> Docker </tag>
             
-            <tag> CI/CD </tag>
-            
             <tag> Kubernetes </tag>
+            
+            <tag> CI/CD </tag>
             
         </tags>
       
@@ -850,11 +850,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -995,9 +995,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -1127,11 +1127,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1245,11 +1245,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -1332,11 +1332,11 @@
             
             <tag> Laradock </tag>
             
+            <tag> Caddy </tag>
+            
             <tag> SSL </tag>
             
             <tag> HTTPS </tag>
-            
-            <tag> Caddy </tag>
             
         </tags>
       
@@ -1982,9 +1982,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Mix </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> Mix </tag>
             
             <tag> Vue </tag>
             
@@ -2075,9 +2075,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2160,9 +2160,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2376,9 +2376,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2573,9 +2573,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3008,9 +3008,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Laradock </tag>
             
@@ -3621,9 +3621,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3654,9 +3654,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3687,9 +3687,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3718,9 +3718,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -4453,9 +4453,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -5075,9 +5075,9 @@
             
             <tag> 元件 </tag>
             
-            <tag> YouTube </tag>
-            
             <tag> Packagist </tag>
+            
+            <tag> YouTube </tag>
             
         </tags>
       
@@ -5112,9 +5112,9 @@
             
             <tag> 元件 </tag>
             
-            <tag> YouTube </tag>
-            
             <tag> Packagist </tag>
+            
+            <tag> YouTube </tag>
             
         </tags>
       
@@ -5263,9 +5263,9 @@
             
             <tag> Vue </tag>
             
-            <tag> Nuxt </tag>
-            
             <tag> Bootstrap Vue </tag>
+            
+            <tag> Nuxt </tag>
             
         </tags>
       
@@ -7035,13 +7035,13 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -7070,13 +7070,13 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -8575,9 +8575,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
