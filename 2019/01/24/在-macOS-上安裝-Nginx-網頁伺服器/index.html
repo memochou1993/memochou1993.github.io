@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="安裝 PHP使用 brew 指令安裝 PHP。 1brew install php@7.2  啟動 PHP 服務。 1brew services start php@7.2  關閉 PHP 服務。 1brew services stop php@7.2  安裝 Nginx使用 brew 指令安裝 Nginx。 1brew install nginx  啟動 Nginx 服務。 1sudo ngin">
-<meta name="keywords" content="程式設計,PHP,Laravel,macOS,Nginx">
+    <meta name="description" content="安裝使用 brew 指令安裝 Nginx。 1brew install nginx  啟動 Nginx 服務。 1sudo nginx  停止 Nginx 服務。 1sudo nginx -s stop  重啟 Nginx 服務。 1sudo nginx -s reload  站點修改 /usr/local/etc/nginx/nginx.conf 檔的 fastcgi_param 參數： 123">
+<meta name="keywords" content="環境部署,macOS,網頁伺服器,Nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 macOS 上安裝 PHP 和 Nginx 網頁伺服器">
-<meta property="og:url" content="https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/index.html">
+<meta property="og:title" content="在 macOS 上安裝 Nginx 網頁伺服器">
+<meta property="og:url" content="https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="安裝 PHP使用 brew 指令安裝 PHP。 1brew install php@7.2  啟動 PHP 服務。 1brew services start php@7.2  關閉 PHP 服務。 1brew services stop php@7.2  安裝 Nginx使用 brew 指令安裝 Nginx。 1brew install nginx  啟動 Nginx 服務。 1sudo ngin">
+<meta property="og:description" content="安裝使用 brew 指令安裝 Nginx。 1brew install nginx  啟動 Nginx 服務。 1sudo nginx  停止 Nginx 服務。 1sudo nginx -s stop  重啟 Nginx 服務。 1sudo nginx -s reload  站點修改 /usr/local/etc/nginx/nginx.conf 檔的 fastcgi_param 參數： 123">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.801Z">
+<meta property="og:updated_time" content="2020-04-21T13:58:52.532Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 macOS 上安裝 PHP 和 Nginx 網頁伺服器">
-<meta name="twitter:description" content="安裝 PHP使用 brew 指令安裝 PHP。 1brew install php@7.2  啟動 PHP 服務。 1brew services start php@7.2  關閉 PHP 服務。 1brew services stop php@7.2  安裝 Nginx使用 brew 指令安裝 Nginx。 1brew install nginx  啟動 Nginx 服務。 1sudo ngin">
+<meta name="twitter:title" content="在 macOS 上安裝 Nginx 網頁伺服器">
+<meta name="twitter:description" content="安裝使用 brew 指令安裝 Nginx。 1brew install nginx  啟動 Nginx 服務。 1sudo nginx  停止 Nginx 服務。 1sudo nginx -s stop  重啟 Nginx 服務。 1sudo nginx -s reload  站點修改 /usr/local/etc/nginx/nginx.conf 檔的 fastcgi_param 參數： 123">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 macOS 上安裝 PHP 和 Nginx 網頁伺服器</title>
+    <title>在 macOS 上安裝 Nginx 網頁伺服器</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -85,7 +85,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/01/24/在-Homestead-中安裝-PHP-的-Swoole-擴充套件/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/01/24/在-macOS-上安裝-PHP-7-2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2019/01/24/在-macOS-上安裝-PHP-的-Swoole-擴充套件/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -101,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&text=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&is_video=false&description=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器&body=Check out this article: https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&name=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&text=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&is_video=false&description=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 Nginx 網頁伺服器&body=Check out this article: https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&name=在 macOS 上安裝 Nginx 網頁伺服器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-PHP"><span class="toc-number">1.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Nginx"><span class="toc-number">2.</span> <span class="toc-text">安裝 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">1.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#站點"><span class="toc-number">2.</span> <span class="toc-text">站點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 macOS 上安裝 PHP 和 Nginx 網頁伺服器
+        在 macOS 上安裝 Nginx 網頁伺服器
     </h1>
 
 
@@ -153,9 +153,7 @@
             
         
             
-        
-            
-                <a href="/categories/程式設計/PHP/環境安裝/">環境安裝</a>
+                <a href="/categories/環境部署/網頁伺服器/">網頁伺服器</a>
             
         
     </div>
@@ -164,7 +162,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/Nginx/">Nginx</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/macOS/">macOS</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/Nginx/">Nginx</a>, <a class="tag-link" href="/tags/macOS/">macOS</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>, <a class="tag-link" href="/tags/網頁伺服器/">網頁伺服器</a>
     </div>
 
 
@@ -173,16 +171,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="安裝-PHP"><a href="#安裝-PHP" class="headerlink" title="安裝 PHP"></a>安裝 PHP</h2><p>使用 <code>brew</code> 指令安裝 PHP。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php@7.2</span><br></pre></td></tr></table></figure>
-
-<p>啟動 PHP 服務。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services start php@7.2</span><br></pre></td></tr></table></figure>
-
-<p>關閉 PHP 服務。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services stop php@7.2</span><br></pre></td></tr></table></figure>
-
-<h2 id="安裝-Nginx"><a href="#安裝-Nginx" class="headerlink" title="安裝 Nginx"></a>安裝 Nginx</h2><p>使用 <code>brew</code> 指令安裝 Nginx。</p>
+    <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 指令安裝 Nginx。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure>
 
 <p>啟動 Nginx 服務。</p>
@@ -194,7 +183,7 @@
 <p>重啟 Nginx 服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure>
 
-<p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 檔的 <code>fastcgi_param</code> 參數：</p>
+<h2 id="站點"><a href="#站點" class="headerlink" title="站點"></a>站點</h2><p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 檔的 <code>fastcgi_param</code> 參數：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">#</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>/usr/local/var/www</code> 目錄新增 <code>index.php</code> 檔：</p>
@@ -237,21 +226,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-PHP"><span class="toc-number">1.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Nginx"><span class="toc-number">2.</span> <span class="toc-text">安裝 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">1.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#站點"><span class="toc-number">2.</span> <span class="toc-text">站點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&text=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&is_video=false&description=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器&body=Check out this article: https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&title=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-PHP-和-Nginx-網頁伺服器/&name=在 macOS 上安裝 PHP 和 Nginx 網頁伺服器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&text=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&is_video=false&description=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 Nginx 網頁伺服器&body=Check out this article: https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&title=在 macOS 上安裝 Nginx 網頁伺服器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/&name=在 macOS 上安裝 Nginx 網頁伺服器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

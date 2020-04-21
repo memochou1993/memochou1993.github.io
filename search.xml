@@ -3,6 +3,35 @@
   
     
     <entry>
+      <title>在 macOS 上安裝 PHP 7.4</title>
+      <link href="/2020/04/21/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-4/"/>
+      <url>/2020/04/21/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-4/</url>
+      <content type="html"><![CDATA[<h2 id="移除舊版本"><a href="#移除舊版本" class="headerlink" title="移除舊版本"></a>移除舊版本</h2><p>使用 <code>brew</code> 指令移除，以 PHP 7.2 為例：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew uninstall php@7.2</span><br></pre></td></tr></table></figure><p>刪除相關檔案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /usr/<span class="built_in">local</span>/etc/php/7.2</span><br></pre></td></tr></table></figure><h2 id="安裝新版本"><a href="#安裝新版本" class="headerlink" title="安裝新版本"></a>安裝新版本</h2><p>使用 <code>brew</code> 指令安裝 PHP 7.4。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php@7.4</span><br></pre></td></tr></table></figure><p>啟動 PHP-FPM 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services start php</span><br></pre></td></tr></table></figure><p>關閉 PHP-FPM 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services stop php</span><br></pre></td></tr></table></figure><p>重新啟動 PHP-FPM 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services restart php</span><br></pre></td></tr></table></figure><h2 id="修改環境變數"><a href="#修改環境變數" class="headerlink" title="修改環境變數"></a>修改環境變數</h2><p>修改 <code>.zshrc</code> 檔：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/opt/php@7.4/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/opt/php@7.4/sbin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure><p>重新讀取環境變數。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure><p>查看 PHP-CLI 版本。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php -v</span><br><span class="line">PHP 7.4.5 (cli)</span><br></pre></td></tr></table></figure><p>查看 PHP-FPM 版本。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php-fpm -v</span><br><span class="line">PHP 7.4.5 (fpm-fcgi)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> 環境安裝 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> macOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>使用 Docker 搭建 Harbor 映像檔儲存庫</title>
       <link href="/2020/04/20/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Harbor-%E6%98%A0%E5%83%8F%E6%AA%94%E5%84%B2%E5%AD%98%E5%BA%AB/"/>
       <url>/2020/04/20/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Harbor-%E6%98%A0%E5%83%8F%E6%AA%94%E5%84%B2%E5%AD%98%E5%BA%AB/</url>
@@ -70,6 +99,8 @@
           
           <category> 環境部署 </category>
           
+          <category> 網頁伺服器 </category>
+          
           <category> Caddy </category>
           
       </categories>
@@ -82,6 +113,8 @@
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 網頁伺服器 </tag>
             
             <tag> Caddy </tag>
             
@@ -850,11 +883,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -995,9 +1028,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -1021,7 +1054,7 @@
           
           <category> 環境部署 </category>
           
-          <category> Caddy </category>
+          <category> 網頁伺服器 </category>
           
       </categories>
       
@@ -1033,6 +1066,8 @@
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 網頁伺服器 </tag>
             
             <tag> Caddy </tag>
             
@@ -1982,9 +2017,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> Mix </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Vue </tag>
             
@@ -2075,9 +2110,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -2160,9 +2195,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -2376,9 +2411,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
@@ -2573,9 +2608,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -3008,9 +3043,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Laradock </tag>
             
@@ -3621,9 +3656,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -3654,9 +3689,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -3687,9 +3722,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -3718,9 +3753,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4023,10 +4058,39 @@
     </entry>
     
     <entry>
-      <title>在 macOS 上安裝 PHP 和 Nginx 網頁伺服器</title>
-      <link href="/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E5%92%8C-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
-      <url>/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E5%92%8C-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
-      <content type="html"><![CDATA[<h2 id="安裝-PHP"><a href="#安裝-PHP" class="headerlink" title="安裝 PHP"></a>安裝 PHP</h2><p>使用 <code>brew</code> 指令安裝 PHP。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php@7.2</span><br></pre></td></tr></table></figure><p>啟動 PHP 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services start php@7.2</span><br></pre></td></tr></table></figure><p>關閉 PHP 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services stop php@7.2</span><br></pre></td></tr></table></figure><h2 id="安裝-Nginx"><a href="#安裝-Nginx" class="headerlink" title="安裝 Nginx"></a>安裝 Nginx</h2><p>使用 <code>brew</code> 指令安裝 Nginx。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure><p>啟動 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure><p>停止 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br></pre></td></tr></table></figure><p>重啟 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 檔的 <code>fastcgi_param</code> 參數：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">#</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>/usr/local/var/www</code> 目錄新增 <code>index.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpinfo();</span><br></pre></td></tr></table></figure><h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往：<a href="http://localhost:8080/index.php" target="_blank" rel="noopener">http://localhost:8080/index.php</a></p>]]></content>
+      <title>在 macOS 上安裝 Nginx 網頁伺服器</title>
+      <link href="/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
+      <url>/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
+      <content type="html"><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 指令安裝 Nginx。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure><p>啟動 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure><p>停止 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br></pre></td></tr></table></figure><p>重啟 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><h2 id="站點"><a href="#站點" class="headerlink" title="站點"></a>站點</h2><p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 檔的 <code>fastcgi_param</code> 參數：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">#</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>/usr/local/var/www</code> 目錄新增 <code>index.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpinfo();</span><br></pre></td></tr></table></figure><h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往：<a href="http://localhost:8080/index.php" target="_blank" rel="noopener">http://localhost:8080/index.php</a></p>]]></content>
+      
+      <categories>
+          
+          <category> 環境部署 </category>
+          
+          <category> 網頁伺服器 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 環境部署 </tag>
+            
+            <tag> macOS </tag>
+            
+            <tag> 網頁伺服器 </tag>
+            
+            <tag> Nginx </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>在 macOS 上安裝 PHP 7.2</title>
+      <link href="/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-2/"/>
+      <url>/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-2/</url>
+      <content type="html"><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 指令安裝 PHP 7.2。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php@7.2</span><br></pre></td></tr></table></figure><p>啟動 PHP-FPM 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services start php@7.2</span><br></pre></td></tr></table></figure><p>關閉 PHP-FPM 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew services stop php@7.2</span><br></pre></td></tr></table></figure><h2 id="環境變數"><a href="#環境變數" class="headerlink" title="環境變數"></a>環境變數</h2><p>修改 <code>.zshrc</code> 檔：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/opt/php@7.2/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure><p>重新讀取環境變數。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
           
@@ -4045,11 +4109,7 @@
             
             <tag> PHP </tag>
             
-            <tag> Laravel </tag>
-            
             <tag> macOS </tag>
-            
-            <tag> Nginx </tag>
             
         </tags>
       
@@ -4453,9 +4513,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
@@ -7035,13 +7095,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -7070,13 +7130,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 元件 </tag>
             
@@ -8575,9 +8635,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
