@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="步驟查看 PHP 版本。 1vagrant@homestead:~$ php -v  更新 PECL 倉庫。 1vagrant@homestead:~$ sudo pecl channel-update pecl.php.net  安裝 swoole 擴充套件。 1vagrant@homestead:~$ sudo pecl install swoole  新增 swoole.ini 設定檔。 1">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.801Z">
+<meta property="og:updated_time" content="2020-04-21T15:12:20.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Homestead 中安裝 PHP 的 Swoole 擴充套件">
 <meta name="twitter:description" content="步驟查看 PHP 版本。 1vagrant@homestead:~$ php -v  更新 PECL 倉庫。 1vagrant@homestead:~$ sudo pecl channel-update pecl.php.net  安裝 swoole 擴充套件。 1vagrant@homestead:~$ sudo pecl install swoole  新增 swoole.ini 設定檔。 1">
@@ -88,7 +88,7 @@
         <li><a class="icon" href="/2019/01/23/在-Laravel-5-7-設置時區/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/01/24/在-macOS-上安裝-PHP-7-2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/01/24/在-macOS-上安裝-Nginx-網頁伺服器/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -209,8 +209,8 @@
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>查看詳細資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php --ri swoole</span><br></pre></td></tr></table></figure>
 
-<p>查看所有 PHP 擴充套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -i|grep extension_dir</span><br><span class="line">extension_dir =&gt; /usr/lib/php/20170718 =&gt; /usr/lib/php/20170718</span><br><span class="line">vagrant@homestead:~$ <span class="built_in">cd</span> /usr/lib/php/20170718 &amp;&amp; ls</span><br></pre></td></tr></table></figure>
+<p>查看擴充套件的安裝位置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -i|grep extension_dir</span><br></pre></td></tr></table></figure>
 
 
   </div>

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言如使用 CodeIgniter 框架，需安裝 PHP 的 Redis 擴充套件；如使用 Laravel 框架，則只要在專案使用 Composer 安裝 predis/predis 套件即可。 步驟查看 PHP 版本。 1vagrant@homestead:~$ php -v  新增 ondrej/php 套件庫。 1vagrant@homestead:~$ sudo add-apt-repos">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.796Z">
+<meta property="og:updated_time" content="2020-04-21T15:12:10.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Homestead 中安裝 PHP 的 Redis 擴充套件">
 <meta name="twitter:description" content="前言如使用 CodeIgniter 框架，需安裝 PHP 的 Redis 擴充套件；如使用 Laravel 框架，則只要在專案使用 Composer 安裝 predis/predis 套件即可。 步驟查看 PHP 版本。 1vagrant@homestead:~$ php -v  新增 ondrej/php 套件庫。 1vagrant@homestead:~$ sudo add-apt-repos">
@@ -213,8 +213,8 @@
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>查看詳細資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php --ri redis</span><br></pre></td></tr></table></figure>
 
-<p>查看所有 PHP 擴充套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -i|grep extension_dir</span><br><span class="line">extension_dir =&gt; /usr/lib/php/20170718 =&gt; /usr/lib/php/20170718</span><br><span class="line">vagrant@homestead:~$ <span class="built_in">cd</span> /usr/lib/php/20170718 &amp;&amp; ls</span><br></pre></td></tr></table></figure>
+<p>查看擴充套件的安裝位置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -i|grep extension_dir</span><br></pre></td></tr></table></figure>
 
 
   </div>

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="步驟安裝 PHP 的 Xdebug 擴充套件。 1pecl install xdebug  修改 php.ini 檔，並刪除第一行 zend_extension=&amp;quot;xdebug.so&amp;quot;。 1vi /usr/local/etc/php/7.2/php.ini  新增 xdebug.ini 檔。 1vi /usr/local/etc/php/7.2/conf.d/xdebug.in">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.798Z">
+<meta property="og:updated_time" content="2020-04-21T15:12:17.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 macOS 上安裝 PHP 的 Xdebug 擴充套件">
 <meta name="twitter:description" content="步驟安裝 PHP 的 Xdebug 擴充套件。 1pecl install xdebug  修改 php.ini 檔，並刪除第一行 zend_extension=&amp;quot;xdebug.so&amp;quot;。 1vi /usr/local/etc/php/7.2/php.ini  新增 xdebug.ini 檔。 1vi /usr/local/etc/php/7.2/conf.d/xdebug.in">
@@ -183,10 +183,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/<span class="built_in">local</span>/etc/php/7.2/conf.d/xdebug.ini</span><br></pre></td></tr></table></figure>
 
 <p>加入以下內容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[xdebug]</span><br><span class="line">zend_extension=&quot;/usr/local/lib/php/pecl/20170718/xdebug.so&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[xdebug]</span><br><span class="line">zend_extension=<span class="string">"/usr/local/lib/php/pecl/20170718/xdebug.so"</span></span><br></pre></td></tr></table></figure>
 
 <p>使用指令查看擴充套件是否安裝成功，或在 PHP 腳本中使用 <code>phpinfo()</code> 查看。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">php -m |grep xdebug</span><br><span class="line">xdebug</span><br><span class="line">php -i|grep extension_dir</span><br><span class="line">extension_dir =&gt; /usr/<span class="built_in">local</span>/lib/php/pecl/20170718 =&gt; /usr/<span class="built_in">local</span>/lib/php/pecl/20170718</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/lib/php/pecl/20170718 &amp;&amp; ls</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php -m |grep xdebug</span><br><span class="line">xdebug</span><br></pre></td></tr></table></figure>
+
+<p>查看擴充套件的安裝位置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -i|grep extension_dir</span><br></pre></td></tr></table></figure>
 
 <p>查看詳細資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php --ri xdebug</span><br></pre></td></tr></table></figure>
