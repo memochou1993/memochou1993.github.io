@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="移除舊版本使用 brew 指令移除，以 PHP 7.2 為例： 1brew uninstall php@7.2  刪除相關檔案。 1rm -rf /usr/local/etc/php/7.2  安裝新版本使用 brew 指令安裝 PHP 7.4。 1brew install php@7.4  啟動 PHP-FPM 服務。 1brew services start php  關閉 PHP-FPM 服">
+    <meta name="description" content="移除舊版本如果先前有使用過 Homebrew 安裝過 PHP，以 PHP 7.2 為例，使用 brew 指令移除。 1brew uninstall php@7.2  刪除相關檔案。 1rm -rf /usr/local/etc/php/7.2  安裝新版本使用 brew 指令安裝最新版本，以 PHP 7.4 為例。 1brew install php@7.4  啟動 PHP-FPM 服務。 1br">
 <meta name="keywords" content="程式設計,PHP,macOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 macOS 上安裝 PHP 7.4">
 <meta property="og:url" content="https://memochou1993.github.io/2020/04/21/在-macOS-上安裝-PHP-7-4/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="移除舊版本使用 brew 指令移除，以 PHP 7.2 為例： 1brew uninstall php@7.2  刪除相關檔案。 1rm -rf /usr/local/etc/php/7.2  安裝新版本使用 brew 指令安裝 PHP 7.4。 1brew install php@7.4  啟動 PHP-FPM 服務。 1brew services start php  關閉 PHP-FPM 服">
+<meta property="og:description" content="移除舊版本如果先前有使用過 Homebrew 安裝過 PHP，以 PHP 7.2 為例，使用 brew 指令移除。 1brew uninstall php@7.2  刪除相關檔案。 1rm -rf /usr/local/etc/php/7.2  安裝新版本使用 brew 指令安裝最新版本，以 PHP 7.4 為例。 1brew install php@7.4  啟動 PHP-FPM 服務。 1br">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-21T14:31:10.072Z">
+<meta property="og:updated_time" content="2020-04-22T15:46:08.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 macOS 上安裝 PHP 7.4">
-<meta name="twitter:description" content="移除舊版本使用 brew 指令移除，以 PHP 7.2 為例： 1brew uninstall php@7.2  刪除相關檔案。 1rm -rf /usr/local/etc/php/7.2  安裝新版本使用 brew 指令安裝 PHP 7.4。 1brew install php@7.4  啟動 PHP-FPM 服務。 1brew services start php  關閉 PHP-FPM 服">
+<meta name="twitter:description" content="移除舊版本如果先前有使用過 Homebrew 安裝過 PHP，以 PHP 7.2 為例，使用 brew 指令移除。 1brew uninstall php@7.2  刪除相關檔案。 1rm -rf /usr/local/etc/php/7.2  安裝新版本使用 brew 指令安裝最新版本，以 PHP 7.4 為例。 1brew install php@7.4  啟動 PHP-FPM 服務。 1br">
     
     
         
@@ -171,13 +171,13 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="移除舊版本"><a href="#移除舊版本" class="headerlink" title="移除舊版本"></a>移除舊版本</h2><p>使用 <code>brew</code> 指令移除，以 PHP 7.2 為例：</p>
+    <h2 id="移除舊版本"><a href="#移除舊版本" class="headerlink" title="移除舊版本"></a>移除舊版本</h2><p>如果先前有使用過 Homebrew 安裝過 PHP，以 PHP 7.2 為例，使用 <code>brew</code> 指令移除。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew uninstall php@7.2</span><br></pre></td></tr></table></figure>
 
 <p>刪除相關檔案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /usr/<span class="built_in">local</span>/etc/php/7.2</span><br></pre></td></tr></table></figure>
 
-<h2 id="安裝新版本"><a href="#安裝新版本" class="headerlink" title="安裝新版本"></a>安裝新版本</h2><p>使用 <code>brew</code> 指令安裝 PHP 7.4。</p>
+<h2 id="安裝新版本"><a href="#安裝新版本" class="headerlink" title="安裝新版本"></a>安裝新版本</h2><p>使用 <code>brew</code> 指令安裝最新版本，以 PHP 7.4 為例。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install php@7.4</span><br></pre></td></tr></table></figure>
 
 <p>啟動 PHP-FPM 服務。</p>
@@ -192,6 +192,10 @@
 <h2 id="修改環境變數"><a href="#修改環境變數" class="headerlink" title="修改環境變數"></a>修改環境變數</h2><p>修改 <code>.zshrc</code> 檔：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/opt/php@7.4/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/opt/php@7.4/sbin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><code>bin</code> 資料夾存放 PHP-CLI 的執行檔。</li>
+<li><code>sbin</code> 資料夾存放 PHP-FPM 的執行檔。</li>
+</ul>
 <p>重新讀取環境變數。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure>
 
