@@ -9,14 +9,14 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="環境 Windows 10 Homestead  建立專案建立專案。 1laravel new telescope  一般使用安裝 laravel/telescope 套件。 1composer require laravel/telescope  執行安裝。 1php artisan telescope:install  執行遷移。 1php artisan migrate  發布資源。 1ph">
-<meta name="keywords" content="程式設計,PHP,Laravel,除錯,Telescope">
+<meta name="keywords" content="Laravel,程式設計,PHP,除錯,Telescope">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laravel 5.7 使用 Telescope 除錯工具">
 <meta property="og:url" content="https://memochou1993.github.io/2018/11/18/在-Laravel-5-7-使用-Telescope-除錯工具/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Windows 10 Homestead  建立專案建立專案。 1laravel new telescope  一般使用安裝 laravel/telescope 套件。 1composer require laravel/telescope  執行安裝。 1php artisan telescope:install  執行遷移。 1php artisan migrate  發布資源。 1ph">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.798Z">
+<meta property="og:updated_time" content="2020-04-22T10:32:48.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 5.7 使用 Telescope 除錯工具">
 <meta name="twitter:description" content="環境 Windows 10 Homestead  建立專案建立專案。 1laravel new telescope  一般使用安裝 laravel/telescope 套件。 1composer require laravel/telescope  執行安裝。 1php artisan telescope:install  執行遷移。 1php artisan migrate  發布資源。 1ph">
@@ -205,8 +205,15 @@
 <p>發布資源。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan telescope:publish</span><br></pre></td></tr></table></figure>
 
-<p>將 <code>config/app.php</code> 檔中的 <code>App\Providers\TelescopeServiceProvider::class</code> 刪除， 並在 <code>app/Providers/AppServiceProvider.php</code> 檔中註冊服務提供者。</p>
+<p>將 <code>config/app.php</code> 檔中的 <code>App\Providers\TelescopeServiceProvider::class</code> 刪除。</p>
+<p>在 <code>app/Providers/AppServiceProvider.php</code> 檔中註冊服務提供者。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Register any application services.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">register</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;app-&gt;isLocal()) &#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;app-&gt;register(TelescopeServiceProvider::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為了避免在正式環境執行 Telescope 遷移，需要修改 <code>config/telescope.php</code> 檔，將預設啟用改為 <code>false</code>：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="string">'enabled'</span> =&gt; env(<span class="string">'TELESCOPE_ENABLED'</span>, <span class="keyword">false</span>),</span><br><span class="line"></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>再修改 <code>.env</code> 檔，即可在本地環境啟用 Telescope：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TELESCOPE_ENABLED=true</span><br></pre></td></tr></table></figure>
 
 <p>前往：<a href="http://telescope.test/telescope" target="_blank" rel="noopener">http://telescope.test/telescope</a></p>
 <h2 id="認證"><a href="#認證" class="headerlink" title="認證"></a>認證</h2><p>在非本地環境下使用，可以修改 <code>app/Providers/TelescopeServiceProvider.php</code> 檔，定義合法的使用者列表：</p>
