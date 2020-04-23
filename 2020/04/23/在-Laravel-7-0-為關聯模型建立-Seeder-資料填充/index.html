@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="咩某的部落格">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
+<meta name="keywords" content="Laravel,程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Laravel 7.0 為關聯模型建立 Seeder 資料填充">
+<meta property="og:url" content="https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-23T08:39:40.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 Laravel 7.0 為關聯模型建立 Seeder 資料填充">
+<meta name="twitter:description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Laravel 7.0 為關聯模型建立 Seeder 資料填充</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/04/21/在-macOS-上安裝-PHP-7-4/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&text=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&is_video=false&description=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&name=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#關聯方法"><span class="toc-number">2.</span> <span class="toc-text">關聯方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">3.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">3.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.3.</span> <span class="toc-text">方法三</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Laravel 7.0 為關聯模型建立 Seeder 資料填充
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-04-22T17:47:13.000Z" itemprop="datePublished">2020-04-23</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/Laravel/">Laravel</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。</p>
+<h2 id="關聯方法"><a href="#關聯方法" class="headerlink" title="關聯方法"></a>關聯方法</h2><p>首先，為 <code>User</code> 模型建立關聯方法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all of the projects for the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\hasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">projects</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Project::class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all of the posts for the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\hasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Post::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>User</code> 模型和 <code>Project</code> 模型是一對多的關聯，和 <code>Post</code> 模型也是一對多的關聯</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>以父關聯為主，由上而下建立關聯資料。</p>
+<p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者，為每個使用者個別建立 10 個專案和 10 筆文章。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;saveMany(factory(App\Project::class, <span class="number">10</span>)-&gt;make());</span><br><span class="line">    $user-&gt;posts()-&gt;saveMany(factory(App\Post::class, <span class="number">10</span>)-&gt;make());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>此方法在模型互相關聯的情況下，容易形成複雜的巢狀結構。而且每一個模型的資料填充都寫在同一個檔案內，形成高度耦合。</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>以子關聯為主，由下而上建立關聯資料。</p>
+<p>修改 <code>ProjectSeeder</code> 資料填充，建立 5 個專案。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\Project::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>ProjectFactory</code> 模型工廠，為每個專案建立 1 個使用者。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Project::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; factory(App\User::class)-&gt;create()-&gt;id,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>PostSeeder</code> 資料填充，建立 5 筆文章。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\Post::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>PostFactory</code> 模型工廠，為每筆文章建立 1 個使用者。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Post::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; factory(App\User::class)-&gt;create()-&gt;id,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>此方法導致 <code>Project</code> 模型和 <code>Post</code> 模型所生產出來的 <code>User</code> 模型都不一樣，無法反映一個使用者同時擁有專案和文章的情況。而且在模型工廠做資料填充的行為，違反了單一職責原則。</p>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>個別建立關聯資料。</p>
+<p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>ProjectSeeder</code> 資料填充，撈出所有使用者，個別建立 10 個專案。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">App\User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;saveMany(</span><br><span class="line">        factory(App\Project::class, <span class="number">10</span>)-&gt;make()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>PostSeeder</code> 資料填充，撈出所有使用者，個別建立 10 筆文章。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">App\User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;posts()-&gt;saveMany(</span><br><span class="line">        factory(App\Post::class, <span class="number">10</span>)-&gt;make()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>此方法雖然多了兩次資料庫的查詢，但解耦了模型之間的資料填充。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#關聯方法"><span class="toc-number">2.</span> <span class="toc-text">關聯方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">3.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">3.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.3.</span> <span class="toc-text">方法三</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&text=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&is_video=false&description=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/&name=在 Laravel 7.0 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-117292723-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+

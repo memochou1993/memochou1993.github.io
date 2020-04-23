@@ -3,6 +3,35 @@
   
     
     <entry>
+      <title>在 Laravel 7.0 為關聯模型建立 Seeder 資料填充</title>
+      <link href="/2020/04/23/%E5%9C%A8-Laravel-7-0-%E7%82%BA%E9%97%9C%E8%81%AF%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B-Seeder-%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"/>
+      <url>/2020/04/23/%E5%9C%A8-Laravel-7-0-%E7%82%BA%E9%97%9C%E8%81%AF%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B-Seeder-%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。</p><h2 id="關聯方法"><a href="#關聯方法" class="headerlink" title="關聯方法"></a>關聯方法</h2><p>首先，為 <code>User</code> 模型建立關聯方法：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all of the projects for the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\hasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">projects</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Project::class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all of the posts for the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\hasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Post::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><code>User</code> 模型和 <code>Project</code> 模型是一對多的關聯，和 <code>Post</code> 模型也是一對多的關聯</p><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>以父關聯為主，由上而下建立關聯資料。</p><p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者，為每個使用者個別建立 10 個專案和 10 筆文章。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;saveMany(factory(App\Project::class, <span class="number">10</span>)-&gt;make());</span><br><span class="line">    $user-&gt;posts()-&gt;saveMany(factory(App\Post::class, <span class="number">10</span>)-&gt;make());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>此方法在模型互相關聯的情況下，容易形成複雜的巢狀結構。而且每一個模型的資料填充都寫在同一個檔案內，形成高度耦合。</p><h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>以子關聯為主，由下而上建立關聯資料。</p><p>修改 <code>ProjectSeeder</code> 資料填充，建立 5 個專案。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\Project::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure><p>修改 <code>ProjectFactory</code> 模型工廠，為每個專案建立 1 個使用者。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Project::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; factory(App\User::class)-&gt;create()-&gt;id,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>修改 <code>PostSeeder</code> 資料填充，建立 5 筆文章。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\Post::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure><p>修改 <code>PostFactory</code> 模型工廠，為每筆文章建立 1 個使用者。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Post::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; factory(App\User::class)-&gt;create()-&gt;id,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>此方法導致 <code>Project</code> 模型和 <code>Post</code> 模型所生產出來的 <code>User</code> 模型都不一樣，無法反映一個使用者同時擁有專案和文章的情況。而且在模型工廠做資料填充的行為，違反了單一職責原則。</p><h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>個別建立關聯資料。</p><p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure><p>修改 <code>ProjectSeeder</code> 資料填充，撈出所有使用者，個別建立 10 個專案。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">App\User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;saveMany(</span><br><span class="line">        factory(App\Project::class, <span class="number">10</span>)-&gt;make()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>修改 <code>PostSeeder</code> 資料填充，撈出所有使用者，個別建立 10 筆文章。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">App\User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;posts()-&gt;saveMany(</span><br><span class="line">        factory(App\Post::class, <span class="number">10</span>)-&gt;make()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>此方法雖然多了兩次資料庫的查詢，但解耦了模型之間的資料填充。</p>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> PHP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>在 macOS 上安裝 PHP 7.4</title>
       <link href="/2020/04/21/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-4/"/>
       <url>/2020/04/21/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-4/</url>
@@ -52,9 +81,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Harbor </tag>
             
@@ -141,11 +170,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -170,11 +199,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -396,11 +425,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -854,11 +883,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Cron </tag>
             
@@ -885,11 +914,11 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> PHP </tag>
+            <tag> Docker </tag>
             
             <tag> Laravel </tag>
             
-            <tag> Docker </tag>
+            <tag> PHP </tag>
             
         </tags>
       
@@ -914,11 +943,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1032,11 +1061,11 @@
             
             <tag> Linux </tag>
             
-            <tag> Laravel </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> CentOS </tag>
             
@@ -1094,11 +1123,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> SFTP </tag>
             
@@ -1127,9 +1156,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> 程式設計 </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Go </tag>
             
@@ -1425,11 +1454,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1481,11 +1510,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -1514,11 +1543,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -1547,11 +1576,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1576,11 +1605,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -1636,11 +1665,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1746,11 +1775,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1916,11 +1945,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1945,11 +1974,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -2011,11 +2040,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Mix </tag>
             
@@ -2077,11 +2106,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> JavaScript </tag>
             
@@ -2112,9 +2141,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> PHP </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Nginx </tag>
             
@@ -2197,11 +2226,11 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> PHP </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> PHP </tag>
             
         </tags>
       
@@ -2332,9 +2361,9 @@
       
         <tags>
             
-            <tag> npm </tag>
-            
             <tag> Node </tag>
+            
+            <tag> npm </tag>
             
         </tags>
       
@@ -2413,13 +2442,13 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
-            <tag> Laravel </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -2612,9 +2641,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Wordpress </tag>
             
@@ -2747,11 +2776,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -2896,11 +2925,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -2925,11 +2954,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> CORS </tag>
             
@@ -2987,11 +3016,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3016,11 +3045,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3045,9 +3074,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Laravel </tag>
-            
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Guzzle </tag>
             
@@ -3076,11 +3105,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3105,11 +3134,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3134,20 +3163,20 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
     </entry>
     
     <entry>
-      <title>在 Laravel 5.8 為 Eloquent 關聯建立資料填充</title>
-      <link href="/2019/02/28/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"/>
-      <url>/2019/02/28/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/</url>
+      <title>在 Laravel 5.8 為關聯模型建立 Seeder 資料填充</title>
+      <link href="/2019/02/28/%E5%9C%A8-Laravel-5-8-%E7%82%BA%E9%97%9C%E8%81%AF%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B-Seeder-%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"/>
+      <url>/2019/02/28/%E5%9C%A8-Laravel-5-8-%E7%82%BA%E9%97%9C%E8%81%AF%E6%A8%A1%E5%9E%8B%E5%BB%BA%E7%AB%8B-Seeder-%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>假設一個使用者（<code>User</code>）擁有多個專案，一個專案（<code>Project</code>）擁有多個使用者，以及一個專案擁有有多個設定檔（<code>Environment</code>）。</p><h2 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h2><p>修改 <code>app/User.php</code> 檔。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the route key for the model.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRouteKeyName</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'username'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the projects that belong to the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsToMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">projects</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Project::class, <span class="string">'user_project'</span>)-&gt;withTimestamps();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>修改 <code>app/Project.php</code> 檔。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the users that belong to the project.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsToMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">users</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(User::class, <span class="string">'user_project'</span>)-&gt;withTimestamps();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the environments for the project.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\HasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">environments</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Environment::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>修改 <code>app/Environment.php</code> 檔。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the project that the environments belongs to.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsTo</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">project</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsTo(Project::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="建立資料填充"><a href="#建立資料填充" class="headerlink" title="建立資料填充"></a>建立資料填充</h2><p>建立 <code>ProjectsTableSeeder.php</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed ProjectsTableSeeder</span><br></pre></td></tr></table></figure><p>為第一個使用者建立 10 筆私人專案，並為每筆專案建立 5 筆設定檔。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">factory(Project::class, <span class="number">10</span>)-&gt;create([</span><br><span class="line">    <span class="string">'private'</span> =&gt; <span class="keyword">true</span>,</span><br><span class="line">])-&gt;each(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="params">(Project $project)</span> </span>&#123;</span><br><span class="line">        $project-&gt;users()-&gt;attach(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        $project-&gt;environments()-&gt;saveMany(</span><br><span class="line">            factory(Environment::class, <span class="number">5</span>)-&gt;make()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure><p>建立 <code>UserProjectTableSeeder.php</code> 檔。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed UserProjectTableSeeder</span><br></pre></td></tr></table></figure><p>為所有使用者與 10 筆專案建立隨機的多對多關聯。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all public projects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$projects = Project::all();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create many-to-many relationships between users and public projects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> <span class="title">use</span> <span class="params">($projects)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;attach(</span><br><span class="line">        $projects-&gt;random(rand(<span class="number">1</span>, <span class="number">10</span>))-&gt;pluck(<span class="string">'id'</span>)-&gt;all()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>]]></content>
       
       <categories>
@@ -3163,11 +3192,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3192,11 +3221,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3221,11 +3250,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3250,11 +3279,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Horizon </tag>
             
@@ -3389,11 +3418,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 全文檢索 </tag>
             
@@ -3478,11 +3507,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -3509,11 +3538,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> JavaScript </tag>
             
@@ -3575,9 +3604,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -3606,9 +3635,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -3660,9 +3689,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> CI/CD </tag>
             
@@ -3693,9 +3722,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> MySQL </tag>
             
@@ -3726,9 +3755,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> CI/CD </tag>
             
@@ -3757,13 +3786,13 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
-            <tag> Laravel </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -3869,11 +3898,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> macOS </tag>
             
@@ -3929,11 +3958,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 除錯 </tag>
             
@@ -3987,11 +4016,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Swoole </tag>
             
@@ -4043,11 +4072,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> macOS </tag>
             
@@ -4078,9 +4107,9 @@
             
             <tag> macOS </tag>
             
-            <tag> Nginx </tag>
-            
             <tag> 網頁伺服器 </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -4134,11 +4163,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Homestead </tag>
             
@@ -4167,11 +4196,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4196,11 +4225,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4289,9 +4318,9 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> Vue </tag>
             
@@ -4455,11 +4484,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4515,11 +4544,11 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Laravel </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> macOS </tag>
             
@@ -4637,11 +4666,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4666,11 +4695,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -4699,11 +4728,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -4730,11 +4759,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -4765,11 +4794,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Xdebug </tag>
             
@@ -4852,11 +4881,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 後台管理系統 </tag>
             
@@ -4885,11 +4914,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 除錯 </tag>
             
@@ -5059,11 +5088,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5092,11 +5121,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5125,11 +5154,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5162,11 +5191,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5197,9 +5226,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> PHP </tag>
             
             <tag> 資料庫 </tag>
             
@@ -5323,9 +5352,9 @@
             
             <tag> Vue </tag>
             
-            <tag> Nuxt </tag>
-            
             <tag> Bootstrap Vue </tag>
+            
+            <tag> Nuxt </tag>
             
         </tags>
       
@@ -5381,11 +5410,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> JavaScript </tag>
             
@@ -7354,11 +7383,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> PHPUnit </tag>
             
@@ -7576,11 +7605,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -7605,11 +7634,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -7715,11 +7744,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -8049,11 +8078,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -8140,11 +8169,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -8173,11 +8202,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -8291,11 +8320,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Guzzle </tag>
             
@@ -8353,9 +8382,9 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> Zurb Foundatin </tag>
             
@@ -8409,11 +8438,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Lumen </tag>
             
@@ -8577,11 +8606,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Mix </tag>
             
@@ -8639,13 +8668,13 @@
             
             <tag> Linux </tag>
             
-            <tag> Laravel </tag>
-            
             <tag> elementary OS </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
         </tags>
       
@@ -8670,9 +8699,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Windows </tag>
             
             <tag> Ubuntu </tag>
             
@@ -8699,11 +8728,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Lumen </tag>
             
@@ -8734,11 +8763,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Lumen </tag>
             
@@ -8796,11 +8825,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       

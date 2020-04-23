@@ -9,16 +9,16 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app/User.php 檔。 12345678910111213141516171819/** * Get the route key for the model. * * @return string */public function">
-<meta name="keywords" content="程式設計,PHP,Laravel">
+<meta name="keywords" content="Laravel,程式設計,PHP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 Laravel 5.8 為 Eloquent 關聯建立資料填充">
-<meta property="og:url" content="https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/index.html">
+<meta property="og:title" content="在 Laravel 5.8 為關聯模型建立 Seeder 資料填充">
+<meta property="og:url" content="https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app/User.php 檔。 12345678910111213141516171819/** * Get the route key for the model. * * @return string */public function">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.805Z">
+<meta property="og:updated_time" content="2020-04-22T17:47:02.199Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laravel 5.8 為 Eloquent 關聯建立資料填充">
+<meta name="twitter:title" content="在 Laravel 5.8 為關聯模型建立 Seeder 資料填充">
 <meta name="twitter:description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app/User.php 檔。 12345678910111213141516171819/** * Get the route key for the model. * * @return string */public function">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 Laravel 5.8 為 Eloquent 關聯建立資料填充</title>
+    <title>在 Laravel 5.8 為關聯模型建立 Seeder 資料填充</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&text=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&is_video=false&description=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為 Eloquent 關聯建立資料填充&body=Check out this article: https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&name=在 Laravel 5.8 為 Eloquent 關聯建立資料填充&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&text=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&is_video=false&description=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&name=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 Laravel 5.8 為 Eloquent 關聯建立資料填充
+        在 Laravel 5.8 為關聯模型建立 Seeder 資料填充
     </h1>
 
 
@@ -236,16 +236,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&text=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&is_video=false&description=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為 Eloquent 關聯建立資料填充&body=Check out this article: https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為 Eloquent 關聯建立資料填充"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&name=在 Laravel 5.8 為 Eloquent 關聯建立資料填充&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&text=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&is_video=false&description=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/28/在-Laravel-5-8-為關聯模型建立-Seeder-資料填充/&name=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
