@@ -9,14 +9,14 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
-<meta name="keywords" content="Laravel,程式設計,PHP">
+<meta name="keywords" content="程式設計,PHP,Laravel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laravel 7.0 為關聯模型建立 Seeder 資料填充">
 <meta property="og:url" content="https://memochou1993.github.io/2020/04/23/在-Laravel-7-0-為關聯模型建立-Seeder-資料填充/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-23T08:39:40.781Z">
+<meta property="og:updated_time" content="2020-04-23T10:25:43.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 7.0 為關聯模型建立 Seeder 資料填充">
 <meta name="twitter:description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
@@ -176,12 +176,12 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all of the projects for the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\hasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">projects</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Project::class);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all of the posts for the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\hasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">posts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Post::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><code>User</code> 模型和 <code>Project</code> 模型是一對多的關聯，和 <code>Post</code> 模型也是一對多的關聯</p>
-<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>以父關聯為主，由上而下建立關聯資料。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>以父模型為主，由上而下建立關聯資料。</p>
 <p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者，為每個使用者個別建立 10 個專案和 10 筆文章。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;saveMany(factory(App\Project::class, <span class="number">10</span>)-&gt;make());</span><br><span class="line">    $user-&gt;posts()-&gt;saveMany(factory(App\Post::class, <span class="number">10</span>)-&gt;make());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>此方法在模型互相關聯的情況下，容易形成複雜的巢狀結構。而且每一個模型的資料填充都寫在同一個檔案內，形成高度耦合。</p>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>以子關聯為主，由下而上建立關聯資料。</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>以子模型為主，由下而上建立關聯資料。</p>
 <p>修改 <code>ProjectSeeder</code> 資料填充，建立 5 個專案。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\Project::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure>
 
