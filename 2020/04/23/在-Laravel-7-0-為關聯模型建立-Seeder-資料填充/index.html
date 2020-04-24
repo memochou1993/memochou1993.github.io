@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-23T10:25:43.615Z">
+<meta property="og:updated_time" content="2020-04-24T02:47:10.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 7.0 為關聯模型建立 Seeder 資料填充">
 <meta name="twitter:description" content="前言本文使用「一個使用者擁有多個專案和多筆文章」為例，為關聯模型建立資料填充。 關聯方法首先，為 User 模型建立關聯方法： 1234567891011121314151617/** * Get all of the projects for the user. * * @return \Illuminate\Database\Eloquent\Relations\hasMany */publ">
@@ -113,7 +113,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#關聯方法"><span class="toc-number">2.</span> <span class="toc-text">關聯方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">3.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">3.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.3.</span> <span class="toc-text">方法三</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#關聯方法"><span class="toc-number">2.</span> <span class="toc-text">關聯方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">3.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">3.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.3.</span> <span class="toc-text">方法三</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法四"><span class="toc-number">3.4.</span> <span class="toc-text">方法四</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -195,7 +195,7 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Post::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; factory(App\User::class)-&gt;create()-&gt;id,</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>此方法導致 <code>Project</code> 模型和 <code>Post</code> 模型所生產出來的 <code>User</code> 模型都不一樣，無法反映一個使用者同時擁有專案和文章的情況。而且在模型工廠做資料填充的行為，違反了單一職責原則。</p>
-<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>個別建立關聯資料。</p>
+<h3 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h3><p>從資料庫找出既有資料，再建立個別的關聯資料。</p>
 <p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure>
 
@@ -205,7 +205,30 @@
 <p>修改 <code>PostSeeder</code> 資料填充，撈出所有使用者，個別建立 10 筆文章。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">App\User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> </span>&#123;</span><br><span class="line">    $user-&gt;posts()-&gt;saveMany(</span><br><span class="line">        factory(App\Post::class, <span class="number">10</span>)-&gt;make()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<p>此方法雖然多了兩次資料庫的查詢，但解耦了模型之間的資料填充。</p>
+<p>此方法雖然解耦了模型之間的資料填充，但關聯模型一旦複雜，會產生很多次的資料庫查詢。</p>
+<h3 id="方法四"><a href="#方法四" class="headerlink" title="方法四"></a>方法四</h3><p>直接定義好要產生的資料數量及外鍵範圍。</p>
+<p>修改 <code>UserSeeder</code> 資料填充，建立 5 個使用者。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">factory(App\User::class, <span class="number">5</span>)-&gt;create();</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>ProjectSeeder</code> 資料填充，定義一個常數：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">const</span> AMOUNT = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>ProjectFactory</code> 模型工廠，定義好外鍵範圍：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Project::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'user_id'</span> =&gt; $faker-&gt;numberBetween(<span class="number">1</span>, ProjectSeeder::AMOUNT),</span><br><span class="line">        <span class="string">'created_at'</span>  =&gt; now(),</span><br><span class="line">        <span class="string">'updated_at'</span>  =&gt; now(),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>ProjectSeeder</code> 資料填充使用插入的方式，一次建立 10 個專案。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$table = DB::table(app(Project::class)-&gt;getTable());</span><br><span class="line"></span><br><span class="line">$table-&gt;insert(</span><br><span class="line">    factory(Project::class, <span class="keyword">self</span>::AMOUNT)-&gt;make()-&gt;toArray()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>PostSeeder</code> 資料填充，定義一個常數：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">const</span> AMOUNT = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>PostFactory</code> 模型工廠，定義好外鍵範圍：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$factory-&gt;define(Post::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'post_id'</span> =&gt; $faker-&gt;numberBetween(<span class="number">1</span>, PostSeeder::AMOUNT),</span><br><span class="line">        <span class="string">'created_at'</span>  =&gt; now(),</span><br><span class="line">        <span class="string">'updated_at'</span>  =&gt; now(),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>PostSeeder</code> 資料填充使用插入的方式，一次建立 10 筆文章。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$table = DB::table(app(Post::class)-&gt;getTable());</span><br><span class="line"></span><br><span class="line">$table-&gt;insert(</span><br><span class="line">    factory(Post::class, <span class="keyword">self</span>::AMOUNT)-&gt;make()-&gt;toArray()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>此方法是效率最高的，但要注意資料筆數和外鍵範圍的安排。</p>
 
   </div>
 </article>
@@ -242,7 +265,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#關聯方法"><span class="toc-number">2.</span> <span class="toc-text">關聯方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">3.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">3.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.3.</span> <span class="toc-text">方法三</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#關聯方法"><span class="toc-number">2.</span> <span class="toc-text">關聯方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一"><span class="toc-number">3.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二"><span class="toc-number">3.2.</span> <span class="toc-text">方法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法三"><span class="toc-number">3.3.</span> <span class="toc-text">方法三</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法四"><span class="toc-number">3.4.</span> <span class="toc-text">方法四</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
