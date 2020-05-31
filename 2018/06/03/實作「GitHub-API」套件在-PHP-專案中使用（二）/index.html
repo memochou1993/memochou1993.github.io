@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文實作一個可以讀取 GitHub API 的元件。 專案目錄1234567|- github-api/    |- component/        |- src/            |- Github.php        |- .gitignore        |- composer.json        |- README.md   元件的所有檔案都會放在 src 資料夾。">
-<meta name="keywords" content="程式設計,PHP,API,GitHub,元件,Packagist">
+    <meta name="description" content="前言本文實作一個可以讀取 GitHub API 的套件。 專案目錄1234567|- github-api/    |- component/        |- src/            |- Github.php        |- .gitignore        |- composer.json        |- README.md   套件的所有檔案都會放在 src 資料夾。">
+<meta name="keywords" content="GitHub,程式設計,PHP,API,套件開發,Packagist">
 <meta property="og:type" content="article">
-<meta property="og:title" content="實作「GitHub API」元件在 PHP 專案中使用（二）">
-<meta property="og:url" content="https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/index.html">
+<meta property="og:title" content="實作「GitHub API」套件在 PHP 專案中使用（二）">
+<meta property="og:url" content="https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文實作一個可以讀取 GitHub API 的元件。 專案目錄1234567|- github-api/    |- component/        |- src/            |- Github.php        |- .gitignore        |- composer.json        |- README.md   元件的所有檔案都會放在 src 資料夾。">
+<meta property="og:description" content="前言本文實作一個可以讀取 GitHub API 的套件。 專案目錄1234567|- github-api/    |- component/        |- src/            |- Github.php        |- .gitignore        |- composer.json        |- README.md   套件的所有檔案都會放在 src 資料夾。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T16:22:22.837Z">
+<meta property="og:updated_time" content="2020-05-31T09:58:39.441Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="實作「GitHub API」元件在 PHP 專案中使用（二）">
-<meta name="twitter:description" content="前言本文實作一個可以讀取 GitHub API 的元件。 專案目錄1234567|- github-api/    |- component/        |- src/            |- Github.php        |- .gitignore        |- composer.json        |- README.md   元件的所有檔案都會放在 src 資料夾。">
+<meta name="twitter:title" content="實作「GitHub API」套件在 PHP 專案中使用（二）">
+<meta name="twitter:description" content="前言本文實作一個可以讀取 GitHub API 的套件。 專案目錄1234567|- github-api/    |- component/        |- src/            |- Github.php        |- .gitignore        |- composer.json        |- README.md   套件的所有檔案都會放在 src 資料夾。">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>實作「GitHub API」元件在 PHP 專案中使用（二）</title>
+    <title>實作「GitHub API」套件在 PHP 專案中使用（二）</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -85,7 +85,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/06/02/實作「GitHub-API」元件在-PHP-專案中使用（一）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/02/實作「GitHub-API」套件在-PHP-專案中使用（一）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2018/06/04/《現代-PHP》學習筆記（十三）：消毒、驗證及跳脫/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&text=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&is_video=false&description=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=實作「GitHub API」元件在 PHP 專案中使用（二）&body=Check out this article: https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&name=實作「GitHub API」元件在 PHP 專案中使用（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&text=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&is_video=false&description=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作「GitHub API」套件在 PHP 專案中使用（二）&body=Check out this article: https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&name=實作「GitHub API」套件在 PHP 專案中使用（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        實作「GitHub API」元件在 PHP 專案中使用（二）
+        實作「GitHub API」套件在 PHP 專案中使用（二）
     </h1>
 
 
@@ -155,7 +155,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/元件/">元件</a>
+                <a href="/categories/程式設計/PHP/套件開發/">套件開發</a>
             
         
     </div>
@@ -164,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/API/">API</a>, <a class="tag-link" href="/tags/GitHub/">GitHub</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Packagist/">Packagist</a>, <a class="tag-link" href="/tags/元件/">元件</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/API/">API</a>, <a class="tag-link" href="/tags/GitHub/">GitHub</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Packagist/">Packagist</a>, <a class="tag-link" href="/tags/套件開發/">套件開發</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
     </div>
 
 
@@ -173,11 +173,11 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文實作一個可以讀取 GitHub API 的元件。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文實作一個可以讀取 GitHub API 的套件。</p>
 <h2 id="專案目錄"><a href="#專案目錄" class="headerlink" title="專案目錄"></a>專案目錄</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">|- github-api/</span><br><span class="line">    |- component/</span><br><span class="line">        |- src/</span><br><span class="line">            |- Github.php</span><br><span class="line">        |- .gitignore</span><br><span class="line">        |- composer.json</span><br><span class="line">        |- README.md</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>元件的所有檔案都會放在 <code>src</code> 資料夾。</li>
+<li>套件的所有檔案都會放在 <code>src</code> 資料夾。</li>
 </ul>
 <h2 id="新增-gitignore-檔"><a href="#新增-gitignore-檔" class="headerlink" title="新增 .gitignore 檔"></a>新增 .gitignore 檔</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vendor</span><br><span class="line">composer.lock</span><br></pre></td></tr></table></figure>
 
@@ -185,17 +185,17 @@
 
 <h2 id="新增-README-md-檔"><a href="#新增-README-md-檔" class="headerlink" title="新增 README.md 檔"></a>新增 README.md 檔</h2><p>見 <a href="https://github.com/memochou1993/github-api/blob/master/README.md" target="_blank" rel="noopener">https://github.com/memochou1993/github-api/blob/master/README.md</a></p>
 <h2 id="發布"><a href="#發布" class="headerlink" title="發布"></a>發布</h2><ol>
-<li>登入 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>，創建一個 <code>github-api</code> 儲存庫，將元件上傳。</li>
-<li>登入 <a href="https://packagist.org/" target="_blank" rel="noopener">Packagist</a>，註冊 <a href="https://github.com/memochou1993/github-api" target="_blank" rel="noopener">https://github.com/memochou1993/github-api</a> 元件。</li>
+<li>登入 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>，創建一個 <code>github-api</code> 儲存庫，將套件上傳。</li>
+<li>登入 <a href="https://packagist.org/" target="_blank" rel="noopener">Packagist</a>，註冊 <a href="https://github.com/memochou1993/github-api" target="_blank" rel="noopener">https://github.com/memochou1993/github-api</a> 套件。</li>
 </ol>
-<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>回到 GitHub 為元件建立一個語意化版本作為標籤：</p>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>回到 GitHub 為套件建立一個語意化版本作為標籤：</p>
 <ol>
 <li>點選 <code>release</code>。</li>
 <li>點選 <code>Create a new release</code>。</li>
 <li>在 <code>Tag version</code> 輸入 <code>v1.0.0</code>。</li>
 <li>點選 <code>Publish release</code>。</li>
 </ol>
-<h2 id="啟動掛鉤"><a href="#啟動掛鉤" class="headerlink" title="啟動掛鉤"></a>啟動掛鉤</h2><p>啟動 GitHub 掛鉤，讓元件儲存庫更新時送出一個提醒給 Packagist。</p>
+<h2 id="啟動掛鉤"><a href="#啟動掛鉤" class="headerlink" title="啟動掛鉤"></a>啟動掛鉤</h2><p>啟動 GitHub 掛鉤，讓套件儲存庫更新時送出一個提醒給 Packagist。</p>
 <ol>
 <li>點選 <code>Settings</code>。</li>
 <li>點選 <code>Integrations &amp; services</code>。</li>
@@ -205,7 +205,7 @@
 <li>確認將 <code>Active</code> 選項打勾。</li>
 <li>點選 <code>Add service</code>。</li>
 </ol>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>現在可以輸入以下命令使用做好的元件了。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>現在可以輸入以下命令使用做好的套件了。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require memochou1993/github-api</span><br></pre></td></tr></table></figure>
 
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
@@ -252,16 +252,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&text=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&is_video=false&description=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=實作「GitHub API」元件在 PHP 專案中使用（二）&body=Check out this article: https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&title=實作「GitHub API」元件在 PHP 專案中使用（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」元件在-PHP-專案中使用（二）/&name=實作「GitHub API」元件在 PHP 專案中使用（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&text=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&is_video=false&description=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作「GitHub API」套件在 PHP 專案中使用（二）&body=Check out this article: https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&title=實作「GitHub API」套件在 PHP 專案中使用（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/06/03/實作「GitHub-API」套件在-PHP-專案中使用（二）/&name=實作「GitHub API」套件在 PHP 專案中使用（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

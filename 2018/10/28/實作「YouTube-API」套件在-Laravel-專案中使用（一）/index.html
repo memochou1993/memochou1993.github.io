@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文實作一個可以讀取 YouTube API 的元件。 專案目錄12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |- youtub">
-<meta name="keywords" content="程式設計,PHP,Laravel,API,元件,Packagist,YouTube">
+    <meta name="description" content="前言本文實作一個可以讀取 YouTube API 的套件。 專案目錄專案目錄如下： 12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |">
+<meta name="keywords" content="程式設計,PHP,Laravel,API,套件開發,YouTube,Packagist">
 <meta property="og:type" content="article">
-<meta property="og:title" content="實作「YouTube API」元件在 Laravel 專案中使用（一）">
-<meta property="og:url" content="https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/index.html">
+<meta property="og:title" content="實作「YouTube API」套件在 Laravel 專案中使用（一）">
+<meta property="og:url" content="https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文實作一個可以讀取 YouTube API 的元件。 專案目錄12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |- youtub">
+<meta property="og:description" content="前言本文實作一個可以讀取 YouTube API 的套件。 專案目錄專案目錄如下： 12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T16:23:15.447Z">
+<meta property="og:updated_time" content="2020-05-31T10:12:33.635Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="實作「YouTube API」元件在 Laravel 專案中使用（一）">
-<meta name="twitter:description" content="前言本文實作一個可以讀取 YouTube API 的元件。 專案目錄12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |- youtub">
+<meta name="twitter:title" content="實作「YouTube API」套件在 Laravel 專案中使用（一）">
+<meta name="twitter:description" content="前言本文實作一個可以讀取 YouTube API 的套件。 專案目錄專案目錄如下： 12345678910111213141516171819|- youtube-api/    |- component/        |- example/            |- index.php        |- src/            |- config/                |">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>實作「YouTube API」元件在 Laravel 專案中使用（一）</title>
+    <title>實作「YouTube API」套件在 Laravel 專案中使用（一）</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -88,7 +88,7 @@
         <li><a class="icon" href="/2018/10/19/在-Homestead-中使用-PostgreSQL-資料庫/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2018/10/30/實作「YouTube-API」元件在-Laravel-專案中使用（二）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/10/30/實作「YouTube-API」套件在-Laravel-專案中使用（二）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -101,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&text=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&is_video=false&description=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=實作「YouTube API」元件在 Laravel 專案中使用（一）&body=Check out this article: https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&name=實作「YouTube API」元件在 Laravel 專案中使用（一）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&text=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&is_video=false&description=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作「YouTube API」套件在 Laravel 專案中使用（一）&body=Check out this article: https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&name=實作「YouTube API」套件在 Laravel 專案中使用（一）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#專案目錄"><span class="toc-number">2.</span> <span class="toc-text">專案目錄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-YouTube-API"><span class="toc-number">3.</span> <span class="toc-text">使用 YouTube API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#申請-API-Key"><span class="toc-number">4.</span> <span class="toc-text">申請 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相依元件"><span class="toc-number">5.</span> <span class="toc-text">安裝相依元件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">6.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">7.</span> <span class="toc-text">測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">8.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#專案目錄"><span class="toc-number">2.</span> <span class="toc-text">專案目錄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-YouTube-API"><span class="toc-number">3.</span> <span class="toc-text">使用 YouTube API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#申請-API-Key"><span class="toc-number">4.</span> <span class="toc-text">申請 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相依套件"><span class="toc-number">5.</span> <span class="toc-text">安裝相依套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">6.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">7.</span> <span class="toc-text">測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">8.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        實作「YouTube API」元件在 Laravel 專案中使用（一）
+        實作「YouTube API」套件在 Laravel 專案中使用（一）
     </h1>
 
 
@@ -155,7 +155,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/元件/">元件</a>
+                <a href="/categories/程式設計/PHP/套件開發/">套件開發</a>
             
         
     </div>
@@ -164,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/API/">API</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Packagist/">Packagist</a>, <a class="tag-link" href="/tags/YouTube/">YouTube</a>, <a class="tag-link" href="/tags/元件/">元件</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/API/">API</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Packagist/">Packagist</a>, <a class="tag-link" href="/tags/YouTube/">YouTube</a>, <a class="tag-link" href="/tags/套件開發/">套件開發</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
     </div>
 
 
@@ -173,15 +173,16 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文實作一個可以讀取 YouTube API 的元件。</p>
-<h2 id="專案目錄"><a href="#專案目錄" class="headerlink" title="專案目錄"></a>專案目錄</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">|- youtube-api/</span><br><span class="line">    |- component/</span><br><span class="line">        |- example/</span><br><span class="line">            |- index.php</span><br><span class="line">        |- src/</span><br><span class="line">            |- config/</span><br><span class="line">                |- youtube.php</span><br><span class="line">            |- Facades/</span><br><span class="line">                |- Youtube.php</span><br><span class="line">            |- Youtube.php</span><br><span class="line">            |- YoutubeServiceProvider.php</span><br><span class="line">        |- tests/</span><br><span class="line">            |- YoutubeTest.php</span><br><span class="line">        |- vendor/</span><br><span class="line">        |- .gitignore</span><br><span class="line">        |- composer.json</span><br><span class="line">        |- composer.lock</span><br><span class="line">        |- phpunit.xml</span><br><span class="line">        |- README.md</span><br></pre></td></tr></table></figure>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文實作一個可以讀取 YouTube API 的套件。</p>
+<h2 id="專案目錄"><a href="#專案目錄" class="headerlink" title="專案目錄"></a>專案目錄</h2><p>專案目錄如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">|- youtube-api/</span><br><span class="line">    |- component/</span><br><span class="line">        |- example/</span><br><span class="line">            |- index.php</span><br><span class="line">        |- src/</span><br><span class="line">            |- config/</span><br><span class="line">                |- youtube.php</span><br><span class="line">            |- Facades/</span><br><span class="line">                |- Youtube.php</span><br><span class="line">            |- Youtube.php</span><br><span class="line">            |- YoutubeServiceProvider.php</span><br><span class="line">        |- tests/</span><br><span class="line">            |- YoutubeTest.php</span><br><span class="line">        |- vendor/</span><br><span class="line">        |- .gitignore</span><br><span class="line">        |- composer.json</span><br><span class="line">        |- composer.lock</span><br><span class="line">        |- phpunit.xml</span><br><span class="line">        |- README.md</span><br></pre></td></tr></table></figure>
 
 <h2 id="使用-YouTube-API"><a href="#使用-YouTube-API" class="headerlink" title="使用 YouTube API"></a>使用 YouTube API</h2><p><a href="https://developers.google.com/youtube/v3/" target="_blank" rel="noopener">YouTube API</a> 提供詳細的文件供開發者使用。</p>
 <h2 id="申請-API-Key"><a href="#申請-API-Key" class="headerlink" title="申請 API Key"></a>申請 API Key</h2><p>首先到 <a href="https://console.developers.google.com/" target="_blank" rel="noopener">Google 開發者平台</a>建立專案，並且取得 API Key。</p>
-<h2 id="安裝相依元件"><a href="#安裝相依元件" class="headerlink" title="安裝相依元件"></a>安裝相依元件</h2><p>建立 <code>composer.json</code> 檔。</p>
+<h2 id="安裝相依套件"><a href="#安裝相依套件" class="headerlink" title="安裝相依套件"></a>安裝相依套件</h2><p>建立 <code>composer.json</code> 檔。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;require&quot;: &#123;</span><br><span class="line">        &quot;guzzlehttp/guzzle&quot;: &quot;^6.1&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;require-dev&quot;: &#123;</span><br><span class="line">        &quot;phpunit/phpunit&quot;: &quot;^6.1&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>安裝 <code>Guzzle</code> 及 <code>PHPUnit</code> 相依元件。</p>
+<p>安裝 <code>Guzzle</code> 及 <code>PHPUnit</code> 相依套件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer install</span><br></pre></td></tr></table></figure>
 
 <h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>在 <code>src</code> 資料夾中新增一個 <code>Youtube.php</code> 檔。</p>
@@ -238,21 +239,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#專案目錄"><span class="toc-number">2.</span> <span class="toc-text">專案目錄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-YouTube-API"><span class="toc-number">3.</span> <span class="toc-text">使用 YouTube API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#申請-API-Key"><span class="toc-number">4.</span> <span class="toc-text">申請 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相依元件"><span class="toc-number">5.</span> <span class="toc-text">安裝相依元件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">6.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">7.</span> <span class="toc-text">測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">8.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#專案目錄"><span class="toc-number">2.</span> <span class="toc-text">專案目錄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-YouTube-API"><span class="toc-number">3.</span> <span class="toc-text">使用 YouTube API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#申請-API-Key"><span class="toc-number">4.</span> <span class="toc-text">申請 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相依套件"><span class="toc-number">5.</span> <span class="toc-text">安裝相依套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">6.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">7.</span> <span class="toc-text">測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">8.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&text=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&is_video=false&description=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=實作「YouTube API」元件在 Laravel 專案中使用（一）&body=Check out this article: https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&title=實作「YouTube API」元件在 Laravel 專案中使用（一）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」元件在-Laravel-專案中使用（一）/&name=實作「YouTube API」元件在 Laravel 專案中使用（一）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&text=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&is_video=false&description=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作「YouTube API」套件在 Laravel 專案中使用（一）&body=Check out this article: https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&title=實作「YouTube API」套件在 Laravel 專案中使用（一）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/10/28/實作「YouTube-API」套件在-Laravel-專案中使用（一）/&name=實作「YouTube API」套件在 Laravel 專案中使用（一）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
