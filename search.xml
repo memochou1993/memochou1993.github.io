@@ -3,6 +3,35 @@
   
     
     <entry>
+      <title>在 Laravel 7.0 客製化 Sanctum 認證</title>
+      <link href="/2020/06/02/%E5%9C%A8-Laravel-7-0-%E5%AE%A2%E8%A3%BD%E5%8C%96-Sanctum-%E8%AA%8D%E8%AD%89/"/>
+      <url>/2020/06/02/%E5%9C%A8-Laravel-7-0-%E5%AE%A2%E8%A3%BD%E5%8C%96-Sanctum-%E8%AA%8D%E8%AD%89/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一般只有使用者會需要認證，但有時候其他模型也需要認證，例如客戶端、組織或企業等。所幸 Sanctum 使用的關聯是一對多的多態關聯，使得其他的模型可以共用 <code>personal_access_tokens</code> 資料表，為模型建立令牌（token）。</p><h2 id="認證模型"><a href="#認證模型" class="headerlink" title="認證模型"></a>認證模型</h2><p>如果有一個自訂的模型需要建立令牌，例如 <code>Company</code>，可以將它修改如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Models</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>\<span class="title">Authenticatable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">Auth</span>\<span class="title">Authenticatable</span> <span class="title">as</span> <span class="title">AuthenticatableContract</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Model</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">Access</span>\<span class="title">Authorizable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Sanctum</span>\<span class="title">HasApiTokens</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span> <span class="keyword">extends</span> <span class="title">Model</span> <span class="keyword">implements</span> <span class="title">AuthenticatableContract</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Authenticatable</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Authorizable</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">HasApiTokens</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="中介層"><a href="#中介層" class="headerlink" title="中介層"></a>中介層</h2><p>如果令牌不是由 <code>User</code> 模型所建立，直接將當前的認證模型，例如 <code>Auth::user()</code> 帶入有模型綁定的方法中就會發生錯誤。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  User  $user</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">(User $user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>為了避免錯誤的令牌請求，可以建立一個 <code>VerifyToken</code> 中介層：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Middleware</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Closure</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Auth</span>\<span class="title">AuthenticationException</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Str</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VerifyToken</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Handle an incoming request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Illuminate\Http\Request  $request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Closure  $next</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  string  $model</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> AuthenticationException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span><span class="params">($request, Closure $next, string $model)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (! (class_basename($request-&gt;user()) === Str::ucfirst($model))) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AuthenticationException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $next($request);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>app/Http/Kernel.php</code> 檔中註冊。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $routeMiddleware = [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="string">'token'</span> =&gt; \App\Http\Middleware\VerifyToken::class,</span><br><span class="line">];</span><br></pre></td></tr></table></figure><p>在路由中使用如下：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Route::prefix(<span class="string">'api/user'</span>)-&gt;middleware([</span><br><span class="line">    <span class="string">'token:user'</span>,</span><br><span class="line">    <span class="string">'auth:sanctum'</span>,</span><br><span class="line">])-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 只有使用 User 模型所建立的令牌能夠進入</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">Route::prefix(<span class="string">'api/company'</span>)-&gt;middleware([</span><br><span class="line">    <span class="string">'token:company'</span>,</span><br><span class="line">    <span class="string">'auth:sanctum'</span>,</span><br><span class="line">])-&gt;group(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 只有使用 Company 模型所建立的令牌能夠進入</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="令牌模型"><a href="#令牌模型" class="headerlink" title="令牌模型"></a>令牌模型</h2><p>如果要客製 Sanctum 的 <code>PersonalAccessToken</code> 模型，可以建立一個自己的 <code>Token</code> 模型來繼承它。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Models</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Sanctum</span>\<span class="title">PersonalAccessToken</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Token</span> <span class="keyword">extends</span> <span class="title">PersonalAccessToken</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The table associated with the model.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> string</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> $table = <span class="string">'personal_access_tokens'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>修改 <code>AuthServiceProvider</code> 服務提供者，在 <code>boot()</code> 方法中設定 Sanctum 要使用的 <code>Token</code> 模型。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Providers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Support</span>\<span class="title">Providers</span>\<span class="title">AuthServiceProvider</span> <span class="title">as</span> <span class="title">ServiceProvider</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Sanctum</span>\<span class="title">Sanctum</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthServiceProvider</span> <span class="keyword">extends</span> <span class="title">ServiceProvider</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The policy mappings for the application.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> $policies = [</span><br><span class="line">        <span class="comment">// 'App\Model' =&gt; 'App\Policies\ModelPolicy',</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Register any authentication / authorization services.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">boot</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;registerPolicies();</span><br><span class="line"></span><br><span class="line">        Sanctum::usePersonalAccessTokenModel(\App\Models\Token::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>在做單元測試的時候，使用以下方法來認證當前的模型：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$company = factory(Company::class)-&gt;make();</span><br><span class="line"></span><br><span class="line">Sanctum::actingAs($company);</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> Laravel </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>在 Laravel 7.0 開發套件</title>
       <link href="/2020/05/31/%E5%9C%A8-Laravel-7-0-%E9%96%8B%E7%99%BC%E5%A5%97%E4%BB%B6/"/>
       <url>/2020/05/31/%E5%9C%A8-Laravel-7-0-%E9%96%8B%E7%99%BC%E5%A5%97%E4%BB%B6/</url>
@@ -1067,11 +1096,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -1212,9 +1241,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -2201,9 +2230,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> Mix </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Vue </tag>
             
@@ -2294,9 +2323,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2379,9 +2408,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2516,9 +2545,9 @@
       
         <tags>
             
-            <tag> Node </tag>
-            
             <tag> npm </tag>
+            
+            <tag> Node </tag>
             
         </tags>
       
@@ -2595,9 +2624,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Windows </tag>
             
@@ -2792,9 +2821,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3227,9 +3256,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Laradock </tag>
             
@@ -3840,9 +3869,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3873,9 +3902,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3906,9 +3935,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3937,9 +3966,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -4697,9 +4726,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -5507,9 +5536,9 @@
             
             <tag> Vue </tag>
             
-            <tag> Bootstrap Vue </tag>
-            
             <tag> Nuxt </tag>
+            
+            <tag> Bootstrap Vue </tag>
             
         </tags>
       
@@ -5959,9 +5988,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 物件導向 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 物件導向 </tag>
             
         </tags>
       
@@ -6015,9 +6044,9 @@
             
             <tag> 程式設計 </tag>
             
-            <tag> 物件導向 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 物件導向 </tag>
             
         </tags>
       
@@ -7279,11 +7308,11 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> API </tag>
             
@@ -7314,11 +7343,11 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> API </tag>
             
@@ -8821,9 +8850,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
