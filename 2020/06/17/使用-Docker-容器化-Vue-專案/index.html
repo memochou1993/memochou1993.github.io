@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 Go 1.13.4  容器化新增 docker-compose.yaml 檔： 123456789version: &apos;3&apos;services:  app:    container_name: vue-docker-example    build: .    ports:      - &quot;8080:80&quot;    restart: always  新增 Dockerfile 檔： 123456">
-<meta name="keywords" content="環境部署,Docker,JavaScript,Vue">
+    <meta name="description" content="容器化新增 docker-compose.yaml 檔： 123456789version: &apos;3&apos;services:  app:    container_name: vue-docker-example    build: .    ports:      - &quot;8080:80&quot;    restart: always  新增 Dockerfile 檔： 12345678910111213# b">
+<meta name="keywords" content="JavaScript,Vue,環境部署,Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Docker 容器化 Vue 專案">
-<meta property="og:url" content="https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/index.html">
+<meta property="og:url" content="https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 Go 1.13.4  容器化新增 docker-compose.yaml 檔： 123456789version: &apos;3&apos;services:  app:    container_name: vue-docker-example    build: .    ports:      - &quot;8080:80&quot;    restart: always  新增 Dockerfile 檔： 123456">
+<meta property="og:description" content="容器化新增 docker-compose.yaml 檔： 123456789version: &apos;3&apos;services:  app:    container_name: vue-docker-example    build: .    ports:      - &quot;8080:80&quot;    restart: always  新增 Dockerfile 檔： 12345678910111213# b">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-06-17T14:59:39.557Z">
+<meta property="og:updated_time" content="2020-07-10T15:50:03.710Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Docker 容器化 Vue 專案">
-<meta name="twitter:description" content="環境 Go 1.13.4  容器化新增 docker-compose.yaml 檔： 123456789version: &apos;3&apos;services:  app:    container_name: vue-docker-example    build: .    ports:      - &quot;8080:80&quot;    restart: always  新增 Dockerfile 檔： 123456">
+<meta name="twitter:description" content="容器化新增 docker-compose.yaml 檔： 123456789version: &apos;3&apos;services:  app:    container_name: vue-docker-example    build: .    ports:      - &quot;8080:80&quot;    restart: always  新增 Dockerfile 檔： 12345678910111213# b">
     
     
         
@@ -88,6 +88,8 @@
         <li><a class="icon" href="/2020/06/02/在-Laravel-7-0-客製化-Sanctum-認證/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
+        <li><a class="icon" href="/2020/06/20/在-Laravel-7-0-使用-VarExporter-生成-PHP-檔案/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
       </ul>
@@ -99,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&text=使用 Docker 容器化 Vue 專案"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&is_video=false&description=使用 Docker 容器化 Vue 專案"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Docker 容器化 Vue 專案&body=Check out this article: https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&name=使用 Docker 容器化 Vue 專案&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&text=使用 Docker 容器化 Vue 專案"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&is_video=false&description=使用 Docker 容器化 Vue 專案"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Docker 容器化 Vue 專案&body=Check out this article: https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&name=使用 Docker 容器化 Vue 專案&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化"><span class="toc-number">2.</span> <span class="toc-text">容器化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化"><span class="toc-number">1.</span> <span class="toc-text">容器化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">2.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -169,10 +171,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
-<li>Go 1.13.4</li>
-</ul>
-<h2 id="容器化"><a href="#容器化" class="headerlink" title="容器化"></a>容器化</h2><p>新增 <code>docker-compose.yaml</code> 檔：</p>
+    <h2 id="容器化"><a href="#容器化" class="headerlink" title="容器化"></a>容器化</h2><p>新增 <code>docker-compose.yaml</code> 檔：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  app:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">vue-docker-example</span></span><br><span class="line"><span class="attr">    build:</span> <span class="string">.</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8080:80"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>Dockerfile</code> 檔：</p>
@@ -224,21 +223,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化"><span class="toc-number">2.</span> <span class="toc-text">容器化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化"><span class="toc-number">1.</span> <span class="toc-text">容器化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">2.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&text=使用 Docker 容器化 Vue 專案"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&is_video=false&description=使用 Docker 容器化 Vue 專案"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Docker 容器化 Vue 專案&body=Check out this article: https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/06/17/使用 Docker 容器化 Vue 專案/&name=使用 Docker 容器化 Vue 專案&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&text=使用 Docker 容器化 Vue 專案"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&is_video=false&description=使用 Docker 容器化 Vue 專案"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Docker 容器化 Vue 專案&body=Check out this article: https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&title=使用 Docker 容器化 Vue 專案"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/06/17/使用-Docker-容器化-Vue-專案/&name=使用 Docker 容器化 Vue 專案&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
