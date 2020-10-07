@@ -3,6 +3,103 @@
   
     
     <entry>
+      <title>使用 JSDoc 提示 Laravel Mix 的動態方法</title>
+      <link href="/2020/10/07/%E4%BD%BF%E7%94%A8-JSDoc-%E6%8F%90%E7%A4%BA-Laravel-Mix-%E7%9A%84%E5%8B%95%E6%85%8B%E6%96%B9%E6%B3%95/"/>
+      <url>/2020/10/07/%E4%BD%BF%E7%94%A8-JSDoc-%E6%8F%90%E7%A4%BA-Laravel-Mix-%E7%9A%84%E5%8B%95%E6%85%8B%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Laravel Mix 使用了許多的動態方法，為了避免出現錯誤提示，可以使用 JSDoc 註解。</p><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>修改 <code>webpack.mix.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mix = <span class="built_in">require</span>(<span class="string">'laravel-mix'</span>);</span><br><span class="line"></span><br><span class="line">mix</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @method js</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125;</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125;</span></span><br><span class="line"><span class="comment">   * @memberof Api</span></span><br><span class="line"><span class="comment">   * @instance</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  .js(<span class="string">'resources/js/app.js'</span>, <span class="string">'public/js'</span>) <span class="comment">// 動態方法</span></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @method extract</span></span><br><span class="line"><span class="comment">   * @param &#123;array&#125;</span></span><br><span class="line"><span class="comment">   * @memberof Api</span></span><br><span class="line"><span class="comment">   * @instance</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  .extract([]) <span class="comment">// 動態方法</span></span><br><span class="line">  .sourceMaps(); <span class="comment">// 一般方法</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> Mix </tag>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>在 Laravel 7.0 為 Vue 設置路徑別名</title>
+      <link href="/2020/10/06/%E5%9C%A8-Laravel-7-0-%E7%82%BA-Vue-%E8%A8%AD%E7%BD%AE%E8%B7%AF%E5%BE%91%E5%88%A5%E5%90%8D/"/>
+      <url>/2020/10/06/%E5%9C%A8-Laravel-7-0-%E7%82%BA-Vue-%E8%A8%AD%E7%BD%AE%E8%B7%AF%E5%BE%91%E5%88%A5%E5%90%8D/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>在專案根目錄新增 <code>webpack.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    extensions: [</span><br><span class="line">      <span class="string">'.js'</span>,</span><br><span class="line">      <span class="string">'.vue'</span>,</span><br><span class="line">    ],</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'@'</span>: path.join(__dirname, <span class="string">'/resources/js'</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>修改 <code>webpack.mix.js</code> 檔，引入 <code>webpack.config</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mix = <span class="built_in">require</span>(<span class="string">'laravel-mix'</span>);</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./webpack.config'</span>);</span><br><span class="line"></span><br><span class="line">mix.webpackConfig(config);</span><br></pre></td></tr></table></figure><h2 id="編輯器"><a href="#編輯器" class="headerlink" title="編輯器"></a>編輯器</h2><p>使用 PhpStorm 編輯器時，如果出現 <code>Module is not installed</code> 的錯誤訊息，可以開啟 <code>Preferences</code> 視窗，將 Webpack 的 <code>webpack configuration file</code> 路徑設置為 <code>webpack.config.js</code> 檔的路徑。</p>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> Mix </tag>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>使用 PHPDoc 提示 Laravel 的魔術方法</title>
+      <link href="/2020/10/05/%E4%BD%BF%E7%94%A8-PHPDoc-%E6%8F%90%E7%A4%BA-Laravel-%E7%9A%84%E9%AD%94%E8%A1%93%E6%96%B9%E6%B3%95/"/>
+      <url>/2020/10/05/%E4%BD%BF%E7%94%A8-PHPDoc-%E6%8F%90%E7%A4%BA-Laravel-%E7%9A%84%E9%AD%94%E8%A1%93%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Laravel 使用了許多的魔術方法，為了讓編輯器能有更友善的提示，因此可以使用 PHPDoc 註解，避免出現錯誤提示。</p><h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>使用 <code>@property</code> 標籤，告訴編輯器 <code>User</code> 模型有一個 <code>$name</code> 屬性。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@property</span> string $name</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Authenticatable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>使用 <code>@var</code> 標籤，告訴編輯器 <code>$user</code> 變數實際上是一個 <code>User</code> 模型。在存取 <code>$user</code> 變數時，就不會出現錯誤提示。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@var</span> User $user */</span></span><br><span class="line">$user = factory(User::class)-&gt;create();</span><br><span class="line"></span><br><span class="line">$user-&gt;name; <span class="comment">// 魔術方法</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> PHP </category>
+          
+          <category> Laravel </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> PHP </tag>
+            
+            <tag> PHPDoc </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>使用 Go 寄送郵件</title>
       <link href="/2020/07/22/%E4%BD%BF%E7%94%A8-Go-%E5%AF%84%E9%80%81%E9%83%B5%E4%BB%B6/"/>
       <url>/2020/07/22/%E4%BD%BF%E7%94%A8-Go-%E5%AF%84%E9%80%81%E9%83%B5%E4%BB%B6/</url>
@@ -135,11 +232,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -193,11 +290,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -222,11 +319,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -257,11 +354,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -286,11 +383,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -315,11 +412,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -344,11 +441,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Eloquent </tag>
             
@@ -375,11 +472,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Eloquent </tag>
             
@@ -437,9 +534,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Harbor </tag>
             
@@ -526,11 +623,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -555,11 +652,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -582,9 +679,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -781,11 +878,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -1239,11 +1336,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Cron </tag>
             
@@ -1268,13 +1365,13 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> PHP </tag>
             
         </tags>
       
@@ -1299,11 +1396,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1413,8 +1510,6 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
@@ -1422,6 +1517,8 @@
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> CentOS </tag>
             
@@ -1479,11 +1576,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> SFTP </tag>
             
@@ -1510,11 +1607,11 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> Go </tag>
             
@@ -1810,11 +1907,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1866,11 +1963,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -1899,11 +1996,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -1932,11 +2029,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -1961,11 +2058,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -2021,11 +2118,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -2131,11 +2228,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -2301,11 +2398,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -2330,11 +2427,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -2396,15 +2493,15 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
-            <tag> Laravel </tag>
+            <tag> Mix </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> Mix </tag>
             
             <tag> Vue </tag>
             
@@ -2462,11 +2559,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> JavaScript </tag>
             
@@ -2495,11 +2592,11 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Nginx </tag>
             
@@ -2580,13 +2677,13 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> PHP </tag>
             
         </tags>
       
@@ -2796,15 +2893,15 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
-            
-            <tag> Windows </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -2939,13 +3036,13 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Wordpress </tag>
             
@@ -3078,11 +3175,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -3227,11 +3324,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3256,11 +3353,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> CORS </tag>
             
@@ -3318,11 +3415,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3347,11 +3444,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3374,11 +3471,11 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Guzzle </tag>
             
@@ -3407,11 +3504,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3436,11 +3533,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3465,11 +3562,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3494,11 +3591,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3523,11 +3620,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3552,11 +3649,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -3581,11 +3678,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Horizon </tag>
             
@@ -3720,11 +3817,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 全文檢索 </tag>
             
@@ -3809,11 +3906,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -3840,11 +3937,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> JavaScript </tag>
             
@@ -3906,9 +4003,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -3937,9 +4034,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -3987,11 +4084,11 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4020,13 +4117,13 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
             <tag> Ubuntu </tag>
+            
+            <tag> PHP </tag>
             
             <tag> MySQL </tag>
             
@@ -4053,11 +4150,11 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Ubuntu </tag>
             
@@ -4084,17 +4181,17 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -4200,11 +4297,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> macOS </tag>
             
@@ -4260,11 +4357,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 除錯 </tag>
             
@@ -4318,11 +4415,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Swoole </tag>
             
@@ -4374,11 +4471,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> macOS </tag>
             
@@ -4465,11 +4562,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Homestead </tag>
             
@@ -4498,11 +4595,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4527,11 +4624,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4620,9 +4717,9 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> Vue </tag>
             
@@ -4786,11 +4883,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4844,13 +4941,13 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> macOS </tag>
             
@@ -4968,11 +5065,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -4997,11 +5094,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 資料庫 </tag>
             
@@ -5030,11 +5127,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5061,11 +5158,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -5096,11 +5193,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Xdebug </tag>
             
@@ -5183,11 +5280,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 後台管理系統 </tag>
             
@@ -5216,11 +5313,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 除錯 </tag>
             
@@ -5390,11 +5487,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5423,11 +5520,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5456,11 +5553,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5493,11 +5590,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> API </tag>
             
@@ -5528,9 +5625,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> PHP </tag>
             
             <tag> 資料庫 </tag>
             
@@ -5654,9 +5751,9 @@
             
             <tag> Vue </tag>
             
-            <tag> Nuxt </tag>
-            
             <tag> Bootstrap Vue </tag>
+            
+            <tag> Nuxt </tag>
             
         </tags>
       
@@ -5712,11 +5809,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> JavaScript </tag>
             
@@ -7399,11 +7496,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> API </tag>
             
@@ -7434,11 +7531,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> API </tag>
             
@@ -7658,11 +7755,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> PHPUnit </tag>
             
@@ -7880,11 +7977,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -7909,11 +8006,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Eloquent </tag>
             
@@ -7994,11 +8091,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
@@ -8301,11 +8398,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -8392,11 +8489,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -8425,11 +8522,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> 測試 </tag>
             
@@ -8543,11 +8640,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Guzzle </tag>
             
@@ -8605,9 +8702,9 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> Zurb Foundatin </tag>
             
@@ -8661,11 +8758,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Lumen </tag>
             
@@ -8802,11 +8899,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Mix </tag>
             
@@ -8860,8 +8957,6 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
@@ -8871,6 +8966,8 @@
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Laravel </tag>
             
         </tags>
       
@@ -8895,9 +8992,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Windows </tag>
             
             <tag> Ubuntu </tag>
             
@@ -8924,11 +9021,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Lumen </tag>
             
@@ -8959,11 +9056,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
             <tag> Lumen </tag>
             
@@ -8992,11 +9089,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Hexo </tag>
             
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
         </tags>
       
@@ -9021,11 +9118,11 @@
       
         <tags>
             
+            <tag> Laravel </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> Laravel </tag>
             
         </tags>
       
