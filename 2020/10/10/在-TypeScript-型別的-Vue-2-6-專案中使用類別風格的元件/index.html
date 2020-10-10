@@ -11,14 +11,14 @@
     <meta name="description" content="前言Vue 對 TypeScript 已經有了很好的支援，可以使用兩種書寫方式，一種是基礎的寫法，另一種是類別風格的元件寫法。 基礎的寫法基礎的寫法是使用 Vue.component 或 Vue.extend 方法，與原先的寫法沒有太大差異。 12345678910import Vue from &apos;vue&apos;const Component = Vue.extend(&amp;#123;  // type i">
 <meta name="keywords" content="程式設計,JavaScript,Vue,TypeScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 TypeScript 型別的 Vue 專案中使用類別風格的元件">
-<meta property="og:url" content="https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/index.html">
+<meta property="og:title" content="在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件">
+<meta property="og:url" content="https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言Vue 對 TypeScript 已經有了很好的支援，可以使用兩種書寫方式，一種是基礎的寫法，另一種是類別風格的元件寫法。 基礎的寫法基礎的寫法是使用 Vue.component 或 Vue.extend 方法，與原先的寫法沒有太大差異。 12345678910import Vue from &apos;vue&apos;const Component = Vue.extend(&amp;#123;  // type i">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-10T09:14:53.230Z">
+<meta property="og:updated_time" content="2020-10-10T09:19:03.369Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 TypeScript 型別的 Vue 專案中使用類別風格的元件">
+<meta name="twitter:title" content="在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件">
 <meta name="twitter:description" content="前言Vue 對 TypeScript 已經有了很好的支援，可以使用兩種書寫方式，一種是基礎的寫法，另一種是類別風格的元件寫法。 基礎的寫法基礎的寫法是使用 Vue.component 或 Vue.extend 方法，與原先的寫法沒有太大差異。 12345678910import Vue from &apos;vue&apos;const Component = Vue.extend(&amp;#123;  // type i">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 TypeScript 型別的 Vue 專案中使用類別風格的元件</title>
+    <title>在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -85,7 +85,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/10/10/在-TypeScript-型別的-Vue-專案中使用-Vuetify-前端框架/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用-Vuetify-前端框架/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
@@ -99,16 +99,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&text=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&is_video=false&description=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 TypeScript 型別的 Vue 專案中使用類別風格的元件&body=Check out this article: https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&name=在 TypeScript 型別的 Vue 專案中使用類別風格的元件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&text=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&is_video=false&description=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件&body=Check out this article: https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&name=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -125,7 +125,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 TypeScript 型別的 Vue 專案中使用類別風格的元件
+        在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件
     </h1>
 
 
@@ -243,16 +243,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&text=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&is_video=false&description=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 TypeScript 型別的 Vue 專案中使用類別風格的元件&body=Check out this article: https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 專案中使用類別風格的元件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-專案中使用類別風格的元件/&name=在 TypeScript 型別的 Vue 專案中使用類別風格的元件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&text=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&is_video=false&description=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件&body=Check out this article: https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&title=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/10/10/在-TypeScript-型別的-Vue-2-6-專案中使用類別風格的元件/&name=在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

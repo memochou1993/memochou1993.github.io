@@ -3,9 +3,9 @@
   
     
     <entry>
-      <title>在 TypeScript 型別的 Vue 專案中使用類別風格的元件</title>
-      <link href="/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8%E9%A1%9E%E5%88%A5%E9%A2%A8%E6%A0%BC%E7%9A%84%E5%85%83%E4%BB%B6/"/>
-      <url>/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8%E9%A1%9E%E5%88%A5%E9%A2%A8%E6%A0%BC%E7%9A%84%E5%85%83%E4%BB%B6/</url>
+      <title>在 TypeScript 型別的 Vue 2.6 專案中使用類別風格的元件</title>
+      <link href="/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-2-6-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8%E9%A1%9E%E5%88%A5%E9%A2%A8%E6%A0%BC%E7%9A%84%E5%85%83%E4%BB%B6/"/>
+      <url>/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-2-6-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8%E9%A1%9E%E5%88%A5%E9%A2%A8%E6%A0%BC%E7%9A%84%E5%85%83%E4%BB%B6/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vue 對 TypeScript 已經有了很好的支援，可以使用兩種書寫方式，一種是基礎的寫法，另一種是類別風格的元件寫法。</p><h3 id="基礎的寫法"><a href="#基礎的寫法" class="headerlink" title="基礎的寫法"></a>基礎的寫法</h3><p>基礎的寫法是使用 <code>Vue.component</code> 或 <code>Vue.extend</code> 方法，與原先的寫法沒有太大差異。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Component = Vue.extend(&#123;</span><br><span class="line">  <span class="comment">// type inference enabled</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Component = &#123;</span><br><span class="line">  <span class="comment">// this will NOT have type inference,</span></span><br><span class="line">  <span class="comment">// because TypeScript can't tell this is options for a Vue component.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="類別風格的元件"><a href="#類別風格的元件" class="headerlink" title="類別風格的元件"></a>類別風格的元件</h3><p>使用類別風格的元件需要搭配 <code>vue-class-component</code> 套件，以及 <code>@</code> 裝飾器來使用。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Component <span class="keyword">from</span> <span class="string">'vue-class-component'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// The @Component decorator indicates the class is a Vue component</span></span><br><span class="line">@Component(&#123;</span><br><span class="line">  <span class="comment">// All component options are allowed in here</span></span><br><span class="line">  template: <span class="string">'&lt;button @click="onClick"&gt;Click!&lt;/button&gt;'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Initial data can be declared as instance properties</span></span><br><span class="line">  message: string = <span class="string">'Hello!'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Component methods can be declared as instance methods</span></span><br><span class="line">  onClick (): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">window</span>.alert(<span class="keyword">this</span>.message)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>安裝以下套件。社群所開發的 <code>vue-property-decorator</code> 套件是基於官方所開發的 <code>vue-class-component</code> 套件的擴展。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add vue-class-component</span><br><span class="line">yarn add vue-property-decorator</span><br></pre></td></tr></table></figure><h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>首先建立一個 TypeScript 型別的 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create example</span><br></pre></td></tr></table></figure><p>修改 <code>tsconfig.json</code> 檔，開啟編輯器對裝飾器的支援：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>原先 <code>HelloWorld</code> 元件大致上如下：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123; msg &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> Vue.extend(&#123;</span></span><br><span class="line"><span class="javascript">  name: <span class="string">'HelloWorld'</span>,</span></span><br><span class="line"><span class="undefined">  props: &#123;</span></span><br><span class="line"><span class="javascript">    msg: <span class="built_in">String</span>,</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><p>改寫 <code>HelloWorld</code> 元件，修改為裝飾器的寫法：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123; msg &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; Vue, Component, Prop &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">@Component</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span></span><br><span class="line"><span class="undefined">  @Prop() private msg!: string;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><p>原先的 <code>Home</code> 視圖大致上如下：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;HelloWorld</span><br><span class="line">      msg=<span class="string">"Hello"</span></span><br><span class="line">    /&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang=<span class="string">"ts"</span>&gt;</span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'@/components/HelloWorld.vue'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Vue.extend(&#123;</span><br><span class="line">  name: <span class="string">'Home'</span>,</span><br><span class="line">  components: &#123;</span><br><span class="line">    HelloWorld,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure><p>改寫 <code>Home</code> 視圖，修改為裝飾器的寫法：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">HelloWorld</span></span></span><br><span class="line"><span class="tag">      <span class="attr">msg</span>=<span class="string">"Hello"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; Vue, Component &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'@/components/HelloWorld.vue'</span>;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">@Component(&#123;</span></span><br><span class="line"><span class="undefined">  components: &#123;</span></span><br><span class="line"><span class="undefined">    HelloWorld,</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">&#125;)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://vuejs.org/v2/guide/typescript.html" target="_blank" rel="noopener">Vue - TypeScript Support</a></li></ul>]]></content>
       
       <categories>
@@ -34,9 +34,9 @@
     </entry>
     
     <entry>
-      <title>在 TypeScript 型別的 Vue 專案中使用 Vuetify 前端框架</title>
-      <link href="/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuetify-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
-      <url>/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuetify-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/</url>
+      <title>在 TypeScript 型別的 Vue 2.6 專案中使用 Vuetify 前端框架</title>
+      <link href="/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-2-6-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuetify-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
+      <url>/2020/10/10/%E5%9C%A8-TypeScript-%E5%9E%8B%E5%88%A5%E7%9A%84-Vue-2-6-%E5%B0%88%E6%A1%88%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuetify-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/</url>
       <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vuetify 的型別宣告定義在 <code>node_modules/vuetify/types</code> 中，因此 Vuetify 可以直接被使用在 TypeScript 型別的 Vue 專案裡。</p><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>修改根目錄的 <code>tsconfig.json</code> 檔，將 <code>vuetify</code> 的型別宣告添加到 <code>types</code> 列表中。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"types"</span>: [</span><br><span class="line">      <span class="string">"vuetify"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://vuetifyjs.com/en/getting-started/frequently-asked-questions/#questions" target="_blank" rel="noopener">Vuetify - Questions</a></li><li><a href="https://www.tslang.cn/docs/handbook/tsconfig-json.html" target="_blank" rel="noopener">TypeScript - tsconfig.json</a></li></ul>]]></content>
       
       <categories>
@@ -708,9 +708,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Harbor </tag>
             
@@ -1539,11 +1539,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -1684,9 +1684,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -2766,9 +2766,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -2851,9 +2851,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -2988,9 +2988,9 @@
       
         <tags>
             
-            <tag> Node </tag>
-            
             <tag> npm </tag>
+            
+            <tag> Node </tag>
             
         </tags>
       
@@ -3067,15 +3067,15 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -3210,9 +3210,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -3645,9 +3645,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Laradock </tag>
             
@@ -4177,9 +4177,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -4208,9 +4208,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -4258,9 +4258,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4291,9 +4291,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -4324,9 +4324,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4355,17 +4355,17 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
             
-            <tag> Linux </tag>
+            <tag> Laravel </tag>
             
-            <tag> Ubuntu </tag>
+            <tag> Linux </tag>
             
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -5115,9 +5115,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
@@ -5737,9 +5737,9 @@
             
             <tag> 套件開發 </tag>
             
-            <tag> Packagist </tag>
-            
             <tag> YouTube </tag>
+            
+            <tag> Packagist </tag>
             
         </tags>
       
@@ -5774,9 +5774,9 @@
             
             <tag> 套件開發 </tag>
             
-            <tag> Packagist </tag>
-            
             <tag> YouTube </tag>
+            
+            <tag> Packagist </tag>
             
         </tags>
       
@@ -7670,13 +7670,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -7705,13 +7705,13 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
             
             <tag> API </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -9131,9 +9131,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -9166,9 +9166,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Windows </tag>
             
             <tag> Ubuntu </tag>
             
