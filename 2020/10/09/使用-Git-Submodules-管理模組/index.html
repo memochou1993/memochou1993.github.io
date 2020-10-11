@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組先執行以下指令。 123git s">
+    <meta name="description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組1234git submodule">
 <meta name="keywords" content="版本控制,Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Git Submodules 管理模組">
 <meta property="og:url" content="https://memochou1993.github.io/2020/10/09/使用-Git-Submodules-管理模組/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組先執行以下指令。 123git s">
+<meta property="og:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組1234git submodule">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-09T15:32:44.355Z">
+<meta property="og:updated_time" content="2020-10-10T11:28:11.528Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Git Submodules 管理模組">
-<meta name="twitter:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組先執行以下指令。 123git s">
+<meta name="twitter:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組1234git submodule">
     
     
         
@@ -175,13 +175,8 @@
 
 <h3 id="下載包含子模組的專案"><a href="#下載包含子模組的專案" class="headerlink" title="下載包含子模組的專案"></a>下載包含子模組的專案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --recursive &lt;REPOSITORY&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="刪除子模組"><a href="#刪除子模組" class="headerlink" title="刪除子模組"></a>刪除子模組</h3><p>先執行以下指令。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git submodule deinit &lt;PATH&gt;</span><br><span class="line">git rm --cached &lt;PATH&gt;</span><br><span class="line">rm -rf &lt;PATH&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="刪除子模組"><a href="#刪除子模組" class="headerlink" title="刪除子模組"></a>刪除子模組</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git submodule deinit &lt;PATH&gt;</span><br><span class="line">git rm --cached &lt;PATH&gt;</span><br><span class="line">rm -rf &lt;PATH&gt;</span><br><span class="line">rm -rf .git/modules/&lt;PATH&gt;</span><br></pre></td></tr></table></figure>
 
-<p>修改 <code>.gitmodules</code> 檔，刪除不必要的子模組。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[submodule &quot;&lt;PATH&gt;&quot;]</span><br><span class="line">    path = &lt;PATH&gt;</span><br><span class="line">    url = &lt;REPOSITORY&gt;</span><br></pre></td></tr></table></figure>
-
-<p>提交修改。</p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules" target="_blank" rel="noopener">Git Tools - Submodules</a></li>
 </ul>
