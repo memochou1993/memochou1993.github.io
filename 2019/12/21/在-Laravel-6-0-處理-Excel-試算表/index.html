@@ -9,16 +9,16 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="做法安裝 maatwebsite/excel 套件，此套件封裝了 PHPOffice/PhpSpreadsheet 套件。 1composer require maatwebsite/excel  建立 BookingsExport 匯出類別。 1php artisan make:export BookingsExport  修改 BookingsExport 匯出類別。 123456789101">
-<meta name="keywords" content="程式設計,PHP,Laravel">
+<meta name="keywords" content="程式設計,PHP,Laravel,Excel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 Laravel 6.0 匯出 Excel 檔案">
-<meta property="og:url" content="https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/index.html">
+<meta property="og:title" content="在 Laravel 6.0 處理 Excel 試算表">
+<meta property="og:url" content="https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法安裝 maatwebsite/excel 套件，此套件封裝了 PHPOffice/PhpSpreadsheet 套件。 1composer require maatwebsite/excel  建立 BookingsExport 匯出類別。 1php artisan make:export BookingsExport  修改 BookingsExport 匯出類別。 123456789101">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.814Z">
+<meta property="og:updated_time" content="2020-10-19T13:51:13.643Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laravel 6.0 匯出 Excel 檔案">
+<meta name="twitter:title" content="在 Laravel 6.0 處理 Excel 試算表">
 <meta name="twitter:description" content="做法安裝 maatwebsite/excel 套件，此套件封裝了 PHPOffice/PhpSpreadsheet 套件。 1composer require maatwebsite/excel  建立 BookingsExport 匯出類別。 1php artisan make:export BookingsExport  修改 BookingsExport 匯出類別。 123456789101">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 Laravel 6.0 匯出 Excel 檔案</title>
+    <title>在 Laravel 6.0 處理 Excel 試算表</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&text=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&is_video=false&description=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 6.0 匯出 Excel 檔案&body=Check out this article: https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&name=在 Laravel 6.0 匯出 Excel 檔案&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&text=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&is_video=false&description=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 6.0 處理 Excel 試算表&body=Check out this article: https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&name=在 Laravel 6.0 處理 Excel 試算表&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 Laravel 6.0 匯出 Excel 檔案
+        在 Laravel 6.0 處理 Excel 試算表
     </h1>
 
 
@@ -164,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/Excel/">Excel</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
     </div>
 
 
@@ -230,16 +230,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&text=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&is_video=false&description=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 6.0 匯出 Excel 檔案&body=Check out this article: https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&title=在 Laravel 6.0 匯出 Excel 檔案"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-匯出-Excel-檔案/&name=在 Laravel 6.0 匯出 Excel 檔案&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&text=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&is_video=false&description=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 6.0 處理 Excel 試算表&body=Check out this article: https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&title=在 Laravel 6.0 處理 Excel 試算表"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/12/21/在-Laravel-6-0-處理-Excel-試算表/&name=在 Laravel 6.0 處理 Excel 試算表&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

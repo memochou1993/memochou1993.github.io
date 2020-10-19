@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 macOS Homestead  安裝套件1composer require phpoffice/phpspreadsheet  設計 建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。  修改 composer.json 檔使用 PSR-4 方法自動加載命名空間。 12345&quot;autoload&quot;: &amp;#123;    &quot;psr-4&quot;: &amp;#123;">
+    <meta name="description" content="環境 macOS Homestead  安裝套件安裝 phpoffice/phpspreadsheet 套件。 1composer require phpoffice/phpspreadsheet  設計 建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。  修改 composer.json 檔使用 PSR-4 方法自動加載命名空間。 12345&quot;autoload&quot;:">
 <meta name="keywords" content="程式設計,PHP,CodeIgniter,Excel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件">
-<meta property="og:url" content="https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/index.html">
+<meta property="og:title" content="在 CodeIgniter 3.1 處理 Excel 試算表">
+<meta property="og:url" content="https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 macOS Homestead  安裝套件1composer require phpoffice/phpspreadsheet  設計 建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。  修改 composer.json 檔使用 PSR-4 方法自動加載命名空間。 12345&quot;autoload&quot;: &amp;#123;    &quot;psr-4&quot;: &amp;#123;">
+<meta property="og:description" content="環境 macOS Homestead  安裝套件安裝 phpoffice/phpspreadsheet 套件。 1composer require phpoffice/phpspreadsheet  設計 建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。  修改 composer.json 檔使用 PSR-4 方法自動加載命名空間。 12345&quot;autoload&quot;:">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.798Z">
+<meta property="og:updated_time" content="2020-10-19T13:51:13.642Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件">
-<meta name="twitter:description" content="環境 macOS Homestead  安裝套件1composer require phpoffice/phpspreadsheet  設計 建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。  修改 composer.json 檔使用 PSR-4 方法自動加載命名空間。 12345&quot;autoload&quot;: &amp;#123;    &quot;psr-4&quot;: &amp;#123;">
+<meta name="twitter:title" content="在 CodeIgniter 3.1 處理 Excel 試算表">
+<meta name="twitter:description" content="環境 macOS Homestead  安裝套件安裝 phpoffice/phpspreadsheet 套件。 1composer require phpoffice/phpspreadsheet  設計 建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。  修改 composer.json 檔使用 PSR-4 方法自動加載命名空間。 12345&quot;autoload&quot;:">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件</title>
+    <title>在 CodeIgniter 3.1 處理 Excel 試算表</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&text=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&is_video=false&description=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件&body=Check out this article: https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&name=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&text=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&is_video=false&description=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 CodeIgniter 3.1 處理 Excel 試算表&body=Check out this article: https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&name=在 CodeIgniter 3.1 處理 Excel 試算表&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件
+        在 CodeIgniter 3.1 處理 Excel 試算表
     </h1>
 
 
@@ -177,7 +177,8 @@
 <li>macOS</li>
 <li>Homestead</li>
 </ul>
-<h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require phpoffice/phpspreadsheet</span><br></pre></td></tr></table></figure>
+<h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>安裝 <code>phpoffice/phpspreadsheet</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require phpoffice/phpspreadsheet</span><br></pre></td></tr></table></figure>
 
 <h2 id="設計"><a href="#設計" class="headerlink" title="設計"></a>設計</h2><ul>
 <li>建立一個獨立的 ExcelGenerator 模組，只負責資料處理與檔案輸出。</li>
@@ -234,16 +235,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&text=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&is_video=false&description=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件&body=Check out this article: https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&title=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-使用-PhpSpreadsheet-試算表處理套件/&name=在 CodeIgniter 3.1 使用 PhpSpreadsheet 試算表處理套件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&text=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&is_video=false&description=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 CodeIgniter 3.1 處理 Excel 試算表&body=Check out this article: https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&title=在 CodeIgniter 3.1 處理 Excel 試算表"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/26/在-CodeIgniter-3-1-處理-Excel-試算表/&name=在 CodeIgniter 3.1 處理 Excel 試算表&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
