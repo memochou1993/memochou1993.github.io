@@ -3,6 +3,33 @@
   
     
     <entry>
+      <title>使用 Fetch 和 async/await 發送 HTTP 請求</title>
+      <link href="/2020/10/23/%E4%BD%BF%E7%94%A8-Fetch-%E5%92%8C-async-await-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/"/>
+      <url>/2020/10/23/%E4%BD%BF%E7%94%A8-Fetch-%E5%92%8C-async-await-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>使用 <code>async/await</code> 的方式，有順序性地等待 <code>Fetch</code> 回應。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params">url, defer</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 使用 await 語法取得 response</span></span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(url);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 模擬回應時間</span></span><br><span class="line">  <span class="keyword">await</span> (<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> resolve(), defer)))();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 await 語法取得 data</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> response.json();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 等待第一個請求回應，耗時 1 秒</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">await</span> fetchData(<span class="string">'url_1'</span>, <span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 等待第二個請求回應，耗時 0.5 秒</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">await</span> fetchData(<span class="string">'url_2'</span>, <span class="number">500</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 等待第三個請求回應，耗時 0 秒</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">await</span> fetchData(<span class="string">'url_3'</span>, <span class="number">0</span>));</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://dmitripavlutin.com/javascript-fetch-async-await/" target="_blank" rel="noopener">How to Use Fetch with async/await</a></li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> JavaScript </category>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>管理 API 在 Vuex 中的呼叫狀態</title>
       <link href="/2020/10/11/%E7%AE%A1%E7%90%86-API-%E5%9C%A8-Vuex-%E4%B8%AD%E7%9A%84%E5%91%BC%E5%8F%AB%E7%8B%80%E6%85%8B/"/>
       <url>/2020/10/11/%E7%AE%A1%E7%90%86-API-%E5%9C%A8-Vuex-%E4%B8%AD%E7%9A%84%E5%91%BC%E5%8F%AB%E7%8B%80%E6%85%8B/</url>
@@ -2706,9 +2733,9 @@
             
             <tag> Laravel </tag>
             
-            <tag> Mix </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> Mix </tag>
             
             <tag> Vue </tag>
             
@@ -7707,9 +7734,9 @@
             
             <tag> PHP </tag>
             
-            <tag> API </tag>
-            
             <tag> GitHub </tag>
+            
+            <tag> API </tag>
             
             <tag> 套件開發 </tag>
             
@@ -7742,9 +7769,9 @@
             
             <tag> PHP </tag>
             
-            <tag> API </tag>
-            
             <tag> GitHub </tag>
+            
+            <tag> API </tag>
             
             <tag> 套件開發 </tag>
             
