@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語言檔案。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  目錄架構Lexicon 服務端由後端 Laravel 專案以及前端 Vue 專案組成，前端專案以子模組的形式置於 resources/js 資料夾中。 12345|- le">
+    <meta name="description" content="前言本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語系檔。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  目錄架構Lexicon 服務端由後端 Laravel 專案以及前端 Vue 專案組成，前端專案以子模組的形式置於 resources/js 資料夾中。 12345|- lex">
 <meta name="keywords" content="程式設計,PHP,Laravel,Localization">
 <meta property="og:type" content="article">
 <meta property="og:title" content="實作可雙向溝通的「翻譯管理系統」（三）：安裝 Lexicon 服務端">
 <meta property="og:url" content="https://memochou1993.github.io/2020/10/24/實作可雙向溝通的「翻譯管理系統」（三）：安裝-Lexicon-服務端/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語言檔案。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  目錄架構Lexicon 服務端由後端 Laravel 專案以及前端 Vue 專案組成，前端專案以子模組的形式置於 resources/js 資料夾中。 12345|- le">
+<meta property="og:description" content="前言本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語系檔。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  目錄架構Lexicon 服務端由後端 Laravel 專案以及前端 Vue 專案組成，前端專案以子模組的形式置於 resources/js 資料夾中。 12345|- lex">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-24T15:24:56.776Z">
+<meta property="og:updated_time" content="2020-10-24T17:44:10.676Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="實作可雙向溝通的「翻譯管理系統」（三）：安裝 Lexicon 服務端">
-<meta name="twitter:description" content="前言本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語言檔案。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  目錄架構Lexicon 服務端由後端 Laravel 專案以及前端 Vue 專案組成，前端專案以子模組的形式置於 resources/js 資料夾中。 12345|- le">
+<meta name="twitter:description" content="前言本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語系檔。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  目錄架構Lexicon 服務端由後端 Laravel 專案以及前端 Vue 專案組成，前端專案以子模組的形式置於 resources/js 資料夾中。 12345|- lex">
     
     
         
@@ -173,7 +173,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語言檔案。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文介紹如何安裝 Lexicon 服務端，提供使用者線上編輯翻譯內容，並透過 Webhook 主動通知客戶端獲取語系資源，更新專案的語系檔。</p>
 <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
 <li>Ubuntu 18.04.1 LTS</li>
 <li>PHP 7.4</li>
