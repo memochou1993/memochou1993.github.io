@@ -34,6 +34,39 @@
     </entry>
     
     <entry>
+      <title>為 GitHub Pages 設定 Service Worker 資源路徑</title>
+      <link href="/2020/10/25/%E7%82%BA-GitHub-Pages-%E8%A8%AD%E5%AE%9A-Service-Worker-%E8%B3%87%E6%BA%90%E8%B7%AF%E5%BE%91/"/>
+      <url>/2020/10/25/%E7%82%BA-GitHub-Pages-%E8%A8%AD%E5%AE%9A-Service-Worker-%E8%B3%87%E6%BA%90%E8%B7%AF%E5%BE%91/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>修改 <code>manifest.json</code> 檔的 <code>start_url</code> 參數：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"start_url"</span>: <span class="string">"/&lt;REPOSITORY&gt;/index.html"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>修改 <code>service-worker.js</code> 檔的資源路徑：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">self.addEventListener(<span class="string">"install"</span>, (e) =&gt; &#123;</span><br><span class="line">  e.waitUntil(</span><br><span class="line">    caches.open(<span class="string">"store"</span>).then(<span class="function">(<span class="params">cache</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> cache.addAll([</span><br><span class="line">        <span class="string">"/&lt;REPOSITORY&gt;/"</span>,</span><br><span class="line">        <span class="string">"/&lt;REPOSITORY&gt;/index.html"</span>,</span><br><span class="line">        <span class="string">"/&lt;REPOSITORY&gt;/images/cover.png"</span>,</span><br><span class="line">        <span class="string">"/&lt;REPOSITORY&gt;/css/app.css"</span>,</span><br><span class="line">        <span class="string">"/&lt;REPOSITORY&gt;/js/app.js"</span>,</span><br><span class="line">      ]);</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="除錯"><a href="#除錯" class="headerlink" title="除錯"></a>除錯</h2><p>打開 Chrome 開發者工具，點選 Lighthouse 頁籤，將 Progressive Web App 打勾後，點選「Generate report」，即可查看當前的網站是否符合 PWA 的規範。</p>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> JavaScript </category>
+          
+          <category> PWA </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> GitHub </tag>
+            
+            <tag> GitHub Pages </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> PWA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>實作可雙向溝通的「翻譯管理系統」（三）：安裝 Lexicon 服務端</title>
       <link href="/2020/10/24/%E5%AF%A6%E4%BD%9C%E5%8F%AF%E9%9B%99%E5%90%91%E6%BA%9D%E9%80%9A%E7%9A%84%E3%80%8C%E7%BF%BB%E8%AD%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AE%89%E8%A3%9D-Lexicon-%E6%9C%8D%E5%8B%99%E7%AB%AF/"/>
       <url>/2020/10/24/%E5%AF%A6%E4%BD%9C%E5%8F%AF%E9%9B%99%E5%90%91%E6%BA%9D%E9%80%9A%E7%9A%84%E3%80%8C%E7%BF%BB%E8%AD%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AE%89%E8%A3%9D-Lexicon-%E6%9C%8D%E5%8B%99%E7%AB%AF/</url>
@@ -1938,11 +1971,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -2056,11 +2089,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -4782,35 +4815,6 @@
     </entry>
     
     <entry>
-      <title>在 macOS 上安裝 Nginx 網頁伺服器</title>
-      <link href="/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
-      <url>/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
-      <content type="html"><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 指令安裝 Nginx。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure><p>啟動 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure><p>停止 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br></pre></td></tr></table></figure><p>重啟 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><h2 id="站點"><a href="#站點" class="headerlink" title="站點"></a>站點</h2><p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 檔的 <code>fastcgi_param</code> 參數：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">#</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>/usr/local/var/www</code> 目錄新增 <code>index.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpinfo();</span><br></pre></td></tr></table></figure><h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往：<a href="http://localhost:8080/index.php" target="_blank" rel="noopener">http://localhost:8080/index.php</a></p>]]></content>
-      
-      <categories>
-          
-          <category> 環境部署 </category>
-          
-          <category> 網頁伺服器 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 環境部署 </tag>
-            
-            <tag> macOS </tag>
-            
-            <tag> 網頁伺服器 </tag>
-            
-            <tag> Nginx </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>在 macOS 上安裝 PHP 7.2</title>
       <link href="/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-2/"/>
       <url>/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-7-2/</url>
@@ -4834,6 +4838,35 @@
             <tag> PHP </tag>
             
             <tag> macOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>在 macOS 上安裝 Nginx 網頁伺服器</title>
+      <link href="/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
+      <url>/2019/01/24/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/</url>
+      <content type="html"><![CDATA[<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 指令安裝 Nginx。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure><p>啟動 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure><p>停止 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s stop</span><br></pre></td></tr></table></figure><p>重啟 Nginx 服務。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><h2 id="站點"><a href="#站點" class="headerlink" title="站點"></a>站點</h2><p>修改 <code>/usr/local/etc/nginx/nginx.conf</code> 檔的 <code>fastcgi_param</code> 參數：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">#</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>/usr/local/var/www</code> 目錄新增 <code>index.php</code> 檔：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phpinfo();</span><br></pre></td></tr></table></figure><h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往：<a href="http://localhost:8080/index.php" target="_blank" rel="noopener">http://localhost:8080/index.php</a></p>]]></content>
+      
+      <categories>
+          
+          <category> 環境部署 </category>
+          
+          <category> 網頁伺服器 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 環境部署 </tag>
+            
+            <tag> macOS </tag>
+            
+            <tag> 網頁伺服器 </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -9392,6 +9425,8 @@
             <tag> GitHub </tag>
             
             <tag> 環境部署 </tag>
+            
+            <tag> GitHub Pages </tag>
             
         </tags>
       
