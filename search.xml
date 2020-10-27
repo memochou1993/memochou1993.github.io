@@ -3,6 +3,64 @@
   
     
     <entry>
+      <title>在 Vue 3.0 安裝 Tailwind CSS 前端框架</title>
+      <link href="/2020/11/03/%E5%9C%A8-Vue-3-0-%E5%AE%89%E8%A3%9D-Tailwind-CSS-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
+      <url>/2020/11/03/%E5%9C%A8-Vue-3-0-%E5%AE%89%E8%A3%9D-Tailwind-CSS-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create vue-tailwind</span><br></pre></td></tr></table></figure><p>安裝 <code>tailwindcss</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add tailwindcss</span><br></pre></td></tr></table></figure><p>安裝 <code>autoprefixer</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer</span><br></pre></td></tr></table></figure><p>在 <code>src/assets/css</code> 資料夾新增 <code>tailwind.css</code> 檔：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> base;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> components;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> utilities;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>tailwind.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  future: &#123;</span><br><span class="line">    <span class="comment">// removeDeprecatedGapUtilities: true,</span></span><br><span class="line">    <span class="comment">// purgeLayersByDefault: true,</span></span><br><span class="line">  &#125;,</span><br><span class="line">  purge: [</span><br><span class="line">    <span class="string">'@/**/*.html'</span>,</span><br><span class="line">    <span class="string">'@/**/*.vue'</span>,</span><br><span class="line">  ],</span><br><span class="line">  theme: &#123;</span><br><span class="line">    extend: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  variants: &#123;&#125;,</span><br><span class="line">  plugins: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>postcss.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tailwindcss = <span class="built_in">require</span>(<span class="string">'tailwindcss'</span>);</span><br><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    tailwindcss,</span><br><span class="line">    autoprefixer,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>修改 <code>main.js</code> 檔，將 <code>tailwind.css</code> 檔引入：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'@/router'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'@/assets/css/tailwind.css'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App).use(router).mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure><p>使用：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex flex-wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"w-full text-center"</span>&gt;</span></span><br><span class="line">    Form</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://tailwindcss.com/docs/installation" target="_blank" rel="noopener">Tailwind CSS - Documentation</a></li></ul>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> JavaScript </category>
+          
+          <category> Vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> Vue </tag>
+            
+            <tag> Tailwind CSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>在 Go 專案整合 Vue CLI</title>
+      <link href="/2020/11/03/%E5%9C%A8-Go-%E5%B0%88%E6%A1%88%E6%95%B4%E5%90%88-Vue-CLI/"/>
+      <url>/2020/11/03/%E5%9C%A8-Go-%E5%B0%88%E6%A1%88%E6%95%B4%E5%90%88-Vue-CLI/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.Handle(<span class="string">"/"</span>, http.FileServer(http.Dir(<span class="string">"./web/dist/"</span>)))</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create web</span><br></pre></td></tr></table></figure><p>執行編譯。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> web &amp;&amp; yarn build</span><br></pre></td></tr></table></figure><p>啟動應用程式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure><p>前往：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></p>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> Go </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> Vue </tag>
+            
+            <tag> Go </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端</title>
       <link href="/2020/11/02/%E5%AF%A6%E4%BD%9C%E5%9F%BA%E6%96%BC-Webhook-%E7%9A%84%E3%80%8C%E7%BF%BB%E8%AD%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AE%89%E8%A3%9D-Lexicon-%E5%AE%A2%E6%88%B6%E7%AB%AF/"/>
       <url>/2020/11/02/%E5%AF%A6%E4%BD%9C%E5%9F%BA%E6%96%BC-Webhook-%E7%9A%84%E3%80%8C%E7%BF%BB%E8%AD%AF%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AE%89%E8%A3%9D-Lexicon-%E5%AE%A2%E6%88%B6%E7%AB%AF/</url>
@@ -190,11 +248,11 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> GitHub </tag>
             
             <tag> GitHub Pages </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> JavaScript </tag>
             
@@ -1113,9 +1171,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -1797,11 +1855,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -1942,9 +2000,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -3024,9 +3082,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -3109,9 +3167,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -3246,9 +3304,9 @@
       
         <tags>
             
-            <tag> Node </tag>
-            
             <tag> npm </tag>
+            
+            <tag> Node </tag>
             
         </tags>
       
@@ -3325,9 +3383,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Windows </tag>
             
@@ -3468,9 +3526,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -3901,9 +3959,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Laradock </tag>
             
@@ -4514,9 +4572,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4547,9 +4605,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -4580,9 +4638,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4611,9 +4669,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4936,9 +4994,9 @@
             
             <tag> macOS </tag>
             
-            <tag> 網頁伺服器 </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> 網頁伺服器 </tag>
             
         </tags>
       
@@ -5373,9 +5431,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
@@ -5987,9 +6045,9 @@
             
             <tag> 套件開發 </tag>
             
-            <tag> Packagist </tag>
-            
             <tag> YouTube </tag>
+            
+            <tag> Packagist </tag>
             
         </tags>
       
@@ -6022,9 +6080,9 @@
             
             <tag> 套件開發 </tag>
             
-            <tag> Packagist </tag>
-            
             <tag> YouTube </tag>
+            
+            <tag> Packagist </tag>
             
         </tags>
       
@@ -7918,11 +7976,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -7951,11 +8009,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -9373,9 +9431,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -9501,11 +9559,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Hexo </tag>
             
             <tag> GitHub </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> GitHub Pages </tag>
             
