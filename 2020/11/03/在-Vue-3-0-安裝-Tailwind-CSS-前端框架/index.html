@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="做法建立 Vue 專案。 1vue create vue-tailwind  安裝 tailwindcss 套件。 1yarn add tailwindcss  安裝 autoprefixer 套件。 1yarn add autoprefixer  在 src/assets/css 資料夾新增 tailwind.css 檔： 123456/* noinspection CssInvalidAtRu">
+    <meta name="description" content="做法建立 Vue 專案。 1vue create vue-tailwind  安裝 tailwindcss 套件。 1yarn add tailwindcss  安裝 autoprefixer 套件。 1yarn add autoprefixer@^9.0.0   避免使用太新的版本，否則可能會導致編譯失敗。  在 src/assets/css 資料夾新增 tailwind.css 檔： 1234">
 <meta name="keywords" content="程式設計,JavaScript,Vue,Tailwind CSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Vue 3.0 安裝 Tailwind CSS 前端框架">
 <meta property="og:url" content="https://memochou1993.github.io/2020/11/03/在-Vue-3-0-安裝-Tailwind-CSS-前端框架/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法建立 Vue 專案。 1vue create vue-tailwind  安裝 tailwindcss 套件。 1yarn add tailwindcss  安裝 autoprefixer 套件。 1yarn add autoprefixer  在 src/assets/css 資料夾新增 tailwind.css 檔： 123456/* noinspection CssInvalidAtRu">
+<meta property="og:description" content="做法建立 Vue 專案。 1vue create vue-tailwind  安裝 tailwindcss 套件。 1yarn add tailwindcss  安裝 autoprefixer 套件。 1yarn add autoprefixer@^9.0.0   避免使用太新的版本，否則可能會導致編譯失敗。  在 src/assets/css 資料夾新增 tailwind.css 檔： 1234">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-27T15:00:23.127Z">
+<meta property="og:updated_time" content="2020-10-27T15:22:34.666Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Vue 3.0 安裝 Tailwind CSS 前端框架">
-<meta name="twitter:description" content="做法建立 Vue 專案。 1vue create vue-tailwind  安裝 tailwindcss 套件。 1yarn add tailwindcss  安裝 autoprefixer 套件。 1yarn add autoprefixer  在 src/assets/css 資料夾新增 tailwind.css 檔： 123456/* noinspection CssInvalidAtRu">
+<meta name="twitter:description" content="做法建立 Vue 專案。 1vue create vue-tailwind  安裝 tailwindcss 套件。 1yarn add tailwindcss  安裝 autoprefixer 套件。 1yarn add autoprefixer@^9.0.0   避免使用太新的版本，否則可能會導致編譯失敗。  在 src/assets/css 資料夾新增 tailwind.css 檔： 1234">
     
     
         
@@ -87,6 +87,8 @@
         
         <li><a class="icon" href="/2020/11/03/在-Go-專案整合-Vue-CLI/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
+        
+        <li><a class="icon" href="/2020/11/03/在-Vue-3-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -178,8 +180,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add tailwindcss</span><br></pre></td></tr></table></figure>
 
 <p>安裝 <code>autoprefixer</code> 套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer@^9.0.0</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>避免使用太新的版本，否則可能會導致編譯失敗。</li>
+</ul>
 <p>在 <code>src/assets/css</code> 資料夾新增 <code>tailwind.css</code> 檔：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> base;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> components;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> utilities;</span><br></pre></td></tr></table></figure>
 

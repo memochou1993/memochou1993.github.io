@@ -3,10 +3,43 @@
   
     
     <entry>
+      <title>在 Vue 3.0 使用 ESLint 分析工具和 Airbnb 程式碼風格</title>
+      <link href="/2020/11/03/%E5%9C%A8-Vue-3-0-%E4%BD%BF%E7%94%A8-ESLint-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%92%8C-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/"/>
+      <url>/2020/11/03/%E5%9C%A8-Vue-3-0-%E4%BD%BF%E7%94%A8-ESLint-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%92%8C-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/</url>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>安裝 <code>@vue/eslint-config-airbnb</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add @vue/eslint-config-airbnb --dev</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>.eslintrc.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  root: <span class="literal">true</span>,</span><br><span class="line">  env: &#123;</span><br><span class="line">    node: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  extends: [</span><br><span class="line">    <span class="string">'plugin:vue/recommended'</span>,</span><br><span class="line">    <span class="string">'@vue/airbnb'</span>,</span><br><span class="line">  ],</span><br><span class="line">  parserOptions: &#123;</span><br><span class="line">    parser: <span class="string">'babel-eslint'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  rules: &#123;</span><br><span class="line">    <span class="string">'no-console'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'warn'</span> : <span class="string">'off'</span>,</span><br><span class="line">    <span class="string">'no-debugger'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'warn'</span> : <span class="string">'off'</span>,</span><br><span class="line">    <span class="string">'import/extensions'</span>: [<span class="string">'error'</span>, <span class="string">'ignorePackages'</span>],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      <categories>
+          
+          <category> 程式設計 </category>
+          
+          <category> JavaScript </category>
+          
+          <category> ESLint </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程式設計 </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> Vue </tag>
+            
+            <tag> ESLint </tag>
+            
+            <tag> Airbnb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>在 Vue 3.0 安裝 Tailwind CSS 前端框架</title>
       <link href="/2020/11/03/%E5%9C%A8-Vue-3-0-%E5%AE%89%E8%A3%9D-Tailwind-CSS-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
       <url>/2020/11/03/%E5%9C%A8-Vue-3-0-%E5%AE%89%E8%A3%9D-Tailwind-CSS-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/</url>
-      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create vue-tailwind</span><br></pre></td></tr></table></figure><p>安裝 <code>tailwindcss</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add tailwindcss</span><br></pre></td></tr></table></figure><p>安裝 <code>autoprefixer</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer</span><br></pre></td></tr></table></figure><p>在 <code>src/assets/css</code> 資料夾新增 <code>tailwind.css</code> 檔：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> base;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> components;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> utilities;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>tailwind.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  future: &#123;</span><br><span class="line">    <span class="comment">// removeDeprecatedGapUtilities: true,</span></span><br><span class="line">    <span class="comment">// purgeLayersByDefault: true,</span></span><br><span class="line">  &#125;,</span><br><span class="line">  purge: [</span><br><span class="line">    <span class="string">'@/**/*.html'</span>,</span><br><span class="line">    <span class="string">'@/**/*.vue'</span>,</span><br><span class="line">  ],</span><br><span class="line">  theme: &#123;</span><br><span class="line">    extend: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  variants: &#123;&#125;,</span><br><span class="line">  plugins: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>postcss.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tailwindcss = <span class="built_in">require</span>(<span class="string">'tailwindcss'</span>);</span><br><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    tailwindcss,</span><br><span class="line">    autoprefixer,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>修改 <code>main.js</code> 檔，將 <code>tailwind.css</code> 檔引入：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'@/router'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'@/assets/css/tailwind.css'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App).use(router).mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure><p>使用：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex flex-wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"w-full text-center"</span>&gt;</span></span><br><span class="line">    Form</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul><li><a href="https://github.com/memochou1993/vue-tailwind-example" target="_blank" rel="noopener">vue-tailwind-example</a></li></ul><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://tailwindcss.com/docs/installation" target="_blank" rel="noopener">Tailwind CSS - Documentation</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create vue-tailwind</span><br></pre></td></tr></table></figure><p>安裝 <code>tailwindcss</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add tailwindcss</span><br></pre></td></tr></table></figure><p>安裝 <code>autoprefixer</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer@^9.0.0</span><br></pre></td></tr></table></figure><ul><li>避免使用太新的版本，否則可能會導致編譯失敗。</li></ul><p>在 <code>src/assets/css</code> 資料夾新增 <code>tailwind.css</code> 檔：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> base;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> components;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> utilities;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>tailwind.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  future: &#123;</span><br><span class="line">    <span class="comment">// removeDeprecatedGapUtilities: true,</span></span><br><span class="line">    <span class="comment">// purgeLayersByDefault: true,</span></span><br><span class="line">  &#125;,</span><br><span class="line">  purge: [</span><br><span class="line">    <span class="string">'@/**/*.html'</span>,</span><br><span class="line">    <span class="string">'@/**/*.vue'</span>,</span><br><span class="line">  ],</span><br><span class="line">  theme: &#123;</span><br><span class="line">    extend: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  variants: &#123;&#125;,</span><br><span class="line">  plugins: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>postcss.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tailwindcss = <span class="built_in">require</span>(<span class="string">'tailwindcss'</span>);</span><br><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    tailwindcss,</span><br><span class="line">    autoprefixer,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>修改 <code>main.js</code> 檔，將 <code>tailwind.css</code> 檔引入：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'@/router'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'@/assets/css/tailwind.css'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App).use(router).mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure><p>使用：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex flex-wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"w-full text-center"</span>&gt;</span></span><br><span class="line">    Form</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul><li><a href="https://github.com/memochou1993/vue-tailwind-example" target="_blank" rel="noopener">vue-tailwind-example</a></li></ul><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://tailwindcss.com/docs/installation" target="_blank" rel="noopener">Tailwind CSS - Documentation</a></li></ul>]]></content>
       
       <categories>
           
@@ -248,11 +281,11 @@
       
         <tags>
             
+            <tag> 程式設計 </tag>
+            
             <tag> GitHub </tag>
             
             <tag> GitHub Pages </tag>
-            
-            <tag> 程式設計 </tag>
             
             <tag> JavaScript </tag>
             
@@ -376,9 +409,9 @@
             
             <tag> Vue </tag>
             
-            <tag> TypeScript </tag>
-            
             <tag> Vuetify </tag>
+            
+            <tag> TypeScript </tag>
             
         </tags>
       
@@ -1855,11 +1888,11 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2000,9 +2033,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3082,9 +3115,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -3167,9 +3200,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -3383,9 +3416,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -3526,9 +3559,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -3959,9 +3992,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Laradock </tag>
             
@@ -4572,9 +4605,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -4605,9 +4638,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> PHP </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -4638,9 +4671,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -4669,9 +4702,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             
@@ -5431,9 +5464,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -5922,10 +5955,10 @@
     </entry>
     
     <entry>
-      <title>在 Nuxt 2.0 使用 Airbnb 程式碼風格</title>
-      <link href="/2018/11/06/%E5%9C%A8-Nuxt-2-0-%E4%BD%BF%E7%94%A8-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/"/>
-      <url>/2018/11/06/%E5%9C%A8-Nuxt-2-0-%E4%BD%BF%E7%94%A8-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/</url>
-      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>Windows 7</li><li>node 8.11.1</li><li>npm 5.6.0</li></ul><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>使用以下指令安裝。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g install-peerdeps</span><br><span class="line">install-peerdeps --dev eslint-config-airbnb-base</span><br></pre></td></tr></table></figure><p>修改 <code>.prettierrc</code> 檔。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"semi"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"singleQuote"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"trailingComma"</span>: <span class="string">"all"</span>,</span><br><span class="line">  <span class="attr">"arrowParens"</span>: <span class="string">"always"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>修改 <code>.eslintrc.js</code> 檔。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extends: [</span><br><span class="line">  <span class="string">'plugin:vue/recommended'</span>,</span><br><span class="line">  <span class="string">'plugin:prettier/recommended'</span>,</span><br><span class="line">  <span class="string">'airbnb-base'</span></span><br><span class="line">],</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">rules: &#123;</span><br><span class="line">  <span class="string">'arrow-parens'</span>: [<span class="string">'error'</span>, <span class="string">'always'</span>],</span><br><span class="line">  <span class="string">'no-console'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'error'</span> : <span class="string">'off'</span>,</span><br><span class="line">  <span class="string">'no-debugger'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'error'</span> : <span class="string">'off'</span>,</span><br><span class="line">  <span class="string">'no-param-reassign'</span>: [<span class="string">'error'</span>, &#123; <span class="string">'props'</span>: <span class="literal">false</span> &#125;],</span><br><span class="line">  <span class="string">'no-return-assign'</span>: [<span class="string">'error'</span>, <span class="string">'except-parens'</span>],</span><br><span class="line">  <span class="string">'space-before-function-paren'</span>: [<span class="string">'error'</span>, <span class="string">'never'</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul><li><a href="https://github.com/memochou1993/nuxt-airbnb-preset" target="_blank" rel="noopener">nuxt-airbnb-preset</a></li></ul>]]></content>
+      <title>在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格</title>
+      <link href="/2018/11/06/%E5%9C%A8-Nuxt-2-0-%E4%BD%BF%E7%94%A8-ESLint-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%92%8C-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/"/>
+      <url>/2018/11/06/%E5%9C%A8-Nuxt-2-0-%E4%BD%BF%E7%94%A8-ESLint-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%92%8C-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/</url>
+      <content type="html"><![CDATA[<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul><li>Windows 7</li><li>node 8.11.1</li><li>npm 5.6.0</li></ul><h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>使用以下指令安裝。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g install-peerdeps</span><br><span class="line">install-peerdeps --dev eslint-config-airbnb-base</span><br></pre></td></tr></table></figure><p>修改 <code>.prettierrc</code> 檔。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"semi"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"singleQuote"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"trailingComma"</span>: <span class="string">"all"</span>,</span><br><span class="line">  <span class="attr">"arrowParens"</span>: <span class="string">"always"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>修改 <code>.eslintrc.js</code> 檔。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extends: [</span><br><span class="line">  <span class="string">'plugin:vue/recommended'</span>,</span><br><span class="line">  <span class="string">'plugin:prettier/recommended'</span>,</span><br><span class="line">  <span class="string">'airbnb-base'</span></span><br><span class="line">],</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">rules: &#123;</span><br><span class="line">  <span class="string">'arrow-parens'</span>: [<span class="string">'error'</span>, <span class="string">'always'</span>],</span><br><span class="line">  <span class="string">'no-console'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'error'</span> : <span class="string">'off'</span>,</span><br><span class="line">  <span class="string">'no-debugger'</span>: process.env.NODE_ENV === <span class="string">'production'</span> ? <span class="string">'error'</span> : <span class="string">'off'</span>,</span><br><span class="line">  <span class="string">'no-param-reassign'</span>: [<span class="string">'error'</span>, &#123; <span class="string">'props'</span>: <span class="literal">false</span> &#125;],</span><br><span class="line">  <span class="string">'no-return-assign'</span>: [<span class="string">'error'</span>, <span class="string">'except-parens'</span>],</span><br><span class="line">  <span class="string">'space-before-function-paren'</span>: [<span class="string">'error'</span>, <span class="string">'never'</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul><li><a href="https://github.com/memochou1993/nuxt-airbnb-preset" target="_blank" rel="noopener">nuxt-airbnb-preset</a></li></ul>]]></content>
       
       <categories>
           
@@ -5933,7 +5966,7 @@
           
           <category> JavaScript </category>
           
-          <category> Nuxt </category>
+          <category> ESLint </category>
           
       </categories>
       
@@ -5948,7 +5981,7 @@
             
             <tag> Nuxt </tag>
             
-            <tag> JSLint </tag>
+            <tag> ESLint </tag>
             
             <tag> Airbnb </tag>
             
@@ -7976,11 +8009,11 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -8009,11 +8042,11 @@
       
         <tags>
             
-            <tag> GitHub </tag>
-            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
+            
+            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -9431,9 +9464,9 @@
       
         <tags>
             
-            <tag> 環境部署 </tag>
-            
             <tag> Laravel </tag>
+            
+            <tag> 環境部署 </tag>
             
             <tag> Linux </tag>
             

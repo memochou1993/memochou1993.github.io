@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 Windows 7 node 8.11.1 npm 5.6.0  方法使用以下指令安裝。 12npm install -g install-peerdepsinstall-peerdeps --dev eslint-config-airbnb-base  修改 .prettierrc 檔。 123456&amp;#123;  &quot;semi&quot;: true,  &quot;singleQuote&quot;: true,">
-<meta name="keywords" content="程式設計,JavaScript,Vue,Nuxt,JSLint,Airbnb">
+    <meta name="description" content="環境 Windows 7 node 8.11.1 npm 5.6.0  做法使用以下指令安裝。 12npm install -g install-peerdepsinstall-peerdeps --dev eslint-config-airbnb-base  修改 .prettierrc 檔。 123456&amp;#123;  &quot;semi&quot;: true,  &quot;singleQuote&quot;: true,">
+<meta name="keywords" content="程式設計,JavaScript,Vue,Nuxt,ESLint,Airbnb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 Nuxt 2.0 使用 Airbnb 程式碼風格">
-<meta property="og:url" content="https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/index.html">
+<meta property="og:title" content="在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格">
+<meta property="og:url" content="https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 Windows 7 node 8.11.1 npm 5.6.0  方法使用以下指令安裝。 12npm install -g install-peerdepsinstall-peerdeps --dev eslint-config-airbnb-base  修改 .prettierrc 檔。 123456&amp;#123;  &quot;semi&quot;: true,  &quot;singleQuote&quot;: true,">
+<meta property="og:description" content="環境 Windows 7 node 8.11.1 npm 5.6.0  做法使用以下指令安裝。 12npm install -g install-peerdepsinstall-peerdeps --dev eslint-config-airbnb-base  修改 .prettierrc 檔。 123456&amp;#123;  &quot;semi&quot;: true,  &quot;singleQuote&quot;: true,">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T16:23:43.540Z">
+<meta property="og:updated_time" content="2020-10-27T15:27:30.430Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Nuxt 2.0 使用 Airbnb 程式碼風格">
-<meta name="twitter:description" content="環境 Windows 7 node 8.11.1 npm 5.6.0  方法使用以下指令安裝。 12npm install -g install-peerdepsinstall-peerdeps --dev eslint-config-airbnb-base  修改 .prettierrc 檔。 123456&amp;#123;  &quot;semi&quot;: true,  &quot;singleQuote&quot;: true,">
+<meta name="twitter:title" content="在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格">
+<meta name="twitter:description" content="環境 Windows 7 node 8.11.1 npm 5.6.0  做法使用以下指令安裝。 12npm install -g install-peerdepsinstall-peerdeps --dev eslint-config-airbnb-base  修改 .prettierrc 檔。 123456&amp;#123;  &quot;semi&quot;: true,  &quot;singleQuote&quot;: true,">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 Nuxt 2.0 使用 Airbnb 程式碼風格</title>
+    <title>在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,21 +101,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&text=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&is_video=false&description=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Nuxt 2.0 使用 Airbnb 程式碼風格&body=Check out this article: https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&name=在 Nuxt 2.0 使用 Airbnb 程式碼風格&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&text=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&is_video=false&description=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格&body=Check out this article: https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&name=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法"><span class="toc-number">2.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 Nuxt 2.0 使用 Airbnb 程式碼風格
+        在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格
     </h1>
 
 
@@ -155,7 +155,7 @@
             
         
             
-                <a href="/categories/程式設計/JavaScript/Nuxt/">Nuxt</a>
+                <a href="/categories/程式設計/JavaScript/ESLint/">ESLint</a>
             
         
     </div>
@@ -164,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Airbnb/">Airbnb</a>, <a class="tag-link" href="/tags/JSLint/">JSLint</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Nuxt/">Nuxt</a>, <a class="tag-link" href="/tags/Vue/">Vue</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/Airbnb/">Airbnb</a>, <a class="tag-link" href="/tags/ESLint/">ESLint</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Nuxt/">Nuxt</a>, <a class="tag-link" href="/tags/Vue/">Vue</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
     </div>
 
 
@@ -178,7 +178,7 @@
 <li>node 8.11.1</li>
 <li>npm 5.6.0</li>
 </ul>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>使用以下指令安裝。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>使用以下指令安裝。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g install-peerdeps</span><br><span class="line">install-peerdeps --dev eslint-config-airbnb-base</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>.prettierrc</code> 檔。</p>
@@ -226,21 +226,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法"><span class="toc-number">2.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&text=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&is_video=false&description=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Nuxt 2.0 使用 Airbnb 程式碼風格&body=Check out this article: https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 Airbnb 程式碼風格"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-Airbnb-程式碼風格/&name=在 Nuxt 2.0 使用 Airbnb 程式碼風格&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&text=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&is_video=false&description=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格&body=Check out this article: https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&title=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2018/11/06/在-Nuxt-2-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/&name=在 Nuxt 2.0 使用 ESLint 分析工具和 Airbnb 程式碼風格&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
