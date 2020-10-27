@@ -6,7 +6,7 @@
       <title>在 Vue 3.0 安裝 Tailwind CSS 前端框架</title>
       <link href="/2020/11/03/%E5%9C%A8-Vue-3-0-%E5%AE%89%E8%A3%9D-Tailwind-CSS-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/"/>
       <url>/2020/11/03/%E5%9C%A8-Vue-3-0-%E5%AE%89%E8%A3%9D-Tailwind-CSS-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/</url>
-      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create vue-tailwind</span><br></pre></td></tr></table></figure><p>安裝 <code>tailwindcss</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add tailwindcss</span><br></pre></td></tr></table></figure><p>安裝 <code>autoprefixer</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer</span><br></pre></td></tr></table></figure><p>在 <code>src/assets/css</code> 資料夾新增 <code>tailwind.css</code> 檔：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> base;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> components;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> utilities;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>tailwind.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  future: &#123;</span><br><span class="line">    <span class="comment">// removeDeprecatedGapUtilities: true,</span></span><br><span class="line">    <span class="comment">// purgeLayersByDefault: true,</span></span><br><span class="line">  &#125;,</span><br><span class="line">  purge: [</span><br><span class="line">    <span class="string">'@/**/*.html'</span>,</span><br><span class="line">    <span class="string">'@/**/*.vue'</span>,</span><br><span class="line">  ],</span><br><span class="line">  theme: &#123;</span><br><span class="line">    extend: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  variants: &#123;&#125;,</span><br><span class="line">  plugins: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>postcss.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tailwindcss = <span class="built_in">require</span>(<span class="string">'tailwindcss'</span>);</span><br><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    tailwindcss,</span><br><span class="line">    autoprefixer,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>修改 <code>main.js</code> 檔，將 <code>tailwind.css</code> 檔引入：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'@/router'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'@/assets/css/tailwind.css'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App).use(router).mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure><p>使用：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex flex-wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"w-full text-center"</span>&gt;</span></span><br><span class="line">    Form</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://tailwindcss.com/docs/installation" target="_blank" rel="noopener">Tailwind CSS - Documentation</a></li></ul>]]></content>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create vue-tailwind</span><br></pre></td></tr></table></figure><p>安裝 <code>tailwindcss</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add tailwindcss</span><br></pre></td></tr></table></figure><p>安裝 <code>autoprefixer</code> 套件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add autoprefixer</span><br></pre></td></tr></table></figure><p>在 <code>src/assets/css</code> 資料夾新增 <code>tailwind.css</code> 檔：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> base;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> components;</span><br><span class="line"><span class="comment">/* noinspection CssInvalidAtRule */</span></span><br><span class="line">@<span class="keyword">tailwind</span> utilities;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>tailwind.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  future: &#123;</span><br><span class="line">    <span class="comment">// removeDeprecatedGapUtilities: true,</span></span><br><span class="line">    <span class="comment">// purgeLayersByDefault: true,</span></span><br><span class="line">  &#125;,</span><br><span class="line">  purge: [</span><br><span class="line">    <span class="string">'@/**/*.html'</span>,</span><br><span class="line">    <span class="string">'@/**/*.vue'</span>,</span><br><span class="line">  ],</span><br><span class="line">  theme: &#123;</span><br><span class="line">    extend: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  variants: &#123;&#125;,</span><br><span class="line">  plugins: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>在根目錄新增 <code>postcss.config.js</code> 檔：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tailwindcss = <span class="built_in">require</span>(<span class="string">'tailwindcss'</span>);</span><br><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    tailwindcss,</span><br><span class="line">    autoprefixer,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>修改 <code>main.js</code> 檔，將 <code>tailwind.css</code> 檔引入：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'@/router'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'@/assets/css/tailwind.css'</span>;</span><br><span class="line"></span><br><span class="line">createApp(App).use(router).mount(<span class="string">'#app'</span>);</span><br></pre></td></tr></table></figure><p>使用：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flex flex-wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"w-full text-center"</span>&gt;</span></span><br><span class="line">    Form</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul><li><a href="https://github.com/memochou1993/vue-tailwind-example" target="_blank" rel="noopener">vue-tailwind-example</a></li></ul><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://tailwindcss.com/docs/installation" target="_blank" rel="noopener">Tailwind CSS - Documentation</a></li></ul>]]></content>
       
       <categories>
           
@@ -37,7 +37,7 @@
       <title>在 Go 專案整合 Vue CLI</title>
       <link href="/2020/11/03/%E5%9C%A8-Go-%E5%B0%88%E6%A1%88%E6%95%B4%E5%90%88-Vue-CLI/"/>
       <url>/2020/11/03/%E5%9C%A8-Go-%E5%B0%88%E6%A1%88%E6%95%B4%E5%90%88-Vue-CLI/</url>
-      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.Handle(<span class="string">"/"</span>, http.FileServer(http.Dir(<span class="string">"./web/dist/"</span>)))</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create web</span><br></pre></td></tr></table></figure><p>執行編譯。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> web &amp;&amp; yarn build</span><br></pre></td></tr></table></figure><p>啟動應用程式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure><p>前往：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></p>]]></content>
+      <content type="html"><![CDATA[<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>main.go</code> 檔：</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"><span class="string">"log"</span></span><br><span class="line"><span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">http.Handle(<span class="string">"/"</span>, http.FileServer(http.Dir(<span class="string">"./web/dist/"</span>)))</span><br><span class="line"></span><br><span class="line">log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>建立 Vue 專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create web</span><br></pre></td></tr></table></figure><p>執行編譯。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> web &amp;&amp; yarn build</span><br></pre></td></tr></table></figure><p>啟動應用程式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure><p>前往：<a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a></p><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul><li><a href="https://github.com/memochou1993/go-vue-cli-example" target="_blank" rel="noopener">go-vue-cli-example</a></li></ul>]]></content>
       
       <categories>
           
@@ -376,9 +376,9 @@
             
             <tag> Vue </tag>
             
-            <tag> Vuetify </tag>
-            
             <tag> TypeScript </tag>
+            
+            <tag> Vuetify </tag>
             
         </tags>
       
@@ -1026,9 +1026,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Harbor </tag>
             
@@ -1206,9 +1206,9 @@
             
             <tag> Docker </tag>
             
-            <tag> CI/CD </tag>
-            
             <tag> Kubernetes </tag>
+            
+            <tag> CI/CD </tag>
             
         </tags>
       
@@ -1235,9 +1235,9 @@
             
             <tag> Docker </tag>
             
-            <tag> CI/CD </tag>
-            
             <tag> Kubernetes </tag>
+            
+            <tag> CI/CD </tag>
             
         </tags>
       
@@ -2134,11 +2134,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -2252,11 +2252,11 @@
             
             <tag> Go </tag>
             
-            <tag> ORM </tag>
-            
             <tag> MongoDB </tag>
             
             <tag> NoSQL </tag>
+            
+            <tag> ORM </tag>
             
         </tags>
       
@@ -2339,11 +2339,11 @@
             
             <tag> Laradock </tag>
             
+            <tag> Caddy </tag>
+            
             <tag> SSL </tag>
             
             <tag> HTTPS </tag>
-            
-            <tag> Caddy </tag>
             
         </tags>
       
@@ -3304,9 +3304,9 @@
       
         <tags>
             
-            <tag> npm </tag>
-            
             <tag> Node </tag>
+            
+            <tag> npm </tag>
             
         </tags>
       
@@ -3387,11 +3387,11 @@
             
             <tag> Laravel </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Windows </tag>
             
         </tags>
       
@@ -4491,9 +4491,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> GitLab </tag>
             
@@ -4522,9 +4522,9 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Ubuntu </tag>
             
             <tag> Rocket.Chat </tag>
             
@@ -4675,11 +4675,11 @@
             
             <tag> Linux </tag>
             
-            <tag> Ubuntu </tag>
-            
             <tag> Docker </tag>
             
             <tag> Laradock </tag>
+            
+            <tag> Ubuntu </tag>
             
         </tags>
       
@@ -4994,9 +4994,9 @@
             
             <tag> macOS </tag>
             
-            <tag> Nginx </tag>
-            
             <tag> 網頁伺服器 </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -6045,9 +6045,9 @@
             
             <tag> 套件開發 </tag>
             
-            <tag> YouTube </tag>
-            
             <tag> Packagist </tag>
+            
+            <tag> YouTube </tag>
             
         </tags>
       
@@ -6080,9 +6080,9 @@
             
             <tag> 套件開發 </tag>
             
-            <tag> YouTube </tag>
-            
             <tag> Packagist </tag>
+            
+            <tag> YouTube </tag>
             
         </tags>
       
@@ -9466,9 +9466,9 @@
             
             <tag> 環境部署 </tag>
             
-            <tag> Windows </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Windows </tag>
             
             <tag> Ubuntu </tag>
             
