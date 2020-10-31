@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文為 Kubernetes 官方文件的學習筆記。 環境 MacOS  更新使用 Homebrew 重新安裝 minikube。 1brew reinstall minikube  創建叢集啟動 minikube 並創建一個叢集。 1minikube start  使用 kubectl 指令與叢集進行互動。以下使用 echoserver 映像檔創建一個  Kubernetes Deployme">
+    <meta name="description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  更新使用 Homebrew 安裝 minikube。 1brew install minikube  創建叢集啟動 minikube 並創建一個叢集（Cluster）。 1minikube start  使用 kubectl 指令與叢集進行互動。以下使用 echoserver 映像檔創建一個  Kube">
 <meta name="keywords" content="環境部署,Docker,Kubernetes,minikube">
 <meta property="og:type" content="article">
 <meta property="og:title" content="學習 Kubernetes 容器管理平台（一）：使用 minikube 安装 Kubernetes">
 <meta property="og:url" content="https://memochou1993.github.io/2020/10/30/學習-Kubernetes-容器管理平台（一）：使用-minikube-安装-Kubernetes/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為 Kubernetes 官方文件的學習筆記。 環境 MacOS  更新使用 Homebrew 重新安裝 minikube。 1brew reinstall minikube  創建叢集啟動 minikube 並創建一個叢集。 1minikube start  使用 kubectl 指令與叢集進行互動。以下使用 echoserver 映像檔創建一個  Kubernetes Deployme">
+<meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  更新使用 Homebrew 安裝 minikube。 1brew install minikube  創建叢集啟動 minikube 並創建一個叢集（Cluster）。 1minikube start  使用 kubectl 指令與叢集進行互動。以下使用 echoserver 映像檔創建一個  Kube">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-30T08:56:37.896Z">
+<meta property="og:updated_time" content="2020-10-31T14:32:07.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="學習 Kubernetes 容器管理平台（一）：使用 minikube 安装 Kubernetes">
-<meta name="twitter:description" content="前言本文為 Kubernetes 官方文件的學習筆記。 環境 MacOS  更新使用 Homebrew 重新安裝 minikube。 1brew reinstall minikube  創建叢集啟動 minikube 並創建一個叢集。 1minikube start  使用 kubectl 指令與叢集進行互動。以下使用 echoserver 映像檔創建一個  Kubernetes Deployme">
+<meta name="twitter:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  更新使用 Homebrew 安裝 minikube。 1brew install minikube  創建叢集啟動 minikube 並創建一個叢集（Cluster）。 1minikube start  使用 kubectl 指令與叢集進行互動。以下使用 echoserver 映像檔創建一個  Kube">
     
     
         
@@ -88,6 +88,8 @@
         <li><a class="icon" href="/2020/10/29/在-Vue-3-0-使用-ESLint-分析工具和-Airbnb-程式碼風格/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
+        <li><a class="icon" href="/2020/10/30/學習-Kubernetes-容器管理平台（二）：叢集、部署、豆莢/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
       </ul>
@@ -113,7 +115,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-number">3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#創建叢集"><span class="toc-number">4.</span> <span class="toc-text">創建叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理叢集"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-number">6.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#與叢集互動"><span class="toc-number">7.</span> <span class="toc-text">與叢集互動</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubectl"><span class="toc-number">7.1.</span> <span class="toc-text">Kubectl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UI-介面"><span class="toc-number">7.2.</span> <span class="toc-text">UI 介面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#網路"><span class="toc-number">7.3.</span> <span class="toc-text">網路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persistent-Volume"><span class="toc-number">7.4.</span> <span class="toc-text">Persistent Volume</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-number">3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#創建叢集"><span class="toc-number">4.</span> <span class="toc-text">創建叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理叢集"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-number">6.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#與叢集互動"><span class="toc-number">7.</span> <span class="toc-text">與叢集互動</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kubectl"><span class="toc-number">7.1.</span> <span class="toc-text">kubectl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UI-介面"><span class="toc-number">7.2.</span> <span class="toc-text">UI 介面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#網路"><span class="toc-number">7.3.</span> <span class="toc-text">網路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persistent-Volume"><span class="toc-number">7.4.</span> <span class="toc-text">Persistent Volume</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -169,14 +171,15 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為 <a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener">Kubernetes 官方文件</a>的學習筆記。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener">Kubernetes 官方文件</a>〉的學習筆記。</p>
 <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
 <li>MacOS</li>
+<li>minikube</li>
 </ul>
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>使用 Homebrew 重新安裝 minikube。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew reinstall minikube</span><br></pre></td></tr></table></figure>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>使用 Homebrew 安裝 minikube。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install minikube</span><br></pre></td></tr></table></figure>
 
-<h2 id="創建叢集"><a href="#創建叢集" class="headerlink" title="創建叢集"></a>創建叢集</h2><p>啟動 minikube 並創建一個叢集。</p>
+<h2 id="創建叢集"><a href="#創建叢集" class="headerlink" title="創建叢集"></a>創建叢集</h2><p>啟動 minikube 並創建一個叢集（Cluster）。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>kubectl</code> 指令與叢集進行互動。以下使用 <code>echoserver</code> 映像檔創建一個  Kubernetes Deployment，並開放在 8080 埠號。</p>
@@ -216,7 +219,7 @@
 <p>使用以下指令，指定 VM 驅動。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start --vm-driver=&lt;driver_name&gt;</span><br></pre></td></tr></table></figure>
 
-<p>使用以下指令，將 shell 指向 minikube 的 Docker 守護行程。Docker Client 會把 build context 送往 minikube 內的 Docker 守護行程進行打包。打包出來的映像檔會存在 minikube 虛擬機內，如此一來可以加速本地端的實驗。</p>
+<p>使用以下指令，將 shell 指向 minikube 的 Docker 守護行程（daemon）。Docker Client 會把 build context 送往 minikube 內的 Docker 守護行程進行打包。打包出來的映像檔會存在 minikube 虛擬機內，如此一來可以加速本地端的實驗。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(minikube docker-env)</span><br></pre></td></tr></table></figure>
 
 <p>現在可以使用 Docker 與 minikube 虛擬機內的 Docker 守護行程進行通訊。</p>
@@ -226,16 +229,16 @@
 <p>例如要在 <code>Kubelet</code> 上將 <code>MaxPods</code> 設定調整為 5，可以使用以下參數：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--extra-config=kubelet.MaxPods=5</span><br></pre></td></tr></table></figure>
 
-<p>若要將 <code>apiserver</code> 的 <code>AuthorizationMode</code> 設定調整為 RBAC，可以使用以下參數：</p>
+<p>若要將 <code>apiserver</code> 的 <code>AuthorizationMode</code> 設定調整為 RBAC（一種身分驗證方法），使用以下參數：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--extra-config=apiserver.authorization-mode=RBAC</span><br></pre></td></tr></table></figure>
 
-<h2 id="與叢集互動"><a href="#與叢集互動" class="headerlink" title="與叢集互動"></a>與叢集互動</h2><h3 id="Kubectl"><a href="#Kubectl" class="headerlink" title="Kubectl"></a>Kubectl</h3><p>使用 <code>minikube start</code> 指令時，會創建一個名為 <code>minikube</code> 的 <code>kubectl</code> 上下文。此上下文包含與 minikube 叢集通訊的配置。使用以下指令，查看當前的 <code>kubectl</code> 上下文。</p>
+<h2 id="與叢集互動"><a href="#與叢集互動" class="headerlink" title="與叢集互動"></a>與叢集互動</h2><h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><p>使用 <code>minikube start</code> 指令時，會創建一個名為 <code>minikube</code> 的 <code>kubectl</code> 上下文。此上下文包含與 minikube 叢集通訊的配置。使用以下指令，查看當前的 <code>kubectl</code> 上下文。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl config current-context</span><br></pre></td></tr></table></figure>
 
 <h3 id="UI-介面"><a href="#UI-介面" class="headerlink" title="UI 介面"></a>UI 介面</h3><p>使用以下指令，開啟 UI 介面。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube dashboard</span><br></pre></td></tr></table></figure>
 
-<h3 id="網路"><a href="#網路" class="headerlink" title="網路"></a>網路</h3><p>minikube 虛擬機透過 host-only IP 開放給主機系統，可以使用以下指令獲得此 IP。</p>
+<h3 id="網路"><a href="#網路" class="headerlink" title="網路"></a>網路</h3><p>minikube 虛擬機透過 host-only IP 開放給主機系統，可以使用以下指令獲得此 IP：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube ip</span><br></pre></td></tr></table></figure>
 
 <p>在 NodePort 上，可以透過此 IP 位址訪問任何類型同為 NodePort 的服務。要確定服務的 NodePort，使用以下指令：</p>
@@ -280,7 +283,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-number">3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#創建叢集"><span class="toc-number">4.</span> <span class="toc-text">創建叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理叢集"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-number">6.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#與叢集互動"><span class="toc-number">7.</span> <span class="toc-text">與叢集互動</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubectl"><span class="toc-number">7.1.</span> <span class="toc-text">Kubectl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UI-介面"><span class="toc-number">7.2.</span> <span class="toc-text">UI 介面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#網路"><span class="toc-number">7.3.</span> <span class="toc-text">網路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persistent-Volume"><span class="toc-number">7.4.</span> <span class="toc-text">Persistent Volume</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-number">3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#創建叢集"><span class="toc-number">4.</span> <span class="toc-text">創建叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理叢集"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-number">6.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#與叢集互動"><span class="toc-number">7.</span> <span class="toc-text">與叢集互動</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kubectl"><span class="toc-number">7.1.</span> <span class="toc-text">kubectl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UI-介面"><span class="toc-number">7.2.</span> <span class="toc-text">UI 介面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#網路"><span class="toc-number">7.3.</span> <span class="toc-text">網路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persistent-Volume"><span class="toc-number">7.4.</span> <span class="toc-text">Persistent Volume</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
