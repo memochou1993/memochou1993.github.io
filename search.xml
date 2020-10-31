@@ -165,6 +165,8 @@
           
           <category> Go </category>
           
+          <category> 其他 </category>
+          
       </categories>
       
       
@@ -368,11 +370,11 @@
       
         <tags>
             
-            <tag> 程式設計 </tag>
-            
             <tag> GitHub </tag>
             
             <tag> GitHub Pages </tag>
+            
+            <tag> 程式設計 </tag>
             
             <tag> JavaScript </tag>
             
@@ -722,6 +724,8 @@
           <category> 程式設計 </category>
           
           <category> Go </category>
+          
+          <category> 其他 </category>
           
       </categories>
       
@@ -1330,6 +1334,8 @@
             
             <tag> Kubernetes </tag>
             
+            <tag> minikube </tag>
+            
         </tags>
       
     </entry>
@@ -1358,6 +1364,8 @@
             <tag> CI/CD </tag>
             
             <tag> Kubernetes </tag>
+            
+            <tag> minikube </tag>
             
         </tags>
       
@@ -1431,6 +1439,8 @@
           
           <category> Go </category>
           
+          <category> 爬蟲 </category>
+          
       </categories>
       
       
@@ -1457,6 +1467,8 @@
           <category> 程式設計 </category>
           
           <category> Go </category>
+          
+          <category> 爬蟲 </category>
           
       </categories>
       
@@ -1977,11 +1989,11 @@
       
         <tags>
             
+            <tag> 環境部署 </tag>
+            
             <tag> PHP </tag>
             
             <tag> Laravel </tag>
-            
-            <tag> 環境部署 </tag>
             
             <tag> Docker </tag>
             
@@ -2122,9 +2134,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -2149,6 +2161,8 @@
           <category> 環境部署 </category>
           
           <category> 網頁伺服器 </category>
+          
+          <category> Caddy </category>
           
       </categories>
       
@@ -2559,9 +2573,9 @@
     </entry>
     
     <entry>
-      <title>在 Laravel 6.0 處理大量資料庫記錄</title>
-      <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/"/>
-      <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/</url>
+      <title>在 Laravel 6.0 處理資料庫大量資料查詢</title>
+      <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E5%BA%AB%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2/"/>
+      <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E5%BA%AB%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2/</url>
       <content type="html"><![CDATA[<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new eloquent-chunking</span><br></pre></td></tr></table></figure><h2 id="新增資料庫"><a href="#新增資料庫" class="headerlink" title="新增資料庫"></a>新增資料庫</h2><p>為求方便，使用 SQLite 資料庫。</p><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>由於需要查看記憶體使用量、執行時間以及資料庫查詢，需要安裝 Telescope 套件。</p><h2 id="新增模型"><a href="#新增模型" class="headerlink" title="新增模型"></a>新增模型</h2><p>新增 <code>Book</code> 模型，使用 <code>-a</code> 參數同時新增遷移檔、工廠和控制器。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:model Book -a</span><br></pre></td></tr></table></figure><p>在遷移檔新增欄位。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateBooksTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'books'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;bigIncrements(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'author'</span>);</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'books'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="資料填充"><a href="#資料填充" class="headerlink" title="資料填充"></a>資料填充</h2><p>修改 <code>database/factories/BookFactory.php</code> 檔，使工廠產生不重複的資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Faker</span>\<span class="title">Generator</span> <span class="title">as</span> <span class="title">Faker</span>;</span><br><span class="line"></span><br><span class="line">$factory-&gt;define(Book::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'title'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;sentence(), rand()),</span><br><span class="line">        <span class="string">'author'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;name(), rand()),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>新增 <code>BooksTableSeeder</code> 資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed BooksTableSeeder</span><br></pre></td></tr></table></figure><p>分批插入共 10 萬筆資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BooksTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the database seeds.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= <span class="number">100</span>; $i++) &#123;</span><br><span class="line">            $books = factory(Book::class)-&gt;times(<span class="number">1000</span>)-&gt;make()-&gt;toArray();</span><br><span class="line"></span><br><span class="line">            Book::insert($books);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>database/seeds/DatabaseSeeder.php</code> 檔註冊資料填充。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DatabaseSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Seed the application's database.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;call(BooksTableSeeder::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>執行資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate --seed</span><br></pre></td></tr></table></figure><h2 id="新增路由"><a href="#新增路由" class="headerlink" title="新增路由"></a>新增路由</h2><p>在 <code>routes/api.php</code> 檔新增路由。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'books'</span>, <span class="string">'BookController@index'</span>);</span><br></pre></td></tr></table></figure><h2 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h2><p>從 10 萬筆資料中找到一筆已存在的資料：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查詢已存在的資料</span></span><br><span class="line">$books = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;get();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 檢驗是否已存在</span></span><br><span class="line">$isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1037 ms</td><td>119.9 MB</td><td>2</td></tr><tr><td>1040 ms</td><td>117.9 MB</td><td>2</td></tr><tr><td>1092 ms</td><td>113.9 MB</td><td>2</td></tr><tr><td>1151 ms</td><td>111.9 MB</td><td>2</td></tr><tr><td>1084 ms</td><td>103.9 MB</td><td>2</td></tr></tbody></table><h2 id="優化"><a href="#優化" class="headerlink" title="優化"></a>優化</h2><h3 id="分塊"><a href="#分塊" class="headerlink" title="分塊"></a>分塊</h3><p>在處理大型結果集時，為了節省記憶體使用量，可以使用 <code>chunk()</code> 方法來查詢 Eloquent 模型中的「分塊」，將它們提供給指定的閉包處理。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分 10 次查詢已存在的資料</span></span><br><span class="line">Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;chunk($max / <span class="number">10</span>, <span class="function"><span class="keyword">function</span> <span class="params">($books)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook, &amp;$isExisting)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 檢驗是否已存在</span></span><br><span class="line">    $isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果存在就停止查詢</span></span><br><span class="line">    <span class="keyword">return</span> ! $isExisting;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1053 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1112 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1145 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1114 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1120 ms</td><td>18 MB</td><td>11</td></tr></tbody></table><p>使用 <code>chunkById()</code> 方法可以更快速地查詢資料庫，但僅限用於主鍵為 <code>AUTO_INCREMENT</code> 的資料表，並且在有 <code>join</code> 的情況下可能不能使用。</p><h3 id="游標"><a href="#游標" class="headerlink" title="游標"></a>游標</h3><p>使用 <code>cursor()</code> 方法可以藉由游標遍歷資料庫，並且只會執行一次的查詢。處理大量的數據時，可以減少記憶體使用量。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;cursor()-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>2168 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2166 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2214 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2178 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2165 ms</td><td>4 MB</td><td>2</td></tr></tbody></table><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>如果只是要避免重複插入資料而產生錯誤，可以考慮使用 <code>insertOrIgnore()</code> 方法，但是這個方法只會檢查主鍵而已。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">Book::insertOrIgnore([</span><br><span class="line">    [</span><br><span class="line">        <span class="string">"id"</span> =&gt; $max,</span><br><span class="line">        <span class="string">"title"</span> =&gt; <span class="string">"New Book"</span>,</span><br><span class="line">        <span class="string">"author"</span> =&gt; <span class="string">"Memo Chou"</span>,</span><br><span class="line">    ],</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">dump(Book::count());</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">100000</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/eloquent-chunking-example" target="_blank" rel="noopener">eloquent-chunking-example</a></p>]]></content>
       
       <categories>
@@ -2592,9 +2606,9 @@
     </entry>
     
     <entry>
-      <title>在 Laravel 6.0 處理資料庫大量資料查詢</title>
-      <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E5%BA%AB%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2/"/>
-      <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E5%BA%AB%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%9F%A5%E8%A9%A2/</url>
+      <title>在 Laravel 6.0 處理大量資料庫記錄</title>
+      <link href="/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/"/>
+      <url>/2019/12/15/%E5%9C%A8-Laravel-6-0-%E8%99%95%E7%90%86%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E5%BA%AB%E8%A8%98%E9%8C%84/</url>
       <content type="html"><![CDATA[<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new eloquent-chunking</span><br></pre></td></tr></table></figure><h2 id="新增資料庫"><a href="#新增資料庫" class="headerlink" title="新增資料庫"></a>新增資料庫</h2><p>為求方便，使用 SQLite 資料庫。</p><h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>由於需要查看記憶體使用量、執行時間以及資料庫查詢，需要安裝 Telescope 套件。</p><h2 id="新增模型"><a href="#新增模型" class="headerlink" title="新增模型"></a>新增模型</h2><p>新增 <code>Book</code> 模型，使用 <code>-a</code> 參數同時新增遷移檔、工廠和控制器。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:model Book -a</span><br></pre></td></tr></table></figure><p>在遷移檔新增欄位。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Migrations</span>\<span class="title">Migration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Schema</span>\<span class="title">Blueprint</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateBooksTable</span> <span class="keyword">extends</span> <span class="title">Migration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::create(<span class="string">'books'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(Blueprint $table)</span> </span>&#123;</span><br><span class="line">            $table-&gt;bigIncrements(<span class="string">'id'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'title'</span>);</span><br><span class="line">            $table-&gt;string(<span class="string">'author'</span>);</span><br><span class="line">            $table-&gt;timestamps();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Reverse the migrations.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Schema::dropIfExists(<span class="string">'books'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="資料填充"><a href="#資料填充" class="headerlink" title="資料填充"></a>資料填充</h2><p>修改 <code>database/factories/BookFactory.php</code> 檔，使工廠產生不重複的資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Faker</span>\<span class="title">Generator</span> <span class="title">as</span> <span class="title">Faker</span>;</span><br><span class="line"></span><br><span class="line">$factory-&gt;define(Book::class, <span class="function"><span class="keyword">function</span> <span class="params">(Faker $faker)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'title'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;sentence(), rand()),</span><br><span class="line">        <span class="string">'author'</span> =&gt; sprintf(<span class="string">'%s (%u)'</span>, $faker-&gt;name(), rand()),</span><br><span class="line">    ];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>新增 <code>BooksTableSeeder</code> 資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed BooksTableSeeder</span><br></pre></td></tr></table></figure><p>分批插入共 10 萬筆資料。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Book</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BooksTableSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Run the database seeds.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= <span class="number">100</span>; $i++) &#123;</span><br><span class="line">            $books = factory(Book::class)-&gt;times(<span class="number">1000</span>)-&gt;make()-&gt;toArray();</span><br><span class="line"></span><br><span class="line">            Book::insert($books);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在 <code>database/seeds/DatabaseSeeder.php</code> 檔註冊資料填充。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Seeder</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DatabaseSeeder</span> <span class="keyword">extends</span> <span class="title">Seeder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Seed the application's database.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> void</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;call(BooksTableSeeder::class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>執行資料填充。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate --seed</span><br></pre></td></tr></table></figure><h2 id="新增路由"><a href="#新增路由" class="headerlink" title="新增路由"></a>新增路由</h2><p>在 <code>routes/api.php</code> 檔新增路由。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'books'</span>, <span class="string">'BookController@index'</span>);</span><br></pre></td></tr></table></figure><h2 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h2><p>從 10 萬筆資料中找到一筆已存在的資料：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查詢已存在的資料</span></span><br><span class="line">$books = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;get();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 檢驗是否已存在</span></span><br><span class="line">$isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1037 ms</td><td>119.9 MB</td><td>2</td></tr><tr><td>1040 ms</td><td>117.9 MB</td><td>2</td></tr><tr><td>1092 ms</td><td>113.9 MB</td><td>2</td></tr><tr><td>1151 ms</td><td>111.9 MB</td><td>2</td></tr><tr><td>1084 ms</td><td>103.9 MB</td><td>2</td></tr></tbody></table><h2 id="優化"><a href="#優化" class="headerlink" title="優化"></a>優化</h2><h3 id="分塊"><a href="#分塊" class="headerlink" title="分塊"></a>分塊</h3><p>在處理大型結果集時，為了節省記憶體使用量，可以使用 <code>chunk()</code> 方法來查詢 Eloquent 模型中的「分塊」，將它們提供給指定的閉包處理。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將最後一筆資料當作要尋找的資料</span></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分 10 次查詢已存在的資料</span></span><br><span class="line">Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;chunk($max / <span class="number">10</span>, <span class="function"><span class="keyword">function</span> <span class="params">($books)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook, &amp;$isExisting)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 檢驗是否已存在</span></span><br><span class="line">    $isExisting = $books-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果存在就停止查詢</span></span><br><span class="line">    <span class="keyword">return</span> ! $isExisting;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>1053 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1112 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1145 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1114 ms</td><td>18 MB</td><td>11</td></tr><tr><td>1120 ms</td><td>18 MB</td><td>11</td></tr></tbody></table><p>使用 <code>chunkById()</code> 方法可以更快速地查詢資料庫，但僅限用於主鍵為 <code>AUTO_INCREMENT</code> 的資料表，並且在有 <code>join</code> 的情況下可能不能使用。</p><h3 id="游標"><a href="#游標" class="headerlink" title="游標"></a>游標</h3><p>使用 <code>cursor()</code> 方法可以藉由游標遍歷資料庫，並且只會執行一次的查詢。處理大量的數據時，可以減少記憶體使用量。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">$existingBook = Book::find($max);</span><br><span class="line"></span><br><span class="line">$isExisting = Book::where(<span class="string">'id'</span>, <span class="string">'&lt;='</span>, $max)-&gt;cursor()-&gt;some(<span class="function"><span class="keyword">function</span> <span class="params">($book)</span> <span class="title">use</span> <span class="params">(&amp;$existingBook)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $book-&gt;title === $existingBook-&gt;title;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dump($isExisting);</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">true</span><br></pre></td></tr></table></figure><p>實測 5 次的效能分別如下：</p><table><thead><tr><th>Duration</th><th>Memory usage</th><th>queries</th></tr></thead><tbody><tr><td>2168 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2166 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2214 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2178 ms</td><td>4 MB</td><td>2</td></tr><tr><td>2165 ms</td><td>4 MB</td><td>2</td></tr></tbody></table><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>如果只是要避免重複插入資料而產生錯誤，可以考慮使用 <code>insertOrIgnore()</code> 方法，但是這個方法只會檢查主鍵而已。</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$max = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line">Book::insertOrIgnore([</span><br><span class="line">    [</span><br><span class="line">        <span class="string">"id"</span> =&gt; $max,</span><br><span class="line">        <span class="string">"title"</span> =&gt; <span class="string">"New Book"</span>,</span><br><span class="line">        <span class="string">"author"</span> =&gt; <span class="string">"Memo Chou"</span>,</span><br><span class="line">    ],</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">dump(Book::count());</span><br></pre></td></tr></table></figure><p>結果：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">100000</span></span><br></pre></td></tr></table></figure><h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p><a href="https://github.com/memochou1993/eloquent-chunking-example" target="_blank" rel="noopener">eloquent-chunking-example</a></p>]]></content>
       
       <categories>
@@ -3204,9 +3218,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -3289,9 +3303,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Docker </tag>
             
@@ -3505,9 +3519,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Windows </tag>
             
@@ -3648,9 +3662,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -4081,9 +4095,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Laradock </tag>
             
@@ -4694,9 +4708,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4727,9 +4741,9 @@
       
         <tags>
             
-            <tag> PHP </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> PHP </tag>
             
             <tag> Linux </tag>
             
@@ -4760,9 +4774,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -4791,9 +4805,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
@@ -5106,6 +5120,8 @@
           <category> 環境部署 </category>
           
           <category> 網頁伺服器 </category>
+          
+          <category> Nginx </category>
           
       </categories>
       
@@ -5553,9 +5569,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Docker </tag>
             
@@ -8098,11 +8114,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -8131,11 +8147,11 @@
       
         <tags>
             
+            <tag> GitHub </tag>
+            
             <tag> 程式設計 </tag>
             
             <tag> PHP </tag>
-            
-            <tag> GitHub </tag>
             
             <tag> 套件開發 </tag>
             
@@ -9553,9 +9569,9 @@
       
         <tags>
             
-            <tag> Laravel </tag>
-            
             <tag> 環境部署 </tag>
+            
+            <tag> Laravel </tag>
             
             <tag> Linux </tag>
             
