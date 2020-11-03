@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述ConfigMap 允許配置檔案與鏡像檔案分離，使得容器化的應用程式具有可移植性。 創建配置檔案新增一個 configure-pod-container/configmap 資料夾。 1mkdir -p configure-pod-container/configmap/  使用 kubectl c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-03T09:02:03.662Z">
+<meta property="og:updated_time" content="2020-11-03T09:14:22.051Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="學習 Kubernetes 容器管理平台（四）：使用 ConfigMap 配置 Pod">
 <meta name="twitter:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述ConfigMap 允許配置檔案與鏡像檔案分離，使得容器化的應用程式具有可移植性。 創建配置檔案新增一個 configure-pod-container/configmap 資料夾。 1mkdir -p configure-pod-container/configmap/  使用 kubectl c">
@@ -254,7 +254,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -k .</span><br></pre></td></tr></table></figure>
 
 <h4 id="基於環境變數檔-1"><a href="#基於環境變數檔-1" class="headerlink" title="基於環境變數檔"></a>基於環境變數檔</h4><p>從指令指定的字面值創建。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">configMapGenerator:</span><br><span class="line">- name: special-config-6</span><br><span class="line">  env: configure-pod-container/configmap/game-env-file.properties</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;./kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: special-config-6</span><br><span class="line">  env: configure-pod-container/configmap/game-env-file.properties</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
 <p>創建 ConfigMap 物件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -k .</span><br></pre></td></tr></table></figure>
