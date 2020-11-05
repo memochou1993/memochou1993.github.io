@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法在專案根目錄新增 webpack.config.js 檔： 12345678910111213const path = require(&apos;path&apos;);module.exports = &amp;#123;  resolve: &amp;#123;    extensions: [      &apos;.js&apos;,      &apos;.vue&apos;,    ],    alias: &amp;#123;      &apos;@&apos;: path.j">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-08T15:27:48.696Z">
+<meta property="og:updated_time" content="2020-11-05T16:52:11.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 7.0 設置 Vue 專案的路徑別名">
 <meta name="twitter:description" content="做法在專案根目錄新增 webpack.config.js 檔： 12345678910111213const path = require(&apos;path&apos;);module.exports = &amp;#123;  resolve: &amp;#123;    extensions: [      &apos;.js&apos;,      &apos;.vue&apos;,    ],    alias: &amp;#123;      &apos;@&apos;: path.j">
@@ -179,7 +179,7 @@
 <p>修改 <code>webpack.mix.js</code> 檔，引入 <code>webpack.config</code> 檔：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mix = <span class="built_in">require</span>(<span class="string">'laravel-mix'</span>);</span><br><span class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./webpack.config'</span>);</span><br><span class="line"></span><br><span class="line">mix.webpackConfig(config);</span><br></pre></td></tr></table></figure>
 
-<h2 id="編輯器"><a href="#編輯器" class="headerlink" title="編輯器"></a>編輯器</h2><p>使用 PhpStorm 編輯器時，如果出現 <code>Module is not installed</code> 的錯誤訊息，可以開啟 <code>Preferences</code> 視窗，將 Webpack 的 <code>webpack configuration file</code> 路徑設置為 <code>webpack.config.js</code> 檔的路徑。</p>
+<h2 id="編輯器"><a href="#編輯器" class="headerlink" title="編輯器"></a>編輯器</h2><p>使用 WebStorm 編輯器時，如果出現 <code>Module is not installed</code> 的錯誤訊息，可以開啟 <code>Preferences</code> 視窗，將 Webpack 的 <code>webpack configuration file</code> 路徑設置為 <code>webpack.config.js</code> 檔的路徑。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/&lt;USER&gt;/Projects/&lt;PROJECT&gt;/webpack.config.js</span><br></pre></td></tr></table></figure>
 
 
