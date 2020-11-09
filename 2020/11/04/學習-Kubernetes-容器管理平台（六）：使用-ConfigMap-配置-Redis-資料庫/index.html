@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述本文使用 ConfigMap 来配置 Redis 服務。 做法首先，建立一個 redis-config 設定檔： 1234cat &amp;lt;&amp;lt;EOF &amp;gt;./redis-configmaxmemory 2mbmaxmemory-policy allkeys-lruEOF  建立一個 kust">
+    <meta name="description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述本文使用 ConfigMap 来配置一個 Redis 服務。 做法首先，建立一個 redis-config 設定檔： 1234cat &amp;lt;&amp;lt;EOF &amp;gt;./redis-configmaxmemory 2mbmaxmemory-policy allkeys-lruEOF  建立一個 ku">
 <meta name="keywords" content="環境部署,Docker,Kubernetes,minikube">
 <meta property="og:type" content="article">
-<meta property="og:title" content="學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）">
-<meta property="og:url" content="https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/index.html">
+<meta property="og:title" content="學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫">
+<meta property="og:url" content="https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述本文使用 ConfigMap 来配置 Redis 服務。 做法首先，建立一個 redis-config 設定檔： 1234cat &amp;lt;&amp;lt;EOF &amp;gt;./redis-configmaxmemory 2mbmaxmemory-policy allkeys-lruEOF  建立一個 kust">
+<meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述本文使用 ConfigMap 来配置一個 Redis 服務。 做法首先，建立一個 redis-config 設定檔： 1234cat &amp;lt;&amp;lt;EOF &amp;gt;./redis-configmaxmemory 2mbmaxmemory-policy allkeys-lruEOF  建立一個 ku">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-03T13:40:42.123Z">
+<meta property="og:updated_time" content="2020-11-09T14:24:24.258Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）">
-<meta name="twitter:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述本文使用 ConfigMap 来配置 Redis 服務。 做法首先，建立一個 redis-config 設定檔： 1234cat &amp;lt;&amp;lt;EOF &amp;gt;./redis-configmaxmemory 2mbmaxmemory-policy allkeys-lruEOF  建立一個 kust">
+<meta name="twitter:title" content="學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫">
+<meta name="twitter:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 MacOS minikube  概述本文使用 ConfigMap 来配置一個 Redis 服務。 做法首先，建立一個 redis-config 設定檔： 1234cat &amp;lt;&amp;lt;EOF &amp;gt;./redis-configmaxmemory 2mbmaxmemory-policy allkeys-lruEOF  建立一個 ku">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）</title>
+    <title>學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -85,10 +85,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/11/02/學習-Kubernetes-容器管理平台（四）：使用-ConfigMap-配置-Pod（一）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-Ingress-公開應用程式/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-Ingress-公開應用程式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/11/05/學習-Kubernetes-容器管理平台（七）：部署一個基於-Redis-資料庫的-PHP-簽到簿/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&text=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&is_video=false&description=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）&body=Check out this article: https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&name=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&text=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&is_video=false&description=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫&body=Check out this article: https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&name=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）
+        學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫
     </h1>
 
 
@@ -142,7 +142,7 @@
       </span>
       
     <div class="postdate">
-        <time datetime="2020-11-03T12:46:36.000Z" itemprop="datePublished">2020-11-03</time>
+        <time datetime="2020-11-04T12:46:36.000Z" itemprop="datePublished">2020-11-04</time>
     </div>
 
 
@@ -176,7 +176,7 @@
 <li>MacOS</li>
 <li>minikube</li>
 </ul>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本文使用 ConfigMap 来配置 Redis 服務。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本文使用 ConfigMap 来配置一個 Redis 服務。</p>
 <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>首先，建立一個 <code>redis-config</code> 設定檔：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt;./redis-config</span><br><span class="line">maxmemory 2mb</span><br><span class="line">maxmemory-policy allkeys-lru</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 
@@ -249,16 +249,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&text=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&is_video=false&description=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）&body=Check out this article: https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&title=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/03/學習-Kubernetes-容器管理平台（五）：使用-ConfigMap-配置-Pod（二）/&name=學習 Kubernetes 容器管理平台（五）：使用 ConfigMap 配置 Pod（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&text=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&is_video=false&description=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫&body=Check out this article: https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&title=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/04/學習-Kubernetes-容器管理平台（六）：使用-ConfigMap-配置-Redis-資料庫/&name=學習 Kubernetes 容器管理平台（六）：使用 ConfigMap 配置 Redis 資料庫&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
