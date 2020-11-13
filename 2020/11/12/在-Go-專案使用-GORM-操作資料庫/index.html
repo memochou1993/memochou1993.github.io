@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Error())&amp;#125;  模型範例以下是一個模型的範例： 12345">
+    <meta name="description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table?charset=utf8mb4&amp;amp;parseTime=true&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Er">
 <meta name="keywords" content="程式設計,ORM,Go,GORM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Go 專案使用 GORM 操作資料庫">
 <meta property="og:url" content="https://memochou1993.github.io/2020/11/12/在-Go-專案使用-GORM-操作資料庫/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Error())&amp;#125;  模型範例以下是一個模型的範例： 12345">
+<meta property="og:description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table?charset=utf8mb4&amp;amp;parseTime=true&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Er">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-12T15:18:51.831Z">
+<meta property="og:updated_time" content="2020-11-13T10:56:46.060Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Go 專案使用 GORM 操作資料庫">
-<meta name="twitter:description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Error())&amp;#125;  模型範例以下是一個模型的範例： 12345">
+<meta name="twitter:description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table?charset=utf8mb4&amp;amp;parseTime=true&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Er">
     
     
         
@@ -172,8 +172,12 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="連線"><a href="#連線" class="headerlink" title="連線"></a>連線</h2><p>建立連線：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dsn := <span class="string">"root:root@tcp(127.0.0.1:3306)/table"</span></span><br><span class="line">db, err := gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Fatal(err.Error())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dsn := <span class="string">"root:root@tcp(127.0.0.1:3306)/table?charset=utf8mb4&amp;parseTime=true"</span></span><br><span class="line">db, err := gorm.Open(mysql.Open(dsn), &amp;gorm.Config&#123;&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Fatal(err.Error())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>為了正確處理 <code>time.Time</code>，需要帶上 <code>parseTime=true</code> 參數。</li>
+<li>為了支援完整的 UTF-8 編碼，需要帶上 <code>charset=utf8mb4</code> 參數。</li>
+</ul>
 <h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><p>以下是一個模型的範例：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID           <span class="keyword">uint</span></span><br><span class="line">	Name         <span class="keyword">string</span></span><br><span class="line">	Email        *<span class="keyword">string</span></span><br><span class="line">	Age          <span class="keyword">uint8</span></span><br><span class="line">	Birthday     *time.Time</span><br><span class="line">	MemberNumber sql.NullString</span><br><span class="line">	ActivedAt    sql.NullTime</span><br><span class="line">	CreatedAt    time.Time</span><br><span class="line">	UpdatedAt    time.Time</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
