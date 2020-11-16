@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table?charset=utf8mb4&amp;amp;parseTime=true&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Er">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-13T13:19:27.102Z">
+<meta property="og:updated_time" content="2020-11-16T14:03:03.936Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Go 專案使用 GORM 操作資料庫">
 <meta name="twitter:description" content="連線建立連線： 123456dsn := &quot;root:root@tcp(127.0.0.1:3306)/table?charset=utf8mb4&amp;amp;parseTime=true&quot;db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config&amp;#123;&amp;#125;)if err != nil &amp;#123;    log.Fatal(err.Er">
@@ -115,7 +115,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#連線"><span class="toc-number">1.</span> <span class="toc-text">連線</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型"><span class="toc-number">2.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#範例"><span class="toc-number">2.1.</span> <span class="toc-text">範例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#巢狀結構體"><span class="toc-number">2.2.</span> <span class="toc-text">巢狀結構體</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-number">2.3.</span> <span class="toc-text">JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#連線"><span class="toc-number">1.</span> <span class="toc-text">連線</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型"><span class="toc-number">2.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#範例"><span class="toc-number">2.1.</span> <span class="toc-text">範例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#巢狀結構體"><span class="toc-number">2.2.</span> <span class="toc-text">巢狀結構體</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-number">2.3.</span> <span class="toc-text">JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遷移"><span class="toc-number">3.</span> <span class="toc-text">遷移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -200,6 +200,12 @@
 </ul>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> User <span class="keyword">struct</span> &#123;</span><br><span class="line">	gorm.Model</span><br><span class="line">	Name         <span class="keyword">string</span>        <span class="string">`gorm:"size:255;not null;"`</span></span><br><span class="line">	Email        <span class="keyword">string</span>        <span class="string">`gorm:"size:255;not null;uniqueIndex;"`</span></span><br><span class="line">	Password     <span class="keyword">string</span>        <span class="string">`gorm:"size:255;not null;" json:"-"`</span></span><br><span class="line">	Property     *Property     <span class="string">`gorm:"polymorphic:Owner;polymorphicValue:user;" json:",omitempty"`</span></span><br><span class="line">	Entries      []Entry       <span class="string">`gorm:"polymorphic:Owner;polymorphicValue:user;" json:",omitempty"`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="遷移"><a href="#遷移" class="headerlink" title="遷移"></a>遷移</h2><p>使用 <code>AutoMigrate()</code> 方法遷移資料表。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">err := db.AutoMigrate(</span><br><span class="line">	&amp;model.User&#123;&#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>Migrator</code> 的 <code>DropTable()</code> 方法丟棄資料表。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">err := db.Migrator().DropTable(</span><br><span class="line">	&amp;model.User&#123;&#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="https://gorm.io/docs/" target="_blank" rel="noopener">GORM Guides</a></li>
 <li><a href="https://pjchender.github.io/2020/07/22/note-gorm-%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/" target="_blank" rel="noopener">GORM 使用筆記</a></li>
@@ -241,7 +247,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#連線"><span class="toc-number">1.</span> <span class="toc-text">連線</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型"><span class="toc-number">2.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#範例"><span class="toc-number">2.1.</span> <span class="toc-text">範例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#巢狀結構體"><span class="toc-number">2.2.</span> <span class="toc-text">巢狀結構體</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-number">2.3.</span> <span class="toc-text">JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#連線"><span class="toc-number">1.</span> <span class="toc-text">連線</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型"><span class="toc-number">2.</span> <span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#範例"><span class="toc-number">2.1.</span> <span class="toc-text">範例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#巢狀結構體"><span class="toc-number">2.2.</span> <span class="toc-text">巢狀結構體</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON"><span class="toc-number">2.3.</span> <span class="toc-text">JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遷移"><span class="toc-number">3.</span> <span class="toc-text">遷移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
