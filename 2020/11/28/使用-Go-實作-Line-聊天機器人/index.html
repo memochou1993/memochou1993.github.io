@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="建立頻道登入 LINE Developers 網頁，選擇 Messaging API 產品，建立一個 Channel。 建立專案新增專案。 12mkdir line-chatbotcd line-chatbot  啟用 Go Modules。 1go mod init  下載 linebot 套件。 1go get github.com/line/line-bot-sdk-go/linebot">
+    <meta name="description" content="建立頻道登入 LINE Developers 網頁，選擇 Messaging API 產品，建立一個 Channel。 建立專案新增專案。 12mkdir line-chatcd line-chat  啟用 Go Modules。 1go mod init  下載 linebot 套件。 1go get github.com/line/line-bot-sdk-go/linebot  建立 mai">
 <meta name="keywords" content="程式設計,Go,Line">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Go 實作 Line 聊天機器人">
 <meta property="og:url" content="https://memochou1993.github.io/2020/11/28/使用-Go-實作-Line-聊天機器人/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="建立頻道登入 LINE Developers 網頁，選擇 Messaging API 產品，建立一個 Channel。 建立專案新增專案。 12mkdir line-chatbotcd line-chatbot  啟用 Go Modules。 1go mod init  下載 linebot 套件。 1go get github.com/line/line-bot-sdk-go/linebot">
+<meta property="og:description" content="建立頻道登入 LINE Developers 網頁，選擇 Messaging API 產品，建立一個 Channel。 建立專案新增專案。 12mkdir line-chatcd line-chat  啟用 Go Modules。 1go mod init  下載 linebot 套件。 1go get github.com/line/line-bot-sdk-go/linebot  建立 mai">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-28T08:15:13.137Z">
+<meta property="og:updated_time" content="2020-11-28T14:21:47.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Go 實作 Line 聊天機器人">
-<meta name="twitter:description" content="建立頻道登入 LINE Developers 網頁，選擇 Messaging API 產品，建立一個 Channel。 建立專案新增專案。 12mkdir line-chatbotcd line-chatbot  啟用 Go Modules。 1go mod init  下載 linebot 套件。 1go get github.com/line/line-bot-sdk-go/linebot">
+<meta name="twitter:description" content="建立頻道登入 LINE Developers 網頁，選擇 Messaging API 產品，建立一個 Channel。 建立專案新增專案。 12mkdir line-chatcd line-chat  啟用 Go Modules。 1go mod init  下載 linebot 套件。 1go get github.com/line/line-bot-sdk-go/linebot  建立 mai">
     
     
         
@@ -85,7 +85,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/11/27/使用-Go-下載-YouTube-影片/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/11/28/使用-Go-實作-Line-Notify-推播/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
@@ -173,7 +173,7 @@
   <div class="content" itemprop="articleBody">
     <h2 id="建立頻道"><a href="#建立頻道" class="headerlink" title="建立頻道"></a>建立頻道</h2><p>登入 <a href="https://developers.line.biz/" target="_blank" rel="noopener">LINE Developers</a> 網頁，選擇 <a href="https://developers.line.biz/en/services/messaging-api/" target="_blank" rel="noopener">Messaging API</a> 產品，建立一個 Channel。</p>
 <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>新增專案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir line-chatbot</span><br><span class="line"><span class="built_in">cd</span> line-chatbot</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir line-chat</span><br><span class="line"><span class="built_in">cd</span> line-chat</span><br></pre></td></tr></table></figure>
 
 <p>啟用 Go Modules。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init</span><br></pre></td></tr></table></figure>
@@ -195,7 +195,7 @@
 <h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><ol>
 <li>進到 <code>Messaging API</code> 頁面，設置應用程式的「Webhook URL」。</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://chatbot.xxx.com/callback</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://line-chat.xxx.com/callback</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li><p>點選 <code>Verify</code> 按鈕。</p>
@@ -207,7 +207,7 @@
 </ol>
 <h2 id="聊天"><a href="#聊天" class="headerlink" title="聊天"></a>聊天</h2><p>進到「主頁」，點選「加入好友」，使用行動條碼加入好友。</p>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
-<li><a href="https://github.com/memochou1993/line-chatbot" target="_blank" rel="noopener">line-chatbot</a></li>
+<li><a href="https://github.com/memochou1993/line-chat" target="_blank" rel="noopener">line-chat</a></li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="http://www.evanlin.com/create-your-line-bot-golang/" target="_blank" rel="noopener">在 Heroku 建立你自己的 LINE 機器人</a></li>
