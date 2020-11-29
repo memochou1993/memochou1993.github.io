@@ -12,11 +12,11 @@
 <meta name="keywords" content="程式設計,Go,Line">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Go 建立 Line Notify 推播服務">
-<meta property="og:url" content="https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/index.html">
+<meta property="og:url" content="https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="登陸服務登入 LINE Notify，並註冊一個服務。 流程 設計一個 auth 頁，並提供一個按鈕，此按鈕會將使用者導向 LINE Notify 的 OAuth 授權頁面。 使用者同意授權後，Line Notify 會導回指定的 callback URL，並附帶一個 code。 程式收到 code 後，帶著 code 向 Line Notify 申請一個 Access Token。 程式收到 A">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-28T16:36:13.968Z">
+<meta property="og:updated_time" content="2020-11-29T12:45:35.637Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Go 建立 Line Notify 推播服務">
 <meta name="twitter:description" content="登陸服務登入 LINE Notify，並註冊一個服務。 流程 設計一個 auth 頁，並提供一個按鈕，此按鈕會將使用者導向 LINE Notify 的 OAuth 授權頁面。 使用者同意授權後，Line Notify 會導回指定的 callback URL，並附帶一個 code。 程式收到 code 後，帶著 code 向 Line Notify 申請一個 Access Token。 程式收到 A">
@@ -85,10 +85,8 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/11/27/使用-Go-下載-YouTube-影片/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/11/28/使用-Go-建立-Line-聊天機器人服務/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-        
-        <li><a class="icon" href="/2020/11/28/使用-Go-建立-Line-聊天機器人服務/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -101,16 +99,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&text=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&is_video=false&description=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 建立 Line Notify 推播服務&body=Check out this article: https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&name=使用 Go 建立 Line Notify 推播服務&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&text=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&is_video=false&description=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 建立 Line Notify 推播服務&body=Check out this article: https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&name=使用 Go 建立 Line Notify 推播服務&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -142,7 +140,7 @@
       </span>
       
     <div class="postdate">
-        <time datetime="2020-11-28T13:44:12.000Z" itemprop="datePublished">2020-11-28</time>
+        <time datetime="2020-11-29T13:44:12.000Z" itemprop="datePublished">2020-11-29</time>
     </div>
 
 
@@ -242,16 +240,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&text=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&is_video=false&description=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 建立 Line Notify 推播服務&body=Check out this article: https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/28/使用-Go-建立-Line-Notify-推播服務/&name=使用 Go 建立 Line Notify 推播服務&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&text=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&is_video=false&description=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 建立 Line Notify 推播服務&body=Check out this article: https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&title=使用 Go 建立 Line Notify 推播服務"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/11/29/使用-Go-建立-Line-Notify-推播服務/&name=使用 Go 建立 Line Notify 推播服務&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
