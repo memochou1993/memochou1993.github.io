@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 MacOS Go 1.13.4 MongoDB 4.2.2  前言當有大量資料要寫入至 MongoDB 時，可以使用 bulkWrite() 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。 建立專案建立專案目錄。 1mkdir -p $GOPATH/src/github.com/memochou1993/mongo-bulk-exampl">
-<meta name="keywords" content="程式設計,資料庫,ORM,Go,MongoDB,NoSQL">
+    <meta name="description" content="環境 MacOS Go 1.13.4 MongoDB 4.2.2  前言對 MongoDB 有多個操作時，可以使用 bulkWrite() 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。 建立專案建立專案目錄。 1mkdir -p $GOPATH/src/github.com/memochou1993/mongo-bulk-example  進">
+<meta name="keywords" content="程式設計,資料庫,Go,ORM,MongoDB,NoSQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 Go 處理 MongoDB 大量資料寫入">
-<meta property="og:url" content="https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/index.html">
+<meta property="og:title" content="使用 Go 實作 MongoDB 批量操作">
+<meta property="og:url" content="https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 MacOS Go 1.13.4 MongoDB 4.2.2  前言當有大量資料要寫入至 MongoDB 時，可以使用 bulkWrite() 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。 建立專案建立專案目錄。 1mkdir -p $GOPATH/src/github.com/memochou1993/mongo-bulk-exampl">
+<meta property="og:description" content="環境 MacOS Go 1.13.4 MongoDB 4.2.2  前言對 MongoDB 有多個操作時，可以使用 bulkWrite() 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。 建立專案建立專案目錄。 1mkdir -p $GOPATH/src/github.com/memochou1993/mongo-bulk-example  進">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-11-05T14:48:27.686Z">
+<meta property="og:updated_time" content="2020-12-08T03:57:22.847Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Go 處理 MongoDB 大量資料寫入">
-<meta name="twitter:description" content="環境 MacOS Go 1.13.4 MongoDB 4.2.2  前言當有大量資料要寫入至 MongoDB 時，可以使用 bulkWrite() 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。 建立專案建立專案目錄。 1mkdir -p $GOPATH/src/github.com/memochou1993/mongo-bulk-exampl">
+<meta name="twitter:title" content="使用 Go 實作 MongoDB 批量操作">
+<meta name="twitter:description" content="環境 MacOS Go 1.13.4 MongoDB 4.2.2  前言對 MongoDB 有多個操作時，可以使用 bulkWrite() 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。 建立專案建立專案目錄。 1mkdir -p $GOPATH/src/github.com/memochou1993/mongo-bulk-example  進">
     
     
         
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>使用 Go 處理 MongoDB 大量資料寫入</title>
+    <title>使用 Go 實作 MongoDB 批量操作</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&text=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&is_video=false&description=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 處理 MongoDB 大量資料寫入&body=Check out this article: https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&name=使用 Go 處理 MongoDB 大量資料寫入&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&text=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&is_video=false&description=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 實作 MongoDB 批量操作&body=Check out this article: https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&name=使用 Go 實作 MongoDB 批量操作&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        使用 Go 處理 MongoDB 大量資料寫入
+        使用 Go 實作 MongoDB 批量操作
     </h1>
 
 
@@ -178,7 +178,7 @@
 <li>Go 1.13.4</li>
 <li>MongoDB 4.2.2</li>
 </ul>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>當有大量資料要寫入至 MongoDB 時，可以使用 <code>bulkWrite()</code> 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>對 MongoDB 有多個操作時，可以使用 <code>bulkWrite()</code> 方法提高效能。此方法將每 100,000 個請求做為一個批次發送至服務器，而不是每一次發送一個請求。</p>
 <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案目錄。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$GOPATH</span>/src/github.com/memochou1993/mongo-bulk-example</span><br></pre></td></tr></table></figure>
 
@@ -342,16 +342,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&text=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&is_video=false&description=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 處理 MongoDB 大量資料寫入&body=Check out this article: https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&title=使用 Go 處理 MongoDB 大量資料寫入"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/01/08/使用-Go-處理-MongoDB-大量資料寫入/&name=使用 Go 處理 MongoDB 大量資料寫入&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&text=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&is_video=false&description=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 實作 MongoDB 批量操作&body=Check out this article: https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&title=使用 Go 實作 MongoDB 批量操作"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2020/01/08/使用-Go-實作-MongoDB-批量操作/&name=使用 Go 實作 MongoDB 批量操作&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

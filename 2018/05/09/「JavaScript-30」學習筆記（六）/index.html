@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為「JavaScript 30」教學影片的學習筆記。 目標製作一個輸入框的候選詞的功能。 筆記宣告一個 cities 空陣列。 1const cities = [];   使用 fetch() 方法取得要使用的 JSON 檔。 123fetch(endpoint)    .then(blob =&amp;gt; blob.json())    .then(data =&amp;gt; cities.pus">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.778Z">
+<meta property="og:updated_time" content="2020-12-08T03:57:22.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「JavaScript 30」學習筆記（六）">
 <meta name="twitter:description" content="前言本文為「JavaScript 30」教學影片的學習筆記。 目標製作一個輸入框的候選詞的功能。 筆記宣告一個 cities 空陣列。 1const cities = [];   使用 fetch() 方法取得要使用的 JSON 檔。 123fetch(endpoint)    .then(blob =&amp;gt; blob.json())    .then(data =&amp;gt; cities.pus">
@@ -190,7 +190,7 @@
 <li><code>...</code> 展開運算子，允許從可反覆執行的運算式（例如其他陣列常値）初始化陣列常値的某些部分，或允許將運算式展開成多個引數（在方法呼叫中）。</li>
 </ul>
 <hr>
-<p>設定一個 <code>findMatches()</code> 的方法，用於根據輸入字串尋找査詢結果。</p>
+<p>設定一個 <code>findMatches()</code> 的方法，用於根據輸入字串尋找查詢結果。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findMatches</span>(<span class="params">wordToMatch, cities</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> cities.filter(<span class="function"><span class="params">place</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> regex = <span class="keyword">new</span> <span class="built_in">RegExp</span>(wordToMatch, <span class="string">'gi'</span>);</span><br><span class="line">        <span class="keyword">return</span> place.city.match(regex) || place.state.match(regex);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
