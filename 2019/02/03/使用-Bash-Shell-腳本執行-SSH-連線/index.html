@@ -9,16 +9,16 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="做法新增 ec2.sh 檔： 123456789101112131415161718192021222324252627282930313233343536373839#!/bin/bash# 金鑰位置key=&quot;~/.ssh/aws.pem&quot;# 主機選項user[1]=&quot;ubuntu&quot;user[2]=&quot;deployer&quot;# 使用者選項ip[1]=&quot;xx.xxx.xxx.xxx&quot;ip[2]=&quot;yy.">
-<meta name="keywords" content="SSH,Shell">
+<meta name="keywords" content="Bash Shell,SSH">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 Shell 腳本執行 SSH 連線">
-<meta property="og:url" content="https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/index.html">
+<meta property="og:title" content="使用 Bash Shell 腳本執行 SSH 連線">
+<meta property="og:url" content="https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法新增 ec2.sh 檔： 123456789101112131415161718192021222324252627282930313233343536373839#!/bin/bash# 金鑰位置key=&quot;~/.ssh/aws.pem&quot;# 主機選項user[1]=&quot;ubuntu&quot;user[2]=&quot;deployer&quot;# 使用者選項ip[1]=&quot;xx.xxx.xxx.xxx&quot;ip[2]=&quot;yy.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.802Z">
+<meta property="og:updated_time" content="2020-12-10T06:03:36.445Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Shell 腳本執行 SSH 連線">
+<meta name="twitter:title" content="使用 Bash Shell 腳本執行 SSH 連線">
 <meta name="twitter:description" content="做法新增 ec2.sh 檔： 123456789101112131415161718192021222324252627282930313233343536373839#!/bin/bash# 金鑰位置key=&quot;~/.ssh/aws.pem&quot;# 主機選項user[1]=&quot;ubuntu&quot;user[2]=&quot;deployer&quot;# 使用者選項ip[1]=&quot;xx.xxx.xxx.xxx&quot;ip[2]=&quot;yy.">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>使用 Shell 腳本執行 SSH 連線</title>
+    <title>使用 Bash Shell 腳本執行 SSH 連線</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&text=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&is_video=false&description=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Shell 腳本執行 SSH 連線&body=Check out this article: https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&name=使用 Shell 腳本執行 SSH 連線&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&text=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&is_video=false&description=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Bash Shell 腳本執行 SSH 連線&body=Check out this article: https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&name=使用 Bash Shell 腳本執行 SSH 連線&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        使用 Shell 腳本執行 SSH 連線
+        使用 Bash Shell 腳本執行 SSH 連線
     </h1>
 
 
@@ -153,7 +153,7 @@
             
         
             
-                <a href="/categories/其他/SSH/">SSH</a>
+                <a href="/categories/其他/Bash-Shell/">Bash Shell</a>
             
         
     </div>
@@ -162,7 +162,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/SSH/">SSH</a>, <a class="tag-link" href="/tags/Shell/">Shell</a>
+        <a class="tag-link" href="/tags/Bash-Shell/">Bash Shell</a>, <a class="tag-link" href="/tags/SSH/">SSH</a>
     </div>
 
 
@@ -218,16 +218,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&text=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&is_video=false&description=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Shell 腳本執行 SSH 連線&body=Check out this article: https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&title=使用 Shell 腳本執行 SSH 連線"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/03/使用-Shell-腳本執行-SSH-連線/&name=使用 Shell 腳本執行 SSH 連線&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&text=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&is_video=false&description=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Bash Shell 腳本執行 SSH 連線&body=Check out this article: https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&title=使用 Bash Shell 腳本執行 SSH 連線"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/02/03/使用-Bash-Shell-腳本執行-SSH-連線/&name=使用 Bash Shell 腳本執行 SSH 連線&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
