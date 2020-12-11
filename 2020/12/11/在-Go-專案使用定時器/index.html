@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法方法一使用無窮迴圈搭配 time.Sleep() 方法，可以達到每隔一段時間執行程式的效果。如果期望的週期是 2 秒，程式的執行時間是 n 秒，則一次的循環最短為 2 秒，最長為 n+2 秒。 123456789101112131415// 背景執行go func() &amp;#123;	for &amp;#123;		log.Println(&quot;休息&quot;)		time.Sleep(1 * time.Secon">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-10T16:20:36.816Z">
+<meta property="og:updated_time" content="2020-12-11T08:43:14.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Go 專案使用定時器">
 <meta name="twitter:description" content="做法方法一使用無窮迴圈搭配 time.Sleep() 方法，可以達到每隔一段時間執行程式的效果。如果期望的週期是 2 秒，程式的執行時間是 n 秒，則一次的循環最短為 2 秒，最長為 n+2 秒。 123456789101112131415// 背景執行go func() &amp;#123;	for &amp;#123;		log.Println(&quot;休息&quot;)		time.Sleep(1 * time.Secon">
@@ -184,6 +184,11 @@
 
 <p>輸出如下，一個循環總共花了 5 秒。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2020/12/11 00:10:01 休息</span><br><span class="line">2020/12/11 00:10:02 執行 <span class="comment"># 第一次</span></span><br><span class="line">2020/12/11 00:10:02 休息</span><br><span class="line">2020/12/11 00:10:03 休息</span><br><span class="line">2020/12/11 00:10:04 休息</span><br><span class="line">2020/12/11 00:10:05 休息</span><br><span class="line">2020/12/11 00:10:06 休息</span><br><span class="line">2020/12/11 00:10:07 休息</span><br><span class="line">2020/12/11 00:10:07 執行 <span class="comment"># 第二次</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要立即執行程式的話，可以使用以下方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ticker := time.NewTicker(<span class="number">2</span> * time.Second)</span><br><span class="line"><span class="keyword">for</span> ; <span class="literal">true</span>; &lt;-ticker.C &#123;</span><br><span class="line">	log.Println(<span class="string">"執行"</span>)</span><br><span class="line">	time.Sleep(<span class="number">5</span> * time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2009/11/10 23:00:00 執行 <span class="comment"># 第一次</span></span><br><span class="line">2009/11/10 23:00:01 休息</span><br><span class="line">2009/11/10 23:00:02 休息</span><br><span class="line">2009/11/10 23:00:03 休息</span><br><span class="line">2009/11/10 23:00:04 休息</span><br><span class="line">2009/11/10 23:00:05 執行 <span class="comment"># 第二次</span></span><br></pre></td></tr></table></figure>
 
 
   </div>
