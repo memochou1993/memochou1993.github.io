@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法使用以下方式檢查寫入資料庫的錯誤類型，並且使用錯誤代碼 11000 來檢查是否儲存重複資料。 12345678910111213const ErrorDuplicateKey = 11000opts := options.InsertMany().SetOrdered(false)_, err := u.GetCollection().InsertMany(ctx, users, opts)i">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-14T16:35:33.390Z">
+<meta property="og:updated_time" content="2020-12-23T17:08:04.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Go 專案檢查寫入 MongoDB 的錯誤類型">
 <meta name="twitter:description" content="做法使用以下方式檢查寫入資料庫的錯誤類型，並且使用錯誤代碼 11000 來檢查是否儲存重複資料。 12345678910111213const ErrorDuplicateKey = 11000opts := options.InsertMany().SetOrdered(false)_, err := u.GetCollection().InsertMany(ctx, users, opts)i">
@@ -175,7 +175,7 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ErrorDuplicateKey = <span class="number">11000</span></span><br><span class="line"></span><br><span class="line">opts := options.InsertMany().SetOrdered(<span class="literal">false</span>)</span><br><span class="line">_, err := u.GetCollection().InsertMany(ctx, users, opts)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> err, ok := err.(mongo.BulkWriteException); ok &#123;</span><br><span class="line">	<span class="keyword">for</span> _, err := <span class="keyword">range</span> err.WriteErrors &#123;</span><br><span class="line">		<span class="keyword">if</span> err.Code != ErrorDuplicateKey &#123;</span><br><span class="line">			log.Fatalln(err.Error())</span><br><span class="line">		&#125;</span><br><span class="line">		logger.Warning(err.WriteError.Error())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><code>SetOrdered</code> 代表即使儲存重複鍵名的資料，也不會後續其他資料的儲存。</li>
+<li><code>SetOrdered</code> 表示即使儲存重複鍵名的資料，也不會中斷後續其他資料的儲存。</li>
 </ul>
 
   </div>
