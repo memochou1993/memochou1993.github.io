@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Windows 10 Homestead  建立專案建立專案。 1laravel new telescope  一般使用安裝 laravel/telescope 套件。 1composer require laravel/telescope  執行安裝。 1php artisan telescope:install  執行遷移。 1php artisan migrate  發布資源。 1ph">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-22T10:32:48.257Z">
+<meta property="og:updated_time" content="2020-12-24T12:59:12.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Laravel 5.7 使用 Telescope 除錯工具">
 <meta name="twitter:description" content="環境 Windows 10 Homestead  建立專案建立專案。 1laravel new telescope  一般使用安裝 laravel/telescope 套件。 1composer require laravel/telescope  執行安裝。 1php artisan telescope:install  執行遷移。 1php artisan migrate  發布資源。 1ph">
@@ -195,6 +195,9 @@
 <p>前往：<a href="http://telescope.test/telescope" target="_blank" rel="noopener">http://telescope.test/telescope</a></p>
 <h2 id="本地使用"><a href="#本地使用" class="headerlink" title="本地使用"></a>本地使用</h2><p>安裝 <code>laravel/telescope</code> 套件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require laravel/telescope --dev</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>composer.json</code> 檔。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"extra": &#123;</span><br><span class="line">    "laravel": &#123;</span><br><span class="line">        "dont-discover": [</span><br><span class="line">            <span class="string">"laravel/telescope"</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
 <p>執行安裝。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan telescope:install</span><br></pre></td></tr></table></figure>
