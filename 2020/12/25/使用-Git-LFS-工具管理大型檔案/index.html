@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 做法更新 Brew 套件管理工具。 1brew update  安裝 Git LFS 工具。 1brew install git-lfs  套用 Git LFS 工具到 Git。">
+    <meta name="description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 安裝MacOS執行以下指令： 123brew updatebrew install git-lfsgit lfs install  Ubuntu執行以下指令： 1234curl -">
 <meta name="keywords" content="GitHub,版本控制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Git LFS 工具管理大型檔案">
 <meta property="og:url" content="https://memochou1993.github.io/2020/12/25/使用-Git-LFS-工具管理大型檔案/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 做法更新 Brew 套件管理工具。 1brew update  安裝 Git LFS 工具。 1brew install git-lfs  套用 Git LFS 工具到 Git。">
+<meta property="og:description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 安裝MacOS執行以下指令： 123brew updatebrew install git-lfsgit lfs install  Ubuntu執行以下指令： 1234curl -">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-25T11:57:17.627Z">
+<meta property="og:updated_time" content="2020-12-25T13:11:07.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Git LFS 工具管理大型檔案">
-<meta name="twitter:description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 做法更新 Brew 套件管理工具。 1brew update  安裝 Git LFS 工具。 1brew install git-lfs  套用 Git LFS 工具到 Git。">
+<meta name="twitter:description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 安裝MacOS執行以下指令： 123brew updatebrew install git-lfsgit lfs install  Ubuntu執行以下指令： 1234curl -">
     
     
         
@@ -113,7 +113,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">2.</span> <span class="toc-text">安裝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MacOS"><span class="toc-number">2.1.</span> <span class="toc-text">MacOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu"><span class="toc-number">2.2.</span> <span class="toc-text">Ubuntu</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理"><span class="toc-number">3.</span> <span class="toc-text">管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -168,16 +168,13 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>以前做的一個作品「<a href="https://thesaurus.epoch.tw/" target="_blank" rel="noopener">藝術與建築索引典</a>」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。</p>
-<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>更新 Brew 套件管理工具。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew update</span><br></pre></td></tr></table></figure>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><h3 id="MacOS"><a href="#MacOS" class="headerlink" title="MacOS"></a>MacOS</h3><p>執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew update</span><br><span class="line">brew install git-lfs</span><br><span class="line">git lfs install</span><br></pre></td></tr></table></figure>
 
-<p>安裝 Git LFS 工具。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install git-lfs</span><br></pre></td></tr></table></figure>
+<h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install git-lfs</span><br><span class="line">git lfs install</span><br></pre></td></tr></table></figure>
 
-<p>套用 Git LFS 工具到 Git。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs install</span><br></pre></td></tr></table></figure>
-
-<p>使用 <code>git lfs track</code> 指令追蹤大型檔案。</p>
+<h2 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h2><p>使用 <code>git lfs track</code> 指令追蹤大型檔案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs track storage/vocabulary.xml</span><br></pre></td></tr></table></figure>
 
 <p>此時 Git 會新增一個 <code>.gitattributes</code> 檔：</p>
@@ -231,7 +228,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">2.</span> <span class="toc-text">安裝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MacOS"><span class="toc-number">2.1.</span> <span class="toc-text">MacOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu"><span class="toc-number">2.2.</span> <span class="toc-text">Ubuntu</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理"><span class="toc-number">3.</span> <span class="toc-text">管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
