@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 安裝MacOS執行以下指令： 123brew updatebrew install git-lfsgit lfs install  Ubuntu執行以下指令： 1234curl -">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-12-25T13:11:07.345Z">
+<meta property="og:updated_time" content="2020-12-25T13:48:33.528Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Git LFS 工具管理大型檔案">
 <meta name="twitter:description" content="前言以前做的一個作品「藝術與建築索引典」，是一個包含 5 萬多筆詞彙條目的索引典。這些詞彙來自於一個超過 700 MB 的 XML 檔，為了更方便管理這個檔案，因此使用 Git LFS 來把它上傳到 GitHub 上。 安裝MacOS執行以下指令： 123brew updatebrew install git-lfsgit lfs install  Ubuntu執行以下指令： 1234curl -">
@@ -174,10 +174,10 @@
 <h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>執行以下指令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br><span class="line">apt-get update</span><br><span class="line">apt-get install git-lfs</span><br><span class="line">git lfs install</span><br></pre></td></tr></table></figure>
 
-<h2 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h2><p>使用 <code>git lfs track</code> 指令追蹤大型檔案。</p>
+<h2 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h2><p>使用以下指令追蹤指定的大型檔案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs track storage/vocabulary.xml</span><br></pre></td></tr></table></figure>
 
-<p>此時 Git 會新增一個 <code>.gitattributes</code> 檔：</p>
+<p>Git 會新增一個 <code>.gitattributes</code> 檔：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">storage/vocabulary.xml filter=lfs diff=lfs merge=lfs -text</span><br></pre></td></tr></table></figure>
 
 <p>查看追蹤的大型檔案。</p>
@@ -186,7 +186,10 @@
 <p>推送到 GitHub。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"Add a large file"</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 
-<p>如果要從遠端將大型檔案拉取下來，可以執行以下指令：</p>
+<p>如果要從遠端連同大型檔案一起拉取下來，執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs <span class="built_in">clone</span> git@github.com:memochou1993/thesaurus-server.git</span><br></pre></td></tr></table></figure>
+
+<p>如果本地有漏掉的大型檔案要更新，執行以下指令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs pull</span><br></pre></td></tr></table></figure>
 
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
