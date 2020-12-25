@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="容器化12345678version: &apos;3&apos;services:  app:    container_name: quasar    build: .    ports:      - &quot;3000:3000&quot;  新增 Dockerfile 檔： 123456789101112131415161718192021# build stageFROM node:alpine as builderWOR">
+    <meta name="description" content="做法新增 docker-compose.yaml 檔： 12345678version: &quot;3&quot;services:  app:    container_name: quasar    build: .    ports:      - &quot;3000:3000&quot;  新增 Dockerfile 檔： 123456789101112131415161718192021# build stageFROM">
 <meta name="keywords" content="環境部署,Docker,JavaScript,Node,Quasar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Docker 容器化 Quasar 專案">
 <meta property="og:url" content="https://memochou1993.github.io/2020/02/10/使用-Docker-容器化-Quasar-專案/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="容器化12345678version: &apos;3&apos;services:  app:    container_name: quasar    build: .    ports:      - &quot;3000:3000&quot;  新增 Dockerfile 檔： 123456789101112131415161718192021# build stageFROM node:alpine as builderWOR">
+<meta property="og:description" content="做法新增 docker-compose.yaml 檔： 12345678version: &quot;3&quot;services:  app:    container_name: quasar    build: .    ports:      - &quot;3000:3000&quot;  新增 Dockerfile 檔： 123456789101112131415161718192021# build stageFROM">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-11T16:31:13.475Z">
+<meta property="og:updated_time" content="2020-12-25T11:22:51.198Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Docker 容器化 Quasar 專案">
-<meta name="twitter:description" content="容器化12345678version: &apos;3&apos;services:  app:    container_name: quasar    build: .    ports:      - &quot;3000:3000&quot;  新增 Dockerfile 檔： 123456789101112131415161718192021# build stageFROM node:alpine as builderWOR">
+<meta name="twitter:description" content="做法新增 docker-compose.yaml 檔： 12345678version: &quot;3&quot;services:  app:    container_name: quasar    build: .    ports:      - &quot;3000:3000&quot;  新增 Dockerfile 檔： 123456789101112131415161718192021# build stageFROM">
     
     
         
@@ -115,7 +115,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化"><span class="toc-number">1.</span> <span class="toc-text">容器化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">2.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">2.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -171,7 +171,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="容器化"><a href="#容器化" class="headerlink" title="容器化"></a>容器化</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  app:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">quasar</span></span><br><span class="line"><span class="attr">    build:</span> <span class="string">.</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"3000:3000"</span></span><br></pre></td></tr></table></figure>
+    <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>docker-compose.yaml</code> 檔：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  app:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">quasar</span></span><br><span class="line"><span class="attr">    build:</span> <span class="string">.</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"3000:3000"</span></span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>Dockerfile</code> 檔：</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build stage</span></span><br><span class="line"><span class="keyword">FROM</span> node:alpine as builder</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY . .</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">RUN yarn global add @quasar/cli</span></span><br><span class="line"><span class="bash">RUN yarn install</span></span><br><span class="line"><span class="bash">RUN quasar build -m ssr</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># final stage</span></span></span><br><span class="line"><span class="bash">FROM node:alpine</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">WORKDIR /root</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY --from=builder /app/dist/ssr .</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">RUN yarn install</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">CMD [ <span class="string">"yarn"</span>, <span class="string">"start"</span> ]</span></span><br></pre></td></tr></table></figure>
@@ -219,7 +220,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化"><span class="toc-number">1.</span> <span class="toc-text">容器化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">2.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">2.</span> <span class="toc-text">瀏覽網頁</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
