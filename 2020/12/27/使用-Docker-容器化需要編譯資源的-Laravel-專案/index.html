@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="前言最近把 JSON Editor 專案容器化。此專案是一個前後端合併在一起的 SPA 專案，並且利用 Laravel Mix 整合 Vue CLI 專案，最後生成 Blade 檔和靜態檔案。 在容器化的過程中，發現使用 volume 掛載 public 資料夾到 Nginx 容器的話，永遠都會是空的，因為 Docker 在文件掛載的行為上，是將本機上的資料夾覆蓋至容器中的資料夾內容。因此最後決定">
-<meta name="keywords" content="PHP,Laravel,環境部署,Mix,Docker">
+<meta name="keywords" content="環境部署,PHP,Laravel,Docker,Mix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Docker 容器化需要編譯資源的 Laravel 專案">
 <meta property="og:url" content="https://memochou1993.github.io/2020/12/27/使用-Docker-容器化需要編譯資源的-Laravel-專案/index.html">
