@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組1234git submodule">
+    <meta name="description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新子模組1git submodule foreach --recursive git pull origin master  下載遺失的子模組1git submodule update --init --recursive   參數 init 將 .gitmodules 中的資訊">
 <meta name="keywords" content="版本控制,Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Git Submodules 管理模組">
 <meta property="og:url" content="https://memochou1993.github.io/2020/10/09/使用-Git-Submodules-管理模組/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組1234git submodule">
+<meta property="og:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新子模組1git submodule foreach --recursive git pull origin master  下載遺失的子模組1git submodule update --init --recursive   參數 init 將 .gitmodules 中的資訊">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-10-10T11:28:11.528Z">
+<meta property="og:updated_time" content="2021-02-28T19:01:00.144Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Git Submodules 管理模組">
-<meta name="twitter:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新所有子模組1git submodule foreach --recursive git pull origin master  下載包含子模組的專案1git clone --recursive &amp;lt;REPOSITORY&amp;gt;  刪除子模組1234git submodule">
+<meta name="twitter:description" content="指令新增子模組1git submodule add &amp;lt;REPOSITORY&amp;gt; &amp;lt;PATH&amp;gt;  更新子模組1git submodule foreach --recursive git pull origin master  下載遺失的子模組1git submodule update --init --recursive   參數 init 將 .gitmodules 中的資訊">
     
     
         
@@ -115,7 +115,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">1.</span> <span class="toc-text">指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增子模組"><span class="toc-number">1.1.</span> <span class="toc-text">新增子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新所有子模組"><span class="toc-number">1.2.</span> <span class="toc-text">更新所有子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下載包含子模組的專案"><span class="toc-number">1.3.</span> <span class="toc-text">下載包含子模組的專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除子模組"><span class="toc-number">1.4.</span> <span class="toc-text">刪除子模組</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">1.</span> <span class="toc-text">指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增子模組"><span class="toc-number">1.1.</span> <span class="toc-text">新增子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新子模組"><span class="toc-number">1.2.</span> <span class="toc-text">更新子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下載遺失的子模組"><span class="toc-number">1.3.</span> <span class="toc-text">下載遺失的子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下載包含子模組的專案"><span class="toc-number">1.4.</span> <span class="toc-text">下載包含子模組的專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除子模組"><span class="toc-number">1.5.</span> <span class="toc-text">刪除子模組</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -171,8 +171,14 @@
   <div class="content" itemprop="articleBody">
     <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><h3 id="新增子模組"><a href="#新增子模組" class="headerlink" title="新增子模組"></a>新增子模組</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add &lt;REPOSITORY&gt; &lt;PATH&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="更新所有子模組"><a href="#更新所有子模組" class="headerlink" title="更新所有子模組"></a>更新所有子模組</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule foreach --recursive git pull origin master</span><br></pre></td></tr></table></figure>
+<h3 id="更新子模組"><a href="#更新子模組" class="headerlink" title="更新子模組"></a>更新子模組</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule foreach --recursive git pull origin master</span><br></pre></td></tr></table></figure>
 
+<h3 id="下載遺失的子模組"><a href="#下載遺失的子模組" class="headerlink" title="下載遺失的子模組"></a>下載遺失的子模組</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>參數 <code>init</code> 將 <code>.gitmodules</code> 中的資訊註冊到 <code>.git/config</code> 內。</li>
+<li>參數 <code>update</code> 將根據 <code>.git/config</code> 內的資訊進行更新。</li>
+</ul>
 <h3 id="下載包含子模組的專案"><a href="#下載包含子模組的專案" class="headerlink" title="下載包含子模組的專案"></a>下載包含子模組的專案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --recursive &lt;REPOSITORY&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="刪除子模組"><a href="#刪除子模組" class="headerlink" title="刪除子模組"></a>刪除子模組</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git submodule deinit &lt;PATH&gt;</span><br><span class="line">git rm --cached &lt;PATH&gt;</span><br><span class="line">rm -rf &lt;PATH&gt;</span><br><span class="line">rm -rf .git/modules/&lt;PATH&gt;</span><br></pre></td></tr></table></figure>
@@ -216,7 +222,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">1.</span> <span class="toc-text">指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增子模組"><span class="toc-number">1.1.</span> <span class="toc-text">新增子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新所有子模組"><span class="toc-number">1.2.</span> <span class="toc-text">更新所有子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下載包含子模組的專案"><span class="toc-number">1.3.</span> <span class="toc-text">下載包含子模組的專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除子模組"><span class="toc-number">1.4.</span> <span class="toc-text">刪除子模組</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">1.</span> <span class="toc-text">指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增子模組"><span class="toc-number">1.1.</span> <span class="toc-text">新增子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新子模組"><span class="toc-number">1.2.</span> <span class="toc-text">更新子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下載遺失的子模組"><span class="toc-number">1.3.</span> <span class="toc-text">下載遺失的子模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下載包含子模組的專案"><span class="toc-number">1.4.</span> <span class="toc-text">下載包含子模組的專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#刪除子模組"><span class="toc-number">1.5.</span> <span class="toc-text">刪除子模組</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
