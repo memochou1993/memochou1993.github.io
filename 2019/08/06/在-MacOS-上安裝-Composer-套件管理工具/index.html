@@ -11,14 +11,14 @@
     <meta name="description" content="步驟使用 brew 指令安裝 Composer。 1brew install composer  將 Composer 的套件執行檔寫進環境變數。 1echo &apos;export PATH=&quot;$HOME/.composer/vendor/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; ~/.bashrc  重新讀取 .bashrc 檔。 1source .bashrc  確認 Composer 的版本。 1">
 <meta name="keywords" content="PHP,Composer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 MacOS 安裝 Composer 套件管理工具">
-<meta property="og:url" content="https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/index.html">
+<meta property="og:title" content="在 MacOS 上安裝 Composer 套件管理工具">
+<meta property="og:url" content="https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="步驟使用 brew 指令安裝 Composer。 1brew install composer  將 Composer 的套件執行檔寫進環境變數。 1echo &apos;export PATH=&quot;$HOME/.composer/vendor/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; ~/.bashrc  重新讀取 .bashrc 檔。 1source .bashrc  確認 Composer 的版本。 1">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-18T14:09:42.287Z">
+<meta property="og:updated_time" content="2021-03-17T15:13:30.306Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 MacOS 安裝 Composer 套件管理工具">
+<meta name="twitter:title" content="在 MacOS 上安裝 Composer 套件管理工具">
 <meta name="twitter:description" content="步驟使用 brew 指令安裝 Composer。 1brew install composer  將 Composer 的套件執行檔寫進環境變數。 1echo &apos;export PATH=&quot;$HOME/.composer/vendor/bin:$PATH&quot;&apos; &amp;gt;&amp;gt; ~/.bashrc  重新讀取 .bashrc 檔。 1source .bashrc  確認 Composer 的版本。 1">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 MacOS 安裝 Composer 套件管理工具</title>
+    <title>在 MacOS 上安裝 Composer 套件管理工具</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -88,7 +88,7 @@
         <li><a class="icon" href="/2019/07/18/使用-PHP-操作-LDAP-伺服器/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/08/06/在-MacOS-安裝-npm-套件管理工具/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/06/在-MacOS-上安裝-npm-套件管理工具/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&text=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&is_video=false&description=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 MacOS 安裝 Composer 套件管理工具&body=Check out this article: https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&name=在 MacOS 安裝 Composer 套件管理工具&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&text=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&is_video=false&description=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 MacOS 上安裝 Composer 套件管理工具&body=Check out this article: https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&name=在 MacOS 上安裝 Composer 套件管理工具&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 MacOS 安裝 Composer 套件管理工具
+        在 MacOS 上安裝 Composer 套件管理工具
     </h1>
 
 
@@ -224,16 +224,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&text=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&is_video=false&description=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 MacOS 安裝 Composer 套件管理工具&body=Check out this article: https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&title=在 MacOS 安裝 Composer 套件管理工具"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/06/在-MacOS-安裝-Composer-套件管理工具/&name=在 MacOS 安裝 Composer 套件管理工具&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&text=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&is_video=false&description=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 MacOS 上安裝 Composer 套件管理工具&body=Check out this article: https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&title=在 MacOS 上安裝 Composer 套件管理工具"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/06/在-MacOS-上安裝-Composer-套件管理工具/&name=在 MacOS 上安裝 Composer 套件管理工具&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

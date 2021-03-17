@@ -11,14 +11,14 @@
     <meta name="description" content="步驟修改 .env 檔，開啟 SSH 連線。 1WORKSPACE_INSTALL_WORKSPACE_SSH=true  修改 insecure_id_rsa 檔的權限。 1chmod 0600 workspace/insecure_id_rsa  修改 docker-compose.yml 檔 123workspace:  ...  privileged: true  重建 workspace">
 <meta name="keywords" content="環境部署,Docker,Laradock">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在 MacOS 校正 Laradock 環境時間">
-<meta property="og:url" content="https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/index.html">
+<meta property="og:title" content="在 MacOS 上校正 Laradock 環境時間">
+<meta property="og:url" content="https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="步驟修改 .env 檔，開啟 SSH 連線。 1WORKSPACE_INSTALL_WORKSPACE_SSH=true  修改 insecure_id_rsa 檔的權限。 1chmod 0600 workspace/insecure_id_rsa  修改 docker-compose.yml 檔 123workspace:  ...  privileged: true  重建 workspace">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-10T11:45:13.810Z">
+<meta property="og:updated_time" content="2021-03-17T15:12:58.520Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 MacOS 校正 Laradock 環境時間">
+<meta name="twitter:title" content="在 MacOS 上校正 Laradock 環境時間">
 <meta name="twitter:description" content="步驟修改 .env 檔，開啟 SSH 連線。 1WORKSPACE_INSTALL_WORKSPACE_SSH=true  修改 insecure_id_rsa 檔的權限。 1chmod 0600 workspace/insecure_id_rsa  修改 docker-compose.yml 檔 123workspace:  ...  privileged: true  重建 workspace">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>在 MacOS 校正 Laradock 環境時間</title>
+    <title>在 MacOS 上校正 Laradock 環境時間</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -85,7 +85,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/08/24/在-MacOS-安裝-Python-3-和-Anaconda-環境/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/24/在-MacOS-上安裝-Python-3-和-Anaconda-環境/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2019/08/27/在-macOS-上使用-Docker-建立-PHP-環境/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&text=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&is_video=false&description=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 MacOS 校正 Laradock 環境時間&body=Check out this article: https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&name=在 MacOS 校正 Laradock 環境時間&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&text=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&is_video=false&description=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 MacOS 上校正 Laradock 環境時間&body=Check out this article: https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&name=在 MacOS 上校正 Laradock 環境時間&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        在 MacOS 校正 Laradock 環境時間
+        在 MacOS 上校正 Laradock 環境時間
     </h1>
 
 
@@ -227,16 +227,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&text=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&is_video=false&description=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 MacOS 校正 Laradock 環境時間&body=Check out this article: https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&title=在 MacOS 校正 Laradock 環境時間"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/26/在-MacOS-校正-Laradock-環境時間/&name=在 MacOS 校正 Laradock 環境時間&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&text=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&is_video=false&description=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 MacOS 上校正 Laradock 環境時間&body=Check out this article: https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&title=在 MacOS 上校正 Laradock 環境時間"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/08/26/在-MacOS-上校正-Laradock-環境時間/&name=在 MacOS 上校正 Laradock 環境時間&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
