@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 macOS (M1) Docker Desktop preview  做法下載並啟動 mysql/mysql-server 映像檔。 1docker run --name=mysql -d -p 3306:3306 mysql/mysql-server  等待 health 狀態從 starting 變成 healthy 後，使用以下指令取得初始密碼。 1docker logs mysql">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-03-17T15:23:44.961Z">
+<meta property="og:updated_time" content="2021-04-02T09:47:13.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 MacOS 上使用 Docker 搭建 MySQL 資料庫">
 <meta name="twitter:description" content="環境 macOS (M1) Docker Desktop preview  做法下載並啟動 mysql/mysql-server 映像檔。 1docker run --name=mysql -d -p 3306:3306 mysql/mysql-server  等待 health 狀態從 starting 變成 healthy 後，使用以下指令取得初始密碼。 1docker logs mysql">
@@ -180,7 +180,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs mysql 2&gt;&amp;1 | grep GENERATED</span><br></pre></td></tr></table></figure>
 
 <p>使用初始密碼進入容器。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it mysql1 mysql -uroot -p</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it mysql mysql -uroot -p</span><br></pre></td></tr></table></figure>
 
 <p>修改使用者密碼。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER user &apos;root&apos;@&apos;localhost&apos; identified by &apos;root&apos;;</span><br><span class="line">mysql&gt; UPDATE mysql.user SET Host=&apos;%&apos; WHERE Host=&apos;localhost&apos; AND User=&apos;root&apos;;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
