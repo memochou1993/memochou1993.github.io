@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="建立專案1mkdir ts-example-package  使用以下指令建立 package.json 檔： 1npm init  生成後 package.json 檔如下： 12345678910111213141516171819&amp;#123;  &quot;name&quot;: &quot;ts-example-package&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;description&quot;: &quot;&quot;,  &quot;m">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-03-06T14:00:36.988Z">
+<meta property="og:updated_time" content="2021-05-08T05:07:23.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 TypeScript 建立 npm 套件">
 <meta name="twitter:description" content="建立專案1mkdir ts-example-package  使用以下指令建立 package.json 檔： 1npm init  生成後 package.json 檔如下： 12345678910111213141516171819&amp;#123;  &quot;name&quot;: &quot;ts-example-package&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;description&quot;: &quot;&quot;,  &quot;m">
@@ -214,7 +214,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  preset: 'ts-jest',</span><br><span class="line">  testEnvironment: 'node',</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>執行測試。</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; hello &#125; <span class="keyword">from</span> <span class="string">'../src'</span>;</span><br><span class="line"></span><br><span class="line">test(<span class="string">'hello'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  expect(hello(<span class="string">'World'</span>)).toEqual(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="發布套件"><a href="#發布套件" class="headerlink" title="發布套件"></a>發布套件</h2><p>建立 <code>.gitignore</code> 檔，並推送至 GitHub。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dist/</span><br><span class="line">node_modules/</span><br></pre></td></tr></table></figure>
