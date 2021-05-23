@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="前言由於遠端伺服器只有 1G 的 RAM，如果在遠端伺服器進行編譯，資源很快就沒了，因此先在本機端先進行編譯，再將靜態檔案同步至遠端伺服器。 做法將公開金鑰同步到遠端伺服器。 1ssh-copy-id -i ~/.ssh/id_rsa.pub root@xxx.xxx.xxx.xxx  新增 sync.sh 腳本。 1234#!/bin/bashyarn build --mode producti">
-<meta name="keywords" content="環境部署,JavaScript,Vue,Vuex">
+<meta name="keywords" content="JavaScript,Vue,環境部署,Vuex">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 rsync 指令部署 Vue 2.5 專案">
 <meta property="og:url" content="https://memochou1993.github.io/2019/05/09/使用-rsync-指令部署-Vue-2-5-專案/index.html">
