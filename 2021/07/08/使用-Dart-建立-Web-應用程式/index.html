@@ -8,18 +8,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart： 12brew tap dart-lang/dartbrew install dart  取得 CLI 工具： 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$HOME/.pub-cache/bin&quot;  建">
+    <meta name="description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart。 12brew tap dart-lang/dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$">
 <meta name="keywords" content="程式設計,Dart">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Dart 建立 Web 應用程式">
 <meta property="og:url" content="https://memochou1993.github.io/2021/07/08/使用-Dart-建立-Web-應用程式/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart： 12brew tap dart-lang/dartbrew install dart  取得 CLI 工具： 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$HOME/.pub-cache/bin&quot;  建">
+<meta property="og:description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart。 12brew tap dart-lang/dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-07-08T13:55:57.018Z">
+<meta property="og:updated_time" content="2021-07-08T14:59:53.774Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Dart 建立 Web 應用程式">
-<meta name="twitter:description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart： 12brew tap dart-lang/dartbrew install dart  取得 CLI 工具： 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$HOME/.pub-cache/bin&quot;  建">
+<meta name="twitter:description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart。 12brew tap dart-lang/dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$">
     
     
         
@@ -87,6 +87,8 @@
         
         <li><a class="icon" href="/2021/05/29/在-Go-專案使用-Session-認證/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
+        
+        <li><a class="icon" href="/2021/07/08/使用-Flutter-建立-Web-應用程式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -171,10 +173,13 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 新增 <code>dart-lang/dart</code> 儲存庫，並安裝 <code>dart</code>：</p>
+    <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>使用 <code>brew</code> 新增 <code>dart-lang/dart</code> 儲存庫，並安裝 <code>dart</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap dart-lang/dart</span><br><span class="line">brew install dart</span><br></pre></td></tr></table></figure>
 
-<p>取得 CLI 工具：</p>
+<p>查看版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dart --version</span><br></pre></td></tr></table></figure>
+
+<p>取得 CLI 工具。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dart pub global activate webdev</span><br></pre></td></tr></table></figure>
 
 <p>將 Dart 套件的執行檔路徑加到環境變數。</p>
@@ -183,10 +188,10 @@
 <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dart create -t web-simple dart-web-example</span><br></pre></td></tr></table></figure>
 
-<p>啟動服務：</p>
+<p>啟動服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> dart-web-example</span><br><span class="line">webdev serve</span><br></pre></td></tr></table></figure>
 
-<p>修改 <code>main.dart</code> 檔：</p>
+<p>修改 <code>main.dart</code> 檔。</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'dart:html'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">var</span> output = <span class="built_in">document</span>.<span class="built_in">querySelector</span>(<span class="string">'#output'</span>);</span><br><span class="line">  output?.children.addAll(thingsTodo().map(newLI));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LIElement newLI(<span class="built_in">String</span> itemText) =&gt; LIElement()..text = itemText;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Iterable</span>&lt;<span class="built_in">String</span>&gt; thingsTodo() <span class="keyword">sync</span>* &#123;</span><br><span class="line">  <span class="keyword">var</span> actions = [<span class="string">'Walk'</span>, <span class="string">'Wash'</span>, <span class="string">'Feed'</span>];</span><br><span class="line">  <span class="keyword">var</span> pets = [<span class="string">'cats'</span>, <span class="string">'dogs'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> action <span class="keyword">in</span> actions) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">      <span class="keyword">if</span> (pet == <span class="string">'cats'</span> &amp;&amp; action != <span class="string">'Feed'</span>) <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">yield</span> <span class="string">'$action the $pet'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往：<a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a></p>
