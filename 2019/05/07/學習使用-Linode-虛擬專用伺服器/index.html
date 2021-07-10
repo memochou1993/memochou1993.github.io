@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="咩某的部落格">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言一直以來作品都是放在 GoDaddy 的共享主機，這次決定搬家到 Linode，並使用虛擬專用伺服器。 註冊到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。 轉移網域首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。    網域名稱伺服器    n">
+<meta name="keywords" content="環境部署,Linux,Linode,VPS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="學習使用 Linode 虛擬專用伺服器">
+<meta property="og:url" content="https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言一直以來作品都是放在 GoDaddy 的共享主機，這次決定搬家到 Linode，並使用虛擬專用伺服器。 註冊到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。 轉移網域首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。    網域名稱伺服器    n">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-17T14:16:14.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="學習使用 Linode 虛擬專用伺服器">
+<meta name="twitter:description" content="前言一直以來作品都是放在 GoDaddy 的共享主機，這次決定搬家到 Linode，並使用虛擬專用伺服器。 註冊到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。 轉移網域首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。    網域名稱伺服器    n">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>學習使用 Linode 虛擬專用伺服器</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/05/01/在-Laravel-5-8-使用帳號或信箱進行-Passport-認證/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/05/08/使用-ssh-copy-id-命令同步金鑰執行-SSH-連線/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&text=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&is_video=false&description=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=學習使用 Linode 虛擬專用伺服器&body=Check out this article: https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&name=學習使用 Linode 虛擬專用伺服器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊"><span class="toc-number">2.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#轉移網域"><span class="toc-number">3.</span> <span class="toc-text">轉移網域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-DNS"><span class="toc-number">4.</span> <span class="toc-text">設定 DNS</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        學習使用 Linode 虛擬專用伺服器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-05-07T15:20:15.000Z" itemprop="datePublished">2019-05-07</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/其他/VPS/">VPS</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linode/">Linode</a>, <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/VPS/">VPS</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一直以來作品都是放在 GoDaddy 的共享主機，這次決定搬家到 Linode，並使用虛擬專用伺服器。</p>
+<h2 id="註冊"><a href="#註冊" class="headerlink" title="註冊"></a>註冊</h2><p>到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。</p>
+<h2 id="轉移網域"><a href="#轉移網域" class="headerlink" title="轉移網域"></a>轉移網域</h2><p>首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。</p>
+<table>
+<thead>
+<tr>
+<th>網域名稱伺服器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ns1.linode.com</td>
+</tr>
+<tr>
+<td>ns2.linode.com</td>
+</tr>
+<tr>
+<td>ns3.linode.com</td>
+</tr>
+<tr>
+<td>ns4.linode.com</td>
+</tr>
+<tr>
+<td>ns5.linode.com</td>
+</tr>
+</tbody></table>
+<h2 id="設定-DNS"><a href="#設定-DNS" class="headerlink" title="設定 DNS"></a>設定 DNS</h2><p>在 Linode 的 Domains 頁面新增一個 Domain。</p>
+<p>編輯 Domain，新增 A/AAAA 記錄，並指向主機的 IP 位置。</p>
+<table>
+<thead>
+<tr>
+<th>Hostname</th>
+<th>IP Address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>（空白）</td>
+<td>xxx.xxx.xxx.xxx</td>
+</tr>
+<tr>
+<td>www</td>
+<td>xxx.xxx.xxx.xxx</td>
+</tr>
+</tbody></table>
+<p>新增 CNAME 記錄，設定別名。</p>
+<table>
+<thead>
+<tr>
+<th>Hostname</th>
+<th>IP Address</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>laravel</td>
+<td><a href="http://www.domain.com" target="_blank" rel="noopener">www.domain.com</a></td>
+</tr>
+</tbody></table>
+<p>約等待 15 分鐘即可生效。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊"><span class="toc-number">2.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#轉移網域"><span class="toc-number">3.</span> <span class="toc-text">轉移網域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-DNS"><span class="toc-number">4.</span> <span class="toc-text">設定 DNS</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&text=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&is_video=false&description=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=學習使用 Linode 虛擬專用伺服器&body=Check out this article: https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&title=學習使用 Linode 虛擬專用伺服器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2019/05/07/學習使用-Linode-虛擬專用伺服器/&name=學習使用 Linode 虛擬專用伺服器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2021 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-117292723-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
