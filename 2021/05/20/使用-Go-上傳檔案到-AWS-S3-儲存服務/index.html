@@ -9,16 +9,16 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="前置作業先到 IAM 建立一個使用者，打開「Security credentials」頁籤，並選擇「Create access key」按鈕，最後將生成的「Access key ID」和「Secret access key」儲存起來。 實作建立新專案，並啟用 Go module。 1go mod init github.com/memochou1993/go-s3-example  下載 aws-">
-<meta name="keywords" content="程式設計,AWS,Go,S3">
+<meta name="keywords" content="程式設計,AWS,Go,S3,Storage Service">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 Go 上傳檔案到 AWS S3 服務">
-<meta property="og:url" content="https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/index.html">
+<meta property="og:title" content="使用 Go 上傳檔案到 AWS S3 儲存服務">
+<meta property="og:url" content="https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前置作業先到 IAM 建立一個使用者，打開「Security credentials」頁籤，並選擇「Create access key」按鈕，最後將生成的「Access key ID」和「Secret access key」儲存起來。 實作建立新專案，並啟用 Go module。 1go mod init github.com/memochou1993/go-s3-example  下載 aws-">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-07-10T17:47:05.231Z">
+<meta property="og:updated_time" content="2021-07-10T19:01:34.628Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Go 上傳檔案到 AWS S3 服務">
+<meta name="twitter:title" content="使用 Go 上傳檔案到 AWS S3 儲存服務">
 <meta name="twitter:description" content="前置作業先到 IAM 建立一個使用者，打開「Security credentials」頁籤，並選擇「Create access key」按鈕，最後將生成的「Access key ID」和「Secret access key」儲存起來。 實作建立新專案，並啟用 Go module。 1go mod init github.com/memochou1993/go-s3-example  下載 aws-">
     
     
@@ -39,7 +39,7 @@
         
     
     <!-- title -->
-    <title>使用 Go 上傳檔案到 AWS S3 服務</title>
+    <title>使用 Go 上傳檔案到 AWS S3 儲存服務</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -101,16 +101,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&text=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&is_video=false&description=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 上傳檔案到 AWS S3 服務&body=Check out this article: https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&name=使用 Go 上傳檔案到 AWS S3 服務&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&text=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&is_video=false&description=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 上傳檔案到 AWS S3 儲存服務&body=Check out this article: https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&name=使用 Go 上傳檔案到 AWS S3 儲存服務&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -127,7 +127,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        使用 Go 上傳檔案到 AWS S3 服務
+        使用 Go 上傳檔案到 AWS S3 儲存服務
     </h1>
 
 
@@ -164,7 +164,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/AWS/">AWS</a>, <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/S3/">S3</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link" href="/tags/AWS/">AWS</a>, <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/S3/">S3</a>, <a class="tag-link" href="/tags/Storage-Service/">Storage Service</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
     </div>
 
 
@@ -244,16 +244,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&text=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&is_video=false&description=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 上傳檔案到 AWS S3 服務&body=Check out this article: https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&title=使用 Go 上傳檔案到 AWS S3 服務"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-服務/&name=使用 Go 上傳檔案到 AWS S3 服務&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&text=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&is_video=false&description=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 上傳檔案到 AWS S3 儲存服務&body=Check out this article: https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&title=使用 Go 上傳檔案到 AWS S3 儲存服務"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://memochou1993.github.io/2021/05/20/使用-Go-上傳檔案到-AWS-S3-儲存服務/&name=使用 Go 上傳檔案到 AWS S3 儲存服務&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
