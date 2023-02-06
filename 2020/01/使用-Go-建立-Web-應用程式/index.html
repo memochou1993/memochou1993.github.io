@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="環境 macOS Go 1.13.4  前言本文為 Go 官方文件 Writing Web Applications 的學習筆記，實作與原文有些許差異。 建立專案新增並進入 wiki 資料夾。 12mkdir wikicd wiki  新增 main.go 檔： 1touch main.go  結構體首先需要建立一個 Page 結構體，一個 Wiki 頁面由標題（Title）和內容（Body）所組">
+<meta name="keywords" content="程式設計,Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Go 建立 Web 應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="環境 macOS Go 1.13.4  前言本文為 Go 官方文件 Writing Web Applications 的學習筆記，實作與原文有些許差異。 建立專案新增並進入 wiki 資料夾。 12mkdir wikicd wiki  新增 main.go 檔： 1touch main.go  結構體首先需要建立一個 Page 結構體，一個 Wiki 頁面由標題（Title）和內容（Body）所組">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.955Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Go 建立 Web 應用程式">
+<meta name="twitter:description" content="環境 macOS Go 1.13.4  前言本文為 Go 官方文件 Writing Web Applications 的學習筆記，實作與原文有些許差異。 建立專案新增並進入 wiki 資料夾。 12mkdir wikicd wiki  新增 main.go 檔： 1touch main.go  結構體首先需要建立一個 Page 結構體，一個 Wiki 頁面由標題（Title）和內容（Body）所組">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Go 建立 Web 應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/01/使用-Go-操作-MongoDB-資料庫/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/01/使用-Go-讀取-XML-檔案/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&text=使用 Go 建立 Web 應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&is_video=false&description=使用 Go 建立 Web 應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 建立 Web 應用程式&body=Check out this article: https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&name=使用 Go 建立 Web 應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">2.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結構體"><span class="toc-number">4.</span> <span class="toc-text">結構體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要方法"><span class="toc-number">5.</span> <span class="toc-text">主要方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制器"><span class="toc-number">6.</span> <span class="toc-text">控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由"><span class="toc-number">7.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模板"><span class="toc-number">8.</span> <span class="toc-text">模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#錯誤處理"><span class="toc-number">9.</span> <span class="toc-text">錯誤處理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快取"><span class="toc-number">10.</span> <span class="toc-text">快取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#驗證"><span class="toc-number">11.</span> <span class="toc-text">驗證</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#封裝"><span class="toc-number">12.</span> <span class="toc-text">封裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">13.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">14.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Go 建立 Web 應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-01-04T13:04:20.000Z" itemprop="datePublished">2020-01-04</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Go/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>macOS</li>
+<li>Go 1.13.4</li>
+</ul>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為 Go 官方文件 <a href="https://golang.org/doc/articles/wiki/" target="_blank" rel="noopener">Writing Web Applications</a> 的學習筆記，實作與原文有些許差異。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>新增並進入 <code>wiki</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir wiki</span><br><span class="line"><span class="built_in">cd</span> wiki</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>main.go</code> 檔：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch main.go</span><br></pre></td></tr></table></figure>
+
+<h2 id="結構體"><a href="#結構體" class="headerlink" title="結構體"></a>結構體</h2><p>首先需要建立一個 <code>Page</code> 結構體，一個 Wiki 頁面由標題（Title）和內容（Body）所組成。由於標準庫 <code>io</code> 期望接收到的是一個位元組切片，因此將 <code>Body</code> 的型別設為 <code>[]byte</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Page <span class="keyword">struct</span> &#123;</span><br><span class="line">	Title <span class="keyword">string</span></span><br><span class="line">	Body  []<span class="keyword">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h2><p>引入標準庫 <code>io/ioutil</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>Page</code> 結構體新增一個 <code>save()</code> 方法，用來儲存頁面：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Page)</span> <span class="title">save</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    filename := p.Title + <span class="string">".txt"</span></span><br><span class="line">    <span class="keyword">return</span> ioutil.WriteFile(filename, p.Body, <span class="number">0600</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ioutil.WriteFile()</code> 方法的第三個參數表示檔案的存取權限。</li>
+</ul>
+<p>再新增一個 <code>load()</code> 方法，用來載入頁面：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">load</span><span class="params">(title <span class="keyword">string</span>)</span> *<span class="title">Page</span></span> &#123;</span><br><span class="line">    filename := title + <span class="string">".txt"</span></span><br><span class="line">    body, _ := ioutil.ReadFile(filename)</span><br><span class="line">    <span class="keyword">return</span> &amp;Page&#123;Title: title, Body: body&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由於 Go 的方法可以回傳多個值，所以讓 <code>load()</code> 方法也將錯誤一起回傳：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">load</span><span class="params">(title <span class="keyword">string</span>)</span> <span class="params">(*Page, error)</span></span> &#123;</span><br><span class="line">    filename := title + <span class="string">".txt"</span></span><br><span class="line">    body, err := ioutil.ReadFile(filename)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &amp;Page&#123;Title: title, Body: body&#125;, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然後建立一個 <code>main()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p1 := &amp;Page&#123;Title: <span class="string">"TestPage"</span>, Body: []<span class="keyword">byte</span>(<span class="string">"This is a sample Page."</span>)&#125;</span><br><span class="line">    p1.save()</span><br><span class="line">    p2, _ := load(<span class="string">"TestPage"</span>)</span><br><span class="line">    fmt.Println(<span class="keyword">string</span>(p2.Body))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行應用，會產生一個 <code>TestPage.txt</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h2><p>引入標準庫 <code>net/http</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>新增一個 <code>viewHandler()</code> 方法，用來查看 Wiki 頁面。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">viewHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title := r.URL.Path[<span class="built_in">len</span>(<span class="string">"/view/"</span>):]</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Redirect(w, r, <span class="string">"/edit/"</span>+title, http.StatusFound)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Fprintf(w, <span class="string">"&lt;h1&gt;%s&lt;/h1&gt;&lt;div&gt;%s&lt;/div&gt;"</span>, p.Title, p.Body)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>r.URL.Path</code> 屬性可以獲取當前 URL 路徑。</li>
+</ul>
+<p>新增一個 <code>editHandler()</code> 方法，用來修改 Wiki 頁面。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">editHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title := r.URL.Path[<span class="built_in">len</span>(<span class="string">"/edit/"</span>):]</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		p = &amp;Page&#123;Title: title&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Fprintf(w, <span class="string">"&lt;h1&gt;Editing %s&lt;/h1&gt;"</span>+</span><br><span class="line">		<span class="string">"&lt;form action=\"/store/%s\" method=\"POST\"&gt;"</span>+</span><br><span class="line">		<span class="string">"&lt;textarea name=\"body\"&gt;%s&lt;/textarea&gt;&lt;br&gt;"</span>+</span><br><span class="line">		<span class="string">"&lt;input type=\"submit\" value=\"Save\"&gt;"</span>+</span><br><span class="line">		<span class="string">"&lt;/form&gt;"</span>,</span><br><span class="line">		p.Title, p.Title, p.Body)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增一個 <code>storeHandler()</code> 方法，用來儲存 Wiki 頁面。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title := r.URL.Path[<span class="built_in">len</span>(<span class="string">"/store/"</span>):]</span><br><span class="line">	body := r.FormValue(<span class="string">"body"</span>)</span><br><span class="line">	p := &amp;Page&#123;Title: title, Body: []<span class="keyword">byte</span>(body)&#125;</span><br><span class="line">	p.save()</span><br><span class="line">	http.Redirect(w, r, <span class="string">"/view/"</span>+title, http.StatusFound)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>引入標準庫 <code>log</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>將 <code>main.go</code> 檔修改如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/view/"</span>, viewHandler)</span><br><span class="line">	http.HandleFunc(<span class="string">"/edit/"</span>, editHandler)</span><br><span class="line">	http.HandleFunc(<span class="string">"/store/"</span>, storeHandler)</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行應用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a href="http://localhost:8080/view/TestPage" target="_blank" rel="noopener">http://localhost:8080/view/TestPage</a> 瀏覽。</p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><p>引入標準庫 <code>html/template</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"html/template"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>為了將 HTML 從 Go 程式碼中分離，因此新增一個 <code>renderTemplate()</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">renderTemplate</span><span class="params">(w http.ResponseWriter, tmpl <span class="keyword">string</span>, p *Page)</span></span> &#123;</span><br><span class="line">	t, _ := template.ParseFiles(tmpl + <span class="string">".html"</span>)</span><br><span class="line">	t.Execute(w, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增一個 <code>view.html</code> 檔：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;.Title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>[<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/edit/&#123;&#123;.Title&#125;&#125;"</span>&gt;</span>edit<span class="tag">&lt;/<span class="name">a</span>&gt;</span>]<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;printf "%s" .Body&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>viewHandler()</code> 方法如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">viewHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title := r.URL.Path[<span class="built_in">len</span>(<span class="string">"/view/"</span>):]</span><br><span class="line">	p, _ := load(title)</span><br><span class="line">	renderTemplate(w, <span class="string">"view"</span>, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增一個 <code>edit.html</code> 檔：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Editing &#123;&#123;.Title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/store/&#123;&#123;.Title&#125;&#125;"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"body"</span> <span class="attr">rows</span>=<span class="string">"20"</span> <span class="attr">cols</span>=<span class="string">"80"</span>&gt;</span>&#123;&#123;printf "%s" .Body&#125;&#125;<span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"Save"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>editHandler()</code> 方法如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">editHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title := r.URL.Path[<span class="built_in">len</span>(<span class="string">"/edit/"</span>):]</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		p = &amp;Page&#123;Title: title&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	renderTemplate(w, <span class="string">"edit"</span>, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行應用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a href="http://localhost:8080/view/TestPage" target="_blank" rel="noopener">http://localhost:8080/view/TestPage</a> 瀏覽。</p>
+<h2 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h2><p>修改 <code>renderTemplate()</code> 方法，不要去忽略錯誤：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">renderTemplate</span><span class="params">(w http.ResponseWriter, tmpl <span class="keyword">string</span>, p *Page)</span></span> &#123;</span><br><span class="line">	t, err := template.ParseFiles(tmpl + <span class="string">".html"</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	err = t.Execute(w, p)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>storeHandler()</code> 方法，不要去忽略錯誤：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title := r.URL.Path[<span class="built_in">len</span>(<span class="string">"/store/"</span>):]</span><br><span class="line">	body := r.FormValue(<span class="string">"body"</span>)</span><br><span class="line">	p := &amp;Page&#123;Title: title, Body: []<span class="keyword">byte</span>(body)&#125;</span><br><span class="line">	err := p.save()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	http.Redirect(w, r, <span class="string">"/view/"</span>+title, http.StatusFound)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="快取"><a href="#快取" class="headerlink" title="快取"></a>快取</h2><p>定義一個全域變數，讓 <code>ParseFiles()</code> 方法在應用程式啟動後只執行一次。<code>Must()</code> 方法會在 <code>ParseFiles()</code> 方法返回 <code>err</code> 不為 <code>nil</code> 時調用 <code>panic</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> templates = template.Must(template.ParseFiles(<span class="string">"edit.html"</span>, <span class="string">"view.html"</span>))</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ExecuteTemplate()</code> 方法來渲染樣板，修改 <code>renderTemplate()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">renderTemplate</span><span class="params">(w http.ResponseWriter, tmpl <span class="keyword">string</span>, p *Page)</span></span> &#123;</span><br><span class="line">    err := templates.ExecuteTemplate(w, tmpl+<span class="string">".html"</span>, p)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="驗證"><a href="#驗證" class="headerlink" title="驗證"></a>驗證</h2><p>引入標準庫 <code>regexp</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"regexp"</span></span><br><span class="line">	<span class="string">"text/template"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>定義一個全域變數，讓路由必須符合特定格式。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> validPath = regexp.MustCompile(<span class="string">"^/(view|edit|store)/([a-zA-Z0-9]+)$"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>引入標準庫 <code>errors</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"regexp"</span></span><br><span class="line">	<span class="string">"text/template"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>新增一個 <code>getTitle()</code> 方法，驗證並取得標題名稱。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getTitle</span><span class="params">(w http.ResponseWriter, r *http.Request)</span> <span class="params">(<span class="keyword">string</span>, error)</span></span> &#123;</span><br><span class="line">	m := validPath.FindStringSubmatch(r.URL.Path)</span><br><span class="line">	<span class="keyword">if</span> m == <span class="literal">nil</span> &#123;</span><br><span class="line">		http.NotFound(w, r)</span><br><span class="line">		<span class="keyword">return</span> <span class="string">""</span>, errors.New(<span class="string">"Invalid Page Title"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> m[<span class="number">2</span>], <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>viewHandler()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">viewHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title, err := getTitle(w, r)</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Redirect(w, r, <span class="string">"/edit/"</span>+title, http.StatusFound)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	renderTemplate(w, <span class="string">"view"</span>, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>editHandler()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">editHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title, err := getTitle(w, r)</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		p = &amp;Page&#123;Title: title&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	renderTemplate(w, <span class="string">"edit"</span>, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>storeHandler()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	title, err := getTitle(w, r)</span><br><span class="line">	body := r.FormValue(<span class="string">"body"</span>)</span><br><span class="line">	p := &amp;Page&#123;Title: title, Body: []<span class="keyword">byte</span>(body)&#125;</span><br><span class="line">	err = p.save()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	http.Redirect(w, r, <span class="string">"/view/"</span>+title, http.StatusFound)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="封裝"><a href="#封裝" class="headerlink" title="封裝"></a>封裝</h2><p>刪除 <code>getTitle()</code> 方法和標準庫 <code>errors</code> 的引用。新增一個 <code>makeHandler()</code> 方法，它接收一個閉包，這個閉包會在驗證通過後被呼叫。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">makeHandler</span><span class="params">(fn <span class="keyword">func</span>(http.ResponseWriter, *http.Request, <span class="keyword">string</span>)</span>) <span class="title">http</span>.<span class="title">HandlerFunc</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		m := validPath.FindStringSubmatch(r.URL.Path)</span><br><span class="line">		<span class="keyword">if</span> m == <span class="literal">nil</span> &#123;</span><br><span class="line">			http.NotFound(w, r)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		fn(w, r, m[<span class="number">2</span>])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/view/"</span>, makeHandler(viewHandler))</span><br><span class="line">	http.HandleFunc(<span class="string">"/edit/"</span>, makeHandler(editHandler))</span><br><span class="line">	http.HandleFunc(<span class="string">"/store/"</span>, makeHandler(storeHandler))</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>viewHandler()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">viewHandler</span><span class="params">(w http.ResponseWriter, r *http.Request, title <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Redirect(w, r, <span class="string">"/edit/"</span>+title, http.StatusFound)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	renderTemplate(w, <span class="string">"view"</span>, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>editHandler()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">editHandler</span><span class="params">(w http.ResponseWriter, r *http.Request, title <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	p, err := load(title)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		p = &amp;Page&#123;Title: title&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	renderTemplate(w, <span class="string">"edit"</span>, p)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>storeHandler()</code> 方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">storeHandler</span><span class="params">(w http.ResponseWriter, r *http.Request, title <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	body := r.FormValue(<span class="string">"body"</span>)</span><br><span class="line">	p := &amp;Page&#123;Title: title, Body: []<span class="keyword">byte</span>(body)&#125;</span><br><span class="line">	err := p.save()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	http.Redirect(w, r, <span class="string">"/view/"</span>+title, http.StatusFound)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行應用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a href="http://localhost:8080/view/TestPage" target="_blank" rel="noopener">http://localhost:8080/view/TestPage</a> 瀏覽。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/go-web-example" target="_blank" rel="noopener">go-web-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://golang.org/doc/articles/wiki/" target="_blank" rel="noopener">Writing Web Applications</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">2.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結構體"><span class="toc-number">4.</span> <span class="toc-text">結構體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要方法"><span class="toc-number">5.</span> <span class="toc-text">主要方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制器"><span class="toc-number">6.</span> <span class="toc-text">控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由"><span class="toc-number">7.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模板"><span class="toc-number">8.</span> <span class="toc-text">模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#錯誤處理"><span class="toc-number">9.</span> <span class="toc-text">錯誤處理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快取"><span class="toc-number">10.</span> <span class="toc-text">快取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#驗證"><span class="toc-number">11.</span> <span class="toc-text">驗證</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#封裝"><span class="toc-number">12.</span> <span class="toc-text">封裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">13.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">14.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&text=使用 Go 建立 Web 應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&is_video=false&description=使用 Go 建立 Web 應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 建立 Web 應用程式&body=Check out this article: https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&title=使用 Go 建立 Web 應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/01/使用-Go-建立-Web-應用程式/&name=使用 Go 建立 Web 應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="後端申請令牌先至 GitHub 的 Personal access tokens 頁面申請一個存取令牌。 工具 GitHub GraphQL API 圖形介面：GitHub GraphQL API Explorer API 客戶端工具：Insomnia API Client GitHub 進階查詢：GitHub Advanced Search  文件 GitHub 的查詢語法：Understand">
+<meta name="keywords" content="程式設計,GitHub,GraphQL,Go,MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Go 實作「GitHub 排名系統」應用程式（二）">
+<meta property="og:url" content="https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="後端申請令牌先至 GitHub 的 Personal access tokens 頁面申請一個存取令牌。 工具 GitHub GraphQL API 圖形介面：GitHub GraphQL API Explorer API 客戶端工具：Insomnia API Client GitHub 進階查詢：GitHub Advanced Search  文件 GitHub 的查詢語法：Understand">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Go 實作「GitHub 排名系統」應用程式（二）">
+<meta name="twitter:description" content="後端申請令牌先至 GitHub 的 Personal access tokens 頁面申請一個存取令牌。 工具 GitHub GraphQL API 圖形介面：GitHub GraphQL API Explorer API 客戶端工具：Insomnia API Client GitHub 進階查詢：GitHub Advanced Search  文件 GitHub 的查詢語法：Understand">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Go 實作「GitHub 排名系統」應用程式（二）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/02/使用-Go-實作「GitHub-排名系統」應用程式（一）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/03/使用-TypeScript-建立-npm-套件/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&text=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&is_video=false&description=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 實作「GitHub 排名系統」應用程式（二）&body=Check out this article: https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&name=使用 Go 實作「GitHub 排名系統」應用程式（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#後端"><span class="toc-number">1.</span> <span class="toc-text">後端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#申請令牌"><span class="toc-number">1.1.</span> <span class="toc-text">申請令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">1.2.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件"><span class="toc-number">1.3.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查詢語法"><span class="toc-number">1.4.</span> <span class="toc-text">查詢語法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#蒐集資料"><span class="toc-number">1.5.</span> <span class="toc-text">蒐集資料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#速度限制"><span class="toc-number">1.6.</span> <span class="toc-text">速度限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解析地理位置"><span class="toc-number">1.7.</span> <span class="toc-text">解析地理位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排名語法"><span class="toc-number">1.8.</span> <span class="toc-text">排名語法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排名時間戳"><span class="toc-number">1.9.</span> <span class="toc-text">排名時間戳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查詢"><span class="toc-number">1.10.</span> <span class="toc-text">查詢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快取"><span class="toc-number">1.11.</span> <span class="toc-text">快取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫"><span class="toc-number">2.</span> <span class="toc-text">資料庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端"><span class="toc-number">3.</span> <span class="toc-text">前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共用資源"><span class="toc-number">4.</span> <span class="toc-text">共用資源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#網站"><span class="toc-number">5.</span> <span class="toc-text">網站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Go 實作「GitHub 排名系統」應用程式（二）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-03-01T06:20:16.000Z" itemprop="datePublished">2021-03-01</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Go/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/GitHub/">GitHub</a>, <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/GraphQL/">GraphQL</a>, <a class="tag-link" href="/tags/MongoDB/">MongoDB</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="後端"><a href="#後端" class="headerlink" title="後端"></a>後端</h2><h3 id="申請令牌"><a href="#申請令牌" class="headerlink" title="申請令牌"></a>申請令牌</h3><p>先至 GitHub 的 <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Personal access tokens</a> 頁面申請一個存取令牌。</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><ul>
+<li>GitHub GraphQL API 圖形介面：<a href="https://docs.github.com/en/graphql/overview/explorer" target="_blank" rel="noopener">GitHub GraphQL API Explorer</a></li>
+<li>API 客戶端工具：<a href="https://insomnia.rest/" target="_blank" rel="noopener">Insomnia API Client</a></li>
+<li>GitHub 進階查詢：<a href="https://github.com/search/advanced" target="_blank" rel="noopener">GitHub Advanced Search</a></li>
+</ul>
+<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><ul>
+<li><p>GitHub 的查詢語法：<a href="https://docs.github.com/en/github/searching-for-information-on-github/understanding-the-search-syntax" target="_blank" rel="noopener">Understanding the search syntax</a></p>
+</li>
+<li><p>GitHub GraphQL API 的限制：<a href="https://docs.github.com/en/graphql/overview/resource-limitations" target="_blank" rel="noopener">Resource limitations</a></p>
+</li>
+</ul>
+<h3 id="查詢語法"><a href="#查詢語法" class="headerlink" title="查詢語法"></a>查詢語法</h3><p>由於 GraphQL 的客戶端比較單純，因此直接使用字串替換的方式去改變一個 GraphQL 的請求。</p>
+<p>比方說有一個 <code>owners.graphql</code> 檔，可以查詢一般使用者或組織：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">query Owners &#123;</span><br><span class="line">  search(&lt;SearchArguments&gt;) &#123;</span><br><span class="line">    edges &#123;</span><br><span class="line">      cursor</span><br><span class="line">      node &#123;</span><br><span class="line">        ... on User &#123;</span><br><span class="line">          imageUrl: avatarUrl</span><br><span class="line">          createdAt</span><br><span class="line">          followers &#123;</span><br><span class="line">            totalCount</span><br><span class="line">          &#125;</span><br><span class="line">          location</span><br><span class="line">          login</span><br><span class="line">          name</span><br><span class="line">        &#125;</span><br><span class="line">        ... on Organization &#123;</span><br><span class="line">          imageUrl: avatarUrl</span><br><span class="line">          createdAt</span><br><span class="line">          location</span><br><span class="line">          login</span><br><span class="line">          name</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    pageInfo &#123;</span><br><span class="line">      endCursor</span><br><span class="line">      hasNextPage</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  rateLimit &#123;</span><br><span class="line">    cost</span><br><span class="line">    limit</span><br><span class="line">    nodeCount</span><br><span class="line">    remaining</span><br><span class="line">    resetAt</span><br><span class="line">    used</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>將這個檔案讀取後，利用字串替換的方式把 <code>&lt;SearchArguments&gt;</code> 標籤替換掉就可以了。如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(q Query)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	query := q.Schema</span><br><span class="line">	query = strings.Replace(query, <span class="string">"&lt;Type&gt;"</span>, q.Type, <span class="number">1</span>)</span><br><span class="line">	query = strings.Replace(query, <span class="string">"&lt;SearchArguments&gt;"</span>, util.ParseStruct(q.SearchArguments, <span class="string">","</span>), <span class="number">1</span>)</span><br><span class="line">	query = strings.Replace(query, <span class="string">"&lt;OwnerArguments&gt;"</span>, util.ParseStruct(q.OwnerArguments, <span class="string">","</span>), <span class="number">1</span>)</span><br><span class="line">	query = strings.Replace(query, <span class="string">"&lt;GistsArguments&gt;"</span>, util.ParseStruct(q.GistsArguments, <span class="string">","</span>), <span class="number">1</span>)</span><br><span class="line">	query = strings.Replace(query, <span class="string">"&lt;RepositoriesArguments&gt;"</span>, util.ParseStruct(q.RepositoriesArguments, <span class="string">","</span>), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	payload := <span class="keyword">struct</span> &#123;</span><br><span class="line">		Query <span class="keyword">string</span> <span class="string">`json:"query"`</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		Query: query,</span><br><span class="line">	&#125;</span><br><span class="line">	b, err := json.Marshal(payload)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">string</span>(b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="蒐集資料"><a href="#蒐集資料" class="headerlink" title="蒐集資料"></a>蒐集資料</h3><p>由於 GitHub 的「搜尋」（<code>search</code>）端點，並不允許開發者一次撈取所有的歷史資料，即使有分頁，最多也只有 10 頁。因此需要指定一個時間區間。如果要蒐集 GitHub 上所有的一般使用者或組織，就得從 GitHub 創始的時間開始蒐集。</p>
+<p>以蒐集組織的資料為例，使用一個遞迴方法從 2007 年 10 月 1 日開始蒐集：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(o *Organization)</span> <span class="title">Travel</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> o.From.After(o.To) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// do something</span></span><br><span class="line"></span><br><span class="line">	o.From = o.From.AddDate(<span class="number">0</span>, <span class="number">0</span>, <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> o.Travel()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由於還需要蒐集每個組織各自的儲存庫（repository），因此還需要使用一個遞迴方法去蒐集。這個部分就沒有 10 頁的限制，只需要利用分頁指標（cursor）不斷切換下一頁就可以：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(o *Organization)</span> <span class="title">FetchRepositories</span><span class="params">(repositories *[]model.Repository)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">// do something</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> !res.Data.Organization.Repositories.PageInfo.HasNextPage &#123;</span><br><span class="line">		o.RepositoryQuery.RepositoriesArguments.After = <span class="string">""</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	o.RepositoryQuery.RepositoriesArguments.After = strconv.Quote(res.Data.Organization.Repositories.PageInfo.EndCursor)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> o.FetchRepositories(repositories)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="速度限制"><a href="#速度限制" class="headerlink" title="速度限制"></a>速度限制</h3><p>GitHub GraphQL API 有速度限制，因此需要稍微控制一下速度。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r RateLimit)</span> <span class="title">Throttle</span><span class="params">(collecting <span class="keyword">int64</span>)</span></span> &#123;</span><br><span class="line">	logger.Debug(fmt.Sprintf(<span class="string">"Rate Limit: %s"</span>, strconv.Quote(util.ParseStruct(r, <span class="string">" "</span>))))</span><br><span class="line">	resetAt, err := time.Parse(time.RFC3339, r.ResetAt)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line">	remainingTime := resetAt.Add(time.Second).Sub(time.Now().UTC())</span><br><span class="line">	time.Sleep(time.Duration(remainingTime.Milliseconds()/r.Remaining*collecting) * time.Millisecond)</span><br><span class="line">	<span class="keyword">if</span> r.Remaining &gt; collecting &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	logger.Warning(<span class="string">"Take a break..."</span>)</span><br><span class="line">	time.Sleep(remainingTime)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解析地理位置"><a href="#解析地理位置" class="headerlink" title="解析地理位置"></a>解析地理位置</h3><p>由於每個一般使用者和組織的地理位置都是自由填寫的，所以需要去解析這個帳號所填寫的地理位置究竟是哪個國家和城市，因此需要自行準備一個地區列表和解析方法來處理。</p>
+<h3 id="排名語法"><a href="#排名語法" class="headerlink" title="排名語法"></a>排名語法</h3><p>使用 MongoDB 的聚合（aggregation），可以利用各種管道（pipeline）完成排名。以一般使用者的排名管道為例，需要針對追蹤者數量、程式碼片段和儲存庫，在不同地理位置和程式語言的條件下進行排名：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RankUser</span><span class="params">()</span> <span class="params">(pipelines []*Pipeline)</span></span> &#123;</span><br><span class="line">	rankType := app.TypeUser</span><br><span class="line">	fields := []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">"followers"</span>,</span><br><span class="line">		<span class="string">"gists.forks"</span>,</span><br><span class="line">		<span class="string">"gists.stargazers"</span>,</span><br><span class="line">		<span class="string">"repositories.forks"</span>,</span><br><span class="line">		<span class="string">"repositories.stargazers"</span>,</span><br><span class="line">		<span class="string">"repositories.watchers"</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, field := <span class="keyword">range</span> fields &#123;</span><br><span class="line">		pipelines = <span class="built_in">append</span>(pipelines, rankByField(rankType, field))</span><br><span class="line">		pipelines = <span class="built_in">append</span>(pipelines, rankByLocation(rankType, field)...)</span><br><span class="line">	&#125;</span><br><span class="line">	pipelines = <span class="built_in">append</span>(pipelines, rankOwnerRepositoryByLanguage(rankType, <span class="string">"repositories.stargazers"</span>)...)</span><br><span class="line">	pipelines = <span class="built_in">append</span>(pipelines, rankOwnerRepositoryByLanguage(rankType, <span class="string">"repositories.forks"</span>)...)</span><br><span class="line">	pipelines = <span class="built_in">append</span>(pipelines, rankOwnerRepositoryByLanguage(rankType, <span class="string">"repositories.watchers"</span>)...)</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每個排名管道都經過封裝過：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">rankByField</span><span class="params">(rankType <span class="keyword">string</span>, field <span class="keyword">string</span>)</span> *<span class="title">Pipeline</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;Pipeline&#123;</span><br><span class="line">		Pipeline: &amp;mongo.Pipeline&#123;</span><br><span class="line">			operator.Project(bson.D&#123;</span><br><span class="line">				id(),</span><br><span class="line">				imageUrl(),</span><br><span class="line">				totalCount(field),</span><br><span class="line">			&#125;),</span><br><span class="line">			operator.Sort(<span class="string">"total_count"</span>, descending),</span><br><span class="line">		&#125;,</span><br><span class="line">		Type:  rankType,</span><br><span class="line">		Field: field,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根據計算，一般使用者有 26,325 個管道，組織有 14,010 個管道，而儲存庫有 1,698 個管道需要被執行。</p>
+<h3 id="排名時間戳"><a href="#排名時間戳" class="headerlink" title="排名時間戳"></a>排名時間戳</h3><p>當每一次執行排名時，都相當耗時。為了可以讓前端一直取得正確的排名資訊，當前的排名不可以被覆蓋或刪除。每一次有新的排名被存入資料庫，都會產生一個時間戳來指定這批排名資料已經完成，並且可以被使用。而這個時間戳在每一次排名完成後，就會被寫進環境變數檔裡，如此一來可以確保排名資料的原子性。</p>
+<h3 id="查詢"><a href="#查詢" class="headerlink" title="查詢"></a>查詢</h3><p>所有的排名資料都是相同的格式：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	"_id" : "", // MongoDB 的內建 ID</span><br><span class="line">	"name" : "", // 資源名字</span><br><span class="line">	"image_url" : "", // 資源圖像</span><br><span class="line">	"rank" : 0, // 名次</span><br><span class="line">	"rank_count" : 0, // 名次總數</span><br><span class="line">	"item_count" : 0, // 排名欄位總數</span><br><span class="line">	"type" : "", // 指定是一般使用者、組織或儲存庫</span><br><span class="line">	"field" : "", // 指定排名欄位</span><br><span class="line">	"language" : "", // 語言</span><br><span class="line">	"location" : "", // 地理位置</span><br><span class="line">	"created_at" : "" // 時間戳</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="快取"><a href="#快取" class="headerlink" title="快取"></a>快取</h3><p>快取的部分暫時使用 in-memory 類型的快取套件進行處理。</p>
+<h2 id="資料庫"><a href="#資料庫" class="headerlink" title="資料庫"></a>資料庫</h2><p>資料庫使用 MongoDB，排名資料表的部分，有為以下 5 個欄位特別建立索引：</p>
+<ul>
+<li><code>name</code></li>
+<li><code>type</code></li>
+<li><code>language</code></li>
+<li><code>location</code></li>
+<li><code>created_at</code></li>
+</ul>
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><p>前端的部分使用 Vue 和 Vuetify 進行實作。需要注意使用名字去查詢的時候，需要實作去抖（debounce），不要一直呼叫 API。由於後端有時回覆較慢，也需要特別去撤銷（cancel）被覆蓋的 HTTP 請求。</p>
+<h2 id="共用資源"><a href="#共用資源" class="headerlink" title="共用資源"></a>共用資源</h2><p>前後端有一模一樣的共用資源，像是語言列表和地區列表，這個部分可以使用 Git Submodules 處理。</p>
+<h2 id="網站"><a href="#網站" class="headerlink" title="網站"></a>網站</h2><ul>
+<li><a href="http://gh-rankings.epoch.tw/" target="_blank" rel="noopener">GH Rankings</a></li>
+</ul>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/gh-rankings" target="_blank" rel="noopener">gh-rankings</a></li>
+<li><a href="https://github.com/memochou1993/gh-rankings-ui" target="_blank" rel="noopener">gh-rankings-ui</a></li>
+<li><a href="https://github.com/memochou1993/gh-rankings-language" target="_blank" rel="noopener">gh-rankings-language</a></li>
+<li><a href="https://github.com/memochou1993/gh-rankings-location" target="_blank" rel="noopener">gh-rankings-location</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#後端"><span class="toc-number">1.</span> <span class="toc-text">後端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#申請令牌"><span class="toc-number">1.1.</span> <span class="toc-text">申請令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">1.2.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件"><span class="toc-number">1.3.</span> <span class="toc-text">文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查詢語法"><span class="toc-number">1.4.</span> <span class="toc-text">查詢語法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#蒐集資料"><span class="toc-number">1.5.</span> <span class="toc-text">蒐集資料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#速度限制"><span class="toc-number">1.6.</span> <span class="toc-text">速度限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解析地理位置"><span class="toc-number">1.7.</span> <span class="toc-text">解析地理位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排名語法"><span class="toc-number">1.8.</span> <span class="toc-text">排名語法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排名時間戳"><span class="toc-number">1.9.</span> <span class="toc-text">排名時間戳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查詢"><span class="toc-number">1.10.</span> <span class="toc-text">查詢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快取"><span class="toc-number">1.11.</span> <span class="toc-text">快取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫"><span class="toc-number">2.</span> <span class="toc-text">資料庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端"><span class="toc-number">3.</span> <span class="toc-text">前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#共用資源"><span class="toc-number">4.</span> <span class="toc-text">共用資源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#網站"><span class="toc-number">5.</span> <span class="toc-text">網站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&text=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&is_video=false&description=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 實作「GitHub 排名系統」應用程式（二）&body=Check out this article: https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&title=使用 Go 實作「GitHub 排名系統」應用程式（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/03/使用-Go-實作「GitHub-排名系統」應用程式（二）/&name=使用 Go 實作「GitHub 排名系統」應用程式（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

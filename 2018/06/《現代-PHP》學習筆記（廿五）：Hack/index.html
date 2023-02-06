@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  HackHack 語言是一個伺服器端的語言，Hack 開發者稱其為 PHP 的一種方言。 Facebook 為 Hack 新增了 PHP 所沒有的省時資料結構和介面，更重要的是，Hack 採用了靜態型別來幫助開發者寫出更有預測性和穩定性的程式碼，靜態型別讓開發者在開發階段使用接近即時的型態檢測伺服器，可">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（廿五）：Hack">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  HackHack 語言是一個伺服器端的語言，Hack 開發者稱其為 PHP 的一種方言。 Facebook 為 Hack 新增了 PHP 所沒有的省時資料結構和介面，更重要的是，Hack 採用了靜態型別來幫助開發者寫出更有預測性和穩定性的程式碼，靜態型別讓開發者在開發階段使用接近即時的型態檢測伺服器，可">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.937Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（廿五）：Hack">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  HackHack 語言是一個伺服器端的語言，Hack 開發者稱其為 PHP 的一種方言。 Facebook 為 Hack 新增了 PHP 所沒有的省時資料結構和介面，更重要的是，Hack 採用了靜態型別來幫助開發者寫出更有預測性和穩定性的程式碼，靜態型別讓開發者在開發階段使用接近即時的型態檢測伺服器，可">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（廿五）：Hack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/日本語動詞活用：基本/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（廿六）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&text=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&is_video=false&description=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（廿五）：Hack&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&name=《現代 PHP》學習筆記（廿五）：Hack&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hack"><span class="toc-number">3.</span> <span class="toc-text">Hack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#將-PHP-轉變成-Hack"><span class="toc-number">4.</span> <span class="toc-text">將 PHP 轉變成 Hack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#型態"><span class="toc-number">5.</span> <span class="toc-text">型態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#靜態型別"><span class="toc-number">6.</span> <span class="toc-text">靜態型別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#動態型別"><span class="toc-number">7.</span> <span class="toc-text">動態型別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hack-的型別"><span class="toc-number">8.</span> <span class="toc-text">Hack 的型別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hack-的模式"><span class="toc-number">9.</span> <span class="toc-text">Hack 的模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#strict"><span class="toc-number">9.1.</span> <span class="toc-text">strict</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#partial"><span class="toc-number">9.2.</span> <span class="toc-text">partial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decl"><span class="toc-number">9.3.</span> <span class="toc-text">decl</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（廿五）：Hack
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-21T06:50:36.000Z" itemprop="datePublished">2018-06-21</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Wnmp 3.1.0</li>
+</ul>
+<h2 id="Hack"><a href="#Hack" class="headerlink" title="Hack"></a>Hack</h2><p>Hack 語言是一個伺服器端的語言，Hack 開發者稱其為 PHP 的一種方言。</p>
+<p>Facebook 為 Hack 新增了 PHP 所沒有的省時資料結構和介面，更重要的是，Hack 採用了靜態型別來幫助開發者寫出更有預測性和穩定性的程式碼，靜態型別讓開發者在開發階段使用接近即時的型態檢測伺服器，可以更早發現錯誤。</p>
+<h2 id="將-PHP-轉變成-Hack"><a href="#將-PHP-轉變成-Hack" class="headerlink" title="將 PHP 轉變成 Hack"></a>將 PHP 轉變成 Hack</h2><p>要將 PHP 轉變成 Hack，只要將 <code>&lt;?php</code> 標籤改成 <code>&lt;?hh</code> 標籤即可。</p>
+<p>PHP 程式碼範例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"I'm PHP"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Hack 程式碼範例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>hh</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"I'm Hack"</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="型態"><a href="#型態" class="headerlink" title="型態"></a>型態</h2><p>型態是一個指派給屬性的虛無標籤，用來證明特定的行為存在，並且在預期之中它是根本性的正確。</p>
+<p>表達式 <code>$bar = 14</code> 暗示 <code>$bar</code> 變數的數値是一個整數；而 <code>$foo = &quot;bar&quot;</code> 暗示 <code>$foo</code> 變數是一個字串。即使沒有明確的註解，PHP 直譯器仍擁有足夠的能力藉由語法推測出變數的型態。</p>
+<p>靜態和動態系統之間最大的差異是何時程式型態會被檢查，以及程式如何檢查其正確性。</p>
+<h2 id="靜態型別"><a href="#靜態型別" class="headerlink" title="靜態型別"></a>靜態型別</h2><p>編譯器在編譯靜態型別程式時，會在應用程式部署成產品之前，將型態相關的程式錯誤揭露出來，這是好事。但這意味著開發時較長的回饋時間，會拖延開發程序。</p>
+<p>靜態型別程式的優勢是它們通常較穩定，因為它們的行為由編譯器的型態檢查系統所驗證過了。但是，仍然需要撰寫獨立的測試來驗證程式行為的正確性。</p>
+<h2 id="動態型別"><a href="#動態型別" class="headerlink" title="動態型別"></a>動態型別</h2><p>動態型別程式要一直到執行階段才會被檢查，並沒有所謂的編譯時期。動態型別的程式通常是直譯式的，例如每執行一個 PHP 腳本，PHP 程式碼會被直譯器讀取，轉變成一組 <code>opcode</code> 程式碼，並且被執行。</p>
+<p>由於 PHP 沒有被編譯，所以錯誤會在執行階段才被揭露，而分離的單元測試就顯得更重要了。</p>
+<h2 id="Hack-的型別"><a href="#Hack-的型別" class="headerlink" title="Hack 的型別"></a>Hack 的型別</h2><p>Hack 同時實作了靜態和動態型別，並且大部分可向後相容於 PHP。</p>
+<p>Hack 使用 HHVM 的 JIT 編譯器，Hack 程式碼會在撰寫時，以獨立的型別檢查器檢查，由 HHVM 讀取，最佳化並快取成中介的位元碼。</p>
+<h2 id="Hack-的模式"><a href="#Hack-的模式" class="headerlink" title="Hack 的模式"></a>Hack 的模式</h2><p>Hack 可以在三種模式下撰寫，分別是：<code>strict</code>、<code>partial</code> 或 <code>decl</code>。</p>
+<h3 id="strict"><a href="#strict" class="headerlink" title="strict"></a>strict</h3><p>嚴厲模式需要所有程式碼被適當地註解，Hack 型別檢查器會捕捉所有可能的型態相關錯誤，並且無法使用非 Hack 程式碼。</p>
+<h3 id="partial"><a href="#partial" class="headerlink" title="partial"></a>partial</h3><p>部分模式（預設）允許 Hack 程式碼使用尚未被轉變成 Hack 的 PHP 程式碼，不要求註解所有函式或方法的參數。</p>
+<h3 id="decl"><a href="#decl" class="headerlink" title="decl"></a>decl</h3><p>宣告模式讓嚴厲模式的 Hack 程式碼呼叫沒有型態的程式碼，例如新版的 Hack 程式碼去呼叫老舊的 PHP 程式碼，此時 PHP 程式碼應當使用宣告模式。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hack"><span class="toc-number">3.</span> <span class="toc-text">Hack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#將-PHP-轉變成-Hack"><span class="toc-number">4.</span> <span class="toc-text">將 PHP 轉變成 Hack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#型態"><span class="toc-number">5.</span> <span class="toc-text">型態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#靜態型別"><span class="toc-number">6.</span> <span class="toc-text">靜態型別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#動態型別"><span class="toc-number">7.</span> <span class="toc-text">動態型別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hack-的型別"><span class="toc-number">8.</span> <span class="toc-text">Hack 的型別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hack-的模式"><span class="toc-number">9.</span> <span class="toc-text">Hack 的模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#strict"><span class="toc-number">9.1.</span> <span class="toc-text">strict</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#partial"><span class="toc-number">9.2.</span> <span class="toc-text">partial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decl"><span class="toc-number">9.3.</span> <span class="toc-text">decl</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&text=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&is_video=false&description=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（廿五）：Hack&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&title=《現代 PHP》學習筆記（廿五）：Hack"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿五）：Hack/&name=《現代 PHP》學習筆記（廿五）：Hack&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

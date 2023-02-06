@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言功能需求如下：  不要有按鈕，輸入完價格直接看到計算結果。 要可以查看前後五檔的成交價格，不需要重新輸入新的價格。 電腦版要可以使用上下鍵做價格調整，並且以正確的檔位做為升降單位。 手機版要可以使用數字鍵盤輸入價格。  避免花費太多時間在變數命名上，因此直接使用中文撰寫。 實作主程式如下： 1234567891011121314151617181920212223242526272829303">
+<meta name="keywords" content="程式設計,JavaScript,Bootstrap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 JavaScript 實作「股票交易計算器」應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言功能需求如下：  不要有按鈕，輸入完價格直接看到計算結果。 要可以查看前後五檔的成交價格，不需要重新輸入新的價格。 電腦版要可以使用上下鍵做價格調整，並且以正確的檔位做為升降單位。 手機版要可以使用數字鍵盤輸入價格。  避免花費太多時間在變數命名上，因此直接使用中文撰寫。 實作主程式如下： 1234567891011121314151617181920212223242526272829303">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 JavaScript 實作「股票交易計算器」應用程式">
+<meta name="twitter:description" content="前言功能需求如下：  不要有按鈕，輸入完價格直接看到計算結果。 要可以查看前後五檔的成交價格，不需要重新輸入新的價格。 電腦版要可以使用上下鍵做價格調整，並且以正確的檔位做為升降單位。 手機版要可以使用數字鍵盤輸入價格。  避免花費太多時間在變數命名上，因此直接使用中文撰寫。 實作主程式如下： 1234567891011121314151617181920212223242526272829303">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 JavaScript 實作「股票交易計算器」應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/06/在-Laravel-7-0-使用-VarExporter-生成-PHP-檔案/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/07/建立-PWA-漸進式網頁應用程式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&text=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&is_video=false&description=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 JavaScript 實作「股票交易計算器」應用程式&body=Check out this article: https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&name=使用 JavaScript 實作「股票交易計算器」應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#線上展示"><span class="toc-number">3.</span> <span class="toc-text">線上展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 JavaScript 實作「股票交易計算器」應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-07-06T15:20:03.000Z" itemprop="datePublished">2020-07-06</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/JavaScript/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Bootstrap/">Bootstrap</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>功能需求如下：</p>
+<ol>
+<li>不要有按鈕，輸入完價格直接看到計算結果。</li>
+<li>要可以查看前後五檔的成交價格，不需要重新輸入新的價格。</li>
+<li>電腦版要可以使用上下鍵做價格調整，並且以正確的檔位做為升降單位。</li>
+<li>手機版要可以使用數字鍵盤輸入價格。</li>
+</ol>
+<p>避免花費太多時間在變數命名上，因此直接使用中文撰寫。</p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>主程式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> 文件 = <span class="built_in">document</span>;</span><br><span class="line"><span class="keyword">const</span> 百 = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> 千 = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> 值 = <span class="string">"value"</span>;</span><br><span class="line"><span class="keyword">const</span> 最小 = <span class="string">"min"</span>;</span><br><span class="line"><span class="keyword">const</span> 最大 = <span class="string">"max"</span>;</span><br><span class="line"><span class="keyword">const</span> 間隔 = <span class="string">"step"</span>;</span><br><span class="line"><span class="keyword">const</span> 輸入 = <span class="string">"input"</span>;</span><br><span class="line"><span class="keyword">const</span> 獲益顏色 = <span class="string">"blue"</span>;</span><br><span class="line"><span class="keyword">const</span> 虧損顏色 = <span class="string">"red"</span>;</span><br><span class="line"><span class="keyword">const</span> 賣出價格背景顏色 = <span class="string">"gold"</span>;</span><br><span class="line"><span class="keyword">const</span> 公定手續費費率 = <span class="number">0.1425</span> / 百;</span><br><span class="line"><span class="keyword">const</span> 證券交易稅稅率 = <span class="number">0.3</span> / 百;</span><br><span class="line"><span class="keyword">const</span> 預設手續費折扣 = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> 最低手續費 = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">const</span> 預設檔數 = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> 記住 = <span class="function">(<span class="params">名字, 內容</span>) =&gt;</span> localStorage.setItem(名字, 內容);</span><br><span class="line"><span class="keyword">const</span> 想起 = <span class="function">(<span class="params">名字, 預設</span>) =&gt;</span> localStorage.getItem(名字) || 預設;</span><br><span class="line"><span class="keyword">const</span> 忘記 = <span class="function">(<span class="params">名字</span>) =&gt;</span> localStorage.removeItem(名字);</span><br><span class="line"><span class="keyword">const</span> 顯示 = <span class="function">(<span class="params">節點</span>) =&gt;</span> (節點.hidden = <span class="literal">false</span>);</span><br><span class="line"><span class="keyword">const</span> 隱藏 = <span class="function">(<span class="params">節點</span>) =&gt;</span> (節點.hidden = <span class="literal">true</span>);</span><br><span class="line"><span class="keyword">const</span> 渲染 = <span class="function">(<span class="params">節點, 內容</span>) =&gt;</span> (節點.innerHTML = 內容);</span><br><span class="line"><span class="keyword">const</span> 取得節點 = <span class="function">(<span class="params">名字</span>) =&gt;</span> 文件.getElementById(名字);</span><br><span class="line"><span class="keyword">const</span> 取得數值 = <span class="function">(<span class="params">字串</span>) =&gt;</span> <span class="built_in">Number</span>(字串);</span><br><span class="line"><span class="keyword">const</span> 取得整數 = <span class="function">(<span class="params">數值</span>) =&gt;</span> <span class="built_in">Math</span>.round(數值);</span><br><span class="line"><span class="keyword">const</span> 取得屬性 = <span class="function">(<span class="params">節點, 標籤</span>) =&gt;</span> 節點[標籤];</span><br><span class="line"><span class="keyword">const</span> 註冊事件 = <span class="function">(<span class="params">節點, 事件, 函式</span>) =&gt;</span> 節點.addEventListener(事件, 函式);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> 計算器 </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.回填資料();</span><br><span class="line">    <span class="keyword">this</span>.註冊事件();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 交易類別欄位() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"交易類別"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 買入價格欄位() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"買入價格"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 賣出價格欄位() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"賣出價格"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 交易股數欄位() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"交易股數"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 手續費折扣欄位() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"手續費折扣"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 檔數欄位() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"檔數"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 表格節點() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"表格"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 報價節點() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得節點(<span class="string">"報價"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 交易類別() &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得屬性(<span class="keyword">this</span>.交易類別欄位, 值);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 買入價格() &#123;</span><br><span class="line">    <span class="keyword">const</span> 買入價格 = <span class="keyword">this</span>.取得欄位數值(<span class="string">"買入價格欄位"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.買入價格合理(買入價格) ? 買入價格 : <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 賣出價格() &#123;</span><br><span class="line">    <span class="keyword">const</span> 賣出價格 = <span class="keyword">this</span>.取得欄位數值(<span class="string">"賣出價格欄位"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.賣出價格合理(賣出價格) ? 賣出價格 : <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 交易股數() &#123;</span><br><span class="line">    <span class="keyword">const</span> 交易股數 = <span class="keyword">this</span>.取得欄位數值(<span class="string">"交易股數欄位"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.交易股數合理(交易股數) ? 交易股數 : <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 手續費折扣() &#123;</span><br><span class="line">    <span class="keyword">const</span> 手續費折扣 = <span class="keyword">this</span>.取得欄位數值(<span class="string">"手續費折扣欄位"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.手續費折扣合理(手續費折扣) ? 手續費折扣 : 預設手續費折扣;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 檔數() &#123;</span><br><span class="line">    <span class="keyword">const</span> 檔數 = <span class="keyword">this</span>.取得欄位數值(<span class="string">"檔數欄位"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.檔數合理(檔數) ? 檔數 : 預設檔數;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 偏移列表() &#123;</span><br><span class="line">    <span class="keyword">const</span> 檔數 = <span class="keyword">this</span>.檔數;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> [...Array(檔數 * <span class="number">2</span> + <span class="number">1</span>).keys()].map(<span class="function">(<span class="params">v</span>) =&gt;</span> v - 檔數);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get 完成表單() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="keyword">this</span>.買入價格 &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">      <span class="keyword">this</span>.賣出價格 &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">      <span class="keyword">this</span>.交易股數 &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">      <span class="keyword">this</span>.手續費折扣 &gt; <span class="number">0</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  格式化(數值) &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得數值(數值.toFixed(<span class="number">2</span>)).toLocaleString();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  修正間隔(欄位, 升降單位) &#123;</span><br><span class="line">    欄位[間隔] = 升降單位;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  精算手續費(手續費) &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得整數(手續費 &lt; 最低手續費 ? 最低手續費 : 手續費);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  精算證券交易稅稅率(交易類別) &#123;</span><br><span class="line">    <span class="keyword">return</span> 證券交易稅稅率 * (交易類別 === <span class="string">"現股當沖"</span> ? <span class="number">0.5</span> : <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  取得欄位數值(欄位, 屬性 = 值) &#123;</span><br><span class="line">    <span class="keyword">return</span> 取得數值(取得屬性(<span class="keyword">this</span>[欄位], 屬性));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  取得賣出價格背景顏色(偏移) &#123;</span><br><span class="line">    <span class="keyword">return</span> 偏移 === <span class="number">0</span> &amp;&amp; <span class="keyword">this</span>.檔數 &gt; <span class="number">0</span> ? 賣出價格背景顏色 : <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  取得損益金額顏色(損益金額) &#123;</span><br><span class="line">    <span class="keyword">return</span> 損益金額 &gt; <span class="number">0</span> ? 獲益顏色 : 虧損顏色;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  回填資料() &#123;</span><br><span class="line">    <span class="keyword">this</span>.手續費折扣欄位[值] = 想起(<span class="string">"手續費折扣"</span>, 預設手續費折扣);</span><br><span class="line">    <span class="keyword">this</span>.檔數欄位[值] = 想起(<span class="string">"檔數"</span>, 預設檔數);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  註冊事件() &#123;</span><br><span class="line">    註冊事件(<span class="keyword">this</span>.買入價格欄位, 輸入, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.修正間隔(<span class="keyword">this</span>.買入價格欄位, <span class="keyword">this</span>.換算檔位(<span class="keyword">this</span>.買入價格));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    註冊事件(<span class="keyword">this</span>.賣出價格欄位, 輸入, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.修正間隔(<span class="keyword">this</span>.賣出價格欄位, <span class="keyword">this</span>.換算檔位(<span class="keyword">this</span>.賣出價格));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    註冊事件(<span class="keyword">this</span>.交易股數欄位, 輸入, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.修正間隔(<span class="keyword">this</span>.交易股數欄位, <span class="keyword">this</span>.換算交易股數升降單位(<span class="keyword">this</span>.交易股數));</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    註冊事件(<span class="keyword">this</span>.手續費折扣欄位, 輸入, (event) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> 手續費折扣 = 取得數值(event.target.value);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.手續費折扣合理(手續費折扣) ? 記住(<span class="string">"手續費折扣"</span>, 手續費折扣) : 忘記(<span class="string">"手續費折扣"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    註冊事件(<span class="keyword">this</span>.檔數欄位, 輸入, (event) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> 檔數 = 取得數值(event.target.value);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.檔數合理(檔數) ? 記住(<span class="string">"檔數"</span>, 檔數) : 忘記(<span class="string">"檔數"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    註冊事件(文件, 輸入, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.處理報價();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  換算檔位(價格) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">case</span> 價格 &lt; <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.01</span>;</span><br><span class="line">      <span class="keyword">case</span> 價格 &gt;= <span class="number">10</span> &amp;&amp; 價格 &lt; <span class="number">50</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.05</span>;</span><br><span class="line">      <span class="keyword">case</span> 價格 &gt;= <span class="number">50</span> &amp;&amp; 價格 &lt; <span class="number">100</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.1</span>;</span><br><span class="line">      <span class="keyword">case</span> 價格 &gt;= <span class="number">100</span> &amp;&amp; 價格 &lt; <span class="number">500</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.5</span>;</span><br><span class="line">      <span class="keyword">case</span> 價格 &gt;= <span class="number">500</span> &amp;&amp; 價格 &lt; <span class="number">1000</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">case</span> 價格 &gt;= <span class="number">1000</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">5</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  換算交易股數升降單位(交易股數) &#123;</span><br><span class="line">    <span class="keyword">return</span> 交易股數 % 千 === <span class="number">0</span> ? 千 : <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  買入價格合理(買入價格) &#123;</span><br><span class="line">    <span class="keyword">return</span> 買入價格 &gt;= <span class="number">1</span> &amp;&amp; 買入價格 &lt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"買入價格欄位"</span>, 最大);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  賣出價格合理(賣出價格) &#123;</span><br><span class="line">    <span class="keyword">return</span> 賣出價格 &gt;= <span class="number">1</span> &amp;&amp; 賣出價格 &lt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"賣出價格欄位"</span>, 最大);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  交易股數合理(交易股數) &#123;</span><br><span class="line">    <span class="keyword">return</span> 交易股數 &gt;= <span class="number">1</span> &amp;&amp; 交易股數 &lt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"交易股數欄位"</span>, 最大);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  手續費折扣合理(手續費折扣) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      手續費折扣 &gt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"手續費折扣欄位"</span>, 最小) &amp;&amp;</span><br><span class="line">      手續費折扣 &lt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"手續費折扣欄位"</span>, 最大)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  檔數合理(檔數) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      檔數 &gt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"檔數欄位"</span>, 最小) &amp;&amp;</span><br><span class="line">      檔數 &lt;= <span class="keyword">this</span>.取得欄位數值(<span class="string">"檔數欄位"</span>, 最大)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  處理報價() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.完成表單) &#123;</span><br><span class="line">      <span class="keyword">return</span> 隱藏(<span class="keyword">this</span>.表格節點);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> 報價 = <span class="keyword">this</span>.偏移列表</span><br><span class="line">      .map(<span class="function">(<span class="params">初始偏移</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> 成交價格檔位 = 取得數值(<span class="keyword">this</span>.賣出價格欄位[間隔]);</span><br><span class="line">        <span class="keyword">const</span> 偏移 = (初始偏移 * 千 * 成交價格檔位) / 千;</span><br><span class="line">        <span class="keyword">const</span> 成交價格 = <span class="keyword">this</span>.賣出價格 + 偏移;</span><br><span class="line">        <span class="keyword">const</span> 成本 = <span class="keyword">this</span>.買入價格 * <span class="keyword">this</span>.交易股數;</span><br><span class="line">        <span class="keyword">const</span> 市值 = 成交價格 * <span class="keyword">this</span>.交易股數;</span><br><span class="line">        <span class="keyword">const</span> 手續費費率 = 公定手續費費率 * <span class="keyword">this</span>.手續費折扣;</span><br><span class="line">        <span class="keyword">const</span> 買入手續費 = <span class="keyword">this</span>.精算手續費(成本 * 手續費費率);</span><br><span class="line">        <span class="keyword">const</span> 賣出手續費 = <span class="keyword">this</span>.精算手續費(市值 * 手續費費率);</span><br><span class="line">        <span class="keyword">const</span> 證券交易稅 = 取得整數(市值 * <span class="keyword">this</span>.精算證券交易稅稅率(<span class="keyword">this</span>.交易類別));</span><br><span class="line">        <span class="keyword">const</span> 支付總金額 = 成本 + 買入手續費;</span><br><span class="line">        <span class="keyword">const</span> 實收總金額 = 市值 - 賣出手續費 - 證券交易稅;</span><br><span class="line">        <span class="keyword">const</span> 損益金額 = 實收總金額 - 支付總金額;</span><br><span class="line">        <span class="keyword">const</span> 報酬率 = 損益金額 / 成本;</span><br><span class="line">        <span class="keyword">const</span> 賣出價格背景顏色 = <span class="keyword">this</span>.取得賣出價格背景顏色(偏移);</span><br><span class="line">        <span class="keyword">const</span> 損益金額顏色 = <span class="keyword">this</span>.取得損益金額顏色(損益金額);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">`</span></span><br><span class="line"><span class="string">          &lt;tr class="text-center" style="background:<span class="subst">$&#123;賣出價格背景顏色&#125;</span>;"&gt;</span></span><br><span class="line"><span class="string">            &lt;td&gt;</span></span><br><span class="line"><span class="string">              <span class="subst">$&#123;<span class="keyword">this</span>.格式化(成交價格)&#125;</span></span></span><br><span class="line"><span class="string">            &lt;/td&gt;</span></span><br><span class="line"><span class="string">            &lt;td style="color: <span class="subst">$&#123;損益金額顏色&#125;</span>;"&gt;</span></span><br><span class="line"><span class="string">              <span class="subst">$&#123;<span class="keyword">this</span>.格式化(損益金額)&#125;</span></span></span><br><span class="line"><span class="string">            &lt;/td&gt;</span></span><br><span class="line"><span class="string">            &lt;td style="color: <span class="subst">$&#123;損益金額顏色&#125;</span>;"&gt;</span></span><br><span class="line"><span class="string">              <span class="subst">$&#123;<span class="keyword">this</span>.格式化(報酬率 * 百)&#125;</span>%</span></span><br><span class="line"><span class="string">            &lt;/td&gt;</span></span><br><span class="line"><span class="string">          &lt;/tr&gt;</span></span><br><span class="line"><span class="string">        `</span>;</span><br><span class="line">      &#125;)</span><br><span class="line">      .join(<span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">    渲染(<span class="keyword">this</span>.報價節點, 報價);</span><br><span class="line">    顯示(<span class="keyword">this</span>.表格節點);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> 計算器();</span><br></pre></td></tr></table></figure>
+
+<h2 id="線上展示"><a href="#線上展示" class="headerlink" title="線上展示"></a>線上展示</h2><ul>
+<li><a href="http://stock.epoch.tw/" target="_blank" rel="noopener">Profit and Loss Calculator</a></li>
+</ul>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/profit-and-loss-calculator" target="_blank" rel="noopener">profit-and-loss-calculator</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#線上展示"><span class="toc-number">3.</span> <span class="toc-text">線上展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&text=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&is_video=false&description=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 JavaScript 實作「股票交易計算器」應用程式&body=Check out this article: https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&title=使用 JavaScript 實作「股票交易計算器」應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/07/使用-JavaScript-實作「股票交易計算器」應用程式/&name=使用 JavaScript 實作「股票交易計算器」應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

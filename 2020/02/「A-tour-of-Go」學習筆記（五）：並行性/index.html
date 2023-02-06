@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「A tour of Go」語言指南的學習筆記。 goroutinegoroutine 是由 Go 運行時所管理的輕量級執行緒（thread）。以下會啟動一個新的 goroutine 並且執行： 1go f(x, y, z)   f、x、y 和 z 的賦值發生在當前的 goroutine 中，而 f 的執行發生在新的 goroutine 中。  goroutine 在相同的地址空間中運行">
+<meta name="keywords" content="程式設計,Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「A tour of Go」學習筆記（五）：並行性">
+<meta property="og:url" content="https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「A tour of Go」語言指南的學習筆記。 goroutinegoroutine 是由 Go 運行時所管理的輕量級執行緒（thread）。以下會啟動一個新的 goroutine 並且執行： 1go f(x, y, z)   f、x、y 和 z 的賦值發生在當前的 goroutine 中，而 f 的執行發生在新的 goroutine 中。  goroutine 在相同的地址空間中運行">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「A tour of Go」學習筆記（五）：並行性">
+<meta name="twitter:description" content="前言本文為「A tour of Go」語言指南的學習筆記。 goroutinegoroutine 是由 Go 運行時所管理的輕量級執行緒（thread）。以下會啟動一個新的 goroutine 並且執行： 1go f(x, y, z)   f、x、y 和 z 的賦值發生在當前的 goroutine 中，而 f 的執行發生在新的 goroutine 中。  goroutine 在相同的地址空間中運行">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「A tour of Go」學習筆記（五）：並行性</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/02/使用-React-16-12-實作「井字遊戲」應用程式/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/在-Go-專案讀取-env-環境變數/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&text=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&is_video=false&description=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「A tour of Go」學習筆記（五）：並行性&body=Check out this article: https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&name=「A tour of Go」學習筆記（五）：並行性&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine"><span class="toc-number">2.</span> <span class="toc-text">goroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通道"><span class="toc-number">3.</span> <span class="toc-text">通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具有緩衝的通道"><span class="toc-number">4.</span> <span class="toc-text">具有緩衝的通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#range-和-close"><span class="toc-number">5.</span> <span class="toc-text">range 和 close</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select"><span class="toc-number">6.</span> <span class="toc-text">select</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sync-Mutex"><span class="toc-number">7.</span> <span class="toc-text">sync.Mutex</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「A tour of Go」學習筆記（五）：並行性
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-02-23T09:47:10.000Z" itemprop="datePublished">2020-02-23</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Go/「A-tour-of-Go」學習筆記/">「A tour of Go」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://go-tour-zh-tw.appspot.com/" target="_blank" rel="noopener">A tour of Go</a>」語言指南的學習筆記。</p>
+<h2 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h2><p><code>goroutine</code> 是由 Go 運行時所管理的輕量級執行緒（thread）。以下會啟動一個新的 <code>goroutine</code> 並且執行：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> f(x, y, z)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>f</code>、<code>x</code>、<code>y</code> 和 <code>z</code> 的賦值發生在當前的 <code>goroutine</code> 中，而 <code>f</code> 的執行發生在新的 <code>goroutine</code> 中。</li>
+</ul>
+<p><code>goroutine</code> 在相同的地址空間中運行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">say</span><span class="params">(s <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">		time.Sleep(<span class="number">100</span> * time.Millisecond)</span><br><span class="line">		fmt.Println(s)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">go</span> say(<span class="string">"world"</span>)</span><br><span class="line">	say(<span class="string">"hello"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通道"><a href="#通道" class="headerlink" title="通道"></a>通道</h2><p>通道（channel）是帶有型別的管道，可以通過它使用通道操作符 <code>&lt;-</code> 來發送或接收值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch &lt;- v    <span class="comment">// 將 v 發送至名為 ch 的 channel</span></span><br><span class="line">v := &lt;-ch  <span class="comment">// 從名為 ch 的 channel 接收值並賦予 v</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>箭頭就是數據流的方向。</li>
+</ul>
+<p>就像集合和切片一樣，<code>channel</code> 在使用前必須先創建：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+<p>預設情況下，發送和接收操作在另一端準備好之前都會阻塞，這使得 <code>goroutine</code> 可以在沒有顯式的鎖或靜態變數的情況下進行同步。</p>
+<p>以下範例對切片中的數進行求和，將任務分配給兩個 <code>goroutine</code>。一旦兩個 <code>goroutine</code> 完成了它們的計算，它就能算出最終的結果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sum</span><span class="params">(s []<span class="keyword">int</span>, c <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	sum := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> s &#123;</span><br><span class="line">		sum += v</span><br><span class="line">	&#125;</span><br><span class="line">	c &lt;- sum <span class="comment">// 將 sum 發送至名為 c 的 channel</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := []<span class="keyword">int</span>&#123;<span class="number">7</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">-9</span>, <span class="number">4</span>, <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">	<span class="keyword">go</span> sum(s[:<span class="built_in">len</span>(s)/<span class="number">2</span>], c)</span><br><span class="line">	<span class="keyword">go</span> sum(s[<span class="built_in">len</span>(s)/<span class="number">2</span>:], c)</span><br><span class="line">	x, y := &lt;-c, &lt;-c <span class="comment">// 從名為 c 的 channel 接收值</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(x, y, x+y)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="具有緩衝的通道"><a href="#具有緩衝的通道" class="headerlink" title="具有緩衝的通道"></a>具有緩衝的通道</h2><p><code>channel</code> 是可以具有緩衝的。將緩衝長度作為第二個參數提供給 <code>make()</code> 函式，來初始化一個具有緩衝的 <code>channel</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<p>只有當 <code>channel</code> 的緩衝區被填滿後，向其發送資料時才會阻塞。當緩衝區為空時，接收的一端會阻塞。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">2</span>)</span><br><span class="line">	ch &lt;- <span class="number">1</span></span><br><span class="line">	ch &lt;- <span class="number">2</span></span><br><span class="line">	fmt.Println(&lt;-ch)</span><br><span class="line">	fmt.Println(&lt;-ch)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="range-和-close"><a href="#range-和-close" class="headerlink" title="range 和 close"></a>range 和 close</h2><p>發送者可以透過 <code>close</code> 關閉一個 <code>channel</code> 來表示沒有需要發送的值了。接收者可以透過為接收表達式分配第二個參數來測試 <code>channel</code> 是否被關閉。如果沒有值可以接收，而且 <code>channel</code> 已被關閉，那麼執行完之後，陳述式 <code>v, ok := &lt;-ch</code> 的 <code>ok</code> 會被設置為 <code>false</code>。</p>
+<p>陳述式 <code>for i := range c</code> 會不斷地從 <code>channel</code> 接收值，直到它被關閉為止。</p>
+<p>只有發送者才能關閉 <code>channel</code> ，而接收者不能。向一個已經被關閉的 <code>channel</code> 發送資料，會引發 <code>panic</code>。</p>
+<p><code>channel</code> 與檔案不同，通常情況下無需關閉。只有在必須告訴接收者不再有需要發送的值時才有必要關閉，例如停止一個 <code>range</code> 迴圈。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacci</span><span class="params">(n <span class="keyword">int</span>, c <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	x, y := <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n; i++ &#123;</span><br><span class="line">		c &lt;- x</span><br><span class="line">		x, y = y, x+y</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">close</span>(c)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="keyword">go</span> fibonacci(<span class="built_in">cap</span>(c), c)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="keyword">range</span> c &#123;</span><br><span class="line">		fmt.Println(i)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p><code>select</code> 語句使一個 <code>goroutine</code> 可以等待多個 <code>channel</code> 操作。</p>
+<p><code>select</code> 會阻塞到某個分支可以繼續執行為止，這時就會執行該分支。當多個分支都準備好時，會隨機選擇一個執行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fibonacci</span><span class="params">(c, quit <span class="keyword">chan</span> <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	x, y := <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> c &lt;- x:</span><br><span class="line">			x, y = y, x+y</span><br><span class="line">		<span class="keyword">case</span> &lt;-quit:</span><br><span class="line">			fmt.Println(<span class="string">"quit"</span>)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">	quit := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">			fmt.Println(&lt;-c)</span><br><span class="line">		&#125;</span><br><span class="line">		quit &lt;- <span class="number">0</span></span><br><span class="line">	&#125;()</span><br><span class="line">	fibonacci(c, quit)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當 <code>select</code> 中的其他分支都沒有準備好時，<code>default</code> 分支就會執行。</p>
+<p>為了在嘗試發送或接收時不發生阻塞，可以使用 <code>default</code> 分支：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	tick := time.Tick(<span class="number">100</span> * time.Millisecond)</span><br><span class="line">	boom := time.After(<span class="number">500</span> * time.Millisecond)</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">select</span> &#123;</span><br><span class="line">		<span class="keyword">case</span> &lt;-tick:</span><br><span class="line">			fmt.Println(<span class="string">"tick."</span>)</span><br><span class="line">		<span class="keyword">case</span> &lt;-boom:</span><br><span class="line">			fmt.Println(<span class="string">"BOOM!"</span>)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			fmt.Println(<span class="string">"    ."</span>)</span><br><span class="line">			time.Sleep(<span class="number">50</span> * time.Millisecond)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="sync-Mutex"><a href="#sync-Mutex" class="headerlink" title="sync.Mutex"></a>sync.Mutex</h2><p><code>channel</code> 非常適合在各個 <code>goroutine</code> 之間進行通訊，但是如果並不需要通訊，只是要保證每次只有一個 <code>goroutine</code> 能夠存取一個共用的變數，並且避免衝突，這裡就要涉及到「互斥」（mutual exclusion）的概念，使用「互斥鎖」（Mutex）這一資料結構來提供這種機制。</p>
+<p>Go 標準庫提供了 <code>sync.Mutex</code> 型別以及兩個方法：<code>Lock()</code> 和 <code>Unlock()</code>。</p>
+<p>可以透過在程式碼前調用 <code>Lock()</code> 方法，在程式碼後調用 <code>Unlock()</code> 方法，來保證一段程式碼的互斥執行。</p>
+<p>也可以用 <code>defer</code> 語句來保證互斥鎖一定會被解鎖。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// SafeCounter 的並行使用是安全的</span></span><br><span class="line"><span class="keyword">type</span> SafeCounter <span class="keyword">struct</span> &#123;</span><br><span class="line">	v   <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br><span class="line">	mux sync.Mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Inc 用來增加某個 key 計數器的值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *SafeCounter)</span> <span class="title">Inc</span><span class="params">(key <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	c.mux.Lock()</span><br><span class="line">	<span class="comment">// Lock 之後同一時刻，只有一個 goroutine 能存取 c.v</span></span><br><span class="line">	c.v[key]++</span><br><span class="line">	c.mux.Unlock()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Value 用來返回某個 key 計數器的值</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *SafeCounter)</span> <span class="title">Value</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	c.mux.Lock()</span><br><span class="line">	<span class="comment">// Lock 之後同一時刻，只有一個 goroutine 能存取 c.v</span></span><br><span class="line">	<span class="keyword">defer</span> c.mux.Unlock()</span><br><span class="line">	<span class="keyword">return</span> c.v[key]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := SafeCounter&#123;v: <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">go</span> c.Inc(<span class="string">"somekey"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	time.Sleep(time.Second)</span><br><span class="line">	fmt.Println(c.Value(<span class="string">"somekey"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine"><span class="toc-number">2.</span> <span class="toc-text">goroutine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通道"><span class="toc-number">3.</span> <span class="toc-text">通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具有緩衝的通道"><span class="toc-number">4.</span> <span class="toc-text">具有緩衝的通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#range-和-close"><span class="toc-number">5.</span> <span class="toc-text">range 和 close</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select"><span class="toc-number">6.</span> <span class="toc-text">select</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sync-Mutex"><span class="toc-number">7.</span> <span class="toc-text">sync.Mutex</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&text=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&is_video=false&description=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「A tour of Go」學習筆記（五）：並行性&body=Check out this article: https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&title=「A tour of Go」學習筆記（五）：並行性"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/02/「A-tour-of-Go」學習筆記（五）：並行性/&name=「A tour of Go」學習筆記（五）：並行性&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

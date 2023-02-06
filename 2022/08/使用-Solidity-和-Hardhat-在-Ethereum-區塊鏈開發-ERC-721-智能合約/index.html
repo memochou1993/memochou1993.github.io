@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「Alchemy - How to Create an NFT Tutorial」教學的學習筆記。 建立專案建立專案。 12mkdir eth-nft-examplecd eth-nft-example  建立 package.json 檔。 1npm init -y  安裝 hardhat 依賴套件。 1npm install hardhat --save-dev  使用 Hardha">
+<meta name="keywords" content="JavaScript,Node,區塊鏈,Ethereum,Solidity,Hardhat,Smart Contract,DApp,Alchemy,NFT,ERC-721,IPFS,Pinata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約">
+<meta property="og:url" content="https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「Alchemy - How to Create an NFT Tutorial」教學的學習筆記。 建立專案建立專案。 12mkdir eth-nft-examplecd eth-nft-example  建立 package.json 檔。 1npm init -y  安裝 hardhat 依賴套件。 1npm install hardhat --save-dev  使用 Hardha">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約">
+<meta name="twitter:description" content="前言本文為「Alchemy - How to Create an NFT Tutorial」教學的學習筆記。 建立專案建立專案。 12mkdir eth-nft-examplecd eth-nft-example  建立 package.json 檔。 1npm init -y  安裝 hardhat 依賴套件。 1npm install hardhat --save-dev  使用 Hardha">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/08/使用-GitLab-鏡像與-GitHub-同步專案原始碼/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/08/使用-nft-art-generator-產生-NFT-組合圖片/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&text=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&is_video=false&description=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約&body=Check out this article: https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&name=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合約實作"><span class="toc-number">3.</span> <span class="toc-text">合約實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署合約"><span class="toc-number">4.</span> <span class="toc-text">部署合約</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-NFT"><span class="toc-number">5.</span> <span class="toc-text">設定 NFT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#鑄造-NFT"><span class="toc-number">6.</span> <span class="toc-text">鑄造 NFT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-08-28T14:00:37.000Z" itemprop="datePublished">2022-08-28</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/區塊鏈/Ethereum/">Ethereum</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Alchemy/">Alchemy</a>, <a class="tag-link" href="/tags/DApp/">DApp</a>, <a class="tag-link" href="/tags/ERC-721/">ERC-721</a>, <a class="tag-link" href="/tags/Ethereum/">Ethereum</a>, <a class="tag-link" href="/tags/Hardhat/">Hardhat</a>, <a class="tag-link" href="/tags/IPFS/">IPFS</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/NFT/">NFT</a>, <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/Pinata/">Pinata</a>, <a class="tag-link" href="/tags/Smart-Contract/">Smart Contract</a>, <a class="tag-link" href="/tags/Solidity/">Solidity</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://docs.alchemy.com/docs/how-to-create-an-nft" target="_blank" rel="noopener">Alchemy - How to Create an NFT Tutorial</a>」教學的學習筆記。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir eth-nft-example</span><br><span class="line"><span class="built_in">cd</span> eth-nft-example</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>package.json</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>hardhat</code> 依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hardhat --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>使用 Hardhat 初始化專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hardhat</span><br></pre></td></tr></table></figure>
+
+<p>檢查專案配置是否正常。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hardhat <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="合約實作"><a href="#合約實作" class="headerlink" title="合約實作"></a>合約實作</h2><p>安裝依賴。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @openzeppelin/contracts</span><br></pre></td></tr></table></figure>
+
+<p>刪除 <code>contracts/Lock.sol</code> 範例檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm contracts/Lock.sol</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>contracts/MyNFT.sol</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.4;</span><br><span class="line"></span><br><span class="line">import &quot;@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin/contracts/utils/Counters.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin/contracts/access/Ownable.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract MyNFT is ERC721URIStorage, Ownable &#123;</span><br><span class="line">    using Counters for Counters.Counter;</span><br><span class="line">    Counters.Counter private _tokenIds;</span><br><span class="line"></span><br><span class="line">    constructor() ERC721(&quot;MyNFT&quot;, &quot;NFT&quot;) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    function mintNFT(address recipient, string memory tokenURI)</span><br><span class="line">      public</span><br><span class="line">      onlyOwner</span><br><span class="line">      returns (uint256)</span><br><span class="line">    &#123;</span><br><span class="line">        _tokenIds.increment();</span><br><span class="line"></span><br><span class="line">        uint256 newItemId = _tokenIds.current();</span><br><span class="line"></span><br><span class="line">        _mint(recipient, newItemId);</span><br><span class="line"></span><br><span class="line">        _setTokenURI(newItemId, tokenURI);</span><br><span class="line"></span><br><span class="line">        return newItemId;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署合約"><a href="#部署合約" class="headerlink" title="部署合約"></a>部署合約</h2><p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install dotenv --save</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>.env</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">API_URL=https://eth-goerli.alchemyapi.io/v2/your-api-key</span><br><span class="line">API_KEY=your-api-key</span><br><span class="line">PRIVATE_KEY=your-metamask-private-key</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>hardhat.config.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @type import('hardhat/config').HardhatUserConfig</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'dotenv'</span>).config();</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"@nomiclabs/hardhat-ethers"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; API_URL, PRIVATE_KEY &#125; = process.env;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">   solidity: <span class="string">"0.8.4"</span>,</span><br><span class="line">   defaultNetwork: <span class="string">"goerli"</span>,</span><br><span class="line">   networks: &#123;</span><br><span class="line">      hardhat: &#123;&#125;,</span><br><span class="line">      goerli: &#123;</span><br><span class="line">         url: API_URL,</span><br><span class="line">         accounts: [<span class="string">`0x<span class="subst">$&#123;PRIVATE_KEY&#125;</span>`</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">   &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>scripts/deploy.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Grab the contract factory </span></span><br><span class="line">  <span class="keyword">const</span> MyNFT = <span class="keyword">await</span> ethers.getContractFactory(<span class="string">"MyNFT"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Start deployment, returning a promise that resolves to a contract object</span></span><br><span class="line">  <span class="keyword">const</span> myNFT = <span class="keyword">await</span> MyNFT.deploy(); <span class="comment">// Instance of the contract </span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Contract deployed to address:"</span>, myNFT.address);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main()</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> process.exit(<span class="number">0</span>))</span><br><span class="line">  .catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(error);</span><br><span class="line">    process.exit(<span class="number">1</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>執行部署。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hardhat run scripts/deploy.js --network goerli</span><br></pre></td></tr></table></figure>
+
+<p>輸出訊息如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Contract deployed to address: 0xAdEc9c114D4E094545E60E2e856Ab57552831c00</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定-NFT"><a href="#設定-NFT" class="headerlink" title="設定 NFT"></a>設定 NFT</h2><p>到 <a href="https://app.pinata.cloud/" target="_blank" rel="noopener">Pinata</a> 註冊帳號，此服務能夠將圖片上傳到 IPFS 星際檔案系統。</p>
+<p>註冊後，上傳一張圖片，將圖片的 CID 複製起來。</p>
+<p>建立一個 <code>nft-metadata.json</code> 檔，做為 NFT 的描述檔，並修改 <code>image</code> 欄位，將其設置為圖片的 URI。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"attributes"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"trait_type"</span>: <span class="string">"Breed"</span>,</span><br><span class="line">      <span class="attr">"value"</span>: <span class="string">"Maltipoo"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"trait_type"</span>: <span class="string">"Eye color"</span>,</span><br><span class="line">      <span class="attr">"value"</span>: <span class="string">"Mocha"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"The world's most adorable and sensitive pup."</span>,</span><br><span class="line">  <span class="attr">"image"</span>: <span class="string">"https://gateway.pinata.cloud/ipfs/QmWCoZdz2tnv38dqWSD1Yd2sf41R1CHWpogkVpLaNoa3C9"</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"My First NFT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後，上傳 <code>nft-metadata.json</code> 檔，並將 NFT 的描述檔的 CID 複製起來。</p>
+<h2 id="鑄造-NFT"><a href="#鑄造-NFT" class="headerlink" title="鑄造 NFT"></a>鑄造 NFT</h2><p>建立 <code>src/mint.js</code> 檔，將 <code>tokenURI</code> 變數設定為 NFT 的描述檔的 URI。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">"dotenv"</span>).config();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ethers = <span class="built_in">require</span>(<span class="string">"ethers"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; abi &#125; = <span class="built_in">require</span>(<span class="string">"../artifacts/contracts/MyNFT.sol/MyNFT.json"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; API_KEY, PRIVATE_KEY &#125; = process.env;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> provider = <span class="keyword">new</span> ethers.providers.AlchemyProvider(<span class="string">"goerli"</span>, API_KEY);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> signer = <span class="keyword">new</span> ethers.Wallet(PRIVATE_KEY, provider);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> contractAddress = <span class="string">"0xAdEc9c114D4E094545E60E2e856Ab57552831c00"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myNftContract = <span class="keyword">new</span> ethers.Contract(contractAddress, abi, signer);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tokenURI = <span class="string">"https://gateway.pinata.cloud/ipfs/QmPkfQpZAARb4ZoQVHyLfktvLS6x8WJ9w2yp1XRrZuEeqU"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mintNFT = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> nftTxn = <span class="keyword">await</span> myNftContract.mintNFT(signer.address, tokenURI);</span><br><span class="line">    <span class="keyword">await</span> nftTxn.wait();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`NFT Minted! Check it out at: https://goerli.etherscan.io/tx/<span class="subst">$&#123;nftTxn.hash&#125;</span>`</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">mintNFT()</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> process.exit(<span class="number">0</span>))</span><br><span class="line">  .catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(error);</span><br><span class="line">    process.exit(<span class="number">1</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>執行鑄造腳本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node scripts/mint.js</span><br></pre></td></tr></table></figure>
+
+<p>輸出訊息如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NFT Minted! Check it out at: https://goerli.etherscan.io/tx/0xbba6d2d835fbe58dde91d04676b04a85a5bbf088e78bee7c6166a1155769f58a</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/eth-nft-example" target="_blank" rel="noopener">eth-nft-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://docs.alchemy.com/docs/how-to-create-an-nft" target="_blank" rel="noopener">Alchemy - How to Create an NFT Tutorial</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合約實作"><span class="toc-number">3.</span> <span class="toc-text">合約實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署合約"><span class="toc-number">4.</span> <span class="toc-text">部署合約</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-NFT"><span class="toc-number">5.</span> <span class="toc-text">設定 NFT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#鑄造-NFT"><span class="toc-number">6.</span> <span class="toc-text">鑄造 NFT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&text=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&is_video=false&description=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約&body=Check out this article: https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Hardhat-在-Ethereum-區塊鏈開發-ERC-721-智能合約/&name=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發 ERC-721 智能合約&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

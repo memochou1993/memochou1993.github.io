@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="建立專案建立專案。 12cargo new yew-web-appcd yew-web-app  使用 Cargo 安裝 trunk 套件，用來打包 WebAssembly 和靜態檔案。 1cargo install trunk  為 Rust 添加 wasm32-unknown-unknown 編譯目標，讓 Rust 能夠編譯 WebAssembly 檔案。 1rustup target add">
+<meta name="keywords" content="程式設計,JavaScript,Rust,WebAssembly,Wasm,Yew">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Yew 開發 WebAssembly 應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12cargo new yew-web-appcd yew-web-app  使用 Cargo 安裝 trunk 套件，用來打包 WebAssembly 和靜態檔案。 1cargo install trunk  為 Rust 添加 wasm32-unknown-unknown 編譯目標，讓 Rust 能夠編譯 WebAssembly 檔案。 1rustup target add">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Yew 開發 WebAssembly 應用程式">
+<meta name="twitter:description" content="建立專案建立專案。 12cargo new yew-web-appcd yew-web-app  使用 Cargo 安裝 trunk 套件，用來打包 WebAssembly 和靜態檔案。 1cargo install trunk  為 Rust 添加 wasm32-unknown-unknown 編譯目標，讓 Rust 能夠編譯 WebAssembly 檔案。 1rustup target add">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Yew 開發 WebAssembly 應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/10/使用-pkg-將-Node-專案打包成二進制執行檔/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/10/「The-Rust-Programming-Language」學習筆記（十三）：疊代器與閉包/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&text=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&is_video=false&description=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Yew 開發 WebAssembly 應用程式&body=Check out this article: https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&name=使用 Yew 開發 WebAssembly 應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#獲取遠端資料"><span class="toc-number">3.</span> <span class="toc-text">獲取遠端資料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#補充"><span class="toc-number">4.</span> <span class="toc-text">補充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Yew 開發 WebAssembly 應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-10-08T13:04:49.000Z" itemprop="datePublished">2022-10-08</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/Yew/">Yew</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/Wasm/">Wasm</a>, <a class="tag-link" href="/tags/WebAssembly/">WebAssembly</a>, <a class="tag-link" href="/tags/Yew/">Yew</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new yew-web-app</span><br><span class="line"><span class="built_in">cd</span> yew-web-app</span><br></pre></td></tr></table></figure>
+
+<p>使用 Cargo 安裝 <code>trunk</code> 套件，用來打包 WebAssembly 和靜態檔案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo install trunk</span><br></pre></td></tr></table></figure>
+
+<p>為 Rust 添加 <code>wasm32-unknown-unknown</code> 編譯目標，讓 Rust 能夠編譯 WebAssembly 檔案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup target add wasm32-unknown-unknown</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo add yew</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立 <code>index.html</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> yew_web_app::App;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    yew::start_app::&lt;App&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>lib.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> yew::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Clone, PartialEq)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Video</span></span> &#123;</span><br><span class="line">    id: <span class="built_in">usize</span>,</span><br><span class="line">    title: <span class="built_in">String</span>,</span><br><span class="line">    speaker: <span class="built_in">String</span>,</span><br><span class="line">    url: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Properties, PartialEq)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">VideosListProps</span></span> &#123;</span><br><span class="line">    videos: <span class="built_in">Vec</span>&lt;Video&gt;,</span><br><span class="line">    on_click: Callback&lt;Video&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Clone, Properties, PartialEq)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">VideosDetailsProps</span></span> &#123;</span><br><span class="line">    video: Video,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(VideoDetails)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">video_details</span></span>(VideosDetailsProps &#123; video &#125;: &amp;VideosDetailsProps) -&gt; Html &#123;</span><br><span class="line">    html! &#123;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h3&gt;&#123; video.title.clone() &#125;&lt;/h3&gt;</span><br><span class="line">            &lt;img src=<span class="string">"https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder"</span> alt=<span class="string">"video thumbnail"</span> /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(VideosList)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">videos_list</span></span>(VideosListProps &#123; videos, on_click &#125;: &amp;VideosListProps) -&gt; Html &#123;</span><br><span class="line">    videos</span><br><span class="line">        .iter()</span><br><span class="line">        .map(|video| &#123;</span><br><span class="line">            <span class="keyword">let</span> on_video_select = &#123;</span><br><span class="line">                <span class="keyword">let</span> on_click = on_click.clone();</span><br><span class="line">                <span class="keyword">let</span> video = video.clone();</span><br><span class="line">                Callback::from(<span class="keyword">move</span> |_| on_click.emit(video.clone()))</span><br><span class="line">            &#125;;</span><br><span class="line">            html! &#123;</span><br><span class="line">                &lt;p onclick=&#123;on_video_select&#125; style="cursor: pointer;"&gt;&#123;format!("&#123;&#125;: &#123;&#125;", video.speaker, video.title)&#125;&lt;/p&gt;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        .collect()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(App)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">app</span></span>() -&gt; Html &#123;</span><br><span class="line">    <span class="keyword">let</span> videos = <span class="built_in">vec!</span>[</span><br><span class="line">        Video &#123;</span><br><span class="line">            id: <span class="number">1</span>,</span><br><span class="line">            title: <span class="string">"Building and breaking things"</span>.to_string(),</span><br><span class="line">            speaker: <span class="string">"John Doe"</span>.to_string(),</span><br><span class="line">            url: <span class="string">"https://youtu.be/PsaFVLr8t4E"</span>.to_string(),</span><br><span class="line">        &#125;,</span><br><span class="line">        Video &#123;</span><br><span class="line">            id: <span class="number">2</span>,</span><br><span class="line">            title: <span class="string">"The development process"</span>.to_string(),</span><br><span class="line">            speaker: <span class="string">"Jane Smith"</span>.to_string(),</span><br><span class="line">            url: <span class="string">"https://youtu.be/PsaFVLr8t4E"</span>.to_string(),</span><br><span class="line">        &#125;,</span><br><span class="line">        Video &#123;</span><br><span class="line">            id: <span class="number">3</span>,</span><br><span class="line">            title: <span class="string">"The Web 7.0"</span>.to_string(),</span><br><span class="line">            speaker: <span class="string">"Matt Miller"</span>.to_string(),</span><br><span class="line">            url: <span class="string">"https://youtu.be/PsaFVLr8t4E"</span>.to_string(),</span><br><span class="line">        &#125;,</span><br><span class="line">        Video &#123;</span><br><span class="line">            id: <span class="number">4</span>,</span><br><span class="line">            title: <span class="string">"Mouseless development"</span>.to_string(),</span><br><span class="line">            speaker: <span class="string">"Tom Jerry"</span>.to_string(),</span><br><span class="line">            url: <span class="string">"https://youtu.be/PsaFVLr8t4E"</span>.to_string(),</span><br><span class="line">        &#125;,</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> selected_video = use_state(|| <span class="literal">None</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> on_video_select = &#123;</span><br><span class="line">        <span class="keyword">let</span> selected_video = selected_video.clone();</span><br><span class="line">        Callback::from(<span class="keyword">move</span> |video: Video| selected_video.set(<span class="literal">Some</span>(video)))</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> details = selected_video.as_ref().map(|video| &#123;</span><br><span class="line">        html! &#123;</span><br><span class="line">            &lt;VideoDetails video=&#123;video.clone()&#125; /&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    html! &#123;</span><br><span class="line">        &lt;&gt;</span><br><span class="line">            &lt;h1&gt;&#123; "RustConf Explorer" &#125;&lt;/h1&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h3&gt;&#123; "Videos to watch" &#125;&lt;/h3&gt;</span><br><span class="line">                &lt;VideosList videos=&#123;videos&#125; on_click=&#123;on_video_select&#125; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &#123; <span class="keyword">for</span> details &#125;</span><br><span class="line">        &lt;/&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trunk serve</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 瀏覽。</p>
+<h2 id="獲取遠端資料"><a href="#獲取遠端資料" class="headerlink" title="獲取遠端資料"></a>獲取遠端資料</h2><p>安裝依賴套件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cargo add gloo-net@0.2</span><br><span class="line">cargo add serde@1.0 --features <span class="string">"derive"</span></span><br><span class="line">cargo add wasm-bindgen-futures@0.4</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>lib.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> gloo_net::http::Request;</span><br><span class="line"><span class="keyword">use</span> serde::Deserialize;</span><br><span class="line"><span class="keyword">use</span> yew::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Clone, PartialEq, Deserialize)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Video</span></span> &#123;</span><br><span class="line">    id: <span class="built_in">usize</span>,</span><br><span class="line">    title: <span class="built_in">String</span>,</span><br><span class="line">    speaker: <span class="built_in">String</span>,</span><br><span class="line">    url: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(App)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">app</span></span>() -&gt; Html &#123;</span><br><span class="line">    <span class="keyword">let</span> videos = use_state(|| <span class="built_in">vec!</span>[]);</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> videos = videos.clone();</span><br><span class="line">        use_effect_with_deps(</span><br><span class="line">            <span class="keyword">move</span> |_| &#123;</span><br><span class="line">                <span class="keyword">let</span> videos = videos.clone();</span><br><span class="line">                wasm_bindgen_futures::spawn_local(async <span class="keyword">move</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> fetched_videos: <span class="built_in">Vec</span>&lt;Video&gt; = Request::get(<span class="string">"/tutorial/data.json"</span>)</span><br><span class="line">                        .send()</span><br><span class="line">                        .await</span><br><span class="line">                        .unwrap()</span><br><span class="line">                        .json()</span><br><span class="line">                        .await</span><br><span class="line">                        .unwrap();</span><br><span class="line">                    videos.set(fetched_videos);</span><br><span class="line">                &#125;);</span><br><span class="line">                || ()</span><br><span class="line">            &#125;,</span><br><span class="line">            (),</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> selected_video = use_state(|| <span class="literal">None</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> on_video_select = &#123;</span><br><span class="line">        <span class="keyword">let</span> selected_video = selected_video.clone();</span><br><span class="line">        Callback::from(<span class="keyword">move</span> |video: Video| selected_video.set(<span class="literal">Some</span>(video)))</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> details = selected_video.as_ref().map(|video| &#123;</span><br><span class="line">        html! &#123;</span><br><span class="line">            &lt;VideoDetails video=&#123;video.clone()&#125; /&gt;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    html! &#123;</span><br><span class="line">        &lt;&gt;</span><br><span class="line">            &lt;h1&gt;&#123; "RustConf Explorer" &#125;&lt;/h1&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h3&gt;&#123; "Videos to watch" &#125;&lt;/h3&gt;</span><br><span class="line">                &lt;VideosList videos=&#123;(*videos).clone()&#125; on_click=&#123;on_video_select&#125; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &#123; <span class="keyword">for</span> details &#125;</span><br><span class="line">        &lt;/&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trunk serve --proxy-backend=https://yew.rs/tutorial</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 瀏覽。</p>
+<h2 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h2><p>如果 Trunk 熱更新的速度很慢，有可能是 VS Code 的 rust-analyzer 套件的問題，修改 <code>settings.json</code> 檔，並套用以下設定。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"rust-analyzer.checkOnSave.extraArgs"</span>: [</span><br><span class="line">        <span class="string">"--target-dir"</span>, <span class="string">"/tmp/rust-analyzer-check"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/yew-example" target="_blank" rel="noopener">yew-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://yew.rs/docs/tutorial#fetching-data-using-external-rest-api" target="_blank" rel="noopener">Yew - Tutorial</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#獲取遠端資料"><span class="toc-number">3.</span> <span class="toc-text">獲取遠端資料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#補充"><span class="toc-number">4.</span> <span class="toc-text">補充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&text=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&is_video=false&description=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Yew 開發 WebAssembly 應用程式&body=Check out this article: https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&title=使用 Yew 開發 WebAssembly 應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/使用-Yew-和-WebAssembly-建立-Web-應用程式/&name=使用 Yew 開發 WebAssembly 應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

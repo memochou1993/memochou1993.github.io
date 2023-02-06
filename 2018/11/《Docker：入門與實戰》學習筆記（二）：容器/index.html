@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="環境 macOS  概念Docker 容器（Container）類似於一個輕量級的沙箱，Docker 利用容器來運行和隔離應用。容器是用映像檔所創造的執行實例（Instance），可以將其建立、開始、停止、刪除，而這些容器都是互相隔離的。 映像檔本身是唯獨的，容器從映像檔啟動的時候，Docker 會在映像檔的最上層建立一個可寫層，映像檔本身將保持不變。 建立容器使用 docker create 指">
+<meta name="keywords" content="環境部署,Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Docker：入門與實戰》學習筆記（二）：容器">
+<meta property="og:url" content="https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="環境 macOS  概念Docker 容器（Container）類似於一個輕量級的沙箱，Docker 利用容器來運行和隔離應用。容器是用映像檔所創造的執行實例（Instance），可以將其建立、開始、停止、刪除，而這些容器都是互相隔離的。 映像檔本身是唯獨的，容器從映像檔啟動的時候，Docker 會在映像檔的最上層建立一個可寫層，映像檔本身將保持不變。 建立容器使用 docker create 指">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.940Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Docker：入門與實戰》學習筆記（二）：容器">
+<meta name="twitter:description" content="環境 macOS  概念Docker 容器（Container）類似於一個輕量級的沙箱，Docker 利用容器來運行和隔離應用。容器是用映像檔所創造的執行實例（Instance），可以將其建立、開始、停止、刪除，而這些容器都是互相隔離的。 映像檔本身是唯獨的，容器從映像檔啟動的時候，Docker 會在映像檔的最上層建立一個可寫層，映像檔本身將保持不變。 建立容器使用 docker create 指">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《Docker：入門與實戰》學習筆記（二）：容器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/11/使用-Nuxt-2-0-實作「To-Do-List」應用程式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&text=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&is_video=false&description=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Docker：入門與實戰》學習筆記（二）：容器&body=Check out this article: https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&name=《Docker：入門與實戰》學習筆記（二）：容器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立容器"><span class="toc-number">3.</span> <span class="toc-text">建立容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看容器資訊"><span class="toc-number">4.</span> <span class="toc-text">查看容器資訊</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建並啟動容器"><span class="toc-number">4.1.</span> <span class="toc-text">新建並啟動容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背景狀態下執行"><span class="toc-number">4.2.</span> <span class="toc-text">背景狀態下執行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匯出容器"><span class="toc-number">5.</span> <span class="toc-text">匯出容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匯入容器"><span class="toc-number">6.</span> <span class="toc-text">匯入容器</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《Docker：入門與實戰》學習筆記（二）：容器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-11-08T06:17:34.000Z" itemprop="datePublished">2018-11-08</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/環境部署/Docker/《Docker：入門與實戰》學習筆記/">《Docker：入門與實戰》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>macOS</li>
+</ul>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>Docker 容器（Container）類似於一個輕量級的沙箱，Docker 利用容器來運行和隔離應用。容器是用映像檔所創造的執行實例（Instance），可以將其建立、開始、停止、刪除，而這些容器都是互相隔離的。</p>
+<p>映像檔本身是唯獨的，容器從映像檔啟動的時候，Docker 會在映像檔的最上層建立一個可寫層，映像檔本身將保持不變。</p>
+<h2 id="建立容器"><a href="#建立容器" class="headerlink" title="建立容器"></a>建立容器</h2><p>使用 <code>docker create</code> 指令，建立一個容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker create -it ubuntu:latest</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>docker start</code> 指令，啟動一個容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start 6d1cb023ad7cebd78c4655dd1a4478b2ecaccd95754d761434cf3f87e8955c8e</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看容器資訊"><a href="#查看容器資訊" class="headerlink" title="查看容器資訊"></a>查看容器資訊</h2><p>使用 <code>docker ps</code> 指令，列出運行中的容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>參數 <code>-a</code> 列出所有的容器，包括停止的容器。</li>
+</ul>
+<h3 id="新建並啟動容器"><a href="#新建並啟動容器" class="headerlink" title="新建並啟動容器"></a>新建並啟動容器</h3><p>使用 <code>docker run</code> 指令，將處在停止狀態的容器重新啟動，相當於先執行 <code>docker create</code> 指令，再執行 <code>docker start</code> 指令。</p>
+<p>以下的指令會輸出一個「Hello world」，之後容器自動停止。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run ubuntu /bin/<span class="built_in">echo</span> <span class="string">'Hello world'</span></span><br><span class="line">Hello world</span><br></pre></td></tr></table></figure>
+
+<p>以下的指令會啟動一個 bash shell，允許使用者和容器進行交互操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -ti ubuntu:latest /bin/bash</span><br><span class="line">root@1f8b5c53600e:/<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>參數 <code>-t</code> 讓 Docker 分配一個虛擬終端（pseudo-tty），並綁定到容器的標準輸入上。</li>
+<li>參數 <code>-i</code> 讓容器的標準輸入保持開啟。</li>
+</ul>
+<p>在容器內使用 <code>ps</code> 指令查看程序，可以看到，只運行了 bash 應用，沒有運行其他不需要的程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@f68453f0944e:/<span class="comment"># ps</span></span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">    1 pts/0    00:00:00 bash</span><br><span class="line">   11 pts/0    00:00:00 ps</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>exit</code> 指令，退出容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f68453f0944e:/<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="背景狀態下執行"><a href="#背景狀態下執行" class="headerlink" title="背景狀態下執行"></a>背景狀態下執行</h3><p>使用 <code>docker run</code> 指令，以及 <code>-d</code> 參數，讓容器在後台以背景狀態（Daemonized）的形式執行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 1; done"</span></span><br><span class="line">ee7da9a9016fd63ca61a4a2c7d8599ee5188e420f9171154176c120b4bfa7d97</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>docker logs</code> 指令，取得容器輸出的資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs ee7</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>docker rm</code> 指令，以及 <code>-f</code> 參數，強制刪除一個正在執行的容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f ee7</span><br><span class="line">ee7</span><br></pre></td></tr></table></figure>
+
+<h2 id="匯出容器"><a href="#匯出容器" class="headerlink" title="匯出容器"></a>匯出容器</h2><p>使用 <code>docker export</code> 指令，導出一個已經建立的容器到一個檔案，無論其是否處於運行狀態。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">export</span> -o=<span class="string">"test.tar"</span> ee7</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 <code>docker export</code> 指令，將會遺失資料層的堆疊資訊，無法還原映像檔的資訊；使用 <code>docker pull</code> 指令，則會全部重新下載。</li>
+</ul>
+<h2 id="匯入容器"><a href="#匯入容器" class="headerlink" title="匯入容器"></a>匯入容器</h2><p>使用 <code>docker import</code> 指令，將匯出的容器匯入。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker import test.tar ubuntu:<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p>事實上，既可以使用 <code>docker load</code> 指令來匯入映像檔到本機上，也可以使用 <code>docker import</code> 指令來匯入一個容器快照到本機映像檔倉庫。這兩者的區別在於，容器快照檔將丟棄所有的歷史紀錄和中繼資料資訊（僅保存容器當時的快照狀態）；而映像檔將保存完整紀錄，體積也較大。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立容器"><span class="toc-number">3.</span> <span class="toc-text">建立容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看容器資訊"><span class="toc-number">4.</span> <span class="toc-text">查看容器資訊</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新建並啟動容器"><span class="toc-number">4.1.</span> <span class="toc-text">新建並啟動容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背景狀態下執行"><span class="toc-number">4.2.</span> <span class="toc-text">背景狀態下執行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匯出容器"><span class="toc-number">5.</span> <span class="toc-text">匯出容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匯入容器"><span class="toc-number">6.</span> <span class="toc-text">匯入容器</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&text=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&is_video=false&description=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Docker：入門與實戰》學習筆記（二）：容器&body=Check out this article: https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&title=《Docker：入門與實戰》學習筆記（二）：容器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/&name=《Docker：入門與實戰》學習筆記（二）：容器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

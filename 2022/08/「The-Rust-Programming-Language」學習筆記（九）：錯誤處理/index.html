@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 介紹Rust 將錯誤分成兩大類：可復原的（recoverable）和不可復原的（unrecoverable）錯誤。像是找不到檔案這種可復原的錯誤，回報問題給使用者並重試是很合理的。而不可復原的錯誤就會是程式錯誤的跡象，像是嘗試取得陣列結尾之後的位置。 許多語言不會區分這兩種錯誤，並以相同的方式處理，使用像">
+<meta name="keywords" content="程式設計,Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「The Rust Programming Language」學習筆記（九）：錯誤處理">
+<meta property="og:url" content="https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 介紹Rust 將錯誤分成兩大類：可復原的（recoverable）和不可復原的（unrecoverable）錯誤。像是找不到檔案這種可復原的錯誤，回報問題給使用者並重試是很合理的。而不可復原的錯誤就會是程式錯誤的跡象，像是嘗試取得陣列結尾之後的位置。 許多語言不會區分這兩種錯誤，並以相同的方式處理，使用像">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「The Rust Programming Language」學習筆記（九）：錯誤處理">
+<meta name="twitter:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 介紹Rust 將錯誤分成兩大類：可復原的（recoverable）和不可復原的（unrecoverable）錯誤。像是找不到檔案這種可復原的錯誤，回報問題給使用者並重試是很合理的。而不可復原的錯誤就會是程式錯誤的跡象，像是嘗試取得陣列結尾之後的位置。 許多語言不會區分這兩種錯誤，並以相同的方式處理，使用像">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「The Rust Programming Language」學習筆記（九）：錯誤處理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/08/使用-Vite-發布-npm-套件/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&text=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&is_video=false&description=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「The Rust Programming Language」學習筆記（九）：錯誤處理&body=Check out this article: https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&name=「The Rust Programming Language」學習筆記（九）：錯誤處理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#介紹"><span class="toc-number">2.</span> <span class="toc-text">介紹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#無法復原的錯誤"><span class="toc-number">3.</span> <span class="toc-text">無法復原的錯誤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可復原的錯誤"><span class="toc-number">4.</span> <span class="toc-text">可復原的錯誤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配對不同種的錯誤"><span class="toc-number">4.1.</span> <span class="toc-text">配對不同種的錯誤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#錯誤發生時產生恐慌的捷徑：unwrap-與-expect"><span class="toc-number">4.2.</span> <span class="toc-text">錯誤發生時產生恐慌的捷徑：unwrap 與 expect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#傳播錯誤"><span class="toc-number">4.3.</span> <span class="toc-text">傳播錯誤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#運算子"><span class="toc-number">4.4.</span> <span class="toc-text">? 運算子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#選擇"><span class="toc-number">4.5.</span> <span class="toc-text">選擇</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#範例、程式碼原型與測試"><span class="toc-number">4.6.</span> <span class="toc-text">範例、程式碼原型與測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#當知道的比編譯器還多的時候"><span class="toc-number">4.7.</span> <span class="toc-text">當知道的比編譯器還多的時候</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#錯誤處理的指導原則"><span class="toc-number">4.8.</span> <span class="toc-text">錯誤處理的指導原則</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立自訂型別來驗證"><span class="toc-number">4.9.</span> <span class="toc-text">建立自訂型別來驗證</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「The Rust Programming Language」學習筆記（九）：錯誤處理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-08-17T14:36:03.000Z" itemprop="datePublished">2022-08-17</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/「The-Rust-Programming-Language」學習筆記/">「The Rust Programming Language」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a>」語言指南的學習筆記。</p>
+<h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>Rust 將錯誤分成兩大類：可復原的（recoverable）和不可復原的（unrecoverable）錯誤。像是找不到檔案這種可復原的錯誤，回報問題給使用者並重試是很合理的。而不可復原的錯誤就會是程式錯誤的跡象，像是嘗試取得陣列結尾之後的位置。</p>
+<p>許多語言不會區分這兩種錯誤，並以相同的方式處理，使用像是例外（exceptions）這樣統一的機制處理。Rust 沒有例外處理機制，取而代之的是它對可復原的錯誤提供 <code>Result&lt;T, E&gt;</code> 型別，對不可復原的錯誤使用 <code>panic!</code> 將程式停止執行。</p>
+<h2 id="無法復原的錯誤"><a href="#無法復原的錯誤" class="headerlink" title="無法復原的錯誤"></a>無法復原的錯誤</h2><p>Rust 有提供 <code>panic!</code> 巨集，當 <code>panic!</code> 巨集執行時，程式就會印出程式出錯的訊息，展開並清理堆疊，然後離開程式。這常用來處理當程式遇到某種錯誤時，開發者不清楚如何處理該錯誤的狀況。</p>
+<p>先在小程式內嘗試呼叫 <code>panic!</code> 巨集。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="built_in">panic!</span>(<span class="string">"◢▆▅▄▃ 崩╰(〒皿〒)╯潰 ▃▄▅▆◣"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>顯示結果如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling panic v0.1.0 (file:///projects/panic)</span><br><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> 0.25s</span><br><span class="line">     Running `target/debug/panic`</span><br><span class="line">thread <span class="string">'main'</span> panicked at <span class="string">'◢▆▅▄▃ 崩╰(〒皿〒)╯潰 ▃▄▅▆◣'</span>, src/main.rs:2:5</span><br><span class="line">note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</span><br></pre></td></tr></table></figure>
+
+<p>另一個例子，這是函式庫發生錯誤而呼叫 <code>panic!</code>，而不是來自於我們在程式碼自己呼叫的巨集。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> v = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">    v[<span class="number">99</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這邊嘗試取得向量中第 100 個元素，但它只有 3 個元素。在此情況下，Rust 就會恐慌。</p>
+<p>在 C 中，嘗試讀取資料結構結束之後的元素屬於未定義行為。可能會得到該記憶體位置對應其資料結構的元素，即使該記憶體完全不屬於該資料結構。這就稱做緩衝區過讀（buffer overread）而且會導致安全漏洞。攻擊者可能故意操縱該索引來取得在資料結構後面他們原本不應該讀寫的值。</p>
+<p>為了保護程式免於這樣的漏洞，如果嘗試用一個不存在的索引讀取元素的話，Rust 會停止執行並拒絕繼續運作下去。</p>
+<p>顯示結果如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling panic v0.1.0 (file:///projects/panic)</span><br><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> 0.27s</span><br><span class="line">     Running `target/debug/panic`</span><br><span class="line">thread <span class="string">'main'</span> panicked at <span class="string">'index out of bounds: the len is 3 but the index is 99'</span>, src/main.rs:4:5</span><br><span class="line">note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</span><br></pre></td></tr></table></figure>
+
+<p>此錯誤指向 <code>main.rs</code> 的第四行，也就是嘗試存取索引 99 的地方。下一行提示告訴我們可以設置 <code>RUST_BACKTRACE</code> 環境變數來取得 <code>backtrace</code> 以知道錯誤發生時到底發生什麼事。<code>backtrace</code> 是一個函式列表，指出得到此錯誤時到底依序呼叫了哪些函式。Rust 的 <code>backtraces</code> 運作方式和其他語言一樣：讀取 <code>backtrace</code> 關鍵是從最一開始讀取直到你看到你寫的檔案。那就會是問題發生的源頭。程式碼以上的行數就是呼叫的程式，而以下則是其他呼叫程式碼的程式。這些行數可能還會包含 Rust 核心程式碼、標準函式庫程式碼，或是所使用的 crate。我們設置 <code>RUST_BACKTRACE</code> 環境變數的值不為 <code>0</code>，來嘗試取得 <code>backtrace</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ RUST_BACKTRACE=1 cargo run</span><br><span class="line">thread <span class="string">'main'</span> panicked at <span class="string">'index out of bounds: the len is 3 but the index is 99'</span>, src/main.rs:4:5</span><br><span class="line">stack backtrace:</span><br><span class="line">   0: rust_begin_unwind</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/std/src/panicking.rs:483</span><br><span class="line">   1: core::panicking::panic_fmt</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/panicking.rs:85</span><br><span class="line">   2: core::panicking::panic_bounds_check</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/panicking.rs:62</span><br><span class="line">   3: &lt;usize as core::slice::index::SliceIndex&lt;[T]&gt;&gt;::index</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/slice/index.rs:255</span><br><span class="line">   4: core::slice::index::&lt;impl core::ops::index::Index&lt;I&gt; <span class="keyword">for</span> [T]&gt;::index</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/slice/index.rs:15</span><br><span class="line">   5: &lt;alloc::vec::Vec&lt;T&gt; as core::ops::index::Index&lt;I&gt;&gt;::index</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/alloc/src/vec.rs:1982</span><br><span class="line">   6: panic::main</span><br><span class="line">             at ./src/main.rs:4</span><br><span class="line">   7: core::ops::<span class="keyword">function</span>::FnOnce::call_once</span><br><span class="line">             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/ops/function.rs:227</span><br><span class="line">note: Some details are omitted, run with `RUST_BACKTRACE=full` <span class="keyword">for</span> a verbose backtrace.</span><br></pre></td></tr></table></figure>
+
+<p>要取得這些資訊的 <code>backtrace</code>，除錯符號（debug symbols）必須啟用。當在使用 <code>cargo build</code> 或 <code>cargo run</code> 指令且沒有加上 <code>--release</code> 時，除錯符號預設是啟用的。</p>
+<h2 id="可復原的錯誤"><a href="#可復原的錯誤" class="headerlink" title="可復原的錯誤"></a>可復原的錯誤</h2><p>大多數的錯誤沒有嚴重到需要讓整個程式停止執行。有時候當函式失敗時，是可以輕易理解並作出反應的。舉例來說，如果嘗試開啟一個檔案，但該動作卻因為沒有該檔案而失敗的話，可能會想要建立檔案，而不是終止程序。</p>
+<p>使用 <code>Result</code> 型別處理可能的錯誤，<code>Result</code> 枚舉的定義有兩個變體 <code>Ok</code> 和 <code>Err</code>，如以下所示：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Result</span></span>&lt;T, E&gt; &#123;</span><br><span class="line">    <span class="literal">Ok</span>(T),</span><br><span class="line">    <span class="literal">Err</span>(E),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>T</code> 和 <code>E</code> 是泛型型別參數。現在只需要知道的是 <code>T</code> 代表我們在成功時會在 <code>Ok</code> 變體回傳的型別，而 <code>E</code> 則代表失敗時在 <code>Err</code> 變體會回傳的錯誤型別。因為 <code>Result</code> 有這些泛型型別參數，可以將 <code>Result</code> 型別和標準函式庫運用到它的函式用在許多不同場合，讓成功與失敗時回傳的型別不相同。</p>
+<p>以下呼叫一個可能會失敗的函式，並回傳 <code>Result</code> 型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這樣的回傳型別代表 <code>File::open</code> 的呼叫在成功時會回傳我們可以讀寫的檔案控制代碼，但該函式呼叫也可能失敗。舉例來說，該檔案可能會不存在，或者我們沒有檔案的存取權限。<code>File::open</code> 需要有某種方式能告訴我們它的結果是成功或失敗，並回傳檔案控制代碼或是錯誤資訊。這樣的資訊正是 <code>Result</code> 枚舉想表達的。</p>
+<p>如果 <code>File::open</code> 成功的話，變數 <code>f</code> 的數值就會獲得包含檔案控制代碼的 <code>Ok</code> 實例。如果失敗的話，<code>f</code> 的值就會是包含為何產生該錯誤的資訊的 <code>Err</code> 實例。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> f = <span class="keyword">match</span> f &#123;</span><br><span class="line">        <span class="literal">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="literal">Err</span>(error) =&gt; <span class="built_in">panic!</span>(<span class="string">"開啟檔案時發生問題：&#123;:?&#125;"</span>, error),</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>和 <code>Option</code> 枚舉一樣，<code>Result</code> 枚舉與其變體都會透過 prelude 引入作用域，所以我們不需要指明 <code>Result::</code>，可以直接在 <code>match</code> 的分支中使用 <code>Ok</code> 和 <code>Err</code> 變體。</p>
+<p>我們在此告訴 Rust 結果是 <code>Ok</code> 的話，就回傳 <code>Ok</code> 變體中內部的 <code>file</code>，然後就可以將檔案控制代碼賦值給變數 <code>f</code>。在 <code>match</code> 之後，就可以適用檔案控制代碼來讀寫。</p>
+<p><code>match</code> 的另一個分支則負責處理從 <code>File::open</code> 中取得的 <code>Err</code> 數值。在此範例中，選擇呼叫 <code>panic!</code> 巨集。如果檔案 <code>hello.txt</code> 不存在當前的目錄的話，就會執行此程式碼，接著就會看到來自 <code>panic!</code> 巨集的輸出結果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling error-handling v0.1.0 (file:///projects/error-handling)</span><br><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> 0.73s</span><br><span class="line">     Running `target/debug/error-handling`</span><br><span class="line">thread <span class="string">'main'</span> panicked at <span class="string">'開啟檔案時發生問題：Os &#123; code: 2, kind: NotFound, message: "No such file or directory" &#125;'</span>, src/main.rs:8:23</span><br><span class="line">note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace</span><br></pre></td></tr></table></figure>
+
+<h3 id="配對不同種的錯誤"><a href="#配對不同種的錯誤" class="headerlink" title="配對不同種的錯誤"></a>配對不同種的錯誤</h3><p>以上範例不管 <code>File::open</code> 為何失敗都會呼叫 <code>panic!</code>。我們希望做的是依據不同的錯誤原因採取不同的動作，如果 <code>File::open</code> 是因為檔案不存在的話，我們想要建立檔案並回傳新檔案的控制代碼。如果 <code>File::open</code> 是因為其他原因失敗的話，像是我們沒有開啟檔案的權限，我們仍然要呼叫 <code>panic!</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"><span class="keyword">use</span> std::io::ErrorKind;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> f = <span class="keyword">match</span> f &#123;</span><br><span class="line">        <span class="literal">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="literal">Err</span>(error) =&gt; <span class="keyword">match</span> error.kind() &#123;</span><br><span class="line">            ErrorKind::NotFound =&gt; <span class="keyword">match</span> File::create(<span class="string">"hello.txt"</span>) &#123;</span><br><span class="line">                <span class="literal">Ok</span>(fc) =&gt; fc,</span><br><span class="line">                <span class="literal">Err</span>(e) =&gt; <span class="built_in">panic!</span>(<span class="string">"建立檔案時發生問題：&#123;:?&#125;"</span>, e),</span><br><span class="line">            &#125;,</span><br><span class="line">            other_error =&gt; &#123;</span><br><span class="line">                <span class="built_in">panic!</span>(<span class="string">"開啟檔案時發生問題：&#123;:?&#125;"</span>, other_error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>File::open</code> 在 <code>Err</code> 變體的回傳型別為 <code>io::Error</code>，這是標準函式庫提供的結構體。此結構體有個 <code>kind</code> 方法讓我們可以取得 <code>io::ErrorKind</code> 數值。標準函式庫提供的枚舉 <code>io::ErrorKind</code> 有從 io 運算可能發生的各種錯誤。我們想處理的變體是 <code>ErrorKind::NotFound</code>，這指的是我們嘗試開啟的檔案還不存在。所以我們對 <code>f</code> 配對並在用 <code>error.kind()</code> 繼續配對下去。</p>
+<p>我們從內部配對檢查 <code>error.kind()</code> 的回傳值是否是 <code>ErrorKind</code> 枚舉中的 <code>NotFound</code> 變體。如果是的話，我們就嘗試使用 <code>File::create</code> 建立檔案。不過 <code>File::create</code> 也可能會失敗，所以我們需要第二個內部 <code>match</code> 表達式來處理。如果檔案無法建立的話，我們就會印出不同的錯誤訊息。第二個分支的外部 <code>match</code> 分支保持不變，如果程式遇到其他錯誤的話就會恐慌。</p>
+<p>更熟練的 Rustacean 可能會像這樣寫：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"><span class="keyword">use</span> std::io::ErrorKind;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>).unwrap_or_else(|error| &#123;</span><br><span class="line">        <span class="keyword">if</span> error.kind() == ErrorKind::NotFound &#123;</span><br><span class="line">            File::create(<span class="string">"hello.txt"</span>).unwrap_or_else(|error| &#123;</span><br><span class="line">                <span class="built_in">panic!</span>(<span class="string">"建立檔案時發生問題：&#123;:?&#125;"</span>, error);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">panic!</span>(<span class="string">"開啟檔案時發生問題：&#123;:?&#125;"</span>, error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="錯誤發生時產生恐慌的捷徑：unwrap-與-expect"><a href="#錯誤發生時產生恐慌的捷徑：unwrap-與-expect" class="headerlink" title="錯誤發生時產生恐慌的捷徑：unwrap 與 expect"></a>錯誤發生時產生恐慌的捷徑：unwrap 與 expect</h3><p>雖然 <code>match</code> 已經足以勝任指派的任務了，但它還是有點冗長，而且可能無法正確傳遞錯誤的嚴重性。<code>Result&lt;T, E&gt;</code> 型別有非常多的輔助方法來執行不同的任務。其中一個方法就是 <code>unwrap</code>，這是和我們在範例所寫的 <code>match</code> 表達式一樣，擁有類似效果的捷徑方法。如果 <code>Result</code> 的值是 <code>Ok</code> 變體，<code>unwrap</code> 會回傳 <code>Ok</code> 裡面的值；如果 <code>Result</code> 是 <code>Err</code> 變體的話，<code>unwrap</code> 會呼叫 <code>panic!</code> 巨集。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>).unwrap();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果沒有 <code>hello.txt</code> 這個檔案並執行此程式碼的話，我們會看到從 <code>unwrap</code> 方法所呼叫的 <code>panic!</code> 回傳訊息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">thread <span class="string">'main'</span> panicked at <span class="string">'called `Result::unwrap()` on an `Err` value: Error &#123;</span></span><br><span class="line"><span class="string">repr: Os &#123; code: 2, message: "No such file or directory" &#125; &#125;'</span>,</span><br><span class="line">src/libcore/result.rs:906:4</span><br></pre></td></tr></table></figure>
+
+<p>還有另一個方法 <code>expect</code> 和 <code>unwrap</code> 類似，不過能讓我們選擇 <code>panic!</code> 回傳的錯誤訊息。使用 <code>expect</code> 而非 <code>unwrap</code> 並提供完善的錯誤訊息可以表明開發者的意圖，讓追蹤恐慌的源頭更容易。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>).expect(<span class="string">"開啟 hello.txt 失敗"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們使用 <code>expect</code> 的方式和 <code>unwrap</code> 一樣，不是回傳檔案控制代碼就是呼叫 <code>panic!</code> 巨集。使用 <code>expect</code> 呼叫 <code>panic!</code> 時的錯誤訊息會是我們傳遞給 <code>expect</code> 的參數，而不是像 <code>unwrap</code> 使用 <code>panic!</code> 預設的訊息。訊息看起來就會像這樣：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">thread <span class="string">'main'</span> panicked at <span class="string">'開啟 hello.txt 失敗: Error &#123; repr: Os &#123; code:</span></span><br><span class="line"><span class="string">2, message: "No such file or directory" &#125; &#125;'</span>, src/libcore/result.rs:906:4</span><br></pre></td></tr></table></figure>
+
+<p>由於此錯誤訊息指明了我們想表達的訊息「開啟 hello.txt 失敗」，我們比較能知道此錯誤訊息是從哪裡發生的。如果我們在多處使用 <code>unwrap</code>，我們會需要一些時間才能理解 <code>unwrap</code> 是從哪裡引發恐慌的，因為 <code>unwrap</code> 很可能會顯示相同的訊息。</p>
+<h3 id="傳播錯誤"><a href="#傳播錯誤" class="headerlink" title="傳播錯誤"></a>傳播錯誤</h3><p>當在實作某函式時，要是它的呼叫的程式碼可能會失敗，與其直接在此函式處理錯誤，可以回傳錯誤給呼叫此程式的程式碼，由它們決定如何處理。這稱之為傳播（propagating）錯誤，並讓呼叫者可以有更多的控制權，因為比起程式碼當下的內容，回傳的錯誤可能提供更多資訊與邏輯以利處理。</p>
+<p>舉例來說，一個從檔案讀取使用者名稱的函式。如果檔案不存在或無法讀取的話，此函式會回傳該錯誤給呼叫此函式的程式碼。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"><span class="keyword">use</span> std::io::&#123;<span class="keyword">self</span>, Read&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">read_username_from_file</span></span>() -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">String</span>, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> f = <span class="keyword">match</span> f &#123;</span><br><span class="line">        <span class="literal">Ok</span>(file) =&gt; file,</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; <span class="keyword">return</span> <span class="literal">Err</span>(e),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> s = <span class="built_in">String</span>::new();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">match</span> f.read_to_string(&amp;<span class="keyword">mut</span> s) &#123;</span><br><span class="line">        <span class="literal">Ok</span>(_) =&gt; <span class="literal">Ok</span>(s),</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; <span class="literal">Err</span>(e),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們不會知道呼叫此程式碼的人會如何處理這些數值。舉例來說，如果呼叫此程式碼而獲得錯誤的話，它可能選擇呼叫 <code>panic!</code> 讓程式崩潰，或者使用預設的使用者名稱從檔案以外的地方尋找該使用者。所以我們傳播所有成功或錯誤的資訊給呼叫者，讓它們能妥善處理。</p>
+<p>以下範例是另一個 <code>read_username_from_file</code> 的實作，不過這次使用 <code>?</code> 運算子。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"><span class="keyword">use</span> std::io::Read;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">read_username_from_file</span></span>() -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">String</span>, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> f = File::open(<span class="string">"hello.txt"</span>)?;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> s = <span class="built_in">String</span>::new();</span><br><span class="line">    f.read_to_string(&amp;<span class="keyword">mut</span> s)?;</span><br><span class="line">    <span class="literal">Ok</span>(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定義在 <code>Result</code> 數值後的 <code>?</code> 運作方式幾乎與 <code>match</code> 表達式處理 <code>Result</code> 的方式一樣。如果 <code>Result</code> 的數值是 <code>Ok</code> 的話，<code>Ok</code> 內的數值就會從此表達式回傳，然後程式就會繼續執行。如果數值是 <code>Err</code> 的話，<code>Err</code> 就會使用 <code>return</code> 關鍵字作為整個函式的回傳值回傳，讓錯誤數值可以傳遞給呼叫者的程式碼。</p>
+<p>使用 <code>?</code> 運算子可以消除大量樣板程式碼並讓函式實作更簡單。我們還可以再進一步將方法直接串接到 <code>?</code> 後來簡化程式碼。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"><span class="keyword">use</span> std::io::Read;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">read_username_from_file</span></span>() -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">String</span>, io::Error&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> s = <span class="built_in">String</span>::new();</span><br><span class="line"></span><br><span class="line">    File::open(<span class="string">"hello.txt"</span>)?.read_to_string(&amp;<span class="keyword">mut</span> s)?;</span><br><span class="line"></span><br><span class="line">    <span class="literal">Ok</span>(s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是另一個更簡短的寫法。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">read_username_from_file</span></span>() -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">String</span>, io::Error&gt; &#123;</span><br><span class="line">    fs::read_to_string(<span class="string">"hello.txt"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>讀取檔案至字串中算是個常見動作，所以 Rust 提供了一個方便的函式 <code>fs::read_to_string</code> 來開啟檔案、建立新的 <code>String</code>、讀取檔案內容、將內容放入該 <code>String</code> 並回傳它。</p>
+<h3 id="運算子"><a href="#運算子" class="headerlink" title="? 運算子"></a>? 運算子</h3><p><code>?</code> 運算子只能用在有函式的回傳值相容於 <code>?</code> 使用的值才行。這是因為 <code>?</code> 運算子會在函式中提早回傳數值，就像範例那樣用 <code>match</code> 表達式提早回傳一樣。在範例中，<code>match</code> 使用的是 <code>Result</code> 數值，函式的回傳值必須是 <code>Result</code> 才能相容於此 <code>return</code>。</p>
+<p>若在 <code>main</code> 函式中回傳值為 <code>()</code>，如果使用 <code>?</code> 運算子會發生什麼事：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>)?;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>?</code> 運算子會拿到 <code>File::open</code> 回傳的 <code>Result</code> 數值，但是此 <code>main</code> 函式的回傳值為 <code>()</code>，而非 <code>Result</code>。當我們編譯此程式碼時，我們會得到以下錯誤訊息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling error-handling v0.1.0 (file:///projects/error-handling)</span><br><span class="line">error[E0277]: the `?` operator can only be used <span class="keyword">in</span> a <span class="keyword">function</span> that returns `Result` or `Option` (or another <span class="built_in">type</span> that implements `FromResidual`)</span><br><span class="line"> --&gt; src/main.rs:4:36</span><br><span class="line">  |</span><br><span class="line">3 | / fn <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">4 | |     <span class="built_in">let</span> f = File::open(<span class="string">"hello.txt"</span>)?;</span><br><span class="line">  | |                                    ^ cannot use the `?` operator <span class="keyword">in</span> a <span class="keyword">function</span> that returns `()`</span><br><span class="line">5 | | &#125;</span><br><span class="line">  | |_- this <span class="keyword">function</span> should <span class="built_in">return</span> `Result` or `Option` to accept `?`</span><br><span class="line">  |</span><br><span class="line">  = <span class="built_in">help</span>: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented <span class="keyword">for</span> `()`</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0277`.</span><br><span class="line">error: could not compile `error-handling` due to previous error</span><br></pre></td></tr></table></figure>
+
+<p>目前為止，所有我們使用過的 <code>main</code> 函式都是回傳 <code>()</code>。<code>main</code> 是個特別的函式，因為它是可執行程式的入口點與出口點，而要讓程式可預期執行的話，它的回傳型別就得要有些限制。</p>
+<p><code>main</code> 可以擁有的另一種回傳型別為 <code>Result&lt;(), E&gt;</code>。不過我們更改 <code>main</code> 的回傳型別為 <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code>，並在結尾的回傳數值加上 <code>Ok(())</code>。這樣的程式碼是能編譯的：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::error::Error;</span><br><span class="line"><span class="keyword">use</span> std::fs::File;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; <span class="built_in">Result</span>&lt;(), <span class="built_in">Box</span>&lt;dyn Error&gt;&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> f = File::open(<span class="string">"hello.txt"</span>)?;</span><br><span class="line"></span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Box&lt;dyn Error&gt;</code> 型別使用了特徵物件（trait object）。可以先將 <code>Box&lt;dyn Error&gt;</code> 視為它是「任何種類的錯誤」。這樣 <code>main</code> 函式中的 <code>Result</code> 使用 <code>?</code> 就允許了，因為現在 <code>Err</code> 數值可以被提早回傳。當 <code>main</code> 函式回傳 <code>Result&lt;(), E&gt;</code> 時，如果 <code>main</code> 回傳 <code>Ok(())</code> 的話，執行檔就會用 <code>0</code> 退出；如果 <code>main</code> 回傳 <code>Err</code> 數值的話，就會用非零數值退出。</p>
+<p><code>main</code> 之所以能夠退出是因為實作了 <code>std::process::Termination</code> 特徵。</p>
+<h3 id="選擇"><a href="#選擇" class="headerlink" title="選擇"></a>選擇</h3><p>該如何決定何時要呼叫 <code>panic!</code> 還是要回傳 <code>Result</code> 呢？當程式碼恐慌時，就沒有任何回復的方式。可以在任何錯誤場合呼叫 <code>panic!</code>，無論是可能或不可能復原的情況。不過這樣就等於替呼叫者做出決定，讓情況變成無法復原的錯誤了。當你選擇回傳 <code>Result</code> 數值，你將決定權交給呼叫者的程式碼。呼叫者可能會選擇符合當下場合的方式嘗試復原錯誤，或者它可以選擇 <code>Err</code> 內的數值是不可回復的，所以它就呼叫 <code>panic!</code> 讓原本可回復的錯誤轉成不可回復。因此，當定義可能失敗的函式時預設回傳 <code>Result</code> 是不錯的選擇。</p>
+<p>在少數情況下，程式碼恐慌會比回傳 <code>Result</code> 來得恰當。然後討論到一種編譯器無法辨別出不可能失敗，但人類卻可以的情況。</p>
+<h3 id="範例、程式碼原型與測試"><a href="#範例、程式碼原型與測試" class="headerlink" title="範例、程式碼原型與測試"></a>範例、程式碼原型與測試</h3><p>當在寫解釋一些概念的範例時，寫出完善錯誤處理的範例，反而會讓範例變得較不清楚。在範例中，使用像是 <code>unwrap</code> 這樣會恐慌的方法可以被視為是一種要求使用者自行決定如何處理錯誤的表現，因為他們可以依據程式碼執行的方式來修改此方法。</p>
+<p>同樣地 <code>unwrap</code> 與 <code>expect</code> 方法也很適用在試做原型，可以在決定準備開始處理錯誤前使用它們。它們會留下清楚的痕跡，當你準備好要讓程式碼更穩固時，你就能回來修改。</p>
+<p>如果有方法在測試內失敗時，會希望整個測試都失敗，就算該方法不是要測試的功能。因為 <code>panic!</code> 會將測試標記為失敗，所以在此呼叫 <code>unwrap</code> 或 <code>expect</code> 是很正確的。</p>
+<h3 id="當知道的比編譯器還多的時候"><a href="#當知道的比編譯器還多的時候" class="headerlink" title="當知道的比編譯器還多的時候"></a>當知道的比編譯器還多的時候</h3><p>如果開發者知道一些編譯器不知道的邏輯的話，直接在 <code>Result</code> 呼叫 <code>unwrap</code> 來直接取得 <code>Ok</code> 的數值是很有用的。還是會有個 <code>Result</code> 數值需要做處理，呼叫的程式碼還是有機會失敗的，就算在特定場合中邏輯上是不可能的。如果能保證在親自審閱程式碼後，絕對不可能會有 <code>Err</code> 變體的話，那麼呼叫 <code>unwrap</code> 是完全可以接受的。以下範例就是如此：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::net::IpAddr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> home: IpAddr = <span class="string">"127.0.0.1"</span>.parse().unwrap();</span><br></pre></td></tr></table></figure>
+
+<p>傳遞寫死的字串來建立 <code>IpAddr</code> 的實例。可以看出 <code>127.0.0.1</code> 是完全合理的 IP 位址，所以這邊可以直接 <code>unwrap</code>。不過使用寫死的合理字串並不會改變 <code>parse</code> 方法的回傳型別，還是會取得 <code>Result</code> 數值，編譯器仍然會要我們處理 <code>Result</code> 並認為 <code>Err</code> 變體是有可能發生的。因為編譯器並沒有聰明到可以看出此字串是個有效的 IP 位址。如果 IP 位址的字串是來自使用者輸入而非我們寫死進程式的話，它的確有可能會失敗，這時我們就得要認真處理 <code>Result</code> 了。</p>
+<h3 id="錯誤處理的指導原則"><a href="#錯誤處理的指導原則" class="headerlink" title="錯誤處理的指導原則"></a>錯誤處理的指導原則</h3><p>當程式碼可能會導致嚴重狀態的話，就建議讓你的程式恐慌。這裡的嚴重狀態是指一些假設、保證、協議或不可變性被打破時的狀態，像是當程式碼有無效的數值、互相矛盾的數值或缺少數值。另外還加上以下情形：</p>
+<ul>
+<li>該嚴重狀態並非預期會發生的，而不是像使用者輸入了錯誤格式這種偶而可能會發生的。</li>
+<li>程式在此時需要避免這種嚴重狀態，而不是在每一步都處理此問題。</li>
+<li>所使用的型別沒有適合的方式能夠處理此嚴重狀態。</li>
+</ul>
+<p>如果有人呼叫了程式碼卻傳遞了不合理的數值，最好的辦法是呼叫 <code>panic!</code> 並警告使用函式庫的人他們程式碼錯誤發生的位置，好讓他們在開發時就能修正。同樣地，<code>panic!</code> 也適合用於如果你呼叫了你無法掌控的外部程式碼，然後它回傳了你無法修正的無效狀態。</p>
+<p>不過如果失敗是可預期的，回傳 <code>Result</code> 就會比呼叫 <code>panic!</code> 來得好。類似的例子有，語法分析器 （parser）收到格式錯誤的資訊，或是 HTTP 請求回傳了一個狀態，告訴開發者已經達到請求上限了。在這樣的案例，回傳 <code>Result</code> 代表失敗是預期有時會發生的，而且呼叫者必須決定如何處理。</p>
+<p>當程式碼針對數值進行運算時，程式需要先驗證該數值，如果數值無效的話就要恐慌。這是基於安全原則，嘗試對無效資料做運算的話可能會導致你的程式碼產生漏洞。這也是標準函式庫在開發者嘗試取得超出界限的記憶體存取會呼叫 <code>panic!</code> 的主要原因。嘗試取得不屬於當前資料結構的記憶體是常見的安全問題。函式通常都會訂下一些合約（contracts），它們的行為只有在輸入資料符合特定要求時才帶有保障。當違反合約時恐慌是十分合理的，因為違反合約就代表這是呼叫者的錯誤，這不是程式碼該主動處理的錯誤。事實上，呼叫者也沒有任何合理的理由來復原這樣的錯誤。函式的合約應該要寫在函式的技術文件中解釋，尤其是違反時會恐慌的情況。</p>
+<p>然而要在函式寫一大堆錯誤檢查有時是很冗長且麻煩的。幸運的是，開發者可以利用 Rust 的型別系統（以及編譯器的型別檢查）來幫忙完成檢驗。如果函式用特定型別作為參數的話，就可以認定程式邏輯是編輯器已經幫忙確保拿到的數值是有效的。舉例來說，如果有一個型別而非 <code>Option</code> 的話，程式就會預期取得某個值而不是沒拿到值。程式就不必處理 <code>Some</code> 和 <code>None</code> 這兩個變體情形，它只會有一種情況並絕對會拿到數值。要是有人沒有傳遞任何值給函式會根本無法編譯，所以函式就不需要在執行時做檢查。另一個例子是使用非帶號整數像是 <code>u32</code> 來確保參數不會是負數。</p>
+<h3 id="建立自訂型別來驗證"><a href="#建立自訂型別來驗證" class="headerlink" title="建立自訂型別來驗證"></a>建立自訂型別來驗證</h3><p>試著使用 Rust 的型別系統來進一步確保擁有有效數值，並建立自訂型別來驗證。</p>
+<p>可以建立一個新的型別，並且建立一個驗證產生實例的函式，這樣就不必在每個地方都做驗證。函式可以安全地以這個新型別作為簽名，並放心地使用收到的數值。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Guess</span></span> &#123;</span><br><span class="line">    value: <span class="built_in">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Guess &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(value: <span class="built_in">i32</span>) -&gt; Guess &#123;</span><br><span class="line">        <span class="keyword">if</span> value &lt; <span class="number">1</span> || value &gt; <span class="number">100</span> &#123;</span><br><span class="line">            <span class="built_in">panic!</span>(<span class="string">"猜測數字必須介於 1 到 100 之間，你輸入的是 &#123;&#125;。"</span>, value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Guess &#123; value &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">value</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#介紹"><span class="toc-number">2.</span> <span class="toc-text">介紹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#無法復原的錯誤"><span class="toc-number">3.</span> <span class="toc-text">無法復原的錯誤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可復原的錯誤"><span class="toc-number">4.</span> <span class="toc-text">可復原的錯誤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配對不同種的錯誤"><span class="toc-number">4.1.</span> <span class="toc-text">配對不同種的錯誤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#錯誤發生時產生恐慌的捷徑：unwrap-與-expect"><span class="toc-number">4.2.</span> <span class="toc-text">錯誤發生時產生恐慌的捷徑：unwrap 與 expect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#傳播錯誤"><span class="toc-number">4.3.</span> <span class="toc-text">傳播錯誤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#運算子"><span class="toc-number">4.4.</span> <span class="toc-text">? 運算子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#選擇"><span class="toc-number">4.5.</span> <span class="toc-text">選擇</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#範例、程式碼原型與測試"><span class="toc-number">4.6.</span> <span class="toc-text">範例、程式碼原型與測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#當知道的比編譯器還多的時候"><span class="toc-number">4.7.</span> <span class="toc-text">當知道的比編譯器還多的時候</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#錯誤處理的指導原則"><span class="toc-number">4.8.</span> <span class="toc-text">錯誤處理的指導原則</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立自訂型別來驗證"><span class="toc-number">4.9.</span> <span class="toc-text">建立自訂型別來驗證</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&text=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&is_video=false&description=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「The Rust Programming Language」學習筆記（九）：錯誤處理&body=Check out this article: https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&title=「The Rust Programming Language」學習筆記（九）：錯誤處理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/&name=「The Rust Programming Language」學習筆記（九）：錯誤處理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

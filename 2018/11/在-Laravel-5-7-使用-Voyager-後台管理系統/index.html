@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="環境 Windows 10 Homestead  安裝1composer require tcg/voyager  設定修改 .env 檔。 1APP_URL=voyager.test  執行安裝1php artisan voyager:install --with-dummy   參數 --with-dummy 會附帶預設的假資料。  指派管理員1php artisan voyager:admi">
+<meta name="keywords" content="程式設計,PHP,Laravel,後台管理系統,Voyager">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Laravel 5.7 使用 Voyager 後台管理系統">
+<meta property="og:url" content="https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="環境 Windows 10 Homestead  安裝1composer require tcg/voyager  設定修改 .env 檔。 1APP_URL=voyager.test  執行安裝1php artisan voyager:install --with-dummy   參數 --with-dummy 會附帶預設的假資料。  指派管理員1php artisan voyager:admi">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 Laravel 5.7 使用 Voyager 後台管理系統">
+<meta name="twitter:description" content="環境 Windows 10 Homestead  安裝1composer require tcg/voyager  設定修改 .env 檔。 1APP_URL=voyager.test  執行安裝1php artisan voyager:install --with-dummy   參數 --with-dummy 會附帶預設的假資料。  指派管理員1php artisan voyager:admi">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Laravel 5.7 使用 Voyager 後台管理系統</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/11/在-Laravel-5-7-使用-Telescope-除錯工具/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/11/在-GitHub-上為開源專案貢獻程式碼/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&text=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&is_video=false&description=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Voyager 後台管理系統&body=Check out this article: https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&name=在 Laravel 5.7 使用 Voyager 後台管理系統&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">2.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-number">3.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#執行安裝"><span class="toc-number">4.</span> <span class="toc-text">執行安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指派管理員"><span class="toc-number">5.</span> <span class="toc-text">指派管理員</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Google-Analytics"><span class="toc-number">6.</span> <span class="toc-text">使用 Google Analytics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#首頁工具"><span class="toc-number">7.</span> <span class="toc-text">首頁工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增預設模型"><span class="toc-number">7.1.</span> <span class="toc-text">新增預設模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新增自訂模型"><span class="toc-number">7.2.</span> <span class="toc-text">新增自訂模型</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Laravel 5.7 使用 Voyager 後台管理系統
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-11-22T18:58:23.000Z" itemprop="datePublished">2018-11-23</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/Laravel/">Laravel</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Voyager/">Voyager</a>, <a class="tag-link" href="/tags/後台管理系統/">後台管理系統</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Homestead</li>
+</ul>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require tcg/voyager</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><p>修改 <code>.env</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APP_URL=voyager.test</span><br></pre></td></tr></table></figure>
+
+<h2 id="執行安裝"><a href="#執行安裝" class="headerlink" title="執行安裝"></a>執行安裝</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan voyager:install --with-dummy</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>參數 <code>--with-dummy</code> 會附帶預設的假資料。</li>
+</ul>
+<h2 id="指派管理員"><a href="#指派管理員" class="headerlink" title="指派管理員"></a>指派管理員</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan voyager:admin your@email.com --create</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>參數 <code>--create</code> 會建立一個新的使用者。</li>
+</ul>
+<h2 id="使用-Google-Analytics"><a href="#使用-Google-Analytics" class="headerlink" title="使用 Google Analytics"></a>使用 Google Analytics</h2><ol>
+<li>在 <a href="https://console.developers.google.com/" target="_blank" rel="noopener">Google 開發者平台</a>建立專案。</li>
+<li>點選 <code>Create credentials</code> 的 <code>Oauth client ID</code>。</li>
+<li>點選 <code>Web application</code>。</li>
+<li>在 <code>Authorized JavaScript origins</code> 輸入 <a href="http://voyager.test。" target="_blank" rel="noopener">http://voyager.test。</a></li>
+<li>到 <a href="https://console.developers.google.com/apis/library" target="_blank" rel="noopener">API Library</a> 點選 <code>Analytics API</code>，並啟用。</li>
+<li>到 <a href="http://voyager.test/admin/settings" target="_blank" rel="noopener">http://voyager.test/admin/settings</a> 的 Admin 選單，新增 Google Analytics Client ID。</li>
+</ol>
+<h2 id="首頁工具"><a href="#首頁工具" class="headerlink" title="首頁工具"></a>首頁工具</h2><h3 id="新增預設模型"><a href="#新增預設模型" class="headerlink" title="新增預設模型"></a>新增預設模型</h3><p>修改 <code>config\voyager.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'widgets'</span> =&gt; [</span><br><span class="line">    <span class="string">'TCG\\Voyager\\Widgets\\UserDimmer'</span>,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+
+<h3 id="新增自訂模型"><a href="#新增自訂模型" class="headerlink" title="新增自訂模型"></a>新增自訂模型</h3><ol>
+<li>建立 Item 模型。</li>
+<li>在 <a href="http://fitness.test/admin/bread" target="_blank" rel="noopener">http://fitness.test/admin/bread</a> 新增 Item 模型的 <code>BREAD</code>。</li>
+<li>新增 <code>app\Widgets\ItemDimmer.php</code> 檔。</li>
+<li>在 <a href="https://unsplash.com" target="_blank" rel="noopener">https://unsplash.com</a> 找到適合的圖片放到 <code>public\vendor\tcg\voyager\assets\images\widget-backgrounds</code> 資料夾。</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Widgets</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Item</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Str</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">TCG</span>\<span class="title">Voyager</span>\<span class="title">Facades</span>\<span class="title">Voyager</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">TCG</span>\<span class="title">Voyager</span>\<span class="title">Widgets</span>\<span class="title">BaseDimmer</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Auth</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ItemDimmer</span> <span class="keyword">extends</span> <span class="title">BaseDimmer</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The configuration array.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> array</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> $config = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Treat this method as a controller action.</span></span><br><span class="line"><span class="comment">     * Return view() or other content to display.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $count = Item::count();</span><br><span class="line">        $string = <span class="string">'Items'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'voyager::dimmer'</span>, array_merge(<span class="keyword">$this</span>-&gt;config, [</span><br><span class="line">            <span class="string">'icon'</span>   =&gt; <span class="string">'voyager-group'</span>,</span><br><span class="line">            <span class="string">'title'</span>  =&gt; $count . <span class="string">' '</span> . $string,</span><br><span class="line">            <span class="string">'text'</span>   =&gt; <span class="string">'You have'</span> . $count . <span class="string">'items in your database. Click on button below to view all items.'</span>,</span><br><span class="line">            <span class="string">'button'</span> =&gt; [</span><br><span class="line">                <span class="string">'text'</span> =&gt; <span class="string">'View all items'</span>,</span><br><span class="line">                <span class="string">'link'</span> =&gt; route(<span class="string">'voyager.items.index'</span>),</span><br><span class="line">            ],</span><br><span class="line">            <span class="string">'image'</span> =&gt; voyager_asset(<span class="string">'images/widget-backgrounds/item.jpg'</span>),</span><br><span class="line">        ]));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Determine if the widget should be displayed.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> bool</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">shouldBeDisplayed</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Auth::user()-&gt;can(<span class="string">'browse'</span>, app(Item::class));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>config\voyager.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'widgets'</span> =&gt; [</span><br><span class="line">    <span class="string">'App\\Widgets\\ItemDimmer'</span>,</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">2.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定"><span class="toc-number">3.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#執行安裝"><span class="toc-number">4.</span> <span class="toc-text">執行安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指派管理員"><span class="toc-number">5.</span> <span class="toc-text">指派管理員</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Google-Analytics"><span class="toc-number">6.</span> <span class="toc-text">使用 Google Analytics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#首頁工具"><span class="toc-number">7.</span> <span class="toc-text">首頁工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新增預設模型"><span class="toc-number">7.1.</span> <span class="toc-text">新增預設模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新增自訂模型"><span class="toc-number">7.2.</span> <span class="toc-text">新增自訂模型</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&text=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&is_video=false&description=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Voyager 後台管理系統&body=Check out this article: https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&title=在 Laravel 5.7 使用 Voyager 後台管理系統"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/在-Laravel-5-7-使用-Voyager-後台管理系統/&name=在 Laravel 5.7 使用 Voyager 後台管理系統&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  日期、時間和時區處理日期和時間相關的問題是件棘手的事情，需要考量到日期格式、時區、日光節約時間、閏年和不同天數的月份。幸好，使用 PHP 5.2.0 中實作的 DateTime、DateInterval 和 DateTimeZone 類別，可以準確地建立和調整日期、時間和時區。 設定初始時區如果沒有宣告">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（十五）：日期、時間及時區">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  日期、時間和時區處理日期和時間相關的問題是件棘手的事情，需要考量到日期格式、時區、日光節約時間、閏年和不同天數的月份。幸好，使用 PHP 5.2.0 中實作的 DateTime、DateInterval 和 DateTimeZone 類別，可以準確地建立和調整日期、時間和時區。 設定初始時區如果沒有宣告">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（十五）：日期、時間及時區">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  日期、時間和時區處理日期和時間相關的問題是件棘手的事情，需要考量到日期格式、時區、日光節約時間、閏年和不同天數的月份。幸好，使用 PHP 5.2.0 中實作的 DateTime、DateInterval 和 DateTimeZone 類別，可以準確地建立和調整日期、時間和時區。 設定初始時區如果沒有宣告">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（十五）：日期、時間及時區</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（十六）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/《學會-C-語言》學習筆記（二）：流程圖/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&text=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&is_video=false&description=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（十五）：日期、時間及時區&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&name=《現代 PHP》學習筆記（十五）：日期、時間及時區&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期、時間和時區"><span class="toc-number">3.</span> <span class="toc-text">日期、時間和時區</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定初始時區"><span class="toc-number">4.</span> <span class="toc-text">設定初始時區</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DateTime-類別"><span class="toc-number">5.</span> <span class="toc-text">DateTime 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DateInterval-類別"><span class="toc-number">6.</span> <span class="toc-text">DateInterval 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DateTimeZone-類別"><span class="toc-number">7.</span> <span class="toc-text">DateTimeZone 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DatePeriod-類別"><span class="toc-number">8.</span> <span class="toc-text">DatePeriod 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相關元件"><span class="toc-number">9.</span> <span class="toc-text">相關元件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（十五）：日期、時間及時區
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-06T11:40:56.000Z" itemprop="datePublished">2018-06-06</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Wnmp 3.1.0</li>
+</ul>
+<h2 id="日期、時間和時區"><a href="#日期、時間和時區" class="headerlink" title="日期、時間和時區"></a>日期、時間和時區</h2><p>處理日期和時間相關的問題是件棘手的事情，需要考量到日期格式、時區、日光節約時間、閏年和不同天數的月份。幸好，使用 PHP 5.2.0 中實作的 <code>DateTime</code>、<code>DateInterval</code> 和 <code>DateTimeZone</code> 類別，可以準確地建立和調整日期、時間和時區。</p>
+<h2 id="設定初始時區"><a href="#設定初始時區" class="headerlink" title="設定初始時區"></a>設定初始時區</h2><p>如果沒有宣告初始時區，PHP 會顯示 <code>E_WARNING</code> 訊息。有兩種方式可以設定時區：</p>
+<ol>
+<li>在 <code>php.ini</code> 檔中設定。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date.timezone = &apos;America/New_York&apos;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在執行時期使用 <code>date_default_timezone_set()</code> 宣告初始時區。</li>
+</ol>
+<p>範例 5-9：設定初始時區</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">'America/New_York'</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>完整的 PHP 時區辨識碼列表，可以在 <a href="http://php.net/manual/en/timezones.php" target="_blank" rel="noopener">PHP Manual</a> 找到。</li>
+</ul>
+<h2 id="DateTime-類別"><a href="#DateTime-類別" class="headerlink" title="DateTime 類別"></a>DateTime 類別</h2><p><code>DateTime</code> 類別提供了物件導向介面來管理日期和時間。</p>
+<p>範例 5-10：<code>DateTime</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$datetime = <span class="keyword">new</span> DateTime();</span><br></pre></td></tr></table></figure>
+
+<p>不使用參數的情況下，<code>DateTime</code> 類別建立了一個代表當前日期和時間的實體，可以傳入特定的字串參數到 <code>DateTime</code> 類別建構式，指定需要的日期和時間。</p>
+<p>範例 5-11：帶有參數的 <code>DateTime</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$datetime = <span class="keyword">new</span> DateTime(<span class="string">'2014-04-27 5:03 AM'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>DateTimeFromFormat()</code> 靜態方法可以使用自訂格式的時間和日期建立 <code>DateTime</code> 實體。</p>
+<p>範例 5-12：帶有靜態建構式的 <code>DateTime</code> 類別。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$datetime = DateTime::createFromFormat(<span class="string">'M j, Y H:i:s'</span>, <span class="string">'Jan 2, 2014 23:04:12'</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="DateInterval-類別"><a href="#DateInterval-類別" class="headerlink" title="DateInterval 類別"></a>DateInterval 類別</h2><p><code>DateInterval</code> 實體代表固定長度的時間（例如「兩天」）或相對長度的時間（例如「昨天」），<code>DateInterval</code> 實體可以修改 <code>DateTime</code> 實體。</p>
+<p>區間規範是一個以 <code>P</code> 為開頭的字串，並接上一個整數，最後接上一個週期代號（period designator）修飾前一個整數，並以字母 <code>T</code> 分隔日期和時間部分，有效的週期代號為：</p>
+<ul>
+<li><code>Y</code>（年）</li>
+<li><code>M</code>（月）</li>
+<li><code>D</code>（日）</li>
+<li><code>W</code>（週）</li>
+<li><code>H</code>（時）</li>
+<li><code>M</code>（分）</li>
+<li><code>S</code>（秒）</li>
+</ul>
+<p>例如週期代號 <code>P2D</code> 代表兩天、<code>P2DT5H2M</code> 代表兩天五時又兩分。</p>
+<p>以下例子利用 <code>add()</code> 方法修改 <code>DateTime</code> 實體。</p>
+<p>範例 5-13：<code>DateInterval</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">'America/New_York'</span>);</span><br><span class="line"></span><br><span class="line">$datetime = <span class="keyword">new</span> DateTime(<span class="string">'2014-01-01 14:00:00'</span>);</span><br><span class="line">$interval = <span class="keyword">new</span> DateInterval(<span class="string">'P2W'</span>);</span><br><span class="line"></span><br><span class="line">$datetime-&gt;add($interval);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $datetime-&gt;format(<span class="string">'Y-m-d H:i:s'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>也可以建立一個相反的 <code>DateInterval</code> 實體，用相反的順序走訪 <code>DatePeriod</code> 實體。</p>
+<p>範例 5-14：相反的 <code>DateInterval</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">'America/New_York'</span>);</span><br><span class="line"></span><br><span class="line">$dateStart = <span class="keyword">new</span> \DateTime();</span><br><span class="line">$dateInterval = \DateInterval::createFromDateString(<span class="string">'-1 day'</span>);</span><br><span class="line">$datePeriod = <span class="keyword">new</span> \DatePeriod($dateStart, $dateInterval, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($datePeriod <span class="keyword">as</span> $date) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $date-&gt;format(<span class="string">'Y-m-d'</span>), PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DateTimeZone-類別"><a href="#DateTimeZone-類別" class="headerlink" title="DateTimeZone 類別"></a>DateTimeZone 類別</h2><p>傳入一個有效的時區辨識碼到 <code>DateTimeZone</code> 類別建構式。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$timezone = <span class="keyword">new</span> DateTimeZone(<span class="string">'America/New_York'</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>DateTime</code> 實體建構式的第二個參數就是 <code>DateTimeZone</code>，如果忽略第二個參數，時區會被設定為初始時區。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$timezone = <span class="keyword">new</span> DateTimeZone(<span class="string">'America/New_York'</span>);</span><br><span class="line">$datetime = <span class="keyword">new</span> \DateTime(<span class="string">'2014-08-20'</span>, $timezone);</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用 <code>setTimezone()</code> 方法來改變 <code>DateTime</code> 實體的時區。</p>
+<p>範例 5-15：<code>DateTimeZone</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">'America/New_York'</span>);</span><br><span class="line"></span><br><span class="line">$timezone = <span class="keyword">new</span> DateTimeZone(<span class="string">'America/New_York'</span>);</span><br><span class="line">$datetime = <span class="keyword">new</span> \DateTime(<span class="string">'2014-08-20'</span>, $timezone);</span><br><span class="line">$datetime-&gt;setTimezone(<span class="keyword">new</span> DateTimeZone(<span class="string">'Asia/Hong_Kong'</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="DatePeriod-類別"><a href="#DatePeriod-類別" class="headerlink" title="DatePeriod 類別"></a>DatePeriod 類別</h2><p>有時候需要以固定的時間區間疊代一串日期時間，像是月曆中的重複事件。</p>
+<p><code>DatePeriod</code> 類別建構式需要三個參數：</p>
+<ol>
+<li>第一個是 <code>DateTime</code> 實體，代表疊代的起始日期時間。</li>
+<li>第二個是 <code>DateInterval</code> 實體，代表疊代日期時間的區間。</li>
+<li>第三個是一個整數，代表疊代的總數。</li>
+</ol>
+<p>範例 5-16：<code>DatePeriod</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">'America/New_York'</span>);</span><br><span class="line"></span><br><span class="line">$start = <span class="keyword">new</span> DateTime();</span><br><span class="line">$interval = <span class="keyword">new</span> DateInterval(<span class="string">'P2W'</span>);</span><br><span class="line">$period = <span class="keyword">new</span> DatePeriod($start, $interval, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($period <span class="keyword">as</span> $nextDateTime) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $nextDateTime-&gt;format(<span class="string">'Y-m-d H:i:s'</span>), PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果想要排除疊代的初始日期，可以傳入 <code>DatePeriod::EXCLUDE_START_DATE</code> 常數作為最後的建構式參數。</p>
+<p>範例 5-17：帶有自選參數的 <code>DatePeriod</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">date_default_timezone_set(<span class="string">'America/New_York'</span>);</span><br><span class="line"></span><br><span class="line">$start = <span class="keyword">new</span> DateTime();</span><br><span class="line">$interval = <span class="keyword">new</span> DateInterval(<span class="string">'P2W'</span>);</span><br><span class="line">$period = <span class="keyword">new</span> DatePeriod(</span><br><span class="line">    $start,</span><br><span class="line">    $interval,</span><br><span class="line">    <span class="number">3</span>,</span><br><span class="line">    DatePeriod::EXCLUDE_START_DATE</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($period <span class="keyword">as</span> $nextDateTime) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $nextDateTime-&gt;format(<span class="string">'Y-m-d H:i:s'</span>), PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="相關元件"><a href="#相關元件" class="headerlink" title="相關元件"></a>相關元件</h2><p>Brian Besbitt 的 <a href="https://carbon.nesbot.com/" target="_blank" rel="noopener">nesbot/carbon</a> 元件提供簡單的使用者介面和許多好用的方法用來處理日期與時間。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>Josh Lockhart（2015）。現代 PHP。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期、時間和時區"><span class="toc-number">3.</span> <span class="toc-text">日期、時間和時區</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定初始時區"><span class="toc-number">4.</span> <span class="toc-text">設定初始時區</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DateTime-類別"><span class="toc-number">5.</span> <span class="toc-text">DateTime 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DateInterval-類別"><span class="toc-number">6.</span> <span class="toc-text">DateInterval 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DateTimeZone-類別"><span class="toc-number">7.</span> <span class="toc-text">DateTimeZone 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DatePeriod-類別"><span class="toc-number">8.</span> <span class="toc-text">DatePeriod 類別</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相關元件"><span class="toc-number">9.</span> <span class="toc-text">相關元件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&text=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&is_video=false&description=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（十五）：日期、時間及時區&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&title=《現代 PHP》學習筆記（十五）：日期、時間及時區"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十五）：日期、時間及時區/&name=《現代 PHP》學習筆記（十五）：日期、時間及時區&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

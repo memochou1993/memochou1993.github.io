@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 枚舉枚舉是有別於結構體，另一種定義自訂資料型別的方式。 假設我們要使用 IP 位址，而且現在有兩個主要的標準能使用：IPv4 與 IPv6。我們可以枚舉（enumerate）出所有可能的變體，這正是枚舉的由來。 1234enum IpAddrKind &amp;#123;    V4,    V6,&amp;#125;">
+<meta name="keywords" content="程式設計,Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「The Rust Programming Language」學習筆記（六）：枚舉與模式配對">
+<meta property="og:url" content="https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 枚舉枚舉是有別於結構體，另一種定義自訂資料型別的方式。 假設我們要使用 IP 位址，而且現在有兩個主要的標準能使用：IPv4 與 IPv6。我們可以枚舉（enumerate）出所有可能的變體，這正是枚舉的由來。 1234enum IpAddrKind &amp;#123;    V4,    V6,&amp;#125;">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「The Rust Programming Language」學習筆記（六）：枚舉與模式配對">
+<meta name="twitter:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 枚舉枚舉是有別於結構體，另一種定義自訂資料型別的方式。 假設我們要使用 IP 位址，而且現在有兩個主要的標準能使用：IPv4 與 IPv6。我們可以枚舉（enumerate）出所有可能的變體，這正是枚舉的由來。 1234enum IpAddrKind &amp;#123;    V4,    V6,&amp;#125;">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「The Rust Programming Language」學習筆記（六）：枚舉與模式配對</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/06/使用-Rust-和-WebAssembly-實作「康威生命遊戲」應用程式/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/06/在-Solidity-專案使用-solidity-coverage-查看程式碼覆蓋率報告/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&text=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&is_video=false&description=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對&body=Check out this article: https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&name=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚舉"><span class="toc-number">2.</span> <span class="toc-text">枚舉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#枚舉數值"><span class="toc-number">2.1.</span> <span class="toc-text">枚舉數值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Option-枚舉相對於空值的優勢"><span class="toc-number">2.2.</span> <span class="toc-text">Option 枚舉相對於空值的優勢</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#match-語法"><span class="toc-number">3.</span> <span class="toc-text">match 語法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#綁定數值的模式"><span class="toc-number">3.1.</span> <span class="toc-text">綁定數值的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配對-Option"><span class="toc-number">3.2.</span> <span class="toc-text">配對 Option</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配對必須是徹底的"><span class="toc-number">3.3.</span> <span class="toc-text">配對必須是徹底的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Catch-all-模式與-佔位符"><span class="toc-number">3.4.</span> <span class="toc-text">Catch-all 模式與 _ 佔位符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#if-let-語法"><span class="toc-number">4.</span> <span class="toc-text">if let 語法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「The Rust Programming Language」學習筆記（六）：枚舉與模式配對
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-06-05T12:35:58.000Z" itemprop="datePublished">2022-06-05</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/「The-Rust-Programming-Language」學習筆記/">「The Rust Programming Language」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a>」語言指南的學習筆記。</p>
+<h2 id="枚舉"><a href="#枚舉" class="headerlink" title="枚舉"></a>枚舉</h2><p>枚舉是有別於結構體，另一種定義自訂資料型別的方式。</p>
+<p>假設我們要使用 IP 位址，而且現在有兩個主要的標準能使用：IPv4 與 IPv6。我們可以枚舉（enumerate）出所有可能的變體，這正是枚舉的由來。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddrKind</span></span> &#123;</span><br><span class="line">    V4,</span><br><span class="line">    V6,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="枚舉數值"><a href="#枚舉數值" class="headerlink" title="枚舉數值"></a>枚舉數值</h3><p>注意變體會位於枚舉命名空間底下，所以可以用兩個冒號來標示。這樣的好處在於 <code>IpAddrKind::V4</code> 和 <code>IpAddrKind::V6</code> 都是同型別 <code>IpAddrKind</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> four = IpAddrKind::V4;</span><br><span class="line"><span class="keyword">let</span> six = IpAddrKind::V6;</span><br></pre></td></tr></table></figure>
+
+<p>比方說，我們就可以定義一個接收任 <code>IpAddrKind</code> 的函式。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">route</span></span>(ip_kind: IpAddrKind) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然後可以用任意變體呼叫此函式。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">route(IpAddrKind::V4);</span><br><span class="line">route(IpAddrKind::V6);</span><br></pre></td></tr></table></figure>
+
+<p>使用枚舉還有更多好處。這裡定義了一個有兩個欄位的 <code>IpAddr</code> 結構體，欄位 <code>kind</code> 擁有 <code>IpAddrKind</code>。我們用結構體來組織 <code>kind</code> 和 <code>address</code> 的值在一起，讓變體可以與數值相關。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddrKind</span></span> &#123;</span><br><span class="line">    V4,</span><br><span class="line">    V6,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">IpAddr</span></span> &#123;</span><br><span class="line">    kind: IpAddrKind,</span><br><span class="line">    address: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> home = IpAddr &#123;</span><br><span class="line">    kind: IpAddrKind::V4,</span><br><span class="line">    address: <span class="built_in">String</span>::from(<span class="string">"127.0.0.1"</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> loopback = IpAddr &#123;</span><br><span class="line">    kind: IpAddrKind::V6,</span><br><span class="line">    address: <span class="built_in">String</span>::from(<span class="string">"::1"</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>可以用另一種更簡潔的方式來定義枚舉，而不必使用結構體加上枚舉。枚舉內的每個變體其實都能擁有數值。以下方式讓 <code>IpAddr</code> 的 <code>V4</code> 與 <code>V6</code> 都能擁有與其相關的 <code>String</code> 數值。另一項枚舉的細節：每一個枚舉變體會變成建構該枚舉的函式。也就是說 <code>IpAddr::V4()</code> 是個函式，且接收 <code>String</code> 引數並回傳 <code>IpAddr</code> 的實例。在定義枚舉時就會自動拿到這樣的建構函式。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddr</span></span> &#123;</span><br><span class="line">    V4(<span class="built_in">String</span>),</span><br><span class="line">    V6(<span class="built_in">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> home = IpAddr::V4(<span class="built_in">String</span>::from(<span class="string">"127.0.0.1"</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> loopback = IpAddr::V6(<span class="built_in">String</span>::from(<span class="string">"::1"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>使用枚舉而非結構體的話還有另一項好處：每個變體可以擁有不同型別與資料的數量。第四版的 IP 位址永遠只會有四個 <code>0</code> 到 <code>255</code> 的數字部分，如果我們想要讓 <code>V4</code> 儲存四個 <code>u8</code>，但 <code>V6</code> 位址仍保持 <code>String</code> 不變的話，我們在結構體是無法做到的。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddr</span></span> &#123;</span><br><span class="line">    V4(<span class="built_in">u8</span>, <span class="built_in">u8</span>, <span class="built_in">u8</span>, <span class="built_in">u8</span>),</span><br><span class="line">    V6(<span class="built_in">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> home = IpAddr::V4(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> loopback = IpAddr::V6(<span class="built_in">String</span>::from(<span class="string">"::1"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>以上展示了許多種定義儲存第四版與第六版 IP 位址資料結構的方式，不過需要儲存 IP 位址並編碼成不同類型的案例實在太常見了，所以標準函式庫已經幫我們定義好了。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Ipv4Addr</span></span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Ipv6Addr</span></span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddr</span></span> &#123;</span><br><span class="line">    V4(Ipv4Addr),</span><br><span class="line">    V6(Ipv6Addr),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再看另一個枚舉範例，這次的變體有各式各樣的型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Message</span></span> &#123;</span><br><span class="line">    Quit,</span><br><span class="line">    Move &#123; x: <span class="built_in">i32</span>, y: <span class="built_in">i32</span> &#125;,</span><br><span class="line">    Write(<span class="built_in">String</span>),</span><br><span class="line">    ChangeColor(<span class="built_in">i32</span>, <span class="built_in">i32</span>, <span class="built_in">i32</span>),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此枚舉有四個不同型別的變體：</p>
+<ul>
+<li><code>Quit</code>：沒有包含任何資料。</li>
+<li><code>Move</code>：包含了和結構體一樣的名稱欄位。</li>
+<li><code>Write</code>：包含了一個 <code>String</code>。</li>
+<li><code>ChangeColor</code>：包含了三個 <code>i32</code>。</li>
+</ul>
+<p>這樣定義枚舉變體和定義不同類型的結構體很像，只不過枚舉不使用 <code>struct</code> 關鍵字，而且所有的變體都會在 <code>Message</code> 型別底下。但是如果我們使用不同結構體且各自都有自己的型別的話，我們就無法將 <code>Message</code> 視為單一型別，輕鬆在定義函式時接收訊息所有可能的類型。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">QuitMessage</span></span>; <span class="comment">// 類單元結構體</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MoveMessage</span></span> &#123;</span><br><span class="line">    x: <span class="built_in">i32</span>,</span><br><span class="line">    y: <span class="built_in">i32</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">WriteMessage</span></span>(<span class="built_in">String</span>); <span class="comment">// 元組結構體</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ChangeColorMessage</span></span>(<span class="built_in">i32</span>, <span class="built_in">i32</span>, <span class="built_in">i32</span>); <span class="comment">// 元組結構體</span></span><br></pre></td></tr></table></figure>
+
+<p>枚舉和結構體還有一個地方很像：如同我們可以對結構體使用 <code>impl</code> 定義方法，我們也可以對枚舉定義方法。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Message &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">call</span></span>(&amp;<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="comment">// 在此定義方法本體</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> m = Message::Write(<span class="built_in">String</span>::from(<span class="string">"hello"</span>));</span><br><span class="line">m.call();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Option-枚舉相對於空值的優勢"><a href="#Option-枚舉相對於空值的優勢" class="headerlink" title="Option 枚舉相對於空值的優勢"></a>Option 枚舉相對於空值的優勢</h3><p><code>Option</code> 是在標準函式庫中定義的另一種枚舉。<code>Option</code> 能表示一個數值可能有某個東西，或者什麼都沒有。</p>
+<p>Rust 沒有像其他許多語言都有空值，但是它有一個枚舉可以表達出這樣的概念，也就是一個值可能是存在或不存在的。此枚舉就是 <code>Option&lt;T&gt;</code>，它是在標準函式庫中這樣定義的：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option</span></span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">    <span class="literal">Some</span>(T),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Option&lt;T&gt;</code> 實在太實用了，所以它早已加進 prelude 中，不需要特地匯入作用域中。它的變體一樣也被加進 prelude 中，可以直接使用 <code>Some</code> 和 <code>None</code> 而不必加上 <code>Option::</code> 的前綴。</p>
+<p>語法 <code>&lt;T&gt;</code> 是個泛型型別參數，指的是 <code>Option</code> 枚舉中的 <code>Some</code> 變體可以是任意型別。而透過 <code>Option</code> 數值來持有數字型別和字串型別的話，它們最終會換掉 <code>Option&lt;T&gt;</code> 中的 <code>T</code>，成為不同的型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> some_number = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> some_string = <span class="literal">Some</span>(<span class="string">"一個字串"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> absent_number: <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; = <span class="literal">None</span>;</span><br></pre></td></tr></table></figure>
+
+<p>因為 <code>Option&lt;T&gt;</code> 與 <code>T</code>（<code>T</code> 可以是任意型別）是不同的型別，編譯器不會允許我們像一般有效的值那樣來使用 <code>Option&lt;T&gt;</code>。舉例來說，以下範例是無法編譯的，因為這是將 <code>i8</code> 與 <code>Option&lt;i8&gt;</code> 相加。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x: <span class="built_in">i8</span> = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> y: <span class="built_in">Option</span>&lt;<span class="built_in">i8</span>&gt; = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sum = x + y;</span><br></pre></td></tr></table></figure>
+
+<p>會得到以下錯誤訊息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling enums v0.1.0 (file:///projects/enums)</span><br><span class="line">error[E0277]: cannot add `Option&lt;i8&gt;` to `i8`</span><br></pre></td></tr></table></figure>
+
+<p>此錯誤訊息指的是 Rust 不知道如何將 <code>i8</code> 與 <code>Option&lt;i8&gt;</code> 相加，因為它們是不同的型別。當我們在 Rust 中有個型別像是 <code>i8</code>，編譯器將會確保我們永遠會擁有有效數值，而不必檢查是不是空的。我們只有在使用 <code>Option&lt;i8&gt;</code>（或者任何其他要使用的型別）時才需要去擔心會不會沒有值。</p>
+<p>要讓一個值變成可能為空的話，必須顯式建立成對應型別的 <code>Option&lt;T&gt;</code>。然後當要使用該值時，就得顯式處理數值是否為空的條件。只要一個數值的型別不是 <code>Option&lt;T&gt;</code>，就可以安全地認定該值不為空。這是 Rust 刻意考慮的設計決定，限制無所不在的空值，並增強 Rust 程式碼的安全性。</p>
+<h2 id="match-語法"><a href="#match-語法" class="headerlink" title="match 語法"></a>match 語法</h2><p>Rust 有個功能非常強大的控制流建構子叫做 <code>match</code>，我們可以使用一系列模式來配對數值並依據配對到的模式來執行對應的程式。模式（Patterns）可以是字面數值、變數名稱、通配符（wildcards）和其他更多元件來組成。</p>
+<p>可以想像 <code>match</code> 表達式成一個硬幣分類機器：硬幣會滑到不同大小的軌道，然後每個硬幣會滑入第一個符合大小的軌道。數值會依序遍歷 <code>match</code> 的每個模式，然後進入第一個「配對」到該數值的模式所在的程式碼區塊，並在執行過程中使用。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Coin</span></span> &#123;</span><br><span class="line">    Penny,</span><br><span class="line">    Nickel,</span><br><span class="line">    Dime,</span><br><span class="line">    Quarter,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">value_in_cents</span></span>(coin: Coin) -&gt; <span class="built_in">u8</span> &#123;</span><br><span class="line">    <span class="keyword">match</span> coin &#123;</span><br><span class="line">        Coin::Penny =&gt; <span class="number">1</span>,</span><br><span class="line">        Coin::Nickel =&gt; <span class="number">5</span>,</span><br><span class="line">        Coin::Dime =&gt; <span class="number">10</span>,</span><br><span class="line">        Coin::Quarter =&gt; <span class="number">25</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果想要在配對分支執行多行程式碼的話，就必須用大括號。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">value_in_cents</span></span>(coin: Coin) -&gt; <span class="built_in">u8</span> &#123;</span><br><span class="line">    <span class="keyword">match</span> coin &#123;</span><br><span class="line">        Coin::Penny =&gt; &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"幸運幣！"</span>);</span><br><span class="line">            <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        Coin::Nickel =&gt; <span class="number">5</span>,</span><br><span class="line">        Coin::Dime =&gt; <span class="number">10</span>,</span><br><span class="line">        Coin::Quarter =&gt; <span class="number">25</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="綁定數值的模式"><a href="#綁定數值的模式" class="headerlink" title="綁定數值的模式"></a>綁定數值的模式</h3><p>另一項配對分支的實用功能是它們可以綁定配對模式中部分的數值，這讓我們可以取出枚舉變體中的數值。</p>
+<p>舉例來說，讓我們改變其中一個枚舉變體成擁有資料。從 1999 年到 2008 年，美國在鑄造 25 美分硬幣時，其中一側會有 50 個州不同的設計。不過其他的硬幣就沒有這樣的設計，只有 25 美分會有特殊值而已。我們可以改變我們的 <code>enum</code> 中的 <code>Quarter</code> 變體成儲存 <code>UsState</code> 數值。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[derive(Debug)]</span> <span class="comment">// 這讓我們可以顯示每個州</span></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">UsState</span></span> &#123;</span><br><span class="line">    Alabama,</span><br><span class="line">    Alaska,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Coin</span></span> &#123;</span><br><span class="line">    Penny,</span><br><span class="line">    Nickel,</span><br><span class="line">    Dime,</span><br><span class="line">    Quarter(UsState),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>讓我們想像有一個朋友想要收集所有 50 州的 25 美分硬幣。當我們在排序零錢的同時，我們會在拿到 25 美分時喊出該硬幣對應的州，好讓我們的朋友知道，如果他沒有的話就可以納入收藏。</p>
+<p>在此程式中的配對表達式中，我們在 <code>Coin::Quarter</code> 變體的配對模式中新增了一個變數 <code>state</code>。當 <code>Coin::Quarter</code> 配對符合時，變數 <code>state</code> 會綁定該 25 美分的數值，然後我們就可以在分支程式碼中使用 <code>state</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">value_in_cents</span></span>(coin: Coin) -&gt; <span class="built_in">u8</span> &#123;</span><br><span class="line">    <span class="keyword">match</span> coin &#123;</span><br><span class="line">        Coin::Penny =&gt; <span class="number">1</span>,</span><br><span class="line">        Coin::Nickel =&gt; <span class="number">5</span>,</span><br><span class="line">        Coin::Dime =&gt; <span class="number">10</span>,</span><br><span class="line">        Coin::Quarter(state) =&gt; &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"此 25 美分所屬的州為 &#123;:?&#125;!"</span>, state);</span><br><span class="line">            <span class="number">25</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果我們呼叫 <code>value_in_cents(Coin::Quarter(UsState::Alaska))</code> 的話，<code>coin</code> 就會是 <code>Coin::Quarter(UsState::Alaska)</code>。當我們比較每個配對分支時，我們會到 <code>Coin::Quarter(state)</code> 的分支才配對成功。</p>
+<h3 id="配對-Option"><a href="#配對-Option" class="headerlink" title="配對 Option"></a>配對 Option<t></t></h3><p>我們想要在使用 <code>Option&lt;T&gt;</code> 時取得 <code>Some</code> 內部的 <code>T</code> 值。如同枚舉 <code>Coin</code>，我們一樣可以使用 <code>match</code> 來處理 <code>Option&lt;T&gt;</code>。相對於比較硬幣，我們要比較的是 <code>Option&lt;T&gt;</code> 的變體，不過 <code>match</code> 表達式運作的方式一模一樣。</p>
+<p>假設我們要寫個接受 <code>Option&lt;i32&gt;</code> 的函式，而且如果內部有值的話就將其加上 <code>1</code>。如果內部沒有數值的話，該函式就回傳 <code>None</code> 且不再嘗試做任何動作。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">plus_one</span></span>(x: <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt;) -&gt; <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">match</span> x &#123;</span><br><span class="line">        <span class="literal">None</span> =&gt; <span class="literal">None</span>,</span><br><span class="line">        <span class="literal">Some</span>(i) =&gt; <span class="literal">Some</span>(i + <span class="number">1</span>),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> five = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> six = plus_one(five);</span><br><span class="line"><span class="keyword">let</span> none = plus_one(<span class="literal">None</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="配對必須是徹底的"><a href="#配對必須是徹底的" class="headerlink" title="配對必須是徹底的"></a>配對必須是徹底的</h3><p>要是像這樣寫了一個有錯誤的 <code>plus_one</code> 函式版本，它會無法編譯：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">plus_one</span></span>(x: <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt;) -&gt; <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">match</span> x &#123;</span><br><span class="line">        <span class="literal">Some</span>(i) =&gt; <span class="literal">Some</span>(i + <span class="number">1</span>),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因為我們沒有處理到 <code>None</code> 的情形，所以此程式碼會產生錯誤。幸運的是這是 Rust 能夠抓到的錯誤。當 Rust 防止我們忘記處理 <code>None</code> 的情形時，它使我們免於以為擁有一個有效實際上卻是空的值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling enums v0.1.0 (file:///projects/enums)</span><br><span class="line">error[E0004]: non-exhaustive patterns: `None` not covered</span><br></pre></td></tr></table></figure>
+
+<h3 id="Catch-all-模式與-佔位符"><a href="#Catch-all-模式與-佔位符" class="headerlink" title="Catch-all 模式與 _ 佔位符"></a>Catch-all 模式與 <code>_</code> 佔位符</h3><p>使用枚舉的話，我們可以針對特定數值做特別的動作，而對其他所有數值採取預設動作。</p>
+<p>此程式碼就算我們沒有列完所有 <code>u8</code> 可能的數字也能編譯完成，因為最後的模式會配對所有尚未被列出來的數值。最後一個涵蓋其他可能數值的分支，我們用變數 <code>other</code> 作為模式。在 <code>other</code> 分支執行的程式碼會將該變數傳入函式 <code>move_player</code> 中。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> dice_roll = <span class="number">9</span>;</span><br><span class="line">    <span class="keyword">match</span> dice_roll &#123;</span><br><span class="line">        <span class="number">3</span> =&gt; add_fancy_hat(),</span><br><span class="line">        <span class="number">7</span> =&gt; remove_fancy_hat(),</span><br><span class="line">        other =&gt; move_player(other),</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">add_fancy_hat</span></span>() &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">remove_fancy_hat</span></span>() &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">move_player</span></span>(num_spaces: <span class="built_in">u8</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當我們不想使用 catch-all 模式中的數值時，Rust 還有一種模式能讓我們使用：<code>_</code> 這是個特殊模式，用來配對任意數值且不綁定該數值。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dice_roll = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">match</span> dice_roll &#123;</span><br><span class="line">    <span class="number">3</span> =&gt; add_fancy_hat(),</span><br><span class="line">    <span class="number">7</span> =&gt; remove_fancy_hat(),</span><br><span class="line">    _ =&gt; reroll(),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">add_fancy_hat</span></span>() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">remove_fancy_hat</span></span>() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">reroll</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果我們再改一次遊戲規則，改成如果我們骰到除了 3 與 7 以外，不會有任何事發生的話，我們可以用單元數值作為 <code>_</code> 的程式碼：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dice_roll = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">match</span> dice_roll &#123;</span><br><span class="line">    <span class="number">3</span> =&gt; add_fancy_hat(),</span><br><span class="line">    <span class="number">7</span> =&gt; remove_fancy_hat(),</span><br><span class="line">    _ =&gt; (),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">add_fancy_hat</span></span>() &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">remove_fancy_hat</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="if-let-語法"><a href="#if-let-語法" class="headerlink" title="if let 語法"></a>if let 語法</h2><p>使用 <code>if let</code> 語法讓我們可以用 <code>if</code> 與 <code>let</code> 的組合來以比較不冗長的方式，處理只在乎其中一種模式而忽略其餘的數值。</p>
+<p>現在考慮一支程式如下所示，我們在配對 <code>config_max</code> 中 <code>Option&lt;u8&gt;</code> 的值，但只想在數值為 <code>Some</code> 變體時執行程式。我們必須在只處理一種變體的分支後面，再加上 <code>_ =&gt; ()</code>，這樣就加了不少樣板程式碼。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> config_max = <span class="literal">Some</span>(<span class="number">3u8</span>);</span><br><span class="line"><span class="keyword">match</span> config_max &#123;</span><br><span class="line">    <span class="literal">Some</span>(max) =&gt; <span class="built_in">println!</span>(<span class="string">"最大值被設為 &#123;&#125;"</span>, max),</span><br><span class="line">    _ =&gt; (),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們可以使用 <code>if let</code> 以更精簡的方式寫出來。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> config_max = <span class="literal">Some</span>(<span class="number">3u8</span>);</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Some</span>(max) = config_max &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大值被設為 &#123;&#125;"</span>, max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>if let</code> 可以少打些字、減少縮排以及不用寫多餘的樣板程式碼。不過就少了 <code>match</code> 強制的徹底窮舉檢查。要何時選擇 <code>match</code> 還是 <code>if let</code> 得依據場合，以及在精簡度與徹底檢查之間做取捨。</p>
+<p>換句話說，可以想像 <code>if let</code> 是 <code>match</code> 的語法糖（syntax sugar），它只會配對一種模式來執行程式碼並忽略其他數值。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚舉"><span class="toc-number">2.</span> <span class="toc-text">枚舉</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#枚舉數值"><span class="toc-number">2.1.</span> <span class="toc-text">枚舉數值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Option-枚舉相對於空值的優勢"><span class="toc-number">2.2.</span> <span class="toc-text">Option 枚舉相對於空值的優勢</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#match-語法"><span class="toc-number">3.</span> <span class="toc-text">match 語法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#綁定數值的模式"><span class="toc-number">3.1.</span> <span class="toc-text">綁定數值的模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配對-Option"><span class="toc-number">3.2.</span> <span class="toc-text">配對 Option</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配對必須是徹底的"><span class="toc-number">3.3.</span> <span class="toc-text">配對必須是徹底的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Catch-all-模式與-佔位符"><span class="toc-number">3.4.</span> <span class="toc-text">Catch-all 模式與 _ 佔位符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#if-let-語法"><span class="toc-number">4.</span> <span class="toc-text">if let 語法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&text=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&is_video=false&description=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對&body=Check out this article: https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&title=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/06/「The-Rust-Programming-Language」學習筆記（六）：枚舉與模式配對/&name=「The Rust Programming Language」學習筆記（六）：枚舉與模式配對&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

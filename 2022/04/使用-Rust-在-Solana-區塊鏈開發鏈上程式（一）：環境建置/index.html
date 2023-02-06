@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 安裝 Rust安裝 Rust 語言。 1curl --proto &apos;=https&apos; --tlsv1.2 -sSf https://sh.rustup.rs | sh  查看版本。 12rustup --versionrustup 1.24.3 (ce5817a94 2021-05-31)  安裝 Solana安裝 Solana 命令列工">
+<meta name="keywords" content="JavaScript,區塊鏈,Smart Contract,DApp,Solana,Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置">
+<meta property="og:url" content="https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 安裝 Rust安裝 Rust 語言。 1curl --proto &apos;=https&apos; --tlsv1.2 -sSf https://sh.rustup.rs | sh  查看版本。 12rustup --versionrustup 1.24.3 (ce5817a94 2021-05-31)  安裝 Solana安裝 Solana 命令列工">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置">
+<meta name="twitter:description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 安裝 Rust安裝 Rust 語言。 1curl --proto &apos;=https&apos; --tlsv1.2 -sSf https://sh.rustup.rs | sh  查看版本。 12rustup --versionrustup 1.24.3 (ce5817a94 2021-05-31)  安裝 Solana安裝 Solana 命令列工">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/04/認識-tail-命令列指令/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（二）：履約保證/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&text=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&is_video=false&description=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置&body=Check out this article: https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&name=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Rust"><span class="toc-number">2.</span> <span class="toc-text">安裝 Rust</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Solana"><span class="toc-number">3.</span> <span class="toc-text">安裝 Solana</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動節點"><span class="toc-number">4.</span> <span class="toc-text">啟動節點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#充值"><span class="toc-number">5.</span> <span class="toc-text">充值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用範例專案"><span class="toc-number">6.</span> <span class="toc-text">使用範例專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-04-14T07:16:51.000Z" itemprop="datePublished">2022-04-14</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/區塊鏈/Solana/">Solana</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/DApp/">DApp</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/Smart-Contract/">Smart Contract</a>, <a class="tag-link" href="/tags/Solana/">Solana</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「Solana 開發者的入門指南」影片的學習筆記。</p>
+<h2 id="安裝-Rust"><a href="#安裝-Rust" class="headerlink" title="安裝 Rust"></a>安裝 Rust</h2><p>安裝 Rust 語言。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto <span class="string">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+
+<p>查看版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rustup --version</span><br><span class="line">rustup 1.24.3 (ce5817a94 2021-05-31)</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Solana"><a href="#安裝-Solana" class="headerlink" title="安裝 Solana"></a>安裝 Solana</h2><p>安裝 Solana 命令列工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="variable">$(curl -sSfL https://release.solana.com/v1.10.0/install)</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>將執行檔路徑添加至環境變數。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$HOME</span>/.local/share/solana/install/active_release/bin:<span class="variable">$PATH</span>"</span></span><br></pre></td></tr></table></figure>
+
+<p>查看版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">solana --version</span><br><span class="line">solana-cli 1.10.0 (src:7dbde224; feat:275730699)</span><br></pre></td></tr></table></figure>
+
+<h2 id="啟動節點"><a href="#啟動節點" class="headerlink" title="啟動節點"></a>啟動節點</h2><p>使用 <code>solana-keygen</code> 指令建立一個錢包（一組公私鑰）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solana-keygen new</span><br></pre></td></tr></table></figure>
+
+<p>將命令列設定的 <code>url</code> 參數設置成 <code>localhost</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solana config <span class="built_in">set</span> --url localhost</span><br></pre></td></tr></table></figure>
+
+<p>開啟一個新的終端視窗，使用 <code>solana-test-validator</code> 指令，啟動一個本地的 Solana 節點。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solana-test-validator</span><br></pre></td></tr></table></figure>
+
+<h2 id="充值"><a href="#充值" class="headerlink" title="充值"></a>充值</h2><p>為錢包充值 1 SOL。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solana airdrop 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用範例專案"><a href="#使用範例專案" class="headerlink" title="使用範例專案"></a>使用範例專案</h2><p>下載 <code>example-helloworld</code> 範例專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/solana-labs/example-helloworld.git solana-example</span><br><span class="line"><span class="built_in">cd</span> solana-example</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ci</span><br></pre></td></tr></table></figure>
+
+<p>安裝 TypeScript Node 執行環境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g ts-node</span><br></pre></td></tr></table></figure>
+
+<p>編譯 <code>helloworld</code> 鏈上程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build:program-rust</span><br></pre></td></tr></table></figure>
+
+<p>部署 <code>helloworld</code> 鏈上程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">solana program deploy dist/program/helloworld.so</span><br></pre></td></tr></table></figure>
+
+<p>啟動客戶端。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run start</span><br></pre></td></tr></table></figure>
+
+<p>輸出訊息如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Let<span class="string">'s say hello to a Solana account...</span></span><br><span class="line"><span class="string">Connection to cluster established: http://localhost:8899 &#123; '</span>feature-set<span class="string">': 275730699, '</span>solana-core<span class="string">': '</span>1.10.0<span class="string">' &#125;</span></span><br><span class="line"><span class="string">Using account C4pPW8ZmWFYsAUNcFzEUA7mgdS6ABV9Z3sBobPvVthgi containing 499999998.6475557 SOL to pay for fees</span></span><br><span class="line"><span class="string">Using program 2pCXRB6zESaghdN17WNeBgCjQwgfWK4MZNNK2YkfavPW</span></span><br><span class="line"><span class="string">Creating account 5kgQAzrAn4M274sypVbXx6s6xFNkYChyfSrxCQkekTNf to say hello to</span></span><br><span class="line"><span class="string">Saying hello to 5kgQAzrAn4M274sypVbXx6s6xFNkYChyfSrxCQkekTNf</span></span><br><span class="line"><span class="string">5kgQAzrAn4M274sypVbXx6s6xFNkYChyfSrxCQkekTNf has been greeted 1 time(s)</span></span><br><span class="line"><span class="string">Success</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://github.com/solana-labs/example-helloworld" target="_blank" rel="noopener">example-helloworld</a></li>
+<li><a href="https://book.solmeet.dev/notes/solana-starter-kit" target="_blank" rel="noopener">A Starter Kit for New Solana Developer</a></li>
+<li><a href="https://youtu.be/OIjsPrcPe8s" target="_blank" rel="noopener">Solana 開發者的入門指南</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Rust"><span class="toc-number">2.</span> <span class="toc-text">安裝 Rust</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Solana"><span class="toc-number">3.</span> <span class="toc-text">安裝 Solana</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動節點"><span class="toc-number">4.</span> <span class="toc-text">啟動節點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#充值"><span class="toc-number">5.</span> <span class="toc-text">充值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用範例專案"><span class="toc-number">6.</span> <span class="toc-text">使用範例專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&text=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&is_video=false&description=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置&body=Check out this article: https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&title=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/使用-Rust-在-Solana-區塊鏈開發鏈上程式（一）：環境建置/&name=使用 Rust 在 Solana 區塊鏈開發鏈上程式（一）：環境建置&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

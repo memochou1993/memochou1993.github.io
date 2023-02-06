@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《學會 C 語言》一書的學習筆記。 概述電腦程式在執行時，常常需要記住一些資料，所以程式語言會提供一個地方用來記得執行時的一些資料，這個地方就是變數（Variables）。 變數儲存在哪裡變數儲存在電腦的記憶體裡，變數是一個名稱，用來代表電腦記憶體空間的一個位址。 變數的基本操作變數只有兩種操作：  存値，指定變數成為一個全新的値。 取値，取得目前的變數値。  常數常數（Constant">
+<meta name="keywords" content="程式設計,C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《學會 C 語言》學習筆記（四）：變數、常數及資料型態">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《學會 C 語言》一書的學習筆記。 概述電腦程式在執行時，常常需要記住一些資料，所以程式語言會提供一個地方用來記得執行時的一些資料，這個地方就是變數（Variables）。 變數儲存在哪裡變數儲存在電腦的記憶體裡，變數是一個名稱，用來代表電腦記憶體空間的一個位址。 變數的基本操作變數只有兩種操作：  存値，指定變數成為一個全新的値。 取値，取得目前的變數値。  常數常數（Constant">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《學會 C 語言》學習筆記（四）：變數、常數及資料型態">
+<meta name="twitter:description" content="前言本文為《學會 C 語言》一書的學習筆記。 概述電腦程式在執行時，常常需要記住一些資料，所以程式語言會提供一個地方用來記得執行時的一些資料，這個地方就是變數（Variables）。 變數儲存在哪裡變數儲存在電腦的記憶體裡，變數是一個名稱，用來代表電腦記憶體空間的一個位址。 變數的基本操作變數只有兩種操作：  存値，指定變數成為一個全新的値。 取値，取得目前的變數値。  常數常數（Constant">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《學會 C 語言》學習筆記（四）：變數、常數及資料型態</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/《現代-PHP》學習筆記（十七）：多位元組字串/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/「Python-數據分析」學習筆記（一）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&text=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&is_video=false&description=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（四）：變數、常數及資料型態&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&name=《學會 C 語言》學習筆記（四）：變數、常數及資料型態&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">2.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#變數儲存在哪裡"><span class="toc-number">2.1.</span> <span class="toc-text">變數儲存在哪裡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#變數的基本操作"><span class="toc-number">2.2.</span> <span class="toc-text">變數的基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常數"><span class="toc-number">2.3.</span> <span class="toc-text">常數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#資料型態"><span class="toc-number">2.4.</span> <span class="toc-text">資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#識別字"><span class="toc-number">2.5.</span> <span class="toc-text">識別字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#變數"><span class="toc-number">3.</span> <span class="toc-text">變數</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#宣告變數並指定初値"><span class="toc-number">3.1.</span> <span class="toc-text">宣告變數並指定初値</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定敘述"><span class="toc-number">3.2.</span> <span class="toc-text">指定敘述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常數-1"><span class="toc-number">4.</span> <span class="toc-text">常數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料型態-1"><span class="toc-number">5.</span> <span class="toc-text">資料型態</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本資料型態"><span class="toc-number">5.1.</span> <span class="toc-text">基本資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延伸資料型態"><span class="toc-number">5.2.</span> <span class="toc-text">延伸資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#型態修飾子"><span class="toc-number">5.3.</span> <span class="toc-text">型態修飾子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整數資料型態"><span class="toc-number">5.4.</span> <span class="toc-text">整數資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浮點數資料型態"><span class="toc-number">5.5.</span> <span class="toc-text">浮點數資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字元資料型態"><span class="toc-number">5.6.</span> <span class="toc-text">字元資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳脫字元"><span class="toc-number">5.7.</span> <span class="toc-text">跳脫字元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#void-資料型態"><span class="toc-number">5.8.</span> <span class="toc-text">void 資料型態</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《學會 C 語言》學習筆記（四）：變數、常數及資料型態
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-08T06:00:26.000Z" itemprop="datePublished">2018-06-08</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/C/《學會-C-語言》學習筆記/">《學會 C 語言》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《學會 C 語言》一書的學習筆記。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>電腦程式在執行時，常常需要記住一些資料，所以程式語言會提供一個地方用來記得執行時的一些資料，這個地方就是變數（Variables）。</p>
+<h3 id="變數儲存在哪裡"><a href="#變數儲存在哪裡" class="headerlink" title="變數儲存在哪裡"></a>變數儲存在哪裡</h3><p>變數儲存在電腦的記憶體裡，變數是一個名稱，用來代表電腦記憶體空間的一個位址。</p>
+<h3 id="變數的基本操作"><a href="#變數的基本操作" class="headerlink" title="變數的基本操作"></a>變數的基本操作</h3><p>變數只有兩種操作：</p>
+<ul>
+<li>存値，指定變數成為一個全新的値。</li>
+<li>取値，取得目前的變數値。</li>
+</ul>
+<h3 id="常數"><a href="#常數" class="headerlink" title="常數"></a>常數</h3><p>常數（Constants）就是固定不變的數値，如 <code>A</code>、<code>100</code>，也就是數値或字元値。</p>
+<h3 id="資料型態"><a href="#資料型態" class="headerlink" title="資料型態"></a>資料型態</h3><p>資料型態決定變數能夠儲存數値或字元等資料。</p>
+<h3 id="識別字"><a href="#識別字" class="headerlink" title="識別字"></a>識別字</h3><p>程式設計者在程式碼中自行命名的元素，稱為識別字（Identifier），如變數名稱。而保留字（Reserved Words）是一些對編譯器有特殊意義的名稱，程式設計者不得再重新賦予不同的用途。</p>
+<p>識別字名稱（Identifier Names）是指 C 語言的變數、函數、標籤或各種自訂資料型態的名稱，可以包含英文字母、數字和底線「<code>_</code>」字元組成的名稱。</p>
+<h2 id="變數"><a href="#變數" class="headerlink" title="變數"></a>變數</h2><p>變數就是使用有意義的名稱來代表數字的記憶體位址。</p>
+<h3 id="宣告變數並指定初値"><a href="#宣告變數並指定初値" class="headerlink" title="宣告變數並指定初値"></a>宣告變數並指定初値</h3><p>C 語言提供四種基本資料型態：</p>
+<ul>
+<li><code>char</code>，代表字元。</li>
+<li><code>int</code>，代表整數。</li>
+<li><code>float</code>，代表單精度浮點數。</li>
+<li><code>double</code>，代表雙精度浮點數。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> grage = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">double</span> height = <span class="number">175.5</span>;</span><br><span class="line">    <span class="keyword">double</span> weight = <span class="number">75.5</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"成績 = %d\n"</span>, grage);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"身高 = %f\n"</span>, height);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"體重 = %f\n"</span>, weight);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>格式字元「<code>%d</code>」用來輸出整數。</li>
+<li>格式字元「<code>%f</code>」用來輸出浮點數。</li>
+</ul>
+<p>C 語言除了一行宣告一個變數外，也可以在同一行宣告多個變數，分別指定初値。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> height = <span class="number">175.5</span>, weight = <span class="number">75.5</span>;</span><br></pre></td></tr></table></figure>
+
+<p>也可以只宣告變數，但不指定初値。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> grage;</span><br><span class="line"><span class="keyword">double</span> height;</span><br><span class="line"><span class="keyword">double</span> weight;</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定敘述"><a href="#指定敘述" class="headerlink" title="指定敘述"></a>指定敘述</h3><p>指定敘述（Assignment Statements）是在程式執行中更改變數値，在宣告變數時沒有指定初値，可以使用指定敘述來指定或更改。</p>
+<p>C 語言的指定敘述是「<code>=</code>」符號，可以更改變數値成為常數値、其他變數或運算結果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> score1 = <span class="number">35</span>;</span><br><span class="line">    <span class="keyword">int</span> score2 = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> score3 = <span class="number">10</span>;</span><br><span class="line">    score2 = <span class="number">27</span>;</span><br><span class="line">    score3 = score2;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第一節 = %d\n"</span> , score1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第二節 = %d\n"</span> , score2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第三節 = %d\n"</span> , score3);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>等號左邊的是變數的記憶體空間位址，等號右邊的是變數値。</li>
+</ul>
+<p>C 語言支援多重指定敘述（Multiple Assignments），可以在同一指定敘述同時指定多個變數値。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> score1, score2, score3;</span><br><span class="line"></span><br><span class="line">    score1 = score2 = score3 = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第一節 = %d\n"</span> , score1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第二節 = %d\n"</span> , score2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第三節 = %d\n"</span> , score3);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常數-1"><a href="#常數-1" class="headerlink" title="常數"></a>常數</h2><p>在 C 語言，使用 <code>#define</code> 指令和 <code>const</code> 常數修飾子建立常數。</p>
+<p>使用前置處理器的 <code>#define</code> 指令來定義常數。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PI 3.1415926</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>這是巨集指令，所以沒有等號與分號。</li>
+</ul>
+<p>使用 <code>const</code> 常數修飾子來定義常數。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> e = <span class="number">2.71828182845</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果是使用在陣列，表示陣列的所有元素都不能更改；如果是使用在函數參數，表示函數中不允許更改其參數値。</li>
+</ul>
+<p>使用常數是希望程式執行中，無法使用程式碼更改它的値。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PI 3.1415926 <span class="comment">/* 常數 */</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> area;</span><br><span class="line">    <span class="keyword">double</span> r = <span class="number">10.0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">double</span> e = <span class="number">2.71828182845</span>;</span><br><span class="line">    area = PI * r * r;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"面積: %f\n"</span>, area);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"常數e = %f\n"</span>, e);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料型態-1"><a href="#資料型態-1" class="headerlink" title="資料型態"></a>資料型態</h2><p>C 語言的變數需要指定使用的資料型態，告訴編譯器變數準備儲存哪種資料，以及需要配置多大的記憶體空間。注意，變數在定義以後就不能再更改資料型態。</p>
+<h3 id="基本資料型態"><a href="#基本資料型態" class="headerlink" title="基本資料型態"></a>基本資料型態</h3><p>以 ANSI-C 編譯器為例，一些基本資料型態如下：</p>
+<table>
+<thead>
+<tr>
+<th>資料型態</th>
+<th>說明</th>
+<th>位元數</th>
+<th>範圍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unsigned int</td>
+<td>無符號整數</td>
+<td>32</td>
+<td>0 ~ 4,294,967,295</td>
+</tr>
+<tr>
+<td>signed char</td>
+<td>字元</td>
+<td>8</td>
+<td>-128 ~ 127</td>
+</tr>
+<tr>
+<td>signed int</td>
+<td>整數</td>
+<td>32</td>
+<td>-2,147,483,648 ~ 2,147,483,648</td>
+</tr>
+<tr>
+<td>float</td>
+<td>單精度浮點數</td>
+<td>32</td>
+<td>1.18e-38 ~ 3.40e+38</td>
+</tr>
+<tr>
+<td>double</td>
+<td>雙精度浮點數</td>
+<td>64</td>
+<td>2.23e-308 ~ 1.79e+308</td>
+</tr>
+</tbody></table>
+<h3 id="延伸資料型態"><a href="#延伸資料型態" class="headerlink" title="延伸資料型態"></a>延伸資料型態</h3><p>從基本資料型態可以建立多種延伸資料型態如下：</p>
+<table>
+<thead>
+<tr>
+<th>資料型態</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>陣列（Array）</td>
+<td>大部分資料型態都可建立陣列</td>
+</tr>
+<tr>
+<td>函數（Function）</td>
+<td>函數若有傳回値，就會傳回指定資料型態</td>
+</tr>
+<tr>
+<td>指標（Pointer）</td>
+<td>指向特定資料型態記憶體位址的變數</td>
+</tr>
+<tr>
+<td>結構（Structure）</td>
+<td>可以組合各種資料型態變數來建立新型態</td>
+</tr>
+<tr>
+<td>聯合（Union）</td>
+<td>類似結構，在同一塊記憶體空間可以儲存不同資料型態</td>
+</tr>
+</tbody></table>
+<h3 id="型態修飾子"><a href="#型態修飾子" class="headerlink" title="型態修飾子"></a>型態修飾子</h3><p>C 語言提供四種型態修飾子，如下：</p>
+<table>
+<thead>
+<tr>
+<th>型態修飾子</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unsigned</td>
+<td>無符號變數，變數値都是正整數</td>
+</tr>
+<tr>
+<td>signed</td>
+<td>有符號變數，變數値可為正負値</td>
+</tr>
+<tr>
+<td>short</td>
+<td>比 int 還小的範圍</td>
+</tr>
+<tr>
+<td>long</td>
+<td>比 int 還大的範圍</td>
+</tr>
+</tbody></table>
+<p>在 C 程式可以使用 <code>sizeof</code> 運算子取得指定資料型態占用的位元組數。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"char = %d\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br></pre></td></tr></table></figure>
+
+<p>也可以取得變數占用的位元組數。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"var1 = %d\n"</span>, <span class="keyword">sizeof</span>(var1));</span><br></pre></td></tr></table></figure>
+
+<h3 id="整數資料型態"><a href="#整數資料型態" class="headerlink" title="整數資料型態"></a>整數資料型態</h3><p>整數資料型態（Integer Types）是指變數儲存的値為整數値，沒有小數點。</p>
+<p>整數常數（Integer Constants）是在程式碼直接使用數字。</p>
+<ul>
+<li>八進位：以「0」為開頭的整數値。</li>
+<li>十六進位：以「0x」或「0X」為開頭的數值。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>整數常數</th>
+<th>十進位値</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>123</td>
+<td>123</td>
+<td>十進位整數</td>
+</tr>
+<tr>
+<td>-243</td>
+<td>-234</td>
+<td>十進位負整數</td>
+</tr>
+<tr>
+<td>0256</td>
+<td>174</td>
+<td>八進位整數</td>
+</tr>
+<tr>
+<td>0Xff</td>
+<td>255</td>
+<td>十六進位整數</td>
+</tr>
+<tr>
+<td>0xccf</td>
+<td>3279</td>
+<td>十六進位整數</td>
+</tr>
+</tbody></table>
+<h3 id="浮點數資料型態"><a href="#浮點數資料型態" class="headerlink" title="浮點數資料型態"></a>浮點數資料型態</h3><p>浮點數資料型態（Floating Types）是指變數儲存的値為加上小數或使用科學符號表示的數值。</p>
+<p>浮點常數（Floating Constant）是在程式碼直接使用浮點數値，是擁有小數點的數值。</p>
+<table>
+<thead>
+<tr>
+<th>浮點常數</th>
+<th>十進位値</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>123.23</td>
+<td>123.23</td>
+<td>浮點數</td>
+</tr>
+<tr>
+<td>.0007</td>
+<td>.0007</td>
+<td>浮點數</td>
+</tr>
+<tr>
+<td>5e4</td>
+<td>50000</td>
+<td>使用指數的浮點數</td>
+</tr>
+<tr>
+<td>4.34e-3</td>
+<td>0.00434</td>
+<td>使用指數的浮點數</td>
+</tr>
+</tbody></table>
+<h3 id="字元資料型態"><a href="#字元資料型態" class="headerlink" title="字元資料型態"></a>字元資料型態</h3><p>字元資料型態（Character type）是指變數儲存的値為字元。</p>
+<p>字元常數（Character Constant）是在程式碼直接使用字元符號，需要使用單引號「<code>&#39;</code>」包圍起來。</p>
+<p>可以使用「<code>\x</code>」字串開頭的兩個十六進位數字，或「<code>\</code>」字串開頭的三個八進位數字來表示。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char c = '\x20';</span><br><span class="line">char d = '\040';</span><br></pre></td></tr></table></figure>
+
+<p>字串常數（String Literals）就是字串，使用 ASCII 碼的雙引號「<code>&quot;</code>」包圍起來。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"學習 C 語言"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="跳脫字元"><a href="#跳脫字元" class="headerlink" title="跳脫字元"></a>跳脫字元</h3><p>C 語言提供跳脫字元來輸入特殊字元，一些使用「<code>\</code>」符號開頭的跳脫字元如下：</p>
+<table>
+<thead>
+<tr>
+<th>跳脫字元</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\t</td>
+<td>Tab 鍵</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>Enter 鍵</td>
+</tr>
+<tr>
+<td>&#39;</td>
+<td>單引號</td>
+</tr>
+<tr>
+<td>&quot;</td>
+<td>雙引號</td>
+</tr>
+<tr>
+<td>\</td>
+<td>斜線</td>
+</tr>
+</tbody></table>
+<h3 id="void-資料型態"><a href="#void-資料型態" class="headerlink" title="void 資料型態"></a>void 資料型態</h3><p>void 資料型態在 C 語言是一種特殊資料型態，代表一個並不存在的値，主要使用在型態轉換、函數傳回値、參數列和指標。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>陳會安（2016）。學會 C 語言。台北市：旗標。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">2.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#變數儲存在哪裡"><span class="toc-number">2.1.</span> <span class="toc-text">變數儲存在哪裡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#變數的基本操作"><span class="toc-number">2.2.</span> <span class="toc-text">變數的基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常數"><span class="toc-number">2.3.</span> <span class="toc-text">常數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#資料型態"><span class="toc-number">2.4.</span> <span class="toc-text">資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#識別字"><span class="toc-number">2.5.</span> <span class="toc-text">識別字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#變數"><span class="toc-number">3.</span> <span class="toc-text">變數</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#宣告變數並指定初値"><span class="toc-number">3.1.</span> <span class="toc-text">宣告變數並指定初値</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指定敘述"><span class="toc-number">3.2.</span> <span class="toc-text">指定敘述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常數-1"><span class="toc-number">4.</span> <span class="toc-text">常數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料型態-1"><span class="toc-number">5.</span> <span class="toc-text">資料型態</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本資料型態"><span class="toc-number">5.1.</span> <span class="toc-text">基本資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#延伸資料型態"><span class="toc-number">5.2.</span> <span class="toc-text">延伸資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#型態修飾子"><span class="toc-number">5.3.</span> <span class="toc-text">型態修飾子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整數資料型態"><span class="toc-number">5.4.</span> <span class="toc-text">整數資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浮點數資料型態"><span class="toc-number">5.5.</span> <span class="toc-text">浮點數資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字元資料型態"><span class="toc-number">5.6.</span> <span class="toc-text">字元資料型態</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳脫字元"><span class="toc-number">5.7.</span> <span class="toc-text">跳脫字元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#void-資料型態"><span class="toc-number">5.8.</span> <span class="toc-text">void 資料型態</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&text=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&is_video=false&description=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（四）：變數、常數及資料型態&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&title=《學會 C 語言》學習筆記（四）：變數、常數及資料型態"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（四）：變數、常數及資料型態/&name=《學會 C 語言》學習筆記（四）：變數、常數及資料型態&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言ChatGPT 在 2022 年 11 月推出，是由 OpenAI 開發的一個人工智慧聊天機器人程式。而 OpenAI 提供了 GPT-3 模型的 API 讓開發者可以串接。雖然不是 ChatGPT 使用的 GPT-3.5 模型，但仍然很強大。 為了跟上這波風潮，藉此把 OpenAI 的 Completion API 串接到 LINE 應用程式上，讓使用者可以直接透過 LINE 與 AI 進行">
+<meta name="keywords" content="程式設計,JavaScript,Node,GPT,AI,OpenAI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人">
+<meta property="og:url" content="https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言ChatGPT 在 2022 年 11 月推出，是由 OpenAI 開發的一個人工智慧聊天機器人程式。而 OpenAI 提供了 GPT-3 模型的 API 讓開發者可以串接。雖然不是 ChatGPT 使用的 GPT-3.5 模型，但仍然很強大。 為了跟上這波風潮，藉此把 OpenAI 的 Completion API 串接到 LINE 應用程式上，讓使用者可以直接透過 LINE 與 AI 進行">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2023-02-06T14:47:58.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人">
+<meta name="twitter:description" content="前言ChatGPT 在 2022 年 11 月推出，是由 OpenAI 開發的一個人工智慧聊天機器人程式。而 OpenAI 提供了 GPT-3 模型的 API 讓開發者可以串接。雖然不是 ChatGPT 使用的 GPT-3.5 模型，但仍然很強大。 為了跟上這波風潮，藉此把 OpenAI 的 Completion API 串接到 LINE 應用程式上，讓使用者可以直接透過 LINE 與 AI 進行">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/01/在-Hexo-部落格新增-Google-AdSense-廣告/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2023/01/在-React-專案使用-Swiper-建立幻燈片/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&text=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&is_video=false&description=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人&body=Check out this article: https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&name=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API"><span class="toc-number">2.1.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用參數"><span class="toc-number">2.2.</span> <span class="toc-text">常用參數</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架構"><span class="toc-number">3.</span> <span class="toc-text">架構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#路由"><span class="toc-number">3.1.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要處理器"><span class="toc-number">3.2.</span> <span class="toc-text">主要處理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#兩個核心模組"><span class="toc-number">3.3.</span> <span class="toc-text">兩個核心模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化儲存"><span class="toc-number">3.4.</span> <span class="toc-text">持久化儲存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由-1"><span class="toc-number">4.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要處理器-1"><span class="toc-number">5.</span> <span class="toc-text">主要處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核心模組"><span class="toc-number">6.</span> <span class="toc-text">核心模組</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prompt-模組"><span class="toc-number">6.1.</span> <span class="toc-text">Prompt 模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實際應用"><span class="toc-number">6.2.</span> <span class="toc-text">實際應用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#History-模組"><span class="toc-number">6.3.</span> <span class="toc-text">History 模組</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持久化儲存-1"><span class="toc-number">7.</span> <span class="toc-text">持久化儲存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#實際應用-1"><span class="toc-number">7.1.</span> <span class="toc-text">實際應用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子處理器"><span class="toc-number">8.</span> <span class="toc-text">子處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#開發"><span class="toc-number">9.</span> <span class="toc-text">開發</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#執行測試"><span class="toc-number">9.1.</span> <span class="toc-text">執行測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用代理伺服器"><span class="toc-number">9.2.</span> <span class="toc-text">使用代理伺服器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">10.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-01-06T14:41:52.000Z" itemprop="datePublished">2023-01-06</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/JavaScript/Node/">Node</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/AI/">AI</a>, <a class="tag-link" href="/tags/GPT/">GPT</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/OpenAI/">OpenAI</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ChatGPT 在 2022 年 11 月推出，是由 OpenAI 開發的一個人工智慧聊天機器人程式。而 OpenAI 提供了 GPT-3 模型的 API 讓開發者可以串接。雖然不是 ChatGPT 使用的 GPT-3.5 模型，但仍然很強大。</p>
+<p>為了跟上這波風潮，藉此把 OpenAI 的 Completion API 串接到 LINE 應用程式上，讓使用者可以直接透過 LINE 與 AI 進行互動。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>可以先使用 <a href="https://beta.openai.com/playground" target="_blank" rel="noopener">Playground</a> 進行測試，大概知道 Completion API 的運作方式。也就是只要給 AI 提示詞，讓 AI 把文字補全即可。</p>
+<p>例如，使用以下提示詞：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AI: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Human: 你好嗎？</span><br></pre></td></tr></table></figure>
+
+<p>Completion API 就會將文字補全。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AI: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Human: 你好嗎？</span><br><span class="line">AI: 嗨！很高興為你服務！</span><br></pre></td></tr></table></figure>
+
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>呼叫 API 的方式非常簡單，以使用 curl 為例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curl https://api.openai.com/v1/completions \</span><br><span class="line">  -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">  -H <span class="string">"Authorization: Bearer <span class="variable">$OPENAI_API_KEY</span>"</span> \</span><br><span class="line">  -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">  "model": "text-davinci-003",</span></span><br><span class="line"><span class="string">  "prompt": "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nAI: 我是 AI 助理，我可以怎麼幫你？\nHuman: 你好嗎？ 嗨！很高興為你服務！",</span></span><br><span class="line"><span class="string">  "temperature": 0.9,</span></span><br><span class="line"><span class="string">  "max_tokens": 150,</span></span><br><span class="line"><span class="string">  "top_p": 1,</span></span><br><span class="line"><span class="string">  "frequency_penalty": 0,</span></span><br><span class="line"><span class="string">  "presence_penalty": 0.6,</span></span><br><span class="line"><span class="string">  "stop": [" Human:", " AI:"]</span></span><br><span class="line"><span class="string">&#125;'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常用參數"><a href="#常用參數" class="headerlink" title="常用參數"></a>常用參數</h3><ul>
+<li><code>model</code>：使用的語言模型，最新的是 <code>text-davinci-003</code> 模型，但費用較貴。</li>
+<li><code>temperature</code>：決定回應的創意和多樣性，越高代表越活潑，越低代表越保守。</li>
+<li><code>max_tokens</code>：決定最多回應的字詞數量。</li>
+<li><code>stop</code>：決定停止繼續生成文字的停止符。</li>
+</ul>
+<h2 id="架構"><a href="#架構" class="headerlink" title="架構"></a>架構</h2><p>專案 <a href="https://github.com/memochou1993/gpt-ai-assistant" target="_blank" rel="noopener">gpt-ai-assistant</a> 的架構，主要分成路由、主要處理器、兩個核心模組，和一個持久化儲存。</p>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>路由的部分主要就是兩個：</p>
+<ul>
+<li><code>/</code>：檢查端點，檢查是否部署成功。</li>
+<li><code>/webhook</code>：回呼端點，用來接收 LINE 事件，並處理訊息回覆。</li>
+</ul>
+<h3 id="主要處理器"><a href="#主要處理器" class="headerlink" title="主要處理器"></a>主要處理器</h3><p>主要處理器在接收 LINE 事件後，會被 <code>handleEvents</code> 方法接收，再被 <code>handleContext</code> 方法接收，一路傳遞至指定的子處理器，最終變成 LINE 的回應格式，被送至 LINE 伺服器。</p>
+<h3 id="兩個核心模組"><a href="#兩個核心模組" class="headerlink" title="兩個核心模組"></a>兩個核心模組</h3><ul>
+<li><code>Prompt</code> 模組：用來儲存人類與 AI 的對話，這是被送到 Completion API 的提示詞，儲存的內容會以使用者分群。</li>
+<li><code>History</code> 模組：也是用來儲存人類與 AI 的對話，但是包括群組對話，這是被送到 Completion API 的分析文本，會被夾帶在提示詞之中。</li>
+</ul>
+<h3 id="持久化儲存"><a href="#持久化儲存" class="headerlink" title="持久化儲存"></a>持久化儲存</h3><p>持久化儲存用來儲存設定檔，是把 Vercel 的環境變數當作鍵值對資料庫的特殊實作。</p>
+<h2 id="路由-1"><a href="#路由-1" class="headerlink" title="路由"></a>路由</h2><p>整個程式的進入點在 <code>api/index.js</code> 檔。這裡是放置路由的地方。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// api/index.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 這裡先使用 json 中介層，並設置 rawBody 給後續的 validateLineSignature 中介層使用</span></span><br><span class="line">app.use(express.json(&#123;</span><br><span class="line">  verify: <span class="function">(<span class="params">req, res, buf</span>) =&gt;</span> &#123;</span><br><span class="line">    req.rawBody = buf.toString();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 這是一個檢查用的端點，如果部署成功，應該要看到 OK 回應</span></span><br><span class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 如果有設置 APP_URL 環境變數，會導頁到指定的網址</span></span><br><span class="line">  <span class="keyword">if</span> (config.APP_URL) &#123;</span><br><span class="line">    res.redirect(config.APP_URL);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  res.sendStatus(<span class="number">200</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 這是要設置到 LINE 的 Webhook URL 的端點</span></span><br><span class="line">app.post(config.APP_WEBHOOK_PATH, validateLineSignature, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 首先，要將 storage 初始化，所謂 storage 就是從 Vercel 取得環境變數的值</span></span><br><span class="line">    <span class="keyword">await</span> storage.initialize();</span><br><span class="line">    <span class="comment">// 再來，處理來自 LINE 的事件</span></span><br><span class="line">    <span class="keyword">await</span> handleEvents(req.body.events);</span><br><span class="line">    <span class="comment">// 最終，送出 OK 回應</span></span><br><span class="line">    res.sendStatus(<span class="number">200</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err.message);</span><br><span class="line">    <span class="keyword">if</span> (err.response?.data) <span class="built_in">console</span>.error(err.response.data);</span><br><span class="line">    res.sendStatus(<span class="number">500</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 如果有設置 APP_URL 環境變數，可以在標準輸出看到對話紀錄</span></span><br><span class="line">  <span class="keyword">if</span> (config.APP_DEBUG) printHistories();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果有設置 APP_PORT 環境變數，就啟動一個伺服器，通常是在本機時使用</span></span><br><span class="line"><span class="keyword">if</span> (config.APP_PORT) &#123;</span><br><span class="line">  app.listen(config.APP_PORT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 匯出整個函式，做為 Serverless Functions 給 Vercel 調用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> app;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要處理器-1"><a href="#主要處理器-1" class="headerlink" title="主要處理器"></a>主要處理器</h2><p>主要處理器在 <code>app/app.js</code> 檔。這裡是處理 LINE 事件，將其形變、一路傳遞至指定子處理器，然後最終送出回應的地方。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/app.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;Context&#125; context</span></span><br><span class="line"><span class="comment"> * @returns &#123;Promise&lt;Context&gt;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> handleContext = <span class="keyword">async</span> (context) =&gt; (</span><br><span class="line">  <span class="comment">// 檢查是否為 activate 指令，是的話就執行</span></span><br><span class="line">  activateCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 command 指令，是的話就執行</span></span><br><span class="line">  || commandCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 continue 指令，是的話就執行</span></span><br><span class="line">  || continueCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 deactivate 指令，是的話就執行</span></span><br><span class="line">  || deactivateCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 deploy 指令，是的話就執行</span></span><br><span class="line">  || deployCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 doc 指令，是的話就執行</span></span><br><span class="line">  || docCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 draw 指令，是的話就執行</span></span><br><span class="line">  || drawCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 enquire 指令，是的話就執行</span></span><br><span class="line">  || enquireCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 report 指令，是的話就執行</span></span><br><span class="line">  || reportCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 version 指令，是的話就執行</span></span><br><span class="line">  || versionCommand(context)</span><br><span class="line">  <span class="comment">// 檢查是否為 talk 指令，是的話就執行</span></span><br><span class="line">  || talkCommand(context)</span><br><span class="line">  || context</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handleEvents = <span class="keyword">async</span> (events = []) =&gt; (</span><br><span class="line">  <span class="comment">// 等待第三層執行完畢</span></span><br><span class="line">  (<span class="built_in">Promise</span>.all(</span><br><span class="line">    <span class="comment">// 等待第二層執行完畢</span></span><br><span class="line">    (<span class="keyword">await</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">      <span class="comment">// 等待第一層執行完畢</span></span><br><span class="line">      (<span class="keyword">await</span> <span class="built_in">Promise</span>.all(</span><br><span class="line">        events</span><br><span class="line">          <span class="comment">// 首先，將 event 鑄型成 Event 類別</span></span><br><span class="line">          .map(<span class="function">(<span class="params">event</span>) =&gt;</span> <span class="keyword">new</span> Event(event))</span><br><span class="line">          <span class="comment">// 只接受 message 類型的訊息</span></span><br><span class="line">          .filter(<span class="function">(<span class="params">event</span>) =&gt;</span> event.isMessage)</span><br><span class="line">          <span class="comment">// 將 Event 注入至 Context 類別</span></span><br><span class="line">          .map(<span class="function">(<span class="params">event</span>) =&gt;</span> <span class="keyword">new</span> Context(event))</span><br><span class="line">          <span class="comment">// 執行 Context 類別的 initialize 方法</span></span><br><span class="line">          .map(<span class="function">(<span class="params">context</span>) =&gt;</span> context.initialize()),</span><br><span class="line">      ))</span><br><span class="line">        <span class="comment">// 開始處理 Context 類別</span></span><br><span class="line">        .map(<span class="function">(<span class="params">context</span>) =&gt;</span> (!context.error ? handleContext(context) : context)),</span><br><span class="line">    ))</span><br><span class="line">      <span class="comment">// 只接受有 message 內容的 Context 類別</span></span><br><span class="line">      .filter(<span class="function">(<span class="params">context</span>) =&gt;</span> context.messages.length &gt; <span class="number">0</span>)</span><br><span class="line">      <span class="comment">// 將 Context 類別注入至 replyMessage 方法，完成回覆訊息</span></span><br><span class="line">      .map(<span class="function">(<span class="params">context</span>) =&gt;</span> replyMessage(context)),</span><br><span class="line">  ))</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> handleEvents;</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心模組"><a href="#核心模組" class="headerlink" title="核心模組"></a>核心模組</h2><h3 id="Prompt-模組"><a href="#Prompt-模組" class="headerlink" title="Prompt 模組"></a>Prompt 模組</h3><p>Prompt 模組的進入點在 <code>app/prompt/index.js</code> 檔。這裡放置了以每個人為單位的提示詞。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/prompt/index.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 Map 結構來儲存，用 userId 當作 key，用 Prompt 類別當作 value</span></span><br><span class="line"><span class="keyword">const</span> prompts = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; userId</span></span><br><span class="line"><span class="comment"> * @returns &#123;Prompt&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> getPrompt = <span class="function">(<span class="params">userId</span>) =&gt;</span> prompts.get(userId) || <span class="keyword">new</span> Prompt();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; userId</span></span><br><span class="line"><span class="comment"> * @param &#123;Prompt&#125; prompt</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> setPrompt = <span class="function">(<span class="params">userId, prompt</span>) =&gt;</span> &#123;</span><br><span class="line">  prompts.set(userId, prompt);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; userId</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> removePrompt = <span class="function">(<span class="params">userId</span>) =&gt;</span> &#123;</span><br><span class="line">  prompts.delete(userId);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> printPrompts = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.from(prompts.keys()).length &lt; <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">const</span> content = <span class="built_in">Array</span>.from(prompts.keys()).map(<span class="function">(<span class="params">userId</span>) =&gt;</span> <span class="string">`\n=== <span class="subst">$&#123;userId.slice(<span class="number">0</span>, <span class="number">6</span>)&#125;</span> ===\n<span class="subst">$&#123;getPrompt(userId)&#125;</span>`</span>).join(<span class="string">'\n'</span>);</span><br><span class="line">  <span class="built_in">console</span>.info(content);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  getPrompt,</span><br><span class="line">  setPrompt,</span><br><span class="line">  removePrompt,</span><br><span class="line">  printPrompts,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> prompts;</span><br></pre></td></tr></table></figure>
+
+<p>每一個 Prompt 類別，儲存了 AI 和人類所說的每一句話。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/prompt/prompt.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 為了控制字詞數量，設定上下文最多 16 句話</span></span><br><span class="line"><span class="keyword">const</span> MAX_LINE_COUNT = <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prompt</span> </span>&#123;</span><br><span class="line">  sentences = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// 設置一個 AI 的問候語，可以決定後續回應為中文、英文，或是日文</span></span><br><span class="line">    <span class="keyword">this</span>.write(PARTICIPANT_AI, t(<span class="string">'__COMPLETION_INIT_MESSAGE'</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @returns &#123;Sentence&#125;</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  get lastSentence() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sentences.length &gt; <span class="number">0</span> ? <span class="keyword">this</span>.sentences[<span class="keyword">this</span>.sentences.length - <span class="number">1</span>] : <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; title</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; text</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  write(title, text = <span class="string">''</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.sentences.length &gt;= MAX_LINE_COUNT) &#123;</span><br><span class="line">      <span class="keyword">this</span>.sentences.shift();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.sentences.push(<span class="keyword">new</span> Sentence(&#123; <span class="attr">type</span>: SENTENCE_PROMPTING, title, text &#125;));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; text</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  patch(text) &#123;</span><br><span class="line">    <span class="keyword">this</span>.sentences[<span class="keyword">this</span>.sentences.length - <span class="number">1</span>].text += text;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  toString() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sentences.map(<span class="function">(<span class="params">sentence</span>) =&gt;</span> sentence.toString()).join(<span class="string">''</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Prompt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="實際應用"><a href="#實際應用" class="headerlink" title="實際應用"></a>實際應用</h3><p>Prompt 文本會像是以下內容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AI: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Human: 你好嗎？</span><br><span class="line">AI: 嗨！很高興為你服務！</span><br></pre></td></tr></table></figure>
+
+<h3 id="History-模組"><a href="#History-模組" class="headerlink" title="History 模組"></a>History 模組</h3><p>History 模組的進入點在 <code>app/history/index.js</code> 檔。這裡放置了以每個人或群組為單位的聊天歷史紀錄。與 Prompt 模組不同的地方在於，History 所儲存的內容，是被當成分析文本，最終會被夾帶在提示詞之中送出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/history/index.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 Map 結構來儲存，用 groupId 或 userId 當作 key，用 History 類別當作 value</span></span><br><span class="line"><span class="keyword">const</span> histories = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; contextId</span></span><br><span class="line"><span class="comment"> * @returns &#123;History&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> getHistory = <span class="function">(<span class="params">contextId</span>) =&gt;</span> histories.get(contextId) || <span class="keyword">new</span> History();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; contextId</span></span><br><span class="line"><span class="comment"> * @param &#123;History&#125; history</span></span><br><span class="line"><span class="comment"> * @returns &#123;History&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> setHistory = <span class="function">(<span class="params">contextId, history</span>) =&gt;</span> histories.set(contextId, history);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; contextId</span></span><br><span class="line"><span class="comment"> * @param &#123;function(History)&#125; callback</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> updateHistory = <span class="function">(<span class="params">contextId, callback</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> history = getHistory(contextId);</span><br><span class="line">  callback(history);</span><br><span class="line">  setHistory(contextId, history);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> printHistories = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> records = <span class="built_in">Array</span>.from(histories.keys())</span><br><span class="line">    .filter(<span class="function">(<span class="params">contextId</span>) =&gt;</span> getHistory(contextId).records.length &gt; <span class="number">0</span>)</span><br><span class="line">    .map(<span class="function">(<span class="params">contextId</span>) =&gt;</span> <span class="string">`\n=== <span class="subst">$&#123;contextId.slice(<span class="number">0</span>, <span class="number">6</span>)&#125;</span> ===\n\n<span class="subst">$&#123;getHistory(contextId).toString()&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">if</span> (records.length &lt; <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="built_in">console</span>.info(records.join(<span class="string">'\n'</span>));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  getHistory,</span><br><span class="line">  updateHistory,</span><br><span class="line">  printHistories,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> histories;</span><br></pre></td></tr></table></figure>
+
+<p>每一個 Record 類別，同樣儲存了 AI 和人類所說的每一句話，但是 AI 針對分析文本所回覆的內容並不會被記錄，否則會形成鏡像效應。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/history/history.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 為了控制字詞數量，設定上下文最多 8 句話</span></span><br><span class="line"><span class="keyword">const</span> MAX_RECORD_COUNT = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">History</span> </span>&#123;</span><br><span class="line">  records = [];</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; title</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; text</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  write(title, text) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.records.length &gt;= MAX_RECORD_COUNT) &#123;</span><br><span class="line">      <span class="keyword">this</span>.records.shift();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.records.push(<span class="keyword">new</span> Record(&#123; title, text &#125;));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; text</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  patch(text) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.records.length &lt; <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">this</span>.records[<span class="keyword">this</span>.records.length - <span class="number">1</span>].text += text;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  toString() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.records.map(<span class="function">(<span class="params">record</span>) =&gt;</span> record.toString()).join(<span class="string">'\n'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> History;</span><br></pre></td></tr></table></figure>
+
+<h2 id="持久化儲存-1"><a href="#持久化儲存-1" class="headerlink" title="持久化儲存"></a>持久化儲存</h2><p>持久化儲存的進入點在 <code>storage/index.js</code> 檔。這是把 Vercel 環境變數當作鍵值對資料庫的特殊實作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 將存放在環境變數中的 key 取名為 APP_STORAGE</span></span><br><span class="line"><span class="keyword">const</span> ENV_KEY = <span class="string">'APP_STORAGE'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Storage</span> </span>&#123;</span><br><span class="line">  env;</span><br><span class="line"></span><br><span class="line">  data = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化儲存庫</span></span><br><span class="line">  <span class="keyword">async</span> initialize() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!config.VERCEL_ACCESS_TOKEN) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">// 先試著取得 APP_STORAGE 的值</span></span><br><span class="line">    <span class="keyword">this</span>.env = <span class="keyword">await</span> fetchEnvironment(ENV_KEY);</span><br><span class="line">    <span class="comment">// 如果沒有的話，就要創建環境變數</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.env) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> createEnvironment(&#123;</span><br><span class="line">        key: ENV_KEY,</span><br><span class="line">        value: <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.data),</span><br><span class="line">        type: ENV_TYPE_PLAIN,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">this</span>.env = data.created;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 把值反序列化放到 data 中</span></span><br><span class="line">    <span class="keyword">this</span>.data = <span class="built_in">JSON</span>.parse(<span class="keyword">this</span>.env.value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; key</span></span><br><span class="line"><span class="comment">   * @returns &#123;string&#125;</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  getItem(key) &#123;</span><br><span class="line">    <span class="comment">// 直接從 data 取得指定資料</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.data[key];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; key</span></span><br><span class="line"><span class="comment">   * @param &#123;string&#125; value</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> setItem(key, value) &#123;</span><br><span class="line">    <span class="comment">// 更新 data 指定資料</span></span><br><span class="line">    <span class="keyword">this</span>.data[key] = value;</span><br><span class="line">    <span class="keyword">if</span> (!config.VERCEL_ACCESS_TOKEN) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">// 呼叫 Vercel API 以更新 APP_STORAGE 的值</span></span><br><span class="line">    <span class="keyword">await</span> updateEnvironment(&#123;</span><br><span class="line">      id: <span class="keyword">this</span>.env.id,</span><br><span class="line">      value: <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.data, <span class="literal">null</span>, config.VERCEL_ENV ? <span class="number">0</span> : <span class="number">2</span>),</span><br><span class="line">      type: ENV_TYPE_PLAIN,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> storage = <span class="keyword">new</span> Storage();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> storage;</span><br></pre></td></tr></table></figure>
+
+<h3 id="實際應用-1"><a href="#實際應用-1" class="headerlink" title="實際應用"></a>實際應用</h3><p>History 文本會像是以下內容，稱謂使用的是 AI 的暱稱和使用者的暱稱：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">助理: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Memo: 你好嗎？</span><br><span class="line">助理: 嗨！很高興為你服務！</span><br></pre></td></tr></table></figure>
+
+<p>Prompt 文本則會像是以下內容，稱謂使用的是停止符：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">AI: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Human: 你好嗎？</span><br><span class="line">AI: 嗨！很高興為你服務！</span><br><span class="line">Human: 請幫我總結以下內容。</span><br><span class="line">「</span><br><span class="line">助理: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Memo: 你好嗎？</span><br><span class="line">助理: 嗨！很高興為你服務！</span><br><span class="line">」</span><br><span class="line">AI: 好的！</span><br></pre></td></tr></table></figure>
+
+<h2 id="子處理器"><a href="#子處理器" class="headerlink" title="子處理器"></a>子處理器</h2><p>所謂子處理器就是當接受某一種指令時，可以透過它來判斷是否處理，以及處理的方式。以 <code>doc</code> 這個指令為例，在 <code>app/commands/doc.js</code> 檔被定義。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/commands/doc.js</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 判斷是否接收到指定字串</span></span><br><span class="line"><span class="keyword">const</span> check = <span class="function">(<span class="params">context</span>) =&gt;</span> context.isCommand(COMMAND_SYS_DOC);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行 command 指令所需要執行的內容</span></span><br><span class="line"><span class="keyword">const</span> exec = <span class="function">(<span class="params">context</span>) =&gt;</span> check(context) &amp;&amp; (</span><br><span class="line">  <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 把使用者送出 command 指令的記錄從 History 模組中消除</span></span><br><span class="line">    updateHistory(context.id, (history) =&gt; history.records.pop());</span><br><span class="line">    <span class="comment">// 將文字訊息推送至佇列</span></span><br><span class="line">    context.pushText(<span class="string">'https://github.com/memochou1993/gpt-ai-assistant'</span>, formatCommand(GENERAL_COMMANDS));</span><br><span class="line">    <span class="keyword">return</span> context;</span><br><span class="line">  &#125;</span><br><span class="line">)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> exec;</span><br></pre></td></tr></table></figure>
+
+<h2 id="開發"><a href="#開發" class="headerlink" title="開發"></a>開發</h2><p>下載專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:memochou1993/gpt-ai-assistant.git</span><br></pre></td></tr></table></figure>
+
+<p>進到專案目錄。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> gpt-ai-assistant</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ci</span><br></pre></td></tr></table></figure>
+
+<h3 id="執行測試"><a href="#執行測試" class="headerlink" title="執行測試"></a>執行測試</h3><p>建立 <code>.env.test</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .env.example .env.test</span><br></pre></td></tr></table></figure>
+
+<p>在終端機使用以下指令，運行測試。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p>查看結果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; gpt-ai-assistant@0.0.0 <span class="built_in">test</span></span><br><span class="line">&gt; jest</span><br><span class="line"></span><br><span class="line">  console.info</span><br><span class="line">    === 000001 ===</span><br><span class="line"></span><br><span class="line">    Human: 嗨！</span><br><span class="line">    AI: 好的！</span><br><span class="line"></span><br><span class="line">Test Suites: 1 passed, 1 total</span><br><span class="line">Tests:       1 passed, 1 total</span><br><span class="line">Snapshots:   0 total</span><br><span class="line">Time:        1 s</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用代理伺服器"><a href="#使用代理伺服器" class="headerlink" title="使用代理伺服器"></a>使用代理伺服器</h3><p>建立 <code>.env</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .env.example .env</span><br></pre></td></tr></table></figure>
+
+<p>設置環境變數如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">APP_DEBUG=true</span><br><span class="line">APP_PORT=3000</span><br><span class="line"></span><br><span class="line">VERCEL_GIT_REPO_SLUG=gpt-ai-assistant</span><br><span class="line">VERCEL_ACCESS_TOKEN=&lt;your_vercel_access_token&gt;</span><br><span class="line"></span><br><span class="line">OPENAI_API_KEY=&lt;your_openai_api_key&gt;</span><br><span class="line"></span><br><span class="line">LINE_CHANNEL_ACCESS_TOKEN=&lt;your_line_channel_access_token&gt;</span><br><span class="line">LINE_CHANNEL_SECRET=&lt;your_line_channel_secret&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在終端機使用以下指令，啟動一個本地伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>在另一個終端機使用以下指令，啟動一個代理伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 3000</span><br></pre></td></tr></table></figure>
+
+<p>回到 <a href="https://developers.line.biz/" target="_blank" rel="noopener">LINE</a> 平台，修改「Webhook URL」，例如「<a href="https://0000-0000-0000.jp.ngrok.io/webhook" target="_blank" rel="noopener">https://0000-0000-0000.jp.ngrok.io/webhook</a>」，點選「Update」按鈕。</p>
+<p>使用 LINE 手機應用程式發送訊息。</p>
+<p>查看結果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; gpt-ai-assistant@0.0.0 dev</span><br><span class="line">&gt; node api/index.js</span><br><span class="line"></span><br><span class="line">=== 0x1234 ===</span><br><span class="line"></span><br><span class="line">Memo: 嗨</span><br><span class="line">AI: 你好嗎？</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/gpt-ai-assistant" target="_blank" rel="noopener">gpt-ai-assistant</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API"><span class="toc-number">2.1.</span> <span class="toc-text">API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用參數"><span class="toc-number">2.2.</span> <span class="toc-text">常用參數</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架構"><span class="toc-number">3.</span> <span class="toc-text">架構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#路由"><span class="toc-number">3.1.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要處理器"><span class="toc-number">3.2.</span> <span class="toc-text">主要處理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#兩個核心模組"><span class="toc-number">3.3.</span> <span class="toc-text">兩個核心模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化儲存"><span class="toc-number">3.4.</span> <span class="toc-text">持久化儲存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由-1"><span class="toc-number">4.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要處理器-1"><span class="toc-number">5.</span> <span class="toc-text">主要處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核心模組"><span class="toc-number">6.</span> <span class="toc-text">核心模組</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Prompt-模組"><span class="toc-number">6.1.</span> <span class="toc-text">Prompt 模組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實際應用"><span class="toc-number">6.2.</span> <span class="toc-text">實際應用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#History-模組"><span class="toc-number">6.3.</span> <span class="toc-text">History 模組</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#持久化儲存-1"><span class="toc-number">7.</span> <span class="toc-text">持久化儲存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#實際應用-1"><span class="toc-number">7.1.</span> <span class="toc-text">實際應用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子處理器"><span class="toc-number">8.</span> <span class="toc-text">子處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#開發"><span class="toc-number">9.</span> <span class="toc-text">開發</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#執行測試"><span class="toc-number">9.1.</span> <span class="toc-text">執行測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用代理伺服器"><span class="toc-number">9.2.</span> <span class="toc-text">使用代理伺服器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">10.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&text=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&is_video=false&description=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人&body=Check out this article: https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&title=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/&name=使用 Node 串接 OpenAI API 實作 Line Bot 聊天機器人&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

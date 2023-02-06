@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「Learn How to Build a RUST WebAssembly Frontend App With Yew」教學影片的學習筆記。 前置作業使用 Cargo 安裝 trunk 套件，用來打包 WebAssembly 和靜態檔案。 1cargo install trunk  為 Rust 添加 wasm32-unknown-unknown 編譯目標，讓 Rust 能夠編譯 We">
+<meta name="keywords" content="程式設計,JavaScript,Rust,WebAssembly,Wasm,Yew,Canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Yew 和 WebAssembly 實作「視訊串流」應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「Learn How to Build a RUST WebAssembly Frontend App With Yew」教學影片的學習筆記。 前置作業使用 Cargo 安裝 trunk 套件，用來打包 WebAssembly 和靜態檔案。 1cargo install trunk  為 Rust 添加 wasm32-unknown-unknown 編譯目標，讓 Rust 能夠編譯 We">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Yew 和 WebAssembly 實作「視訊串流」應用程式">
+<meta name="twitter:description" content="前言本文為「Learn How to Build a RUST WebAssembly Frontend App With Yew」教學影片的學習筆記。 前置作業使用 Cargo 安裝 trunk 套件，用來打包 WebAssembly 和靜態檔案。 1cargo install trunk  為 Rust 添加 wasm32-unknown-unknown 編譯目標，讓 Rust 能夠編譯 We">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Yew 和 WebAssembly 實作「視訊串流」應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/09/「The-Rust-Programming-Language」學習筆記（十二）：建立命令列程式/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/10/使用-Shell-腳本切換-Node-版本/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&text=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&is_video=false&description=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式&body=Check out this article: https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&name=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作前端"><span class="toc-number">4.</span> <span class="toc-text">實作前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作後端"><span class="toc-number">5.</span> <span class="toc-text">實作後端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Yew 和 WebAssembly 實作「視訊串流」應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-09-29T11:58:08.000Z" itemprop="datePublished">2022-09-29</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/Yew/">Yew</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Canvas/">Canvas</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/Wasm/">Wasm</a>, <a class="tag-link" href="/tags/WebAssembly/">WebAssembly</a>, <a class="tag-link" href="/tags/Yew/">Yew</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://www.youtube.com/watch?v=In09Lgqxp6Y" target="_blank" rel="noopener">Learn How to Build a RUST WebAssembly Frontend App With Yew</a>」教學影片的學習筆記。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>使用 Cargo 安裝 <code>trunk</code> 套件，用來打包 WebAssembly 和靜態檔案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo install trunk</span><br></pre></td></tr></table></figure>
+
+<p>為 Rust 添加 <code>wasm32-unknown-unknown</code> 編譯目標，讓 Rust 能夠編譯 WebAssembly 檔案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup target add wasm32-unknown-unknown</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new yew-video-streaming</span><br><span class="line"><span class="built_in">cd</span> yew-video-streaming</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo add yew</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>index.html</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> yew::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(App)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">app</span></span>() -&gt; Html &#123;</span><br><span class="line">    html!(</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="string">"Hello, World!"</span>&#125;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    yew::start_app::&lt;App&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trunk serve</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作前端"><a href="#實作前端" class="headerlink" title="實作前端"></a>實作前端</h2><p>新增 <code>style.scss</code> 檔。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.grid</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: grid;</span><br><span class="line">    grid-template-<span class="attribute">columns</span>: repeat(auto-fit, minmax(<span class="number">200px</span>, <span class="number">1</span>fr));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.consumer</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#0057B7</span>;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.producer</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#FFD700</span>;</span><br><span class="line">    <span class="attribute">color</span>: black;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#webcam</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#render</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>index.html</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">data-trunk</span> <span class="attr">rel</span>=<span class="string">"scss"</span> <span class="attr">href</span>=<span class="string">"style.scss"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> yew::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(Producer)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">producer</span></span>() -&gt; Html &#123;</span><br><span class="line">    html!(</span><br><span class="line">        &lt;div class=<span class="string">"producer"</span>&gt;</span><br><span class="line">            &lt;h3&gt;</span><br><span class="line">                &#123;<span class="string">"Producer"</span>&#125;</span><br><span class="line">            &lt;/h3&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(Consumer)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">consumer</span></span>() -&gt; Html &#123;</span><br><span class="line">    html!(</span><br><span class="line">        &lt;div class=<span class="string">"consumer"</span>&gt;</span><br><span class="line">            &lt;h3&gt;</span><br><span class="line">                &#123;<span class="string">"Consumer"</span>&#125;</span><br><span class="line">            &lt;/h3&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(App)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">app</span></span>() -&gt; Html &#123;</span><br><span class="line">    html!(</span><br><span class="line">        &lt;div class=&#123;<span class="string">"grid"</span>&#125;&gt;</span><br><span class="line">            &lt;Producer /&gt;</span><br><span class="line">            &lt;Consumer /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    yew::start_app::&lt;App&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作後端"><a href="#實作後端" class="headerlink" title="實作後端"></a>實作後端</h2><p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cargo add js-sys</span><br><span class="line">cargo add wasm-bindgen</span><br><span class="line">cargo add wasm-bindgen-futures</span><br><span class="line">cargo add web-sys --features <span class="string">"console, CanvasRenderingContext2d, EncodedVideoChunk, EncodedVideoChunkInit, EncodedVideoChunkType, HtmlCanvasElement, HtmlImageElement, HtmlVideoElement, MediaDevices, MediaStream, MediaStreamConstraints, MediaStreamTrack, MediaStreamTrackProcessor, MediaStreamTrackProcessorInit, MediaTrackSettings, Navigator, ReadableStream, ReadableStreamGetReaderOptions, ReadableStreamDefaultReader, VideoDecoder, VideoDecoderConfig, VideoDecoderInit, VideoEncoder, VideoEncoderConfig, VideoEncoderInit, VideoFrame, VideoTrack"</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::rc::Rc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> js_sys::*;</span><br><span class="line"><span class="keyword">use</span> wasm_bindgen::&#123;prelude::Closure, JsCast, JsValue&#125;;</span><br><span class="line"><span class="keyword">use</span> wasm_bindgen_futures::JsFuture;</span><br><span class="line"><span class="keyword">use</span> web_sys::*;</span><br><span class="line"><span class="keyword">use</span> yew::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> VIDEO_CODEC: &amp;<span class="built_in">str</span> = <span class="string">"vp09.00.10.08"</span>;</span><br><span class="line"><span class="keyword">const</span> VIDEO_HEIGHT: <span class="built_in">i32</span> = <span class="number">720i32</span>;</span><br><span class="line"><span class="keyword">const</span> VIDEO_WIDTH: <span class="built_in">i32</span> = <span class="number">1280i32</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Clone, Debug, PartialEq)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EncodedVideoChunkWrapper</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> chunk: <span class="built_in">Option</span>&lt;EncodedVideoChunk&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Reducible <span class="keyword">for</span> EncodedVideoChunkWrapper &#123;</span><br><span class="line">    <span class="class"><span class="keyword">type</span> <span class="title">Action</span></span> = EncodedVideoChunkWrapper;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">reduce</span></span>(<span class="keyword">self</span>: Rc&lt;<span class="keyword">Self</span>&gt;, action: Self::Action) -&gt; Rc&lt;<span class="keyword">Self</span>&gt; &#123;</span><br><span class="line">        action.clone().into()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Properties, Debug, PartialEq)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">VideoChunksProviderProps</span></span> &#123;</span><br><span class="line">    <span class="meta">#[prop_or_default]</span></span><br><span class="line">    <span class="keyword">pub</span> children: Children,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(VideoChunksProvider)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">VideoChunksProviderImp</span></span>(props: &amp;VideoChunksProviderProps) -&gt; Html &#123;</span><br><span class="line">    <span class="keyword">let</span> msg = use_reducer(|| EncodedVideoChunkWrapper &#123; chunk: <span class="literal">None</span> &#125;);</span><br><span class="line"></span><br><span class="line">    html! &#123;</span><br><span class="line">        &lt;ContextProvider&lt;UseReducerHandle&lt;EncodedVideoChunkWrapper&gt;&gt; context=&#123;msg&#125;&gt;</span><br><span class="line">            &#123;props.children.clone()&#125;</span><br><span class="line">        &lt;/ContextProvider&lt;UseReducerHandle&lt;EncodedVideoChunkWrapper&gt;&gt;&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(Producer)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">producer</span></span>() -&gt; Html &#123;</span><br><span class="line">    <span class="keyword">let</span> video_context = use_context::&lt;UseReducerHandle&lt;EncodedVideoChunkWrapper&gt;&gt;().unwrap();</span><br><span class="line">    use_effect_with_deps(</span><br><span class="line">        <span class="keyword">move</span> |_| &#123;</span><br><span class="line">            wasm_bindgen_futures::spawn_local(async <span class="keyword">move</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> navigator = window().unwrap().navigator();</span><br><span class="line">                <span class="keyword">let</span> media_devices = navigator.media_devices().unwrap();</span><br><span class="line">                <span class="keyword">let</span> video_element = window()</span><br><span class="line">                    .unwrap()</span><br><span class="line">                    .document()</span><br><span class="line">                    .unwrap()</span><br><span class="line">                    .get_element_by_id(<span class="string">"webcam"</span>)</span><br><span class="line">                    .unwrap()</span><br><span class="line">                    .unchecked_into::&lt;HtmlVideoElement&gt;();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">let</span> <span class="keyword">mut</span> constraints = MediaStreamConstraints::new();</span><br><span class="line">                constraints.video(&amp;Boolean::from(<span class="literal">true</span>));</span><br><span class="line">                <span class="keyword">let</span> devices_query = media_devices</span><br><span class="line">                    .get_user_media_with_constraints(&amp;constraints)</span><br><span class="line">                    .unwrap();</span><br><span class="line">                <span class="keyword">let</span> device = JsFuture::from(devices_query)</span><br><span class="line">                    .await</span><br><span class="line">                    .unwrap()</span><br><span class="line">                    .unchecked_into::&lt;MediaStream&gt;();</span><br><span class="line">                video_element.set_src_object(<span class="literal">Some</span>(&amp;device));</span><br><span class="line">                <span class="keyword">let</span> video_track = <span class="built_in">Box</span>::new(</span><br><span class="line">                    device</span><br><span class="line">                        .get_video_tracks()</span><br><span class="line">                        .find(&amp;<span class="keyword">mut</span> |_: JsValue, _: <span class="built_in">u32</span>, _: Array| <span class="literal">true</span>)</span><br><span class="line">                        .unchecked_into::&lt;VideoTrack&gt;(),</span><br><span class="line">                );</span><br><span class="line"></span><br><span class="line">                <span class="keyword">let</span> error_handler = Closure::wrap(<span class="built_in">Box</span>::new(<span class="keyword">move</span> |e: JsValue| &#123;</span><br><span class="line">                    console::log_1(&amp;JsString::from(<span class="string">"error"</span>));</span><br><span class="line">                    console::log_1(&amp;e);</span><br><span class="line">                &#125;) <span class="keyword">as</span> <span class="built_in">Box</span>&lt;dyn <span class="built_in">FnMut</span>(JsValue)&gt;);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">let</span> output_handler = Closure::wrap(<span class="built_in">Box</span>::new(<span class="keyword">move</span> |chunk: JsValue| &#123;</span><br><span class="line">                    <span class="keyword">let</span> video_chunk = chunk.unchecked_into::&lt;EncodedVideoChunk&gt;();</span><br><span class="line">                    video_context.dispatch(EncodedVideoChunkWrapper &#123;</span><br><span class="line">                        chunk: <span class="literal">Some</span>(video_chunk),</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;) <span class="keyword">as</span> <span class="built_in">Box</span>&lt;dyn <span class="built_in">FnMut</span>(JsValue)&gt;);</span><br><span class="line">                <span class="keyword">let</span> video_encoder_init = VideoEncoderInit::new(</span><br><span class="line">                    error_handler.as_ref().unchecked_ref(),</span><br><span class="line">                    output_handler.as_ref().unchecked_ref(),</span><br><span class="line">                );</span><br><span class="line">                <span class="keyword">let</span> video_encoder = VideoEncoder::new(&amp;video_encoder_init).unwrap();</span><br><span class="line">                <span class="keyword">let</span> settings = &amp;<span class="keyword">mut</span> video_track</span><br><span class="line">                    .clone()</span><br><span class="line">                    .unchecked_into::&lt;MediaStreamTrack&gt;()</span><br><span class="line">                    .get_settings();</span><br><span class="line">                settings.width(VIDEO_WIDTH);</span><br><span class="line">                settings.height(VIDEO_HEIGHT);</span><br><span class="line">                <span class="keyword">let</span> video_encoder_config =</span><br><span class="line">                    VideoEncoderConfig::new(&amp;VIDEO_CODEC, VIDEO_HEIGHT <span class="keyword">as</span> <span class="built_in">u32</span>, VIDEO_WIDTH <span class="keyword">as</span> <span class="built_in">u32</span>);</span><br><span class="line">                video_encoder.configure(&amp;video_encoder_config);</span><br><span class="line">                <span class="keyword">let</span> processor =</span><br><span class="line">                    MediaStreamTrackProcessor::new(&amp;MediaStreamTrackProcessorInit::new(</span><br><span class="line">                        &amp;video_track.unchecked_into::&lt;MediaStreamTrack&gt;(),</span><br><span class="line">                    ))</span><br><span class="line">                    .unwrap();</span><br><span class="line">                <span class="keyword">let</span> reader = processor</span><br><span class="line">                    .readable()</span><br><span class="line">                    .get_reader()</span><br><span class="line">                    .unchecked_into::&lt;ReadableStreamDefaultReader&gt;();</span><br><span class="line">                <span class="keyword">loop</span> &#123;</span><br><span class="line">                    <span class="keyword">let</span> result = JsFuture::from(reader.read()).await.map_err(|e| &#123;</span><br><span class="line">                        console::log_1(&amp;e);</span><br><span class="line">                    &#125;);</span><br><span class="line">                    <span class="keyword">match</span> result &#123;</span><br><span class="line">                        <span class="literal">Ok</span>(js_frame) =&gt; &#123;</span><br><span class="line">                            <span class="keyword">let</span> video_frame = Reflect::get(&amp;js_frame, &amp;JsString::from(<span class="string">"value"</span>))</span><br><span class="line">                                .unwrap()</span><br><span class="line">                                .unchecked_into::&lt;VideoFrame&gt;();</span><br><span class="line">                            video_encoder.encode(&amp;video_frame);</span><br><span class="line">                            video_frame.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="literal">Err</span>(_e) =&gt; &#123;</span><br><span class="line">                            console::log_1(&amp;JsString::from(<span class="string">"error"</span>));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            || ()</span><br><span class="line">        &#125;,</span><br><span class="line">        (),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    html!(</span><br><span class="line">        &lt;div class=<span class="string">"producer"</span>&gt;</span><br><span class="line">            &lt;h3&gt;&#123;"Producer"&#125;&lt;/h3&gt;</span><br><span class="line">            &lt;video autoplay=true id="webcam"&gt;&lt;/video&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(Consumer)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">consumer</span></span>() -&gt; Html &#123;</span><br><span class="line">    <span class="keyword">let</span> video_ctx = use_context::&lt;UseReducerHandle&lt;EncodedVideoChunkWrapper&gt;&gt;().unwrap();</span><br><span class="line">    <span class="keyword">let</span> video_decoder: UseStateHandle&lt;<span class="built_in">Option</span>&lt;VideoDecoder&gt;&gt; = use_state(|| <span class="literal">None</span>);</span><br><span class="line">    <span class="keyword">if</span> (*video_decoder).is_none() &#123;</span><br><span class="line">        <span class="keyword">let</span> error_video = Closure::wrap(<span class="built_in">Box</span>::new(<span class="keyword">move</span> |e: JsValue| &#123;</span><br><span class="line">            console::log_1(&amp;e);</span><br><span class="line">        &#125;) <span class="keyword">as</span> <span class="built_in">Box</span>&lt;dyn <span class="built_in">FnMut</span>(JsValue)&gt;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> output = Closure::wrap(<span class="built_in">Box</span>::new(<span class="keyword">move</span> |original_chunk: JsValue| &#123;</span><br><span class="line">            <span class="keyword">let</span> chunk = <span class="built_in">Box</span>::new(original_chunk);</span><br><span class="line">            <span class="keyword">let</span> video_chunk = chunk.clone().unchecked_into::&lt;HtmlImageElement&gt;();</span><br><span class="line">            <span class="keyword">let</span> width = Reflect::get(&amp;chunk.clone(), &amp;JsString::from(<span class="string">"codedWidth"</span>))</span><br><span class="line">                .unwrap()</span><br><span class="line">                .as_f64()</span><br><span class="line">                .unwrap();</span><br><span class="line">            <span class="keyword">let</span> height = Reflect::get(&amp;chunk.clone(), &amp;JsString::from(<span class="string">"codedHeight"</span>))</span><br><span class="line">                .unwrap()</span><br><span class="line">                .as_f64()</span><br><span class="line">                .unwrap();</span><br><span class="line">            <span class="keyword">let</span> render_canvas = window()</span><br><span class="line">                .unwrap()</span><br><span class="line">                .document()</span><br><span class="line">                .unwrap()</span><br><span class="line">                .get_element_by_id(<span class="string">"render"</span>)</span><br><span class="line">                .unwrap()</span><br><span class="line">                .unchecked_into::&lt;HtmlCanvasElement&gt;();</span><br><span class="line">            render_canvas.set_width(width <span class="keyword">as</span> <span class="built_in">u32</span>);</span><br><span class="line">            render_canvas.set_height(height <span class="keyword">as</span> <span class="built_in">u32</span>);</span><br><span class="line">            <span class="keyword">let</span> ctx = render_canvas</span><br><span class="line">                .get_context(<span class="string">"2d"</span>)</span><br><span class="line">                .unwrap()</span><br><span class="line">                .unwrap()</span><br><span class="line">                .unchecked_into::&lt;CanvasRenderingContext2d&gt;();</span><br><span class="line">            ctx.draw_image_with_html_image_element(&amp;video_chunk, <span class="number">0.0</span>, <span class="number">0.0</span>)</span><br><span class="line">                .unwrap();</span><br><span class="line">            video_chunk.unchecked_into::&lt;VideoFrame&gt;().close();</span><br><span class="line">        &#125;) <span class="keyword">as</span> <span class="built_in">Box</span>&lt;dyn <span class="built_in">FnMut</span>(JsValue)&gt;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> local_video_decoder = VideoDecoder::new(&amp;VideoDecoderInit::new(</span><br><span class="line">            error_video.as_ref().unchecked_ref(),</span><br><span class="line">            output.as_ref().unchecked_ref(),</span><br><span class="line">        ))</span><br><span class="line">        .unwrap();</span><br><span class="line">        error_video.forget();</span><br><span class="line">        output.forget();</span><br><span class="line">        local_video_decoder.configure(&amp;VideoDecoderConfig::new(&amp;VIDEO_CODEC));</span><br><span class="line">        video_decoder.set(<span class="literal">Some</span>(local_video_decoder));</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> !(*video_ctx).chunk.is_none() &#123;</span><br><span class="line">        <span class="keyword">let</span> chunk = (*video_ctx).chunk.as_ref().unwrap();</span><br><span class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> video_vector = <span class="built_in">vec!</span>[<span class="number">0u8</span>; chunk.byte_length() <span class="keyword">as</span> <span class="built_in">usize</span>];</span><br><span class="line">        <span class="keyword">let</span> video_message = video_vector.as_mut();</span><br><span class="line">        chunk.copy_to_with_u8_array(video_message);</span><br><span class="line">        <span class="keyword">let</span> decoder: VideoDecoder = (*video_decoder).to_owned().unwrap();</span><br><span class="line">        <span class="keyword">let</span> data = Uint8Array::from(video_message.as_ref());</span><br><span class="line">        <span class="keyword">let</span> encoded_video_chunk = EncodedVideoChunk::new(&amp;EncodedVideoChunkInit::new(</span><br><span class="line">            &amp;data,</span><br><span class="line">            chunk.timestamp(),</span><br><span class="line">            chunk.type_(),</span><br><span class="line">        ))</span><br><span class="line">        .unwrap();</span><br><span class="line">        decoder.decode(&amp;encoded_video_chunk);</span><br><span class="line">    &#125;</span><br><span class="line">    html!(</span><br><span class="line">        &lt;div class=<span class="string">"consumer"</span>&gt;</span><br><span class="line">            &lt;h3&gt;&#123;"Consumer"&#125;&lt;/h3&gt;</span><br><span class="line">            &lt;canvas id="render"&gt;&lt;/canvas&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[function_component(App)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">app</span></span>() -&gt; Html &#123;</span><br><span class="line">    html!(</span><br><span class="line">        &lt;VideoChunksProvider&gt;</span><br><span class="line">            &lt;div class=<span class="string">"grid"</span>&gt;</span><br><span class="line">                &lt;Producer/&gt;</span><br><span class="line">                &lt;Consumer/&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/VideoChunksProvider&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    yew::start_app::&lt;App&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RUSTFLAGS=--cfg=web_sys_unstable_apis trunk serve</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/yew-video-streaming" target="_blank" rel="noopener">yew-video-streaming</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=In09Lgqxp6Y" target="_blank" rel="noopener">Learn How to Build a RUST WebAssembly Frontend App With Yew</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作前端"><span class="toc-number">4.</span> <span class="toc-text">實作前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作後端"><span class="toc-number">5.</span> <span class="toc-text">實作後端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&text=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&is_video=false&description=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式&body=Check out this article: https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&title=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/09/使用-Yew-和-WebAssembly-實作「視訊串流」應用程式/&name=使用 Yew 和 WebAssembly 實作「視訊串流」應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

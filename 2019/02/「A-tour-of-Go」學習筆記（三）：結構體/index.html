@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「A tour of Go」語言指南的學習筆記。 結構體一個結構體（struct）是由一系列具有相同或不同型別的資料構成的資料集合。 1234567891011121314package mainimport &quot;fmt&quot;type Vertex struct &amp;#123;    X int    Y int&amp;#125;func main() &amp;#123;    fmt.Println(Ve">
+<meta name="keywords" content="程式設計,Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「A tour of Go」學習筆記（三）：結構體">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「A tour of Go」語言指南的學習筆記。 結構體一個結構體（struct）是由一系列具有相同或不同型別的資料構成的資料集合。 1234567891011121314package mainimport &quot;fmt&quot;type Vertex struct &amp;#123;    X int    Y int&amp;#125;func main() &amp;#123;    fmt.Println(Ve">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.947Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「A tour of Go」學習筆記（三）：結構體">
+<meta name="twitter:description" content="前言本文為「A tour of Go」語言指南的學習筆記。 結構體一個結構體（struct）是由一系列具有相同或不同型別的資料構成的資料集合。 1234567891011121314package mainimport &quot;fmt&quot;type Vertex struct &amp;#123;    X int    Y int&amp;#125;func main() &amp;#123;    fmt.Println(Ve">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「A tour of Go」學習筆記（三）：結構體</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/使用-PHP-實現函數柯里化/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&text=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&is_video=false&description=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「A tour of Go」學習筆記（三）：結構體&body=Check out this article: https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&name=「A tour of Go」學習筆記（三）：結構體&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結構體"><span class="toc-number">2.</span> <span class="toc-text">結構體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#陣列"><span class="toc-number">3.</span> <span class="toc-text">陣列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切片"><span class="toc-number">4.</span> <span class="toc-text">切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合"><span class="toc-number">5.</span> <span class="toc-text">集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函式"><span class="toc-number">6.</span> <span class="toc-text">函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#閉包"><span class="toc-number">7.</span> <span class="toc-text">閉包</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「A tour of Go」學習筆記（三）：結構體
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-02-19T05:25:59.000Z" itemprop="datePublished">2019-02-19</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Go/「A-tour-of-Go」學習筆記/">「A tour of Go」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://go-tour-zh-tw.appspot.com/" target="_blank" rel="noopener">A tour of Go</a>」語言指南的學習筆記。</p>
+<h2 id="結構體"><a href="#結構體" class="headerlink" title="結構體"></a>結構體</h2><p>一個結構體（struct）是由一系列具有相同或不同型別的資料構成的資料集合。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    X <span class="keyword">int</span></span><br><span class="line">    Y <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 2</span></span><br></pre></td></tr></table></figure>
+
+<p>結構體字段使用 <code>.</code> 符號來存取。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    X <span class="keyword">int</span></span><br><span class="line">    Y <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    v := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br><span class="line">    v.X = <span class="number">4</span></span><br><span class="line">    fmt.Println(v.X)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<p>結構體字段可以通過結構體指針來訪問。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    X <span class="keyword">int</span></span><br><span class="line">    Y <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br><span class="line">    q := &amp;p</span><br><span class="line">    q.X = <span class="number">1e9</span></span><br><span class="line">    fmt.Println(p)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="number">1000000000</span> <span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通過結構體字段的值作為列表來分配一個結構體，或使用 <code>{Key:Value}</code> 語法賦值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    X, Y <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">    p = Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;  <span class="comment">// has type Vertex</span></span><br><span class="line">    q = &amp;Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125; <span class="comment">// has type *Vertex</span></span><br><span class="line">    r = Vertex&#123;X: <span class="number">1</span>&#125;  <span class="comment">// Y:0 is implicit</span></span><br><span class="line">    s = Vertex&#123;&#125;      <span class="comment">// X:0 and Y:0</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(p, q, r, s)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;1 2&#125; &amp;&#123;1 2&#125; &#123;1 0&#125; &#123;0 0&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>表達式 <code>new(T)</code> 分配了一個零初始化的 <code>T</code> 值，並返回指向它的指針。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    X, Y <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    v := <span class="built_in">new</span>(Vertex)</span><br><span class="line">    fmt.Println(v)</span><br><span class="line">    v.X, v.Y = <span class="number">11</span>, <span class="number">9</span></span><br><span class="line">    fmt.Println(v)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &amp;&#123;0 0&#125;</span></span><br><span class="line"><span class="comment">// &amp;&#123;11 9&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="陣列"><a href="#陣列" class="headerlink" title="陣列"></a>陣列</h2><p>型別 <code>[n]T</code> 是一個有 <code>n</code> 個型別為 <code>T</code> 的值的陣列。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a [<span class="number">10</span>]<span class="keyword">int</span></span><br><span class="line"><span class="comment">// [0 0 0 0 0 0 0 0 0 0]</span></span><br></pre></td></tr></table></figure>
+
+<p>陣列的長度是其型別的一部分，因此陣列不能改變大小。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> a [<span class="number">2</span>]<span class="keyword">string</span></span><br><span class="line">    a[<span class="number">0</span>] = <span class="string">"Hello"</span></span><br><span class="line">    a[<span class="number">1</span>] = <span class="string">"World"</span></span><br><span class="line">    fmt.Println(a[<span class="number">0</span>], a[<span class="number">1</span>])</span><br><span class="line">    fmt.Println(a)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> ab [<span class="number">10</span>]<span class="keyword">int</span></span><br><span class="line">    fmt.Println(ab)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hello World</span></span><br><span class="line"><span class="comment">// [Hello World]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><p>一個切片（slice）指向一個陣列，並且包含長度訊息。<code>[]T</code> 是一個元素型別為 <code>T</code> 的 <code>slice</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := []<span class="keyword">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">    fmt.Println(<span class="string">"p =="</span>, p)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(p); i++ &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"p[%d] == %d\n"</span>, i, p[i])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// p == [2 3 5 7 11 13]</span></span><br><span class="line"><span class="comment">// p[0] == 2</span></span><br><span class="line"><span class="comment">// p[1] == 3</span></span><br><span class="line"><span class="comment">// p[2] == 5</span></span><br><span class="line"><span class="comment">// p[3] == 7</span></span><br><span class="line"><span class="comment">// p[4] == 11</span></span><br><span class="line"><span class="comment">// p[5] == 13</span></span><br></pre></td></tr></table></figure>
+
+<p><code>slice</code> 可以重新切片，創建一個新的 <code>slice</code> 值指向相同的陣列。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    p := []<span class="keyword">int</span>&#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>&#125;</span><br><span class="line">    fmt.Println(<span class="string">"p =="</span>, p)</span><br><span class="line">    fmt.Println(<span class="string">"p[1:4] =="</span>, p[<span class="number">1</span>:<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment">// missing low index implies 0</span></span><br><span class="line">    fmt.Println(<span class="string">"p[:3] =="</span>, p[:<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment">// missing high index implies len(s)</span></span><br><span class="line">    fmt.Println(<span class="string">"p[4:] =="</span>, p[<span class="number">4</span>:])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// p == [2 3 5 7 11 13]</span></span><br><span class="line"><span class="comment">// p[1:4] == [3 5 7]</span></span><br><span class="line"><span class="comment">// p[:3] == [2 3 5]</span></span><br><span class="line"><span class="comment">// p[4:] == [11 13]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>slice</code> 由函式 <code>make</code> 創建。這會分配一個零長度的陣列並且返回一個 <code>slice</code> 指向這個陣列。為了指定容量，可以傳遞第三個參數到 <code>make</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    a := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">5</span>)</span><br><span class="line">    printSlice(<span class="string">"a"</span>, a)</span><br><span class="line">    b := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="number">5</span>)</span><br><span class="line">    printSlice(<span class="string">"b"</span>, b)</span><br><span class="line">    c := b[:<span class="number">2</span>]</span><br><span class="line">    printSlice(<span class="string">"c"</span>, c)</span><br><span class="line">    d := c[<span class="number">2</span>:<span class="number">5</span>]</span><br><span class="line">    printSlice(<span class="string">"d"</span>, d)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printSlice</span><span class="params">(s <span class="keyword">string</span>, x []<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    fmt.Printf(<span class="string">"%s len=%d cap=%d %v\n"</span>,</span><br><span class="line">        s, <span class="built_in">len</span>(x), <span class="built_in">cap</span>(x), x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// a len=5 cap=5 [0 0 0 0 0]</span></span><br><span class="line"><span class="comment">// b len=0 cap=5 []</span></span><br><span class="line"><span class="comment">// c len=2 cap=5 [0 0]</span></span><br><span class="line"><span class="comment">// d len=3 cap=3 [0 0 0]</span></span><br></pre></td></tr></table></figure>
+
+<p>空 <code>slice</code> 的值為 <code>nil</code>，一個 <code>nil</code> 的 <code>slice</code> 的長度和容量是 0。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> z []<span class="keyword">int</span></span><br><span class="line">    fmt.Println(z, <span class="built_in">len</span>(z), <span class="built_in">cap</span>(z))</span><br><span class="line">    <span class="keyword">if</span> z == <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">"nil!"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [] 0 0</span></span><br><span class="line"><span class="comment">// nil!</span></span><br></pre></td></tr></table></figure>
+
+<p><code>for</code> 循環的 <code>range</code> 格式可以對 <code>slice</code> 或者 <code>map</code> 進行疊代循環。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pow = []<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">32</span>, <span class="number">64</span>, <span class="number">128</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> i, v := <span class="keyword">range</span> pow &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"2**%d = %d\n"</span>, i, v)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2**0 = 1</span></span><br><span class="line"><span class="comment">// 2**1 = 2</span></span><br><span class="line"><span class="comment">// 2**2 = 4</span></span><br><span class="line"><span class="comment">// 2**3 = 8</span></span><br><span class="line"><span class="comment">// 2**4 = 16</span></span><br><span class="line"><span class="comment">// 2**5 = 32</span></span><br><span class="line"><span class="comment">// 2**6 = 64</span></span><br><span class="line"><span class="comment">// 2**7 = 128</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>_</code> 符號忽略 <code>key</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    pow := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">    <span class="keyword">for</span> i := <span class="keyword">range</span> pow &#123;</span><br><span class="line">        pow[i] = <span class="number">1</span> &lt;&lt; <span class="keyword">uint</span>(i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> _, value := <span class="keyword">range</span> pow &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"%d\n"</span>, value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> key := <span class="keyword">range</span> pow &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"%d\n"</span>, key)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 8</span></span><br><span class="line"><span class="comment">// 16</span></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p>集合（map）是一種無序的鍵值對的集合，使用 <code>make</code> 而不是 <code>new</code> 來創建；值為 <code>nil</code> 的 <code>map</code> 是空的，並且不能賦值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    Lat, Long <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> m <span class="keyword">map</span>[<span class="keyword">string</span>]Vertex</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]Vertex)</span><br><span class="line">    m[<span class="string">"Bell Labs"</span>] = Vertex&#123;</span><br><span class="line">        <span class="number">40.68433</span>, <span class="number">-74.39967</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(m[<span class="string">"Bell Labs"</span>])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;40.68433 -74.39967&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>map</code> 的文法跟結構體文法相似，不過必須有鍵名。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    Lat, Long <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> m = <span class="keyword">map</span>[<span class="keyword">string</span>]Vertex&#123;</span><br><span class="line">    <span class="string">"Bell Labs"</span>: Vertex&#123;</span><br><span class="line">        <span class="number">40.68433</span>, <span class="number">-74.39967</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"Google"</span>: Vertex&#123;</span><br><span class="line">        <span class="number">37.42202</span>, <span class="number">-122.08408</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(m)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// map[Bell Labs:&#123;40.68433 -74.39967&#125; Google:&#123;37.42202 -122.08408&#125;]</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>m[key] = elem</code> 語法存取 <code>map</code>。使用 <code>elem, ok = m[key]</code> 語法檢測元素是否存在。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">    m[<span class="string">"Answer"</span>] = <span class="number">42</span></span><br><span class="line">    fmt.Println(<span class="string">"The value:"</span>, m[<span class="string">"Answer"</span>])</span><br><span class="line"></span><br><span class="line">    m[<span class="string">"Answer"</span>] = <span class="number">48</span></span><br><span class="line">    fmt.Println(<span class="string">"The value:"</span>, m[<span class="string">"Answer"</span>])</span><br><span class="line"></span><br><span class="line">    <span class="built_in">delete</span>(m, <span class="string">"Answer"</span>)</span><br><span class="line">    fmt.Println(<span class="string">"The value:"</span>, m[<span class="string">"Answer"</span>])</span><br><span class="line"></span><br><span class="line">    v, ok := m[<span class="string">"Answer"</span>]</span><br><span class="line">    fmt.Println(<span class="string">"The value:"</span>, v, <span class="string">"Present?"</span>, ok)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The value: 42</span></span><br><span class="line"><span class="comment">// The value: 48</span></span><br><span class="line"><span class="comment">// The value: 0</span></span><br><span class="line"><span class="comment">// The value: 0 Present? false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函式"><a href="#函式" class="headerlink" title="函式"></a>函式</h2><p>函式為值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"math"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    hypot := <span class="function"><span class="keyword">func</span><span class="params">(x, y <span class="keyword">float64</span>)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">        <span class="keyword">return</span> math.Sqrt(x*x + y*y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fmt.Println(hypot(<span class="number">3</span>, <span class="number">4</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="閉包"><a href="#閉包" class="headerlink" title="閉包"></a>閉包</h2><p>閉包是一個函式值，它來自函式體的外部的變數引用。函式可以對這個引用值進行存取；意即，這個函式被「綁定」在這個變數上。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">adder</span><span class="params">()</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    sum := <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(x <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">        sum += x</span><br><span class="line">        <span class="keyword">return</span> sum</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    pos, neg := adder(), adder()</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">        fmt.Println(</span><br><span class="line">            pos(i),</span><br><span class="line">            neg(<span class="number">-2</span>*i),</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0 0</span></span><br><span class="line"><span class="comment">// 1 -2</span></span><br><span class="line"><span class="comment">// 3 -6</span></span><br><span class="line"><span class="comment">// 6 -12</span></span><br><span class="line"><span class="comment">// 10 -20</span></span><br><span class="line"><span class="comment">// 15 -30</span></span><br><span class="line"><span class="comment">// 21 -42</span></span><br><span class="line"><span class="comment">// 28 -56</span></span><br><span class="line"><span class="comment">// 36 -72</span></span><br><span class="line"><span class="comment">// 45 -90</span></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#結構體"><span class="toc-number">2.</span> <span class="toc-text">結構體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#陣列"><span class="toc-number">3.</span> <span class="toc-text">陣列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切片"><span class="toc-number">4.</span> <span class="toc-text">切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合"><span class="toc-number">5.</span> <span class="toc-text">集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函式"><span class="toc-number">6.</span> <span class="toc-text">函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#閉包"><span class="toc-number">7.</span> <span class="toc-text">閉包</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&text=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&is_video=false&description=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「A tour of Go」學習筆記（三）：結構體&body=Check out this article: https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&title=「A tour of Go」學習筆記（三）：結構體"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/&name=「A tour of Go」學習筆記（三）：結構體&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

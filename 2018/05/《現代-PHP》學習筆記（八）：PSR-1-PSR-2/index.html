@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 XAMPP 3.2.2  PHP-FIG2009 年，數個 PHP 框架的開發者意識到，如何改善框架間溝通以及效率的重要性。為了讓 PHP 框架之間可以共享低耦合度類別來實現資源共享，PHP 需要標準。 這些 PHP 框架的開發者創立了 PHP Framework Interoperability Group（PHP-FIG）">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2">
+<meta property="og:url" content="https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 XAMPP 3.2.2  PHP-FIG2009 年，數個 PHP 框架的開發者意識到，如何改善框架間溝通以及效率的重要性。為了讓 PHP 框架之間可以共享低耦合度類別來實現資源共享，PHP 需要標準。 這些 PHP 框架的開發者創立了 PHP Framework Interoperability Group（PHP-FIG）">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 XAMPP 3.2.2  PHP-FIG2009 年，數個 PHP 框架的開發者意識到，如何改善框架間溝通以及效率的重要性。為了讓 PHP 框架之間可以共享低耦合度類別來實現資源共享，PHP 需要標準。 這些 PHP 框架的開發者創立了 PHP Framework Interoperability Group（PHP-FIG）">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/05/「JavaScript-30」學習筆記（十二）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/05/在-Laravel-5-6-使用-Mockery-對內含相依物件之函式進行測試/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&text=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&is_video=false&description=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2&body=Check out this article: https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&name=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-FIG"><span class="toc-number">3.</span> <span class="toc-text">PHP-FIG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#框架互通性"><span class="toc-number">4.</span> <span class="toc-text">框架互通性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自動載入"><span class="toc-number">5.</span> <span class="toc-text">自動載入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#風格"><span class="toc-number">6.</span> <span class="toc-text">風格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSR"><span class="toc-number">7.</span> <span class="toc-text">PSR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSR-1：基本程式碼風格"><span class="toc-number">8.</span> <span class="toc-text">PSR-1：基本程式碼風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-標籤"><span class="toc-number">8.1.</span> <span class="toc-text">PHP 標籤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#編碼"><span class="toc-number">8.2.</span> <span class="toc-text">編碼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目的"><span class="toc-number">8.3.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自動載入器"><span class="toc-number">8.4.</span> <span class="toc-text">自動載入器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#類別名稱"><span class="toc-number">8.5.</span> <span class="toc-text">類別名稱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常數名稱"><span class="toc-number">8.6.</span> <span class="toc-text">常數名稱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法名稱"><span class="toc-number">8.7.</span> <span class="toc-text">方法名稱</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSR-2：嚴厲程式碼風格"><span class="toc-number">9.</span> <span class="toc-text">PSR-2：嚴厲程式碼風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#縮排"><span class="toc-number">9.1.</span> <span class="toc-text">縮排</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#檔案和行句"><span class="toc-number">9.2.</span> <span class="toc-text">檔案和行句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#關鍵字"><span class="toc-number">9.3.</span> <span class="toc-text">關鍵字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名稱空間"><span class="toc-number">9.4.</span> <span class="toc-text">名稱空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#類別"><span class="toc-number">9.5.</span> <span class="toc-text">類別</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法"><span class="toc-number">9.6.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#能見度"><span class="toc-number">9.7.</span> <span class="toc-text">能見度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制流程"><span class="toc-number">9.8.</span> <span class="toc-text">控制流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-05-25T02:25:30.000Z" itemprop="datePublished">2018-05-25</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>XAMPP 3.2.2</li>
+</ul>
+<h2 id="PHP-FIG"><a href="#PHP-FIG" class="headerlink" title="PHP-FIG"></a>PHP-FIG</h2><p>2009 年，數個 PHP 框架的開發者意識到，如何改善框架間溝通以及效率的重要性。為了讓 PHP 框架之間可以共享低耦合度類別來實現資源共享，PHP 需要標準。</p>
+<p>這些 PHP 框架的開發者創立了 PHP Framework Interoperability Group（PHP-FIG），目的是「找出專案中的共通性並且找到一個可以共事的方法」。</p>
+<h2 id="框架互通性"><a href="#框架互通性" class="headerlink" title="框架互通性"></a>框架互通性</h2><p>PHP-FIG 的任務是框架的互通性，框架互通性表示框架之間藉由介面、自動載入和風格來合作。</p>
+<h2 id="自動載入"><a href="#自動載入" class="headerlink" title="自動載入"></a>自動載入</h2><p>PHP 框架藉由自動載入來合作，自動載入是個執行時期的程序，PHP 類別在有需要時被 PHP 直譯器自動定位並載入。</p>
+<h2 id="風格"><a href="#風格" class="headerlink" title="風格"></a>風格</h2><p>程式碼風格決定了空格、大小寫以及括號的擺放位置，標準的程式碼風格幫助所有的團隊成員迅速了解同一個程式庫，無論其原先的作者是誰。</p>
+<h2 id="PSR"><a href="#PSR" class="headerlink" title="PSR"></a>PSR</h2><p>PSR 是 PHP Standards Recommendations 的縮寫。</p>
+<p>PHP-FIG 至少已經通過 6 套標準：</p>
+<ol>
+<li>PSR-1：基本程式碼風格</li>
+<li>PSR-2：嚴厲程式碼風格</li>
+<li>PSR-3：紀錄器</li>
+<li>PSR-4：自動載入</li>
+<li>PSR-6：快取介面</li>
+<li>PSR-7：HTTP 消息介面</li>
+</ol>
+<h2 id="PSR-1：基本程式碼風格"><a href="#PSR-1：基本程式碼風格" class="headerlink" title="PSR-1：基本程式碼風格"></a>PSR-1：基本程式碼風格</h2><h3 id="PHP-標籤"><a href="#PHP-標籤" class="headerlink" title="PHP 標籤"></a>PHP 標籤</h3><p>必須使用 <code>&lt;?PHP ?&gt;</code> 或 <code>&lt;?= ?&gt;</code> 標籤包覆 PHP 程式碼。</p>
+<h3 id="編碼"><a href="#編碼" class="headerlink" title="編碼"></a>編碼</h3><p>所有的 PHP 檔案必須以沒有位元組順序記號（BOM）的 UTF-8 字元編碼。</p>
+<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>每個 PHP 檔案可以被用來定義符號（一個類別、特徵機制、函式、常數等）或執行一個有副作用的動作（產生輸出結果或處理資料）。</p>
+<h3 id="自動載入器"><a href="#自動載入器" class="headerlink" title="自動載入器"></a>自動載入器</h3><p>PHP 名稱空間和類別必須支援 PSR-4 自動載入器標準。</p>
+<h3 id="類別名稱"><a href="#類別名稱" class="headerlink" title="類別名稱"></a>類別名稱</h3><p>PHP 類別名稱必須使用共通的 <code>CamelCase</code> 格式，例如：CoffeeGrinder、CoffeeBean。</p>
+<h3 id="常數名稱"><a href="#常數名稱" class="headerlink" title="常數名稱"></a>常數名稱</h3><p>PHP 常數名稱必須全部大寫，使用底線區分單字，例如 LET_OUR_POWERS_COMBINE、GREAT_SCOTT。</p>
+<h3 id="方法名稱"><a href="#方法名稱" class="headerlink" title="方法名稱"></a>方法名稱</h3><p>PHP 方法名稱必須使用共通的 <code>camelCase</code> 格式，例如：phpIsAwesome、iLoveBacon。</p>
+<h2 id="PSR-2：嚴厲程式碼風格"><a href="#PSR-2：嚴厲程式碼風格" class="headerlink" title="PSR-2：嚴厲程式碼風格"></a>PSR-2：嚴厲程式碼風格</h2><h3 id="縮排"><a href="#縮排" class="headerlink" title="縮排"></a>縮排</h3><p>必須使用 <code>4</code> 個空白字元來縮排。</p>
+<h3 id="檔案和行句"><a href="#檔案和行句" class="headerlink" title="檔案和行句"></a>檔案和行句</h3><ol>
+<li>檔案的最後應該保有一行空白行。</li>
+<li>檔案不能包含結尾 <code>?&gt;</code> 標籤，這是為了避免在之後加了一個空白行使得輸出造成錯誤。</li>
+<li>每一行程式碼不應超過 <code>80</code> 個字元。</li>
+<li>每一行程式碼的結尾不能有空白字元。</li>
+</ol>
+<h3 id="關鍵字"><a href="#關鍵字" class="headerlink" title="關鍵字"></a>關鍵字</h3><p>PHP 關鍵字一律使用小寫，如 <code>true</code>、<code>false</code> 和 <code>null</code> 等。</p>
+<h3 id="名稱空間"><a href="#名稱空間" class="headerlink" title="名稱空間"></a>名稱空間</h3><p>每一個名稱空間宣告都必須接上一行空白行，使用 <code>use</code> 宣告時亦同。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">My</span>\<span class="title">Component</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Components</span>\<span class="title">HttpFoundation</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Components</span>\<span class="title">HttpFoundation</span>\<span class="title">Response</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="類別"><a href="#類別" class="headerlink" title="類別"></a>類別</h3><p>類別定義的起始括號必須要在類別名稱的下一行，而 <code>extends</code> 和 <code>implements</code> 關鍵字必須跟類別名稱寫在同一行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">My</span>\<span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Administrator</span> <span class="keyword">extends</span> <span class="title">User</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>方法定義的起始括號必須要在類別名稱的下一行，而參數（除了最後一個）的後面緊接著一個逗號和一個空白字元。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Animals</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrawNeckedIbis</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">flapWings</span><span class="params">($numberOfTimes = <span class="number">3</span>, $speed = <span class="string">'fast'</span>)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="能見度"><a href="#能見度" class="headerlink" title="能見度"></a>能見度</h3><p>必須為每一個類別的屬性和方法定義能見度，分別是 <code>public</code>、<code>protected</code> 或 <code>private</code>。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Animals</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrawNeckedIbis</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> $numberOfBirds = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__contruct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">static</span>::$numberOfBirds++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h3><p>所有的控制流程關鍵字必須接上一個空白字元，起始括號和控制流程關鍵字必須保持在同一樣。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$gorilla = <span class="keyword">new</span> \Animals\Gorilla;</span><br><span class="line">$ibis = <span class="keyword">new</span> \Animals\StrawNeckedIbis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($gorilla-&gt;isAwake() === <span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        $gorrilla-&gt;beatChest();</span><br><span class="line">    &#125; <span class="keyword">while</span> ($ibis-&gt;isAsleep() === <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    $ibis-&gt;flyAway();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>Josh Lockhart（2015）。現代 PHP。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-FIG"><span class="toc-number">3.</span> <span class="toc-text">PHP-FIG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#框架互通性"><span class="toc-number">4.</span> <span class="toc-text">框架互通性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自動載入"><span class="toc-number">5.</span> <span class="toc-text">自動載入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#風格"><span class="toc-number">6.</span> <span class="toc-text">風格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSR"><span class="toc-number">7.</span> <span class="toc-text">PSR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSR-1：基本程式碼風格"><span class="toc-number">8.</span> <span class="toc-text">PSR-1：基本程式碼風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP-標籤"><span class="toc-number">8.1.</span> <span class="toc-text">PHP 標籤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#編碼"><span class="toc-number">8.2.</span> <span class="toc-text">編碼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目的"><span class="toc-number">8.3.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自動載入器"><span class="toc-number">8.4.</span> <span class="toc-text">自動載入器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#類別名稱"><span class="toc-number">8.5.</span> <span class="toc-text">類別名稱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常數名稱"><span class="toc-number">8.6.</span> <span class="toc-text">常數名稱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法名稱"><span class="toc-number">8.7.</span> <span class="toc-text">方法名稱</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSR-2：嚴厲程式碼風格"><span class="toc-number">9.</span> <span class="toc-text">PSR-2：嚴厲程式碼風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#縮排"><span class="toc-number">9.1.</span> <span class="toc-text">縮排</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#檔案和行句"><span class="toc-number">9.2.</span> <span class="toc-text">檔案和行句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#關鍵字"><span class="toc-number">9.3.</span> <span class="toc-text">關鍵字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#名稱空間"><span class="toc-number">9.4.</span> <span class="toc-text">名稱空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#類別"><span class="toc-number">9.5.</span> <span class="toc-text">類別</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法"><span class="toc-number">9.6.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#能見度"><span class="toc-number">9.7.</span> <span class="toc-text">能見度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制流程"><span class="toc-number">9.8.</span> <span class="toc-text">控制流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&text=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&is_video=false&description=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2&body=Check out this article: https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&title=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/05/《現代-PHP》學習筆記（八）：PSR-1-PSR-2/&name=《現代 PHP》學習筆記（八）：PSR-1 &amp; PSR-2&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="建立專案建立專案。 12cargo new conifercd conifer  修改 Cargo.toml 檔，安裝依賴套件。 123456[dependencies]diesel = &amp;#123; version = &quot;2.0&quot;, features = [&quot;postgres&quot;] &amp;#125;dotenvy = &quot;0.15&quot;nanoid = &quot;0.4&quot;rocket = &amp;#123; versio">
+<meta name="keywords" content="程式設計,Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Rust 實作「短網址產生器」應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12cargo new conifercd conifer  修改 Cargo.toml 檔，安裝依賴套件。 123456[dependencies]diesel = &amp;#123; version = &quot;2.0&quot;, features = [&quot;postgres&quot;] &amp;#125;dotenvy = &quot;0.15&quot;nanoid = &quot;0.4&quot;rocket = &amp;#123; versio">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Rust 實作「短網址產生器」應用程式">
+<meta name="twitter:description" content="建立專案建立專案。 12cargo new conifercd conifer  修改 Cargo.toml 檔，安裝依賴套件。 123456[dependencies]diesel = &amp;#123; version = &quot;2.0&quot;, features = [&quot;postgres&quot;] &amp;#125;dotenvy = &quot;0.15&quot;nanoid = &quot;0.4&quot;rocket = &amp;#123; versio">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Rust 實作「短網址產生器」應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/10/使用-Docker-容器化-Nuxt-專案/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/10/在-Ethereum-專案使用-JavaScript-對簽章進行驗證/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&text=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&is_video=false&description=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 實作「短網址產生器」應用程式&body=Check out this article: https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&name=使用 Rust 實作「短網址產生器」應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Rust 實作「短網址產生器」應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-10-13T15:12:31.000Z" itemprop="datePublished">2022-10-13</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new conifer</span><br><span class="line"><span class="built_in">cd</span> conifer</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>Cargo.toml</code> 檔，安裝依賴套件。</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">diesel</span> = &#123; version = <span class="string">"2.0"</span>, features = [<span class="string">"postgres"</span>] &#125;</span><br><span class="line"><span class="attr">dotenvy</span> = <span class="string">"0.15"</span></span><br><span class="line"><span class="attr">nanoid</span> = <span class="string">"0.4"</span></span><br><span class="line"><span class="attr">rocket</span> = &#123; version = <span class="string">"0.5.0-rc.2"</span>, features = [<span class="string">"json"</span>] &#125;</span><br><span class="line"><span class="attr">serde</span> = &#123; version = <span class="string">"1.0"</span>, features = [<span class="string">"derive"</span>] &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DATABASE_URL=postgres://postgres:root@127.0.0.1/records</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>diesel</code> 指令初始化，以建立 <code>records</code> 資料庫和預設的遷移資料表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diesel setup</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>records</code> 資料表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diesel migration generate create_records</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>migrations/2022-10-12-133835_create_records/up.sql</code> 檔。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">records</span> (</span><br><span class="line">  <span class="keyword">id</span> <span class="built_in">VARCHAR</span>(<span class="number">10</span>) PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">  <span class="keyword">url</span> <span class="built_in">TEXT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>migrations/2022-10-12-133835_create_records/down.sql</code> 檔。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">records</span>;</span><br></pre></td></tr></table></figure>
+
+<p>執行遷移。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diesel migration run</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>model.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> crate::schema::records;</span><br><span class="line"><span class="keyword">use</span> diesel::prelude::*;</span><br><span class="line"><span class="keyword">use</span> rocket::serde::&#123;Deserialize, Serialize&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Queryable, Insertable, Serialize, Deserialize)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Record</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> id: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> url: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>repository.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> crate::model::Record;</span><br><span class="line"><span class="keyword">use</span> crate::schema::records::dsl::&#123;id, records&#125;;</span><br><span class="line"><span class="keyword">use</span> diesel::pg::PgConnection;</span><br><span class="line"><span class="keyword">use</span> diesel::prelude::*;</span><br><span class="line"><span class="keyword">use</span> diesel::result::Error;</span><br><span class="line"><span class="keyword">use</span> dotenvy::dotenv;</span><br><span class="line"><span class="keyword">use</span> nanoid::nanoid;</span><br><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">connect</span></span>() -&gt; PgConnection &#123;</span><br><span class="line">    dotenv().ok();</span><br><span class="line">    <span class="keyword">let</span> database_url = env::var(<span class="string">"DATABASE_URL"</span>).unwrap();</span><br><span class="line">    PgConnection::establish(&amp;database_url)</span><br><span class="line">        .unwrap_or_else(|_| <span class="built_in">panic!</span>(<span class="string">"Error connecting to &#123;&#125;"</span>, database_url))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">get_records</span></span>(conn: &amp;<span class="keyword">mut</span> PgConnection) -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">Option</span>&lt;<span class="built_in">Vec</span>&lt;Record&gt;&gt;, Error&gt; &#123;</span><br><span class="line">    records.get_results::&lt;Record&gt;(conn).optional()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">get_record</span></span>(conn: &amp;<span class="keyword">mut</span> PgConnection, _id: &amp;<span class="built_in">str</span>) -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">Option</span>&lt;Record&gt;, Error&gt; &#123;</span><br><span class="line">    records</span><br><span class="line">        .filter(id.eq(_id))</span><br><span class="line">        .limit(<span class="number">1</span>)</span><br><span class="line">        .get_result::&lt;Record&gt;(conn)</span><br><span class="line">        .optional()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">store_record</span></span>(conn: &amp;<span class="keyword">mut</span> PgConnection, _url: &amp;<span class="built_in">str</span>) -&gt; <span class="built_in">Result</span>&lt;<span class="built_in">Option</span>&lt;Record&gt;, Error&gt; &#123;</span><br><span class="line">    <span class="keyword">use</span> crate::schema::records;</span><br><span class="line">    <span class="keyword">let</span> record = Record &#123;</span><br><span class="line">        id: nanoid!(<span class="number">10</span>),</span><br><span class="line">        url: <span class="built_in">String</span>::from(_url),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    diesel::insert_into(records::table)</span><br><span class="line">        .values(&amp;record)</span><br><span class="line">        .get_result::&lt;Record&gt;(conn)</span><br><span class="line">        .optional()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[macro_use]</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> rocket;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[launch]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">rocket</span></span>() -&gt; _ &#123;</span><br><span class="line">    conifer::rocket()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>lib.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[macro_use]</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> rocket;</span><br><span class="line"><span class="keyword">use</span> crate::handler::&#123;get_record, get_records, redirect, store_record&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">mod</span> handler;</span><br><span class="line"><span class="keyword">mod</span> model;</span><br><span class="line"><span class="keyword">mod</span> repository;</span><br><span class="line"><span class="keyword">mod</span> request;</span><br><span class="line"><span class="keyword">mod</span> response;</span><br><span class="line"><span class="keyword">mod</span> schema;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[launch]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">rocket</span></span>() -&gt; _ &#123;</span><br><span class="line">    rocket::build()</span><br><span class="line">        .mount(<span class="string">"/"</span>, routes![redirect])</span><br><span class="line">        .mount(<span class="string">"/api"</span>, routes![get_records])</span><br><span class="line">        .mount(<span class="string">"/api"</span>, routes![store_record])</span><br><span class="line">        .mount(<span class="string">"/api"</span>, routes![get_record])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>handler.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> crate::&#123;</span><br><span class="line">    repository,</span><br><span class="line">    request::ReqStoreRecord,</span><br><span class="line">    response::&#123;RespGetRecord, RespGetRecords, RespStoreRecord&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">use</span> rocket::&#123;http::Status, response::Redirect, serde::json::Json&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[get(<span class="meta-string">"/&lt;id&gt;"</span>)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">redirect</span></span>(id: <span class="built_in">String</span>) -&gt; <span class="built_in">Result</span>&lt;Redirect, Status&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> conn = &amp;<span class="keyword">mut</span> repository::connect();</span><br><span class="line">    <span class="keyword">let</span> record = repository::get_record(conn, &amp;id);</span><br><span class="line">    <span class="keyword">match</span> record &#123;</span><br><span class="line">        <span class="literal">Ok</span>(r) =&gt; <span class="keyword">match</span> r &#123;</span><br><span class="line">            <span class="literal">Some</span>(r) =&gt; <span class="literal">Ok</span>(Redirect::to(r.url)),</span><br><span class="line">            <span class="literal">None</span> =&gt; <span class="literal">Err</span>(Status::NotFound),</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; &#123;</span><br><span class="line">            <span class="built_in">print!</span>(<span class="string">"&#123;&#125;"</span>, e);</span><br><span class="line">            <span class="literal">Err</span>(Status::InternalServerError)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[get(<span class="meta-string">"/records"</span>)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">get_records</span></span>() -&gt; <span class="built_in">Result</span>&lt;Json&lt;RespGetRecords&gt;, Status&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> conn = &amp;<span class="keyword">mut</span> repository::connect();</span><br><span class="line">    <span class="keyword">let</span> records = repository::get_records(conn);</span><br><span class="line">    <span class="keyword">match</span> records &#123;</span><br><span class="line">        <span class="literal">Ok</span>(r) =&gt; <span class="keyword">match</span> r &#123;</span><br><span class="line">            <span class="literal">Some</span>(r) =&gt; <span class="literal">Ok</span>(Json(RespGetRecords &#123; data: r &#125;)),</span><br><span class="line">            <span class="literal">None</span> =&gt; <span class="literal">Err</span>(Status::NotFound),</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; &#123;</span><br><span class="line">            <span class="built_in">print!</span>(<span class="string">"&#123;&#125;"</span>, e);</span><br><span class="line">            <span class="literal">Err</span>(Status::InternalServerError)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[post(<span class="meta-string">"/records"</span>, format = <span class="meta-string">"json"</span>, data = <span class="meta-string">"&lt;req&gt;"</span>)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">store_record</span></span>(req: Json&lt;ReqStoreRecord&gt;) -&gt; <span class="built_in">Result</span>&lt;Json&lt;RespStoreRecord&gt;, Status&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> conn = &amp;<span class="keyword">mut</span> repository::connect();</span><br><span class="line">    <span class="keyword">let</span> record = repository::store_record(conn, &amp;req.url);</span><br><span class="line">    <span class="keyword">match</span> record &#123;</span><br><span class="line">        <span class="literal">Ok</span>(r) =&gt; <span class="keyword">match</span> r &#123;</span><br><span class="line">            <span class="literal">Some</span>(r) =&gt; <span class="literal">Ok</span>(Json(RespStoreRecord &#123; data: r &#125;)),</span><br><span class="line">            <span class="literal">None</span> =&gt; <span class="literal">Err</span>(Status::NotFound),</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; &#123;</span><br><span class="line">            <span class="built_in">print!</span>(<span class="string">"&#123;&#125;"</span>, e);</span><br><span class="line">            <span class="literal">Err</span>(Status::InternalServerError)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[get(<span class="meta-string">"/records/&lt;id&gt;"</span>)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">get_record</span></span>(id: &amp;<span class="built_in">str</span>) -&gt; <span class="built_in">Result</span>&lt;Json&lt;RespGetRecord&gt;, Status&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> conn = &amp;<span class="keyword">mut</span> repository::connect();</span><br><span class="line">    <span class="keyword">let</span> record = repository::get_record(conn, id);</span><br><span class="line">    <span class="keyword">match</span> record &#123;</span><br><span class="line">        <span class="literal">Ok</span>(r) =&gt; <span class="keyword">match</span> r &#123;</span><br><span class="line">            <span class="literal">Some</span>(r) =&gt; <span class="literal">Ok</span>(Json(RespGetRecord &#123; data: r &#125;)),</span><br><span class="line">            <span class="literal">None</span> =&gt; <span class="literal">Err</span>(Status::NotFound),</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="literal">Err</span>(e) =&gt; &#123;</span><br><span class="line">            <span class="built_in">print!</span>(<span class="string">"&#123;&#125;"</span>, e);</span><br><span class="line">            <span class="literal">Err</span>(Status::InternalServerError)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>request.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> serde::Deserialize;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Deserialize)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">ReqStoreRecord</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> url: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>response.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> crate::model::Record;</span><br><span class="line"><span class="keyword">use</span> diesel::Queryable;</span><br><span class="line"><span class="keyword">use</span> rocket::serde::Serialize;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Queryable, Serialize)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">RespGetRecords</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> data: <span class="built_in">Vec</span>&lt;Record&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Queryable, Serialize)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">RespStoreRecord</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> data: Record,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Queryable, Serialize)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">RespGetRecord</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> data: Record,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://zelark.github.io/nano-id-cc/" target="_blank" rel="noopener">Nano ID Collision Calculator</a></li>
+<li><a href="https://www.shuttle.rs/blog/2022/03/13/url-shortener" target="_blank" rel="noopener">Building and Deploying a URL shortener with Rust in 10 minutes or less</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&text=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&is_video=false&description=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 實作「短網址產生器」應用程式&body=Check out this article: https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&title=使用 Rust 實作「短網址產生器」應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/使用-Rust-實作「短網址產生器」應用程式/&name=使用 Rust 實作「短網址產生器」應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

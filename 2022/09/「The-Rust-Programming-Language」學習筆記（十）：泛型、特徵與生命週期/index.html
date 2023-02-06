@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 簡介每個程式語言都有能夠高效處理概念複製的工具。在 Rust 此工具就是泛型（generics）。泛型是實際型別或其他屬性的抽象替代。類似於函式有辦法能接收多種未知數值作為參數來執行相同程式碼，函式也可以接受一些泛型型別參數，而不是實際型別像是 i32 或 String。 泛型資料型別我們可以使用泛型（g">
+<meta name="keywords" content="程式設計,Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期">
+<meta property="og:url" content="https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 簡介每個程式語言都有能夠高效處理概念複製的工具。在 Rust 此工具就是泛型（generics）。泛型是實際型別或其他屬性的抽象替代。類似於函式有辦法能接收多種未知數值作為參數來執行相同程式碼，函式也可以接受一些泛型型別參數，而不是實際型別像是 i32 或 String。 泛型資料型別我們可以使用泛型（g">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期">
+<meta name="twitter:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 簡介每個程式語言都有能夠高效處理概念複製的工具。在 Rust 此工具就是泛型（generics）。泛型是實際型別或其他屬性的抽象替代。類似於函式有辦法能接收多種未知數值作為參數來執行相同程式碼，函式也可以接受一些泛型型別參數，而不是實際型別像是 i32 或 String。 泛型資料型別我們可以使用泛型（g">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/09/使用-VuePress-建立文件網站/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/09/建立「Functional-Programming-in-JavaScript」工作坊/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&text=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&is_video=false&description=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期&body=Check out this article: https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&name=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型資料型別"><span class="toc-number">3.</span> <span class="toc-text">泛型資料型別</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在函式中定義"><span class="toc-number">3.1.</span> <span class="toc-text">在函式中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在結構體中定義"><span class="toc-number">3.2.</span> <span class="toc-text">在結構體中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在枚舉中定義"><span class="toc-number">3.3.</span> <span class="toc-text">在枚舉中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在方法中定義"><span class="toc-number">3.4.</span> <span class="toc-text">在方法中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用泛型的程式碼效能"><span class="toc-number">3.5.</span> <span class="toc-text">使用泛型的程式碼效能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特徵"><span class="toc-number">4.</span> <span class="toc-text">特徵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定義特徵"><span class="toc-number">4.1.</span> <span class="toc-text">定義特徵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#為型別實作特徵"><span class="toc-number">4.2.</span> <span class="toc-text">為型別實作特徵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#預設實作"><span class="toc-number">4.3.</span> <span class="toc-text">預設實作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特徵作為參數"><span class="toc-number">4.4.</span> <span class="toc-text">特徵作為參數</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特徵界限語法"><span class="toc-number">4.4.1.</span> <span class="toc-text">特徵界限語法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#透過-語法來指定多個特徵界限"><span class="toc-number">4.4.2.</span> <span class="toc-text">透過 + 語法來指定多個特徵界限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#透過-where-來使特徵界限更清楚"><span class="toc-number">4.4.3.</span> <span class="toc-text">透過 where 來使特徵界限更清楚</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回有實作特徵的型別"><span class="toc-number">4.5.</span> <span class="toc-text">返回有實作特徵的型別</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#透過特徵界限修正-largest-函式"><span class="toc-number">4.6.</span> <span class="toc-text">透過特徵界限修正 largest 函式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#透過特徵界限來選擇性實作方法"><span class="toc-number">4.6.1.</span> <span class="toc-text">透過特徵界限來選擇性實作方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命週期"><span class="toc-number">5.</span> <span class="toc-text">生命週期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#透過生命週期預防迷途引用"><span class="toc-number">5.1.</span> <span class="toc-text">透過生命週期預防迷途引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#借用檢查器"><span class="toc-number">5.2.</span> <span class="toc-text">借用檢查器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函式中的泛型生命週期"><span class="toc-number">5.3.</span> <span class="toc-text">函式中的泛型生命週期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生命週期詮釋語法"><span class="toc-number">5.4.</span> <span class="toc-text">生命週期詮釋語法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函式簽名中的生命週期詮釋"><span class="toc-number">5.5.</span> <span class="toc-text">函式簽名中的生命週期詮釋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深入理解生命週期"><span class="toc-number">5.6.</span> <span class="toc-text">深入理解生命週期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#結構體定義中的生命週期詮釋"><span class="toc-number">5.7.</span> <span class="toc-text">結構體定義中的生命週期詮釋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生命週期省略"><span class="toc-number">5.8.</span> <span class="toc-text">生命週期省略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在方法定義中的生命週期詮釋"><span class="toc-number">5.9.</span> <span class="toc-text">在方法定義中的生命週期詮釋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#靜態生命週期"><span class="toc-number">5.10.</span> <span class="toc-text">靜態生命週期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#組合"><span class="toc-number">6.</span> <span class="toc-text">組合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-09-18T06:21:15.000Z" itemprop="datePublished">2022-09-18</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/「The-Rust-Programming-Language」學習筆記/">「The Rust Programming Language」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a>」語言指南的學習筆記。</p>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>每個程式語言都有能夠高效處理概念複製的工具。在 Rust 此工具就是泛型（generics）。泛型是實際型別或其他屬性的抽象替代。類似於函式有辦法能接收多種未知數值作為參數來執行相同程式碼，函式也可以接受一些泛型型別參數，而不是實際型別像是 <code>i32</code> 或 <code>String</code>。</p>
+<h2 id="泛型資料型別"><a href="#泛型資料型別" class="headerlink" title="泛型資料型別"></a>泛型資料型別</h2><p>我們可以使用泛型（generics）來建立項目的定義，像是函式簽名或結構體，讓我們在之後可以使用在不同的實際資料型別。</p>
+<h3 id="在函式中定義"><a href="#在函式中定義" class="headerlink" title="在函式中定義"></a>在函式中定義</h3><p>當要使用泛型定義函數時，我們通常會將泛型置於函式簽名中指定參數與回傳值資料型別的位置。這樣做能讓我們的程式碼更具彈性並向呼叫者提供更多功能，同時還能防止重複程式碼。</p>
+<p>以下展示了兩個都在切片上尋找最大值的函式。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest_i32</span></span>(list: &amp;[<span class="built_in">i32</span>]) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> largest = list[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &amp;item <span class="keyword">in</span> list &#123;</span><br><span class="line">        <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">            largest = item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    largest</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest_char</span></span>(list: &amp;[<span class="built_in">char</span>]) -&gt; <span class="built_in">char</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> largest = list[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &amp;item <span class="keyword">in</span> list &#123;</span><br><span class="line">        <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">            largest = item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    largest</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> number_list = <span class="built_in">vec!</span>[<span class="number">34</span>, <span class="number">50</span>, <span class="number">25</span>, <span class="number">100</span>, <span class="number">65</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest_i32(&amp;number_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大數字為 &#123;&#125;"</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> char_list = <span class="built_in">vec!</span>[<span class="string">'y'</span>, <span class="string">'m'</span>, <span class="string">'a'</span>, <span class="string">'q'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest_char(&amp;char_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大字元為 &#123;&#125;"</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由於函式本體都擁有相同的程式碼，因此可以用泛型型別參數來消除重複的部分，轉變成只有一個函式。要在新定義的函式中參數化型別的話，需要為參數型別命名，就和在函式中的參數數值所做的一樣。可以用任何標識符來命名型別參數名稱。但習慣上會用 <code>T</code>，因為 Rust 的參數名稱都盡量很短，常常只會有一個字母，而且 Rust 對於型別命名的慣用規則是駝峰式大小寫（CamelCase）。所以 <code>T</code> 作為「type」的簡稱是大多數 Rust 程式設計師的選擇。</p>
+<p>要定義泛型 <code>largest</code> 函式的話，在函式名稱與參數列表之間加上尖括號，其內就是型別名稱的宣告，如以下所示：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; T &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以這樣理解定義：函式 <code>largest</code> 有泛型型別 <code>T</code>，此函式有一個參數叫做 <code>list</code>，它的型別為數值 <code>T</code> 的切片。<code>largest</code> 函式會回傳與型別 <code>T</code> 相同型別的值。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T&gt;(list: &amp;[T]) -&gt; T &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> largest = list[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &amp;item <span class="keyword">in</span> list &#123;</span><br><span class="line">        <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">            largest = item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    largest</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> number_list = <span class="built_in">vec!</span>[<span class="number">34</span>, <span class="number">50</span>, <span class="number">25</span>, <span class="number">100</span>, <span class="number">65</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;number_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大數字為 &#123;&#125;"</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> char_list = <span class="built_in">vec!</span>[<span class="string">'y'</span>, <span class="string">'m'</span>, <span class="string">'a'</span>, <span class="string">'q'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;char_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大字元為 &#123;&#125;"</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>編譯後會得到以下錯誤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling chapter10 v0.1.0 (file:///projects/chapter10)</span><br><span class="line">error[E0369]: binary operation `&gt;` cannot be applied to <span class="built_in">type</span> `T`</span><br><span class="line"> --&gt; src/main.rs:5:17</span><br><span class="line">  |</span><br><span class="line">5 |         <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">  |            ---- ^ ------- T</span><br><span class="line">  |            |</span><br><span class="line">  |            T</span><br><span class="line">  |</span><br><span class="line"><span class="built_in">help</span>: consider restricting <span class="built_in">type</span> parameter `T`</span><br><span class="line">  |</span><br><span class="line">1 | fn largest&lt;T: std::cmp::PartialOrd&gt;(list: &amp;[T]) -&gt; T &#123;</span><br><span class="line">  |             ++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0369`.</span><br><span class="line">error: could not compile `chapter10` due to previous error</span><br></pre></td></tr></table></figure>
+
+<p>註釋中提到了 <code>std::cmp::PartialOrd</code> 這個特徵（trait）。現在此錯誤告訴我們 <code>largest</code> 本體無法適用於所有可能的 T 型別，因為想要在本體中比較型別 <code>T</code> 的數值，我們只能在能夠排序的型別中做比較。要能夠比較的話，標準函式庫有提供 <code>std::cmp::PartialOrd</code> 特徵可以針對不同型別來實作。</p>
+<p>在「特徵作為參數」的段落會學習到如何指定特定泛型型別擁有特定特徵。先來探索其他泛型型別參數使用的方式。</p>
+<h3 id="在結構體中定義"><a href="#在結構體中定義" class="headerlink" title="在結構體中定義"></a>在結構體中定義</h3><p>以 <code>&lt;&gt;</code> 語法來對結構體中一或多個欄位使用泛型型別參數。以下範例顯示了如何定義 <code>Point&lt;T&gt;</code> 結構體並讓 <code>x</code> 與 <code>y</code> 可以是任意型別數值。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> integer = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> float = Point &#123; x: <span class="number">1.0</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要將結構體 <code>Point</code> 的 <code>x</code> 與 <code>y</code> 定義成擁有不同型別卻仍然是泛型的話，可以使用多個泛型型別參數。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T, U&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: U,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> both_integer = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> both_float = Point &#123; x: <span class="number">1.0</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">    <span class="keyword">let</span> integer_and_float = Point &#123; x: <span class="number">5</span>, y: <span class="number">4.0</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="在枚舉中定義"><a href="#在枚舉中定義" class="headerlink" title="在枚舉中定義"></a>在枚舉中定義</h3><p>如同結構體一樣，可以定義枚舉讓它們的變體擁有泛型資料型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option</span></span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="literal">Some</span>(T),</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>枚舉也能有數個泛型型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Result</span></span>&lt;T, E&gt; &#123;</span><br><span class="line">    <span class="literal">Ok</span>(T),</span><br><span class="line">    <span class="literal">Err</span>(E),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="在方法中定義"><a href="#在方法中定義" class="headerlink" title="在方法中定義"></a>在方法中定義</h3><p>可以對結構體或枚舉定義方法，並也可以使用泛型型別來定義。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T&gt; Point&lt;T&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">x</span></span>(&amp;<span class="keyword">self</span>) -&gt; &amp;T &#123;</span><br><span class="line">        &amp;<span class="keyword">self</span>.x</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> p = Point &#123; x: <span class="number">5</span>, y: <span class="number">10</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"p.x = &#123;&#125;"</span>, p.x());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一種選項是在定義方法時，可以對泛型型別加上些限制。舉例來說，可以只針對 <code>Point&lt;f32&gt;</code> 的實例來實作方法，而非適用於任何泛型型別的 <code>Point&lt;T&gt;</code> 實例。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Point&lt;<span class="built_in">f32</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">distance_from_origin</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">f32</span> &#123;</span><br><span class="line">        (<span class="keyword">self</span>.x.powi(<span class="number">2</span>) + <span class="keyword">self</span>.y.powi(<span class="number">2</span>)).sqrt()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用泛型的程式碼效能"><a href="#使用泛型的程式碼效能" class="headerlink" title="使用泛型的程式碼效能"></a>使用泛型的程式碼效能</h3><p>Rust 在編譯時對使用泛型的程式碼進行單態化（monomorphization）。單態化是個讓泛型程式碼轉換成特定程式碼的過程，在編譯時填入實際的型別。在此過程中，編譯器會檢查所有泛型程式碼被呼叫的地方，並依據泛型程式碼被呼叫的情況產生實際型別的程式碼。</p>
+<p>這在標準函式庫的枚舉 <code>Option&lt;T&gt;</code> 中是怎麼做到的：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> integer = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> float = <span class="literal">Some</span>(<span class="number">5.0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>當 Rust 編譯此程式碼時中，他會進行單態化。在此過程中，會讀取 <code>Option&lt;T&gt;</code> 實例中使用的數值並識別出兩種 <code>Option&lt;T&gt;</code>：一種是 <code>i32</code> 而另一種是 <code>f64</code>。接著它就會將 <code>Option&lt;T&gt;</code> 的泛型定義展開為 <code>Option_i32</code> 和 <code>Option_f64</code>，以此替換函式定義為特定型別。</p>
+<p>單態化的版本看起來會像這樣，泛型 <code>Option&lt;T&gt;</code> 會被替換成編譯器定義的特定定義：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option_i32</span></span> &#123;</span><br><span class="line">    <span class="literal">Some</span>(<span class="built_in">i32</span>),</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option_f64</span></span> &#123;</span><br><span class="line">    <span class="literal">Some</span>(<span class="built_in">f64</span>),</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> integer = Option_i32::<span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">let</span> float = Option_f64::<span class="literal">Some</span>(<span class="number">5.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因為 Rust 會編譯泛型程式碼成個別實例的特定型別，我們使用泛型就不會造成任何執行時消耗。當程式執行時，它就會和我們親自寫重複定義的版本一樣。單態化的過程讓 Rust 的泛型在執行時十分有效率。</p>
+<h2 id="特徵"><a href="#特徵" class="headerlink" title="特徵"></a>特徵</h2><p>特徵（trait）會告訴 Rust 編譯器特定型別與其他型別共享的功能。我們可以使用特徵定義來抽象出共同行為。我們可以使用特徵界限（trait bounds）來指定泛型型別為擁有特定行為的任意型別。</p>
+<h3 id="定義特徵"><a href="#定義特徵" class="headerlink" title="定義特徵"></a>定義特徵</h3><p>一個型別的行為包含我們對該型別可以呼叫的方法。如果我們可以對不同型別呼叫相同的方法，這些型別就能定義共同行為了。特徵定義是一個將方法簽名統整起來，來達成一些目的而定義一系列行為的方法。</p>
+<p>舉例來說，如果有數個結構體各自擁有不同種類與不同數量的文字：結構體 <code>NewsArticle</code> 儲存特定地點的新聞故事，然後 <code>Tweet</code> 則有最多 280 字元的內容，且有個欄位來判斷是全新的推文、轉推或其他推文的回覆。</p>
+<p>我們想要建立個多媒體資料庫來顯示可能存在 <code>NewsArticle</code> 或 <code>Tweet</code> 實例的資料總結。要達成此目的的話，需要每個型別的總結，且會呼叫該實例的 <code>summarize</code> 方法來索取總結。以下範例顯示了表達此行為的 <code>Summary</code> 特徵定義。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Summary</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在方法簽名之後，我們並沒有加上大括號提供實作細節，而是使用分號。每個有實作此特徵的型別必須提供其自訂行為的方法本體。編譯器會強制要求任何有 <code>Summary</code> 特徵的型別都要有定義相同簽名的 <code>summarize</code> 方法。</p>
+<p>特徵本體中可以有多個方法，每行會有一個方法簽名並都以分號做結尾。</p>
+<h3 id="為型別實作特徵"><a href="#為型別實作特徵" class="headerlink" title="為型別實作特徵"></a>為型別實作特徵</h3><p>現在已經用 <code>Summary</code> 特徵定義了所需的方法簽名。以下顯示了 <code>NewsArticle</code> 結構體實作 <code>Summary</code> 特徵的方式，其使用頭條、作者、位置來建立 <code>summerize</code> 的回傳值。至於結構體 <code>Tweet</code>，我們使用使用者名稱加上整個推文的文字來定義 <code>summarize</code> 方法。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">NewsArticle</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> headline: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> location: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> author: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> content: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Summary <span class="keyword">for</span> NewsArticle &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        <span class="built_in">format!</span>(<span class="string">"&#123;&#125; &#123;&#125; 著 (&#123;&#125;)"</span>, <span class="keyword">self</span>.headline, <span class="keyword">self</span>.author, <span class="keyword">self</span>.location)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Tweet</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> username: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> content: <span class="built_in">String</span>,</span><br><span class="line">    <span class="keyword">pub</span> reply: <span class="built_in">bool</span>,</span><br><span class="line">    <span class="keyword">pub</span> retweet: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Summary <span class="keyword">for</span> Tweet &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        <span class="built_in">format!</span>(<span class="string">"&#123;&#125;: &#123;&#125;"</span>, <span class="keyword">self</span>.username, <span class="keyword">self</span>.content)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為一個型別實作一個特徵類似於實作一般的方法。不同的地方在於在 <code>impl</code> 之後我們加上的是想要實作的特徵，然後在用 <code>for</code> 關鍵字加上我們想要實作特徵的型別名稱。在 <code>impl</code> 的區塊內我們置入該特徵所定義的方法簽名，我們使用大括號並填入方法本體來為對特定型別實作出特徵方法的指定行為。</p>
+<p>以下的範例展示執行檔 <code>crate</code> 如何使用我們的 <code>aggregator</code> 函式庫 crate。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> aggregator::&#123;<span class="keyword">self</span>, Summary, Tweet&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> tweet = Tweet &#123;</span><br><span class="line">        username: <span class="built_in">String</span>::from(<span class="string">"horse_ebooks"</span>),</span><br><span class="line">        content: <span class="built_in">String</span>::from(</span><br><span class="line">            <span class="string">"of course, as you probably already know, people"</span>,</span><br><span class="line">        ),</span><br><span class="line">        reply: <span class="literal">false</span>,</span><br><span class="line">        retweet: <span class="literal">false</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"1 則新推文：&#123;&#125;"</span>, tweet.summarize());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="預設實作"><a href="#預設實作" class="headerlink" title="預設實作"></a>預設實作</h3><p>有時候對特徵內的一些或所有方法定義預設行為是很實用的，而不必要求每個型別都實作所有方法。然後當對特定型別實作特徵時，可以保留或覆蓋每個方法的預設行為。</p>
+<p>以下展示如何在 <code>Summary</code> 特徵內指定 <code>summarize</code> 方法的預設字串。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Summary</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        <span class="built_in">String</span>::from(<span class="string">"(閱讀更多...)"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要使用預設實作來總結 <code>NewsArticle</code> 而不是定義自訂實作的話，我們可以指定一個空的 <code>impl</code> 區塊。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Summary <span class="keyword">for</span> NewsArticle &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後仍然能在 <code>NewsArticle</code> 實例中呼叫 <code>summarize</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> article = NewsArticle &#123;</span><br><span class="line">    headline: <span class="built_in">String</span>::from(<span class="string">"Penguins win the Stanley Cup Championship!"</span>),</span><br><span class="line">    location: <span class="built_in">String</span>::from(<span class="string">"Pittsburgh, PA, USA"</span>),</span><br><span class="line">    author: <span class="built_in">String</span>::from(<span class="string">"Iceburgh"</span>),</span><br><span class="line">    content: <span class="built_in">String</span>::from(</span><br><span class="line">        <span class="string">"The Pittsburgh Penguins once again are the best \</span></span><br><span class="line"><span class="string">            hockey team in the NHL."</span>,</span><br><span class="line">    ),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">"有新文章發佈！&#123;&#125;"</span>, article.summarize());</span><br></pre></td></tr></table></figure>
+
+<p>預設實作也能呼叫同特徵中的其他方法，就算那些方法沒有預設實作。這樣一來，特徵就可以提供一堆實用的功能，並要求實作者只需處理一小部分就好。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">trait</span> <span class="title">Summary</span></span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize_author</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        <span class="built_in">format!</span>(<span class="string">"(從 &#123;&#125; 閱讀更多...)"</span>, <span class="keyword">self</span>.summarize_author())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要使用這個版本的 <code>Summary</code>，我們只需要在對型別實作特徵時定義 <code>summarize_author</code> 就好。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Summary <span class="keyword">for</span> Tweet &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">summarize_author</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">        <span class="built_in">format!</span>(<span class="string">"@&#123;&#125;"</span>, <span class="keyword">self</span>.username)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意要是對相同方法覆寫實作的話，就無法呼叫預設實作。</p>
+<h3 id="特徵作為參數"><a href="#特徵作為參數" class="headerlink" title="特徵作為參數"></a>特徵作為參數</h3><p>可以定義一個函式 <code>notify</code> 使用它自己的參數 <code>item</code> 來呼叫 <code>summarize</code> 方法，所以此參數的型別預期有實作 <code>Summary</code> 特徵。 為此我們可以使用 <code>impl Trait</code> 語法，如以下所示：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>(item: &amp;<span class="keyword">impl</span> Summary) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"頭條新聞！&#123;&#125;"</span>, item.summarize());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>與其在 <code>item</code> 參數指定實際型別，這裡用的是 <code>impl</code> 關鍵字並加上特徵名稱。這樣此參數就會接受任何有實作指定特徵的型別。在 <code>notify</code> 本體中我們就可以用 <code>item</code> 呼叫 <code>Summary</code> 特徵的任何方法，像是 <code>summarize</code>。</p>
+<h4 id="特徵界限語法"><a href="#特徵界限語法" class="headerlink" title="特徵界限語法"></a>特徵界限語法</h4><p>語法 <code>impl Trait</code> 看起來很直觀，不過它其實是一個更長格式的語法糖，這個格式稱之為「特徵界限（trait bound）」，它長得會像以下。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>&lt;T: Summary&gt;(item: &amp;T) &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"頭條新聞！&#123;&#125;"</span>, item.summarize());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>特徵界限語法則適合用於其他比較複雜的案例。舉例來說，有兩個有實作 <code>Summary</code> 的參數，使用 <code>impl Trait</code> 語法看起來會像以下。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>(item1: &amp;<span class="keyword">impl</span> Summary, item2: &amp;<span class="keyword">impl</span> Summary) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果想要此函式允許 <code>item1</code> 和 <code>item2</code> 是不同型別的話，使用 <code>impl Trait</code> 的確是正確的（只要它們都有實作 <code>Summary</code>）。不過如果希望兩個參數都是同一型別的話，就得使用特徵界限來表達，如以下。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="透過-語法來指定多個特徵界限"><a href="#透過-語法來指定多個特徵界限" class="headerlink" title="透過 + 語法來指定多個特徵界限"></a>透過 + 語法來指定多個特徵界限</h4><p>假設還想要 <code>notify</code> 中的 <code>item</code> 不只能夠呼叫 <code>summarize</code> 方法，還能顯示格式化訊息的話，可以在 <code>notify</code> 定義中指定 <code>item</code> 必須同時要有 <code>Display</code> 和 <code>Summary</code>。這可以使用 <code>+</code> 語法來達成：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>(item: &amp;(<span class="keyword">impl</span> Summary + Display)) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這也能用在泛型型別的特徵界限中：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">notify</span></span>&lt;T: Summary + Display&gt;(item: &amp;T) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="透過-where-來使特徵界限更清楚"><a href="#透過-where-來使特徵界限更清楚" class="headerlink" title="透過 where 來使特徵界限更清楚"></a>透過 where 來使特徵界限更清楚</h4><p>使用太多特徵界限也會帶來壞處。每個泛型都有自己的特徵界限，所以有數個泛型型別的函式可以在函式名稱與參數列表之間包含大量的特徵界限資訊，讓函式簽名難以閱讀。因此 Rust 有提供另一個在函式簽名之後指定特徵界限的語法 <code>where</code>。所以與其這樣寫：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">some_function</span></span>&lt;T: Display + <span class="built_in">Clone</span>, U: <span class="built_in">Clone</span> + <span class="built_in">Debug</span>&gt;(t: &amp;T, u: &amp;U) -&gt; <span class="built_in">i32</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以這樣寫 <code>where</code> 的語法，如以下所示：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">some_function</span></span>&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; <span class="built_in">i32</span></span><br><span class="line">    <span class="keyword">where</span> T: Display + <span class="built_in">Clone</span>,</span><br><span class="line">          U: <span class="built_in">Clone</span> + <span class="built_in">Debug</span></span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="返回有實作特徵的型別"><a href="#返回有實作特徵的型別" class="headerlink" title="返回有實作特徵的型別"></a>返回有實作特徵的型別</h3><p>也能在回傳的位置使用 <code>impl Trait</code> 語法來回傳某個有實作特徵的型別數值。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">returns_summarizable</span></span>() -&gt; <span class="keyword">impl</span> Summary &#123;</span><br><span class="line">    Tweet &#123;</span><br><span class="line">        username: <span class="built_in">String</span>::from(<span class="string">"horse_ebooks"</span>),</span><br><span class="line">        content: <span class="built_in">String</span>::from(</span><br><span class="line">            <span class="string">"of course, as you probably already know, people"</span>,</span><br><span class="line">        ),</span><br><span class="line">        reply: <span class="literal">false</span>,</span><br><span class="line">        retweet: <span class="literal">false</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回傳一個只有指定所需實作特徵的型別在閉包（closures）與疊代器（iterators）中非常有用。閉包與疊代器能建立只有編譯器知道的型別，或是太長而難以指定的型別。<code>impl Trait</code> 語法能夠不寫出很長的型別，而是只要指定函數會回傳有實作 <code>Iterator</code> 特徵的型別就好。</p>
+<h3 id="透過特徵界限修正-largest-函式"><a href="#透過特徵界限修正-largest-函式" class="headerlink" title="透過特徵界限修正 largest 函式"></a>透過特徵界限修正 largest 函式</h3><p>在 <code>largest</code> 方法，想要用大於（&gt;）運算子比較兩個型別為 <code>T</code> 的數值。由於該運算子是從標準函式庫中的特徵 <code>std::cmp::PartialOrd</code> 的預設方法所定義的，我們希望在 <code>T</code> 中加上 <code>PartialOrd</code> 的特徵界限，讓函式可以比較任意型別的切片。我們不需要將 <code>PartialOrd</code> 引入作用域因為它由 <code>prelude</code> 提供。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T: <span class="built_in">PartialOrd</span>&gt;(list: &amp;[T]) -&gt; T &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這次編譯程式碼時，會得到不同的錯誤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling chapter10 v0.1.0 (file:///projects/chapter10)</span><br><span class="line">error[E0508]: cannot move out of <span class="built_in">type</span> `[T]`, a non-copy slice</span><br><span class="line"> --&gt; src/main.rs:2:23</span><br><span class="line">  |</span><br><span class="line">2 |     <span class="built_in">let</span> mut largest = list[0];</span><br><span class="line">  |                       ^^^^^^^</span><br><span class="line">  |                       |</span><br><span class="line">  |                       cannot move out of here</span><br><span class="line">  |                       move occurs because `list[_]` has <span class="built_in">type</span> `T`, <span class="built_in">which</span> does not implement the `Copy` trait</span><br><span class="line">  |                       <span class="built_in">help</span>: consider borrowing here: `&amp;list[0]`</span><br><span class="line"></span><br><span class="line">error[E0507]: cannot move out of a shared reference</span><br><span class="line"> --&gt; src/main.rs:4:18</span><br><span class="line">  |</span><br><span class="line">4 |     <span class="keyword">for</span> &amp;item <span class="keyword">in</span> list &#123;</span><br><span class="line">  |         -----    ^^^^</span><br><span class="line">  |         ||</span><br><span class="line">  |         |data moved here</span><br><span class="line">  |         |move occurs because `item` has <span class="built_in">type</span> `T`, <span class="built_in">which</span> does not implement the `Copy` trait</span><br><span class="line">  |         <span class="built_in">help</span>: consider removing the `&amp;`: `item`</span><br><span class="line"></span><br><span class="line">Some errors have detailed explanations: E0507, E0508.</span><br><span class="line">For more information about an error, try `rustc --explain E0507`.</span><br><span class="line">error: could not compile `chapter10` due to 2 previous errors</span><br></pre></td></tr></table></figure>
+
+<p>由於像 <code>i32</code> 和 <code>char</code> 這樣的型別是已知大小可以存在堆疊上，所以它們有實作 <code>Copy</code> 特徵。但當我們建立泛型函式 <code>largest</code> 時，<code>list</code> 參數就有可能拿到沒有實作 <code>Copy</code> 特徵的型別。隨後導致我們無法將 <code>list[0]</code> 移出給變數 <code>largest</code>，最後產生錯誤。</p>
+<p>要限制此程式碼只允許有實作 <code>Copy</code> 特徵的型別，可以在 <code>T</code> 的特徵界限中加上 <code>Copy</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">largest</span></span>&lt;T: <span class="built_in">PartialOrd</span> + <span class="built_in">Copy</span>&gt;(list: &amp;[T]) -&gt; T &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> largest = list[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> &amp;item <span class="keyword">in</span> list &#123;</span><br><span class="line">        <span class="keyword">if</span> item &gt; largest &#123;</span><br><span class="line">            largest = item;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    largest</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> number_list = <span class="built_in">vec!</span>[<span class="number">34</span>, <span class="number">50</span>, <span class="number">25</span>, <span class="number">100</span>, <span class="number">65</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;number_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大數字為 &#123;&#125;"</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> char_list = <span class="built_in">vec!</span>[<span class="string">'y'</span>, <span class="string">'m'</span>, <span class="string">'a'</span>, <span class="string">'q'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = largest(&amp;char_list);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最大字元為 &#123;&#125;"</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="透過特徵界限來選擇性實作方法"><a href="#透過特徵界限來選擇性實作方法" class="headerlink" title="透過特徵界限來選擇性實作方法"></a>透過特徵界限來選擇性實作方法</h4><p>在有使用泛型型別參數 <code>impl</code> 區塊中使用特徵界限，可以選擇性地對有實作特定特徵的型別來實作方法。</p>
+<p>在以下第二個 <code>impl</code> 區塊中，只有在其內部型別 <code>T</code> 有實作能夠做比較的 <code>PartialOrd</code> 特徵以及能夠顯示在螢幕的 <code>Display</code> 特徵的話，才會實作 <code>cmp_display</code> 方法。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::Display;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Pair</span></span>&lt;T&gt; &#123;</span><br><span class="line">    x: T,</span><br><span class="line">    y: T,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T&gt; Pair&lt;T&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(x: T, y: T) -&gt; <span class="keyword">Self</span> &#123;</span><br><span class="line">        <span class="keyword">Self</span> &#123; x, y &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span>&lt;T: Display + <span class="built_in">PartialOrd</span>&gt; Pair&lt;T&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">cmp_display</span></span>(&amp;<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.x &gt;= <span class="keyword">self</span>.y &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"最大的是 x = &#123;&#125;"</span>, <span class="keyword">self</span>.x);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"最大的是 y = &#123;&#125;"</span>, <span class="keyword">self</span>.y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>還可以對有實作其他特徵的型別選擇性地來實作特徵。對滿足特徵界限的型別實作特徵會稱之為「毯子實作」（blanket implementations），這被廣泛地用在 Rust 標準函式庫中。舉例來說，標準函式庫會對任何有實作 <code>Display</code> 特徵的型別實作 <code>ToString</code>。標準函式庫中的 <code>impl</code> 區塊會有類似這樣的程式碼：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;T: Display&gt; <span class="built_in">ToString</span> <span class="keyword">for</span> T &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因為標準函式庫有此毯子實作，所以可以在任何有實作 <code>Display</code> 特徵的型別呼叫 <code>ToString</code> 特徵的 <code>to_string</code> 方法。舉例來說，可以像這樣將整數轉變成對應的 <code>String</code> 數值，因為整數有實作 <code>Display</code>：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="number">3</span>.to_string();</span><br></pre></td></tr></table></figure>
+
+<p>毯子實作在特徵技術文件的「Implementors」段落有做說明。</p>
+<p>特徵與特徵界限讓我們能使用泛型型別參數來減少重複的程式碼的同時，告訴編譯器該泛型型別該擁有何種行為。編譯器可以利用特徵界限資訊來檢查程式碼提供的實際型別有沒有符合特定行為。在動態語言中，我們要是呼叫一個該型別沒有的方法的話，我們會在執行時才發生錯誤。但是 Rust 將此錯誤移到編譯期間，讓我們必須在程式能夠執行之前確保有修正此問題。除此之外，我們還不用寫在執行時檢查此行為的程式碼，因為我們已經在編譯時就檢查了。這麼做我們可以在不失去泛型彈性的情況下，提升效能。</p>
+<h2 id="生命週期"><a href="#生命週期" class="headerlink" title="生命週期"></a>生命週期</h2><p>Rust 中的每個引用都有個生命週期（lifetime），這是決定該引用是否有效的作用域。大多情況下生命週期是隱式且可推導出來的，就像大多情況下型別是可推導出來的。當多種型別都有可能時，就得詮釋型別。同樣地，當生命週期的引用能以不同方式關聯的話，就得詮釋生命週期。Rust 要求使用泛型生命週期參數來詮釋引用之間的關係，以確保實際在執行時的引用絕對是有效的。</p>
+<h3 id="透過生命週期預防迷途引用"><a href="#透過生命週期預防迷途引用" class="headerlink" title="透過生命週期預防迷途引用"></a>透過生命週期預防迷途引用</h3><p>生命週期最主要的目的就是要預防迷途引用（dangling references），其會導致程式引用到其他資料，而非它原本想要的引用。以下程式，它有一個外部作用域與內部作用域。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> r;</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line">        r = &amp;x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"r: &#123;&#125;"</span>, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在內部作用域中，嘗試將 <code>x</code> 的引用賦值給 <code>r</code>。然後內部作用域結束後，嘗試印出 <code>r</code>。此程式碼不會編譯成功，因為數值 <code>r</code> 指向的數值在我們嘗試使用它時已經離開作用域。</p>
+<h3 id="借用檢查器"><a href="#借用檢查器" class="headerlink" title="借用檢查器"></a>借用檢查器</h3><p>Rust 編譯器有個借用檢查器（borrow checker），會比較作用域來檢測所有的借用是否有效。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> r;                <span class="comment">// ---------+-- 'a</span></span><br><span class="line">                          <span class="comment">//          |</span></span><br><span class="line">    &#123;                     <span class="comment">//          |</span></span><br><span class="line">        <span class="keyword">let</span> x = <span class="number">5</span>;        <span class="comment">// -+-- 'b  |</span></span><br><span class="line">        r = &amp;x;           <span class="comment">//  |       |</span></span><br><span class="line">    &#125;                     <span class="comment">// -+       |</span></span><br><span class="line">                          <span class="comment">//          |</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"r: &#123;&#125;"</span>, r); <span class="comment">//          |</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下修正了此程式碼讓它不會存在迷途引用，並能夠正確編譯。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;            <span class="comment">// ----------+-- 'b</span></span><br><span class="line">                          <span class="comment">//           |</span></span><br><span class="line">    <span class="keyword">let</span> r = &amp;x;           <span class="comment">// --+-- 'a  |</span></span><br><span class="line">                          <span class="comment">//   |       |</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"r: &#123;&#125;"</span>, r); <span class="comment">//   |       |</span></span><br><span class="line">                          <span class="comment">// --+       |</span></span><br><span class="line">&#125;                         <span class="comment">// ----------+</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="函式中的泛型生命週期"><a href="#函式中的泛型生命週期" class="headerlink" title="函式中的泛型生命週期"></a>函式中的泛型生命週期</h3><p>以下寫個回傳兩個字串切片中較長者的函式。此函式會接收兩個字串切片並回傳一個字串切片。在實作 <code>longest</code> 函式後，程式碼應該要印出最長的字串為 <code>abcd</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">"abcd"</span>);</span><br><span class="line">    <span class="keyword">let</span> string2 = <span class="string">"xyz"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = longest(string1.as_str(), string2);</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最長的字串為 &#123;&#125;"</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果我們嘗試實作 <code>longest</code> 函式時，如以下所示，它不會編譯過。因為 Rust 無法辨別出回傳的引用指的是 <code>x</code> 還是 <code>y</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要修正此錯誤，要加上泛型生命週期參數來定義引用之間的關係，讓借用檢查器能夠進行分析。</p>
+<h3 id="生命週期詮釋語法"><a href="#生命週期詮釋語法" class="headerlink" title="生命週期詮釋語法"></a>生命週期詮釋語法</h3><p>生命週期詮釋不會改變引用能存活多久。就像當函式簽名指定了一個泛型型別參數時，函式便能夠接受任意型別一樣。函式可以指定一個泛型生命週期參數，這樣函式就能接受任何生命週期。生命週期詮釋描述了數個引用的生命週期之間互相的關係，而不會影響其生命週期。</p>
+<p>生命週期詮釋的語法有一點不一樣：生命週期參數的名稱必須以撇號（<code>&#39;</code>）作為開頭，通常全是小寫且很短，就像泛型型別一樣。大多數的人會使用名稱 <code>&#39;a</code>。我們將生命週期參數置於引用的 <code>&amp;</code> 之後，並使用空格區隔詮釋與引用的型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;<span class="built_in">i32</span>        <span class="comment">// 一個引用</span></span><br><span class="line">&amp;<span class="symbol">'a</span> <span class="built_in">i32</span>     <span class="comment">// 一個有顯式生命週期的引用</span></span><br><span class="line">&amp;<span class="symbol">'a</span> <span class="keyword">mut</span> <span class="built_in">i32</span> <span class="comment">// 一個有顯式生命週期的可變引用</span></span><br></pre></td></tr></table></figure>
+
+<p>只有自己一個生命週期本身沒有多少意義，因為該詮釋是為了告訴 Rust 數個引用的泛型生命週期參數之間互相的關係。舉例來說，我們有個函式其參數 <code>first</code> 是個 <code>i32</code> 的引用而生命週期為 <code>&#39;a</code>。此函式還有另一個參數 <code>second</code> 是另一個 <code>i32</code> 的引用而且生命週期也是 <code>&#39;a</code>。生命週期詮釋意味著引用 <code>first</code> 與 <code>second</code> 必須與此泛型生命週期存活的一樣久。</p>
+<h3 id="函式簽名中的生命週期詮釋"><a href="#函式簽名中的生命週期詮釋" class="headerlink" title="函式簽名中的生命週期詮釋"></a>函式簽名中的生命週期詮釋</h3><p>如同泛型型別參數，需要在函式名稱與參數列表之間的尖括號內宣告泛型生命週期參數。我們想在此簽名表達的是參數的生命週期與回傳引用的生命週期是相關的，所有參數都要是有效的，那麼回傳的引用才也會是有效的。以下會將生命週期命名為 <code>&#39;a</code> 然後將它加到每個引用。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>&lt;<span class="symbol">'a</span>&gt;(x: &amp;<span class="symbol">'a</span> <span class="built_in">str</span>, y: &amp;<span class="symbol">'a</span> <span class="built_in">str</span>) -&gt; &amp;<span class="symbol">'a</span> <span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此函式簽名告訴 Rust 它有個生命週期 <code>&#39;a</code>，函式的兩個參數都是字串切片，並且會有生命週期 <code>&#39;a</code>。此函式簽名還告訴了 Rust 從函式回傳的字串切片也會和生命週期 <code>&#39;a</code> 存活的一樣久。實際上它代表 longest 函式回傳引用的生命週期與傳入時字串長度較短的引用的生命週期一樣。這樣的關係正是我們想讓 Rust 知道以便分析這段程式碼。</p>
+<p>注意當我們在此函式簽名指定生命週期參數時，我們不會變更任何傳入或傳出數值的生命週期。我們只是告訴借用檢查器應該要拒絕任何沒有服從這些約束的數值。注意到 <code>longest</code> 函式不需要知道 <code>x</code> 和 <code>y</code> 實際上會活多久，只需要知道有某個作用域會用 <code>&#39;a</code> 取代來滿足此簽名。</p>
+<p>當要在函式詮釋生命週期時，詮釋會位於函式簽名中，而不是函式本體。就像型別會寫在簽名中一樣，生命週期詮釋會成為函式的一部份。在函式簽名加上生命週期能讓 Rust 編譯器的分析工作變得更輕鬆。如果當函式的詮釋或呼叫的方式出問題時，編譯器錯誤就能限縮到我們的程式碼中指出來。如果都改讓 Rust 編譯器去推到可能的生命週期關係的話，編譯器可能會指到程式碼真正出錯之後的好幾步之後。</p>
+<p>當我們向 <code>longest</code> 傳入實際引用時，<code>&#39;a</code> 實際替代的生命週期為 x 作用域與 y 作用域重疊的部分。換句話說，泛型生命週期 <code>&#39;a</code> 取得的生命週期會等於 <code>x</code> 與 <code>y</code> 的生命週期中較短的。因為我們將回傳引用詮釋了相同的生命週期參數 <code>&#39;a</code>，回傳引用的生命週期也會保證在 <code>x</code> 和 `y 的生命週期較短的結束前有效。</p>
+<p>來看看如何透過傳入不同實際生命週期的引用來使生命週期詮釋能約束 <code>longest</code> 函式。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">"很長的長字串"</span>);</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> string2 = <span class="built_in">String</span>::from(<span class="string">"xyz"</span>);</span><br><span class="line">        <span class="keyword">let</span> result = longest(string1.as_str(), string2.as_str());</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"最長的字串為 &#123;&#125;"</span>, result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下寫一個範例能要求 <code>result</code> 生命週期的引用必須是兩個引數中較短的才行。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> string1 = <span class="built_in">String</span>::from(<span class="string">"很長的長字串"</span>);</span><br><span class="line">    <span class="keyword">let</span> result;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> string2 = <span class="built_in">String</span>::from(<span class="string">"xyz"</span>);</span><br><span class="line">        result = longest(string1.as_str(), string2.as_str());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"最長的字串為 &#123;&#125;"</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>嘗試編譯此程式碼，會看到以下錯誤。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling chapter10 v0.<span class="number">1.0</span> (file:<span class="comment">///projects/chapter10)</span></span><br><span class="line">error[E0597]: `string2` does not live long enough</span><br><span class="line"> --&gt; src/main.rs:<span class="number">6</span>:<span class="number">44</span></span><br><span class="line">  |</span><br><span class="line"><span class="number">6</span> |         result = longest(string1.as_str(), string2.as_str());</span><br><span class="line">  |                                            ^^^^^^^^^^^^^^^^ borrowed value does not live long enough</span><br><span class="line"><span class="number">7</span> |     &#125;</span><br><span class="line">  |     - `string2` dropped here <span class="keyword">while</span> still borrowed</span><br><span class="line"><span class="number">8</span> |     <span class="built_in">println!</span>(<span class="string">"最長的字串為 &#123;&#125;"</span>, result);</span><br><span class="line">  |                               ------ borrow later used here</span><br><span class="line"></span><br><span class="line">For more information about this error, try `rustc --explain E0597`.</span><br><span class="line">error: could not compile `chapter10` due to previous error</span><br></pre></td></tr></table></figure>
+
+<p>錯誤訊息表示要讓 <code>result</code> 在 <code>println!</code> 陳述式有效的話，<code>string2</code> 必須在外部作用域結束前都是有效的。Rust 會知道是因為我們在函式的參數與回傳值使用相同的生命週期 <code>&#39;a</code> 來詮釋。</p>
+<p>身為人類我們能看出此程式碼，因為 <code>string1</code> 尚未離開作用域，所以 <code>string1</code> 的引用在 <code>println!</code> 陳述式中仍然是有效的才對。然而編譯器在此情形會無法看出引用是有效的。所以我們才告訴 Rust <code>longest</code> 函式回傳引用的生命週期等同於傳入引用中較短的生命週期。這樣一來借用檢查器就會否決程式碼，因為它可能會有無效的引用。</p>
+<h3 id="深入理解生命週期"><a href="#深入理解生命週期" class="headerlink" title="深入理解生命週期"></a>深入理解生命週期</h3><p>指定生命週期參數的方式取決於函式的行為。舉例來說如果我們改變函式 <code>longest</code> 的實作為永遠只回傳第一個參數而不是最長的字串切片，我們就不需要在參數 y 指定生命週期。</p>
+<p>在此例中，我們指定生命週期參數 <code>&#39;a</code> 給參數 <code>x</code> 與回傳型別，但參數 <code>y</code> 則沒有，因為 <code>y</code> 的生命週期與 <code>x</code> 和回傳型別的生命週期之間沒有任何關係。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>&lt;<span class="symbol">'a</span>&gt;(x: &amp;<span class="symbol">'a</span> <span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="symbol">'a</span> <span class="built_in">str</span> &#123;</span><br><span class="line">    x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當函式回傳引用時，回傳型別的生命週期參數必須符合其中一個參數的生命週期參數。如果回傳引用沒有和任何參數有關聯的話，代表它引用的是函式本體中的數值。但這會是迷途引用，因為該數值會在函式結尾離開作用域。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest</span></span>&lt;<span class="symbol">'a</span>&gt;(x: &amp;<span class="built_in">str</span>, y: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="symbol">'a</span> <span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">String</span>::from(<span class="string">"超長的字串"</span>);</span><br><span class="line">    result.as_str()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>總結來說，生命週期語法是用來連接函式中不同參數與回傳值的生命週期。一旦連結起來，Rust 就可以獲得足夠的資訊來確保記憶體安全的運算並防止會產生迷途指標或違反記憶體安全的操作。</p>
+<h3 id="結構體定義中的生命週期詮釋"><a href="#結構體定義中的生命週期詮釋" class="headerlink" title="結構體定義中的生命週期詮釋"></a>結構體定義中的生命週期詮釋</h3><p>目前為止，我們只定義過擁有所有權的結構體。結構體其實也能持有引用，不過我們會需要在結構體定義中每個引用加上生命週期詮釋。以下範例有個持有字串切片的結構體 <code>ImportantExcerpt</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ImportantExcerpt</span></span>&lt;<span class="symbol">'a</span>&gt; &#123;</span><br><span class="line">    part: &amp;<span class="symbol">'a</span> <span class="built_in">str</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> novel = <span class="built_in">String</span>::from(<span class="string">"叫我以實瑪利。多年以前..."</span>);</span><br><span class="line">    <span class="keyword">let</span> first_sentence = novel.split(<span class="string">'.'</span>).next().expect(<span class="string">"找不到'.'"</span>);</span><br><span class="line">    <span class="keyword">let</span> i = ImportantExcerpt &#123;</span><br><span class="line">        part: first_sentence,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此結構體有個欄位 <code>part</code> 並擁有字串切片引用。如同泛型資料型別，我們在結構體名稱之後的尖括號內宣告泛型生命週期參數，所以我們就可以在結構體定義的本體中使用生命週期參數。此詮釋代表 <code>ImportantExcerpt</code> 的實例不能比它持有的欄位 <code>part</code> 活得還久。</p>
+<p><code>main</code> 函式在此產生一個結構體 <code>ImportantExcerpt</code> 的實例並持有一個引用，其為變數 <code>novel</code> 所擁有的 <code>String</code> 中的第一個句子的引用。<code>novel</code> 的資料是在 <code>ImportantExcerpt</code> 實例之前建立的。除此之外，<code>novel</code> 在 <code>ImportantExcerpt</code> 離開作用域之前不會離開作用域，所以 <code>ImportantExcerpt</code> 實例中的引用是有效的。</p>
+<h3 id="生命週期省略"><a href="#生命週期省略" class="headerlink" title="生命週期省略"></a>生命週期省略</h3><p>每個引用都有個生命週期，而且需要在有使用引用的函式與結構體中指定生命週期參數。然而在以下範例，可以不詮釋生命週期並照樣編譯成功。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">first_word</span></span>(s: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> bytes = s.as_bytes();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i, &amp;item) <span class="keyword">in</span> bytes.iter().enumerate() &#123;</span><br><span class="line">        <span class="keyword">if</span> item == <span class="string">b' '</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> &amp;s[<span class="number">0</span>..i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &amp;s[..]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Rust 團隊發現 Rust 開發者會在特定情況反覆輸入同樣的生命週期詮釋。這些情形都是可預期的，而且可以遵循一些明確的模式。開發者將這些模式加入編譯器的程式碼中，所以借用檢查器可以依據這些情況自行推導生命週期，而讓我們不必顯式詮釋。這樣的歷史值得提起的原因是因為很可能會有更多明確的模式被找出來並加到編譯器中，意味著未來對於生命週期詮釋的要求會更少。</p>
+<p>被寫進 Rust 引用分析的模式被稱作生命週期省略規則（lifetime elision rules）。這些不是程式設計師要遵守的規則，而是一系列編譯器能去考慮的情形。而如果你的程式碼符合這些情形時，你就不必顯式寫出生命週期。</p>
+<p>當引用沒有顯式詮釋生命週期時，編譯器會用三項規則來推導它們。</p>
+<ul>
+<li><p>第一個規則是每個引用都會有自己的生命週期參數。</p>
+</li>
+<li><p>第二個規則是如果剛好只有一個輸入生命週期參數，該參數就會賦值給所有輸出生命週期參數。</p>
+</li>
+<li><p>第三個規則是如果有多個輸入生命週期參數，但其中一個是 <code>&amp;self</code> 或 <code>&amp;mut self``，由於這是方法，self</code> 的生命週期會賦值給所有輸出生命週期參數。</p>
+</li>
+</ul>
+<h3 id="在方法定義中的生命週期詮釋"><a href="#在方法定義中的生命週期詮釋" class="headerlink" title="在方法定義中的生命週期詮釋"></a>在方法定義中的生命週期詮釋</h3><p>當我們在有生命週期的結構體上實作方法時，其語法類似於範例中泛型型別參數的語法。宣告並使用生命週期參數的地方會依據它們是否與結構體欄位或方法參數與回傳值相關。</p>
+<p>結構體欄位的生命週期永遠需要宣告在 <code>impl</code> 關鍵字後方以及結構體名稱後方，因為這些生命週期是結構體型別的一部分。</p>
+<p>在 <code>impl</code> 區塊中方法簽名的引用可能會與結構體欄位的引用生命週期綁定，或者它們可能是互相獨立的。除此之外，生命週期省略規則常常可以省略方法簽名中的生命週期詮釋。</p>
+<p>首先，使用一個方法叫做 <code>level</code> 其參數只有 <code>self</code> 的引用而回傳值是 <code>i32</code>，這不是任何引用：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;<span class="symbol">'a</span>&gt; ImportantExcerpt&lt;<span class="symbol">'a</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">level</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">        <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生命週期參數宣告在 <code>impl</code> 之後，而且也要在型別名稱之後加上。但是不必在 <code>self</code> 的引用加上生命週期詮釋，因為其適用於第一個省略規則。</p>
+<p>以下是第三個生命週期省略規則適用的地方：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span>&lt;<span class="symbol">'a</span>&gt; ImportantExcerpt&lt;<span class="symbol">'a</span>&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">announce_and_return_part</span></span>(&amp;<span class="keyword">self</span>, announcement: &amp;<span class="built_in">str</span>) -&gt; &amp;<span class="built_in">str</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"請注意：&#123;&#125;"</span>, announcement);</span><br><span class="line">        <span class="keyword">self</span>.part</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這裡有兩個輸入生命週期，所以 Rust 用第一個生命週期省略規則給予 <code>&amp;self</code> 和 <code>announcement</code> 它們自己的生命週期。然後因為其中一個參數是 <code>&amp;self</code>，回傳型別會取得 <code>&amp;self</code> 的生命週期，如此一來所有的生命週期都推導出來了。</p>
+<h3 id="靜態生命週期"><a href="#靜態生命週期" class="headerlink" title="靜態生命週期"></a>靜態生命週期</h3><p>其中有個特殊的生命週期 <code>&#39;static</code> 需要進一步討論，這是指該引用可以存活在整個程式期間。所有的字串字面值都有 <code>&#39;static</code> 生命週期，可以這樣詮釋：</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s: &amp;<span class="symbol">'static</span> <span class="built_in">str</span> = <span class="string">"我有靜態生命週期。"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>此字串的文字會直接儲存在程式的二進制檔案中，所以永遠有效。因此所有的字串字面值的生命週期都是 <code>&#39;static</code>。</p>
+<p>有時可能會看到錯誤訊息建議使用 <code>&#39;static</code> 生命週期。但在對引用指明 <code>&#39;static</code> 生命週期前，最好想一下該引用的生命週期是否真的會存在於整個程式期間。就算它可以，可能也得考慮是不是該活得這麼久。大多數的情況，程式問題都來自於嘗試建立迷途引用或可用的生命週期不符。這樣的情況下，應該是要實際嘗試解決問題，而不是指明 <code>&#39;static</code> 生命週期。</p>
+<h2 id="組合"><a href="#組合" class="headerlink" title="組合"></a>組合</h2><p>用一個函式來總結泛型型別參數、特徵界限與生命週期的語法！</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::Display;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">longest_with_an_announcement</span></span>&lt;<span class="symbol">'a</span>, T&gt;(</span><br><span class="line">    x: &amp;<span class="symbol">'a</span> <span class="built_in">str</span>,</span><br><span class="line">    y: &amp;<span class="symbol">'a</span> <span class="built_in">str</span>,</span><br><span class="line">    ann: T,</span><br><span class="line">) -&gt; &amp;<span class="symbol">'a</span> <span class="built_in">str</span></span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    T: Display,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"公告！&#123;&#125;"</span>, ann);</span><br><span class="line">    <span class="keyword">if</span> x.len() &gt; y.len() &#123;</span><br><span class="line">        x</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>這是範例會回傳兩個字串切片較長者的 <code>longest</code> 函式。不過現在它有個額外的參數 <code>ann</code>，使用的是泛型型別 <code>T</code>，它可以是任何在 <code>where</code> 中所指定有實作 <code>Display</code> 特徵的型別。此額外參數會在 <code>{}</code> 的地方印出來，這正是為何 <code>Display</code> 的特徵界限是必須的。因為生命週期也是一種泛型，生命週期參數 <code>&#39;a</code> 與泛型型別參數 <code>T</code> 都宣告在函式名稱後的尖括號內。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型資料型別"><span class="toc-number">3.</span> <span class="toc-text">泛型資料型別</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在函式中定義"><span class="toc-number">3.1.</span> <span class="toc-text">在函式中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在結構體中定義"><span class="toc-number">3.2.</span> <span class="toc-text">在結構體中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在枚舉中定義"><span class="toc-number">3.3.</span> <span class="toc-text">在枚舉中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在方法中定義"><span class="toc-number">3.4.</span> <span class="toc-text">在方法中定義</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用泛型的程式碼效能"><span class="toc-number">3.5.</span> <span class="toc-text">使用泛型的程式碼效能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特徵"><span class="toc-number">4.</span> <span class="toc-text">特徵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定義特徵"><span class="toc-number">4.1.</span> <span class="toc-text">定義特徵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#為型別實作特徵"><span class="toc-number">4.2.</span> <span class="toc-text">為型別實作特徵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#預設實作"><span class="toc-number">4.3.</span> <span class="toc-text">預設實作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特徵作為參數"><span class="toc-number">4.4.</span> <span class="toc-text">特徵作為參數</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特徵界限語法"><span class="toc-number">4.4.1.</span> <span class="toc-text">特徵界限語法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#透過-語法來指定多個特徵界限"><span class="toc-number">4.4.2.</span> <span class="toc-text">透過 + 語法來指定多個特徵界限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#透過-where-來使特徵界限更清楚"><span class="toc-number">4.4.3.</span> <span class="toc-text">透過 where 來使特徵界限更清楚</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回有實作特徵的型別"><span class="toc-number">4.5.</span> <span class="toc-text">返回有實作特徵的型別</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#透過特徵界限修正-largest-函式"><span class="toc-number">4.6.</span> <span class="toc-text">透過特徵界限修正 largest 函式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#透過特徵界限來選擇性實作方法"><span class="toc-number">4.6.1.</span> <span class="toc-text">透過特徵界限來選擇性實作方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命週期"><span class="toc-number">5.</span> <span class="toc-text">生命週期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#透過生命週期預防迷途引用"><span class="toc-number">5.1.</span> <span class="toc-text">透過生命週期預防迷途引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#借用檢查器"><span class="toc-number">5.2.</span> <span class="toc-text">借用檢查器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函式中的泛型生命週期"><span class="toc-number">5.3.</span> <span class="toc-text">函式中的泛型生命週期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生命週期詮釋語法"><span class="toc-number">5.4.</span> <span class="toc-text">生命週期詮釋語法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函式簽名中的生命週期詮釋"><span class="toc-number">5.5.</span> <span class="toc-text">函式簽名中的生命週期詮釋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深入理解生命週期"><span class="toc-number">5.6.</span> <span class="toc-text">深入理解生命週期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#結構體定義中的生命週期詮釋"><span class="toc-number">5.7.</span> <span class="toc-text">結構體定義中的生命週期詮釋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生命週期省略"><span class="toc-number">5.8.</span> <span class="toc-text">生命週期省略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在方法定義中的生命週期詮釋"><span class="toc-number">5.9.</span> <span class="toc-text">在方法定義中的生命週期詮釋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#靜態生命週期"><span class="toc-number">5.10.</span> <span class="toc-text">靜態生命週期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#組合"><span class="toc-number">6.</span> <span class="toc-text">組合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&text=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&is_video=false&description=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期&body=Check out this article: https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&title=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/09/「The-Rust-Programming-Language」學習筆記（十）：泛型、特徵與生命週期/&name=「The Rust Programming Language」學習筆記（十）：泛型、特徵與生命週期&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

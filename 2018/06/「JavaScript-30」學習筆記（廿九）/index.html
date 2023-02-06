@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「JavaScript 30」教學影片的學習筆記。 目標製作一個倒數計時器。 筆記建立一個計數器的指標。 1let countdown;  選取倒數時間文字。 1const timerDisplay = document.querySelector(&apos;.display__time-left&apos;);  選取結束時間文字。 1const endTime = document.querySele">
+<meta name="keywords" content="程式設計,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「JavaScript 30」學習筆記（廿九）">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「JavaScript 30」教學影片的學習筆記。 目標製作一個倒數計時器。 筆記建立一個計數器的指標。 1let countdown;  選取倒數時間文字。 1const timerDisplay = document.querySelector(&apos;.display__time-left&apos;);  選取結束時間文字。 1const endTime = document.querySele">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「JavaScript 30」學習筆記（廿九）">
+<meta name="twitter:description" content="前言本文為「JavaScript 30」教學影片的學習筆記。 目標製作一個倒數計時器。 筆記建立一個計數器的指標。 1let countdown;  選取倒數時間文字。 1const timerDisplay = document.querySelector(&apos;.display__time-left&apos;);  選取結束時間文字。 1const endTime = document.querySele">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「JavaScript 30」學習筆記（廿九）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/使用-Python-學習資料結構（一）：字串/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/使用-Python-學習資料結構（二）：鏈表/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&text=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&is_video=false&description=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「JavaScript 30」學習筆記（廿九）&body=Check out this article: https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&name=「JavaScript 30」學習筆記（廿九）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目標"><span class="toc-number">2.</span> <span class="toc-text">目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#筆記"><span class="toc-number">3.</span> <span class="toc-text">筆記</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「JavaScript 30」學習筆記（廿九）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-27T14:40:12.000Z" itemprop="datePublished">2018-06-27</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/JavaScript/「JavaScript-30」學習筆記/">「JavaScript 30」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://javascript30.com/" target="_blank" rel="noopener">JavaScript 30</a>」教學影片的學習筆記。</p>
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>製作一個倒數計時器。</p>
+<h2 id="筆記"><a href="#筆記" class="headerlink" title="筆記"></a>筆記</h2><p>建立一個計數器的指標。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> countdown;</span><br></pre></td></tr></table></figure>
+
+<p>選取倒數時間文字。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> timerDisplay = <span class="built_in">document</span>.querySelector(<span class="string">'.display__time-left'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>選取結束時間文字。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> endTime = <span class="built_in">document</span>.querySelector(<span class="string">'.display__end-time'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>選取所有設有 <code>data-time</code> 屬性的按鈕。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buttons = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[data-time]'</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>建立一個 <code>timer()</code> 方法，以倒數計時。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params">seconds</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 停止已存在的計數器</span></span><br><span class="line">    clearInterval(countdown);</span><br><span class="line">    <span class="comment">// 取得現在時間</span></span><br><span class="line">    <span class="keyword">const</span> now = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="comment">// 取得停止時間</span></span><br><span class="line">    <span class="keyword">const</span> then = now + seconds * <span class="number">1000</span>;</span><br><span class="line">    <span class="comment">// 顯示剩餘秒數</span></span><br><span class="line">    displayTimeLeft(seconds);</span><br><span class="line">    <span class="comment">// 顯示結束時間</span></span><br><span class="line">    displayEndTime(then);</span><br><span class="line">    <span class="comment">// 使用計數器在每秒取得剩餘秒數</span></span><br><span class="line">    countdown = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 剩餘秒數</span></span><br><span class="line">        <span class="keyword">const</span> secondsLeft = <span class="built_in">Math</span>.round((then - <span class="built_in">Date</span>.now()) / <span class="number">1000</span>);</span><br><span class="line">        <span class="comment">// 如果剩餘秒數小於 0 就停止計數器</span></span><br><span class="line">        <span class="keyword">if</span> (secondsLeft &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            clearInterval(countdown);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 顯示剩餘秒數</span></span><br><span class="line">        displayTimeLeft(secondsLeft);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>建立一個 <code>displayTimeLeft()</code> 方法，以顯示剩餘時間。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">displayTimeLeft</span>(<span class="params">seconds</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 換算成分鐘</span></span><br><span class="line">    <span class="keyword">const</span> minutes = <span class="built_in">Math</span>.floor(seconds / <span class="number">60</span>);</span><br><span class="line">    <span class="comment">// 剩餘秒數</span></span><br><span class="line">    <span class="keyword">const</span> remainSeconds = seconds % <span class="number">60</span>;</span><br><span class="line">    <span class="comment">// 要顯示的時間格式</span></span><br><span class="line">    <span class="keyword">const</span> display = <span class="string">`<span class="subst">$&#123;minutes&#125;</span>:<span class="subst">$&#123;remainSeconds &lt; <span class="number">10</span> ? <span class="string">'0'</span> : <span class="string">''</span>&#125;</span><span class="subst">$&#123;remainSeconds&#125;</span>`</span>;</span><br><span class="line">    <span class="comment">// 更改倒數時間文字</span></span><br><span class="line">    timerDisplay.textContent = display;</span><br><span class="line">    <span class="comment">// 更改頁面標題</span></span><br><span class="line">    <span class="built_in">document</span>.title = display;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>建立一個 <code>displayEndTime()</code> 方法，以顯示結束時間。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">displayEndTime</span>(<span class="params">timestamp</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 轉換結束時間格式</span></span><br><span class="line">    <span class="keyword">const</span> end = <span class="keyword">new</span> <span class="built_in">Date</span>(timestamp);</span><br><span class="line">    <span class="comment">// 取得結束時間小時</span></span><br><span class="line">    <span class="keyword">const</span> hour = end.getHours();</span><br><span class="line">    <span class="comment">// 結束時間小時轉換為 12 小時制</span></span><br><span class="line">    <span class="keyword">const</span> adjustedHour = hour &gt; <span class="number">12</span> ? hour - <span class="number">12</span> : hour;</span><br><span class="line">    <span class="comment">// 取得結束時間分鐘</span></span><br><span class="line">    <span class="keyword">const</span> minutes = end.getMinutes();</span><br><span class="line">    <span class="comment">// 更改結束時間文字</span></span><br><span class="line">    endTime.textContent = <span class="string">`Be Back At <span class="subst">$&#123;adjustedHour&#125;</span>:<span class="subst">$&#123;minutes &lt; <span class="number">10</span> ? <span class="string">'0'</span> : <span class="string">''</span>&#125;</span><span class="subst">$&#123;minutes&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>建立一個 <code>startTimer()</code> 方法，以開始倒數計時。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startTimer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 取得按鈕 dataset 的分鐘</span></span><br><span class="line">    <span class="keyword">const</span> seconds = <span class="built_in">parseInt</span>(<span class="keyword">this</span>.dataset.time);</span><br><span class="line">    <span class="comment">// 執行 timer() 方法</span></span><br><span class="line">    timer(seconds);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>監聽所有按鈕，當發生 <code>click</code> 行為時，觸發 <code>startTimer()</code> 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buttons.forEach(<span class="function"><span class="params">button</span> =&gt;</span> button.addEventListener(<span class="string">'click'</span>, startTimer));</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>監聽表單，當發生 <code>submit</code> 行為時，觸發閉包。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.customForm.addEventListener(<span class="string">'submit'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 防止表單送出並刷新頁面</span></span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="comment">// 取得輸入的分鐘</span></span><br><span class="line">    <span class="keyword">const</span> mins = <span class="keyword">this</span>.minutes.value;</span><br><span class="line">    <span class="comment">// 執行 timer() 方法</span></span><br><span class="line">    timer(mins * <span class="number">60</span>);</span><br><span class="line">    <span class="comment">// 清除輸入的分鐘</span></span><br><span class="line">    <span class="keyword">this</span>.reset();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目標"><span class="toc-number">2.</span> <span class="toc-text">目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#筆記"><span class="toc-number">3.</span> <span class="toc-text">筆記</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&text=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&is_video=false&description=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「JavaScript 30」學習筆記（廿九）&body=Check out this article: https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&title=「JavaScript 30」學習筆記（廿九）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/「JavaScript-30」學習筆記（廿九）/&name=「JavaScript 30」學習筆記（廿九）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

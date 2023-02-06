@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《學會 C 語言》一書的學習筆記。 主控台輸入與輸出C 語言最常使用的標準輸入裝置是鍵盤，標準輸出裝置是電腦螢幕，即所謂的主控台輸入輸出（Console I/O）。 C 語言的標準輸入與輸出是使用文字模式的輸入與輸出，這是循序一行一行組成的文字串流，每一行是由新行字元 \n 結束。 輸入與輸出整數使用 scanf() 函數讀取整數，使用 printf() 函數將整數輸出。 1234567">
+<meta name="keywords" content="程式設計,C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《學會 C 語言》學習筆記（五）：基本輸入與輸出">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《學會 C 語言》一書的學習筆記。 主控台輸入與輸出C 語言最常使用的標準輸入裝置是鍵盤，標準輸出裝置是電腦螢幕，即所謂的主控台輸入輸出（Console I/O）。 C 語言的標準輸入與輸出是使用文字模式的輸入與輸出，這是循序一行一行組成的文字串流，每一行是由新行字元 \n 結束。 輸入與輸出整數使用 scanf() 函數讀取整數，使用 printf() 函數將整數輸出。 1234567">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《學會 C 語言》學習筆記（五）：基本輸入與輸出">
+<meta name="twitter:description" content="前言本文為《學會 C 語言》一書的學習筆記。 主控台輸入與輸出C 語言最常使用的標準輸入裝置是鍵盤，標準輸出裝置是電腦螢幕，即所謂的主控台輸入輸出（Console I/O）。 C 語言的標準輸入與輸出是使用文字模式的輸入與輸出，這是循序一行一行組成的文字串流，每一行是由新行字元 \n 結束。 輸入與輸出整數使用 scanf() 函數讀取整數，使用 printf() 函數將整數輸出。 1234567">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《學會 C 語言》學習筆記（五）：基本輸入與輸出</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/《現代-PHP》學習筆記（十八）：串流/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（十九）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&text=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&is_video=false&description=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（五）：基本輸入與輸出&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&name=《學會 C 語言》學習筆記（五）：基本輸入與輸出&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主控台輸入與輸出"><span class="toc-number">2.</span> <span class="toc-text">主控台輸入與輸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出整數"><span class="toc-number">3.</span> <span class="toc-text">輸入與輸出整數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出浮點數"><span class="toc-number">4.</span> <span class="toc-text">輸入與輸出浮點數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出字串"><span class="toc-number">5.</span> <span class="toc-text">輸入與輸出字串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出單一字元"><span class="toc-number">6.</span> <span class="toc-text">輸入與輸出單一字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出多種型態"><span class="toc-number">7.</span> <span class="toc-text">輸入與輸出多種型態</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空白字元"><span class="toc-number">7.1.</span> <span class="toc-text">空白字元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非空白字元"><span class="toc-number">7.2.</span> <span class="toc-text">非空白字元</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式字元"><span class="toc-number">8.</span> <span class="toc-text">格式字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《學會 C 語言》學習筆記（五）：基本輸入與輸出
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-11T06:57:52.000Z" itemprop="datePublished">2018-06-11</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/C/《學會-C-語言》學習筆記/">《學會 C 語言》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/C/">C</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《學會 C 語言》一書的學習筆記。</p>
+<h2 id="主控台輸入與輸出"><a href="#主控台輸入與輸出" class="headerlink" title="主控台輸入與輸出"></a>主控台輸入與輸出</h2><p>C 語言最常使用的標準輸入裝置是鍵盤，標準輸出裝置是電腦螢幕，即所謂的主控台輸入輸出（Console I/O）。</p>
+<p>C 語言的標準輸入與輸出是使用文字模式的輸入與輸出，這是循序一行一行組成的文字串流，每一行是由新行字元 <code>\n</code> 結束。</p>
+<h2 id="輸入與輸出整數"><a href="#輸入與輸出整數" class="headerlink" title="輸入與輸出整數"></a>輸入與輸出整數</h2><p>使用 <code>scanf()</code> 函數讀取整數，使用 <code>printf()</code> 函數將整數輸出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> var1;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請輸入整數 =&gt;"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;var1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"整數值 = %d\n"</span> , var1);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>scanf()</code> 函數的格式字元 <code>%d</code> 代表資料型態是整數。</li>
+<li><code>scanf()</code> 函數使用第一個參數的格式字元對應第二個參數的變數，變數之前使用 <code>&amp;</code> 取址運算子，可以取得變數的記憶體位址。</li>
+<li><code>printf()</code> 函數輸出整數，格式字元是 <code>%d</code>。</li>
+</ul>
+<h2 id="輸入與輸出浮點數"><a href="#輸入與輸出浮點數" class="headerlink" title="輸入與輸出浮點數"></a>輸入與輸出浮點數</h2><p>使用 <code>scanf()</code> 函數讀取浮點數，使用 <code>printf()</code> 函數將浮點數輸出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> var1;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請輸入浮點數 =&gt;"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%lf"</span>, &amp;var1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"浮點數值 = %f\n"</span> , var1);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>scanf()</code> 函數的格式字元如果是 <code>%lf</code> 代表資料型態是 <code>double</code>。</li>
+<li><code>scanf()</code> 函數的格式字元如果是 <code>%f</code> 代表資料型態是 <code>float</code>。</li>
+<li><code>scanf()</code> 函數使用第一個參數的格式字元對應第二個參數的變數，變數之前使用 <code>&amp;</code> 取址運算子，可以取得變數的記憶體位址。</li>
+<li><code>printf()</code> 函數不論輸出 <code>double</code> 或 <code>float</code>，格式字元都是 <code>%f</code>。</li>
+</ul>
+<h2 id="輸入與輸出字串"><a href="#輸入與輸出字串" class="headerlink" title="輸入與輸出字串"></a>輸入與輸出字串</h2><p>使用 <code>scanf()</code> 函數讀取字串（無法讀取空白字元），使用 <code>printf()</code> 函數將字串輸出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> var1[<span class="number">80</span>]; <span class="comment">// 大小是 80 個字元</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請輸入字串 =&gt;"</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>, var1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"字串值 = %s\n"</span> , var1);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>scanf()</code> 函數的格式字元 <code>%s</code> 代表資料型態是字串。</li>
+<li>C 語言的字串是 <code>char</code> 型態的一維陣列。</li>
+<li>C 語言的陣列名稱本身就是位址，所以不需要在之前使用 <code>&amp;</code> 取址運算子。</li>
+<li><code>printf()</code> 函數輸出整數，格式字元是 <code>%s</code>。</li>
+</ul>
+<p>使用 <code>gets()</code> 函數讀取輸入字串（可以讀取空白字元），使用 <code>puts</code> 函數將字串輸出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> var1[<span class="number">80</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請輸入字串 =&gt;"</span>);</span><br><span class="line">    gets(var1);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"輸出字串 : "</span>);</span><br><span class="line">    <span class="built_in">puts</span>(var1);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>gets()</code> 函數可以從標準輸入裝置讀取整行文字內容的字串。</li>
+</ul>
+<h2 id="輸入與輸出單一字元"><a href="#輸入與輸出單一字元" class="headerlink" title="輸入與輸出單一字元"></a>輸入與輸出單一字元</h2><p>使用 <code>getchar()</code> 函數讀取單一字元（使用緩衝區），使用 <code>putchar()</code> 函數將單一字元輸出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> ch;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請輸入字元 =&gt;"</span>);</span><br><span class="line">    ch = getchar();</span><br><span class="line">    <span class="built_in">putchar</span>(ch);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>getch()</code> 函數讀取單一字元（沒有使用緩衝區），使用 <code>putchar()</code> 函數將單一字元輸出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> ch;  <span class="comment">/* 變數宣告 */</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請輸入字元 =&gt;"</span>);</span><br><span class="line">    ch = getch();   <span class="comment">/* 讀取字元 */</span></span><br><span class="line">    <span class="built_in">putchar</span>(ch);    <span class="comment">/* 輸出字元 */</span></span><br><span class="line">    <span class="built_in">putchar</span>(<span class="string">'\n'</span>);  <span class="comment">/* 換行 */</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>getch()</code> 函數沒有使用緩衝區，也不會產生回應，讀取到字元會馬上送給 C 程式進行處理。</li>
+</ul>
+<h2 id="輸入與輸出多種型態"><a href="#輸入與輸出多種型態" class="headerlink" title="輸入與輸出多種型態"></a>輸入與輸出多種型態</h2><p>使用 <code>scanf</code> 函數可以讀取多筆不同型態的資料，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">"%f, %d, %f"</span>, &amp;x, &amp;y, &amp;z);</span><br></pre></td></tr></table></figure>
+
+<h3 id="空白字元"><a href="#空白字元" class="headerlink" title="空白字元"></a>空白字元</h3><p><code>scanf()</code> 函數的格式字串可以使用空白字元，如跳脫字元 <code>\t</code>（水平定位符號）、 <code>\n</code>（換行符號）等。使用者在輸入資料時，只需間隔一個空白字元即可（最多也只會視為一個）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"%f%d"</span> <span class="comment">// 23.5 45</span></span><br><span class="line"><span class="string">"%f %d"</span> <span class="comment">// 23.5 45</span></span><br><span class="line"><span class="string">"%f\t%d"</span> <span class="comment">// 23.5 45</span></span><br><span class="line"><span class="string">"%f\n%d"</span> <span class="comment">// 23.5 45</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="非空白字元"><a href="#非空白字元" class="headerlink" title="非空白字元"></a>非空白字元</h3><p>在格式字串如果擁有非空白字元，使用者在輸入資料時，也需要同時包含這些非空白字元。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"%f, %d, %f"</span> <span class="comment">// 23.5, 45, 10.2</span></span><br><span class="line"><span class="string">"%f\'%d\'%f"</span> <span class="comment">// 23.5'45'10.2</span></span><br><span class="line"><span class="string">"%f*%d*%f"</span> <span class="comment">// 23.5*45*10.2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="格式字元"><a href="#格式字元" class="headerlink" title="格式字元"></a>格式字元</h2><p>在 <code>scanf()</code> 函數的格式字串中一定需要格式字元，一個格式字元對應一種資料型態。</p>
+<table>
+<thead>
+<tr>
+<th>格式字元</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%d</td>
+<td>整數</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮點數（float）</td>
+</tr>
+<tr>
+<td>%lf</td>
+<td>浮點數（double）</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>字串</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>科學符號的數値</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>無符號整數</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>八進制整數</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六進制整數</td>
+</tr>
+</tbody></table>
+<p>在 C 程式使用 <code>scanf()</code> 函數同時輸入多個數値資料。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> x, z;</span><br><span class="line">    <span class="keyword">int</span> y;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請第1次輸入x, y, z的值: "</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%f, %d, %f"</span>, &amp;x, &amp;y, &amp;z);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"1: x= %f  y= %d z= %f\n"</span>, x, y, z);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請第2次輸入x, y, z的值: "</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%f, %d, %f"</span>, &amp;x, &amp;y, &amp;z);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"2: x= %f  y= %d z= %f\n"</span>, x, y, z);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"請第3次輸入x, y, z的值: "</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%f, %d, %f"</span>, &amp;x, &amp;y, &amp;z);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"3: x= %f  y= %d z= %f\n"</span>, x, y, z);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>陳會安（2016）。學會 C 語言。台北市：旗標。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主控台輸入與輸出"><span class="toc-number">2.</span> <span class="toc-text">主控台輸入與輸出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出整數"><span class="toc-number">3.</span> <span class="toc-text">輸入與輸出整數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出浮點數"><span class="toc-number">4.</span> <span class="toc-text">輸入與輸出浮點數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出字串"><span class="toc-number">5.</span> <span class="toc-text">輸入與輸出字串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出單一字元"><span class="toc-number">6.</span> <span class="toc-text">輸入與輸出單一字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入與輸出多種型態"><span class="toc-number">7.</span> <span class="toc-text">輸入與輸出多種型態</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空白字元"><span class="toc-number">7.1.</span> <span class="toc-text">空白字元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非空白字元"><span class="toc-number">7.2.</span> <span class="toc-text">非空白字元</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式字元"><span class="toc-number">8.</span> <span class="toc-text">格式字元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&text=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&is_video=false&description=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（五）：基本輸入與輸出&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&title=《學會 C 語言》學習筆記（五）：基本輸入與輸出"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/&name=《學會 C 語言》學習筆記（五）：基本輸入與輸出&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

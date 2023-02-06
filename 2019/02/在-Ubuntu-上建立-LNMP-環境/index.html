@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="環境 Ubuntu 18.04.1 LTS  安裝 PHP更新 apt 套件工具。 1sudo apt-get update  安裝 PHP 及擴充套件。 1sudo apt-get install -y php php7.2-fpm php-mysql php-zip php-cli php-mbstring php-xml php-curl  查看 PHP 版本 1php --version">
+<meta name="keywords" content="PHP,環境部署,Linux,Ubuntu,MySQL,Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Ubuntu 上建立 LNMP 環境">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="環境 Ubuntu 18.04.1 LTS  安裝 PHP更新 apt 套件工具。 1sudo apt-get update  安裝 PHP 及擴充套件。 1sudo apt-get install -y php php7.2-fpm php-mysql php-zip php-cli php-mbstring php-xml php-curl  查看 PHP 版本 1php --version">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.946Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 Ubuntu 上建立 LNMP 環境">
+<meta name="twitter:description" content="環境 Ubuntu 18.04.1 LTS  安裝 PHP更新 apt 套件工具。 1sudo apt-get update  安裝 PHP 及擴充套件。 1sudo apt-get install -y php php7.2-fpm php-mysql php-zip php-cli php-mbstring php-xml php-curl  查看 PHP 版本 1php --version">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Ubuntu 上建立 LNMP 環境</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/使用-Deployer-為-Laravel-專案建立自動化部署/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/使用-GitLab-CI-CD-和-Envoy-為-Laravel-專案建立自動化部署/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&text=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&is_video=false&description=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Ubuntu 上建立 LNMP 環境&body=Check out this article: https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&name=在 Ubuntu 上建立 LNMP 環境&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-PHP"><span class="toc-number">2.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相關套件"><span class="toc-number">3.</span> <span class="toc-text">安裝相關套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Composer"><span class="toc-number">4.</span> <span class="toc-text">安裝 Composer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laravel-安裝器"><span class="toc-number">5.</span> <span class="toc-text">安裝 Laravel 安裝器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Nginx"><span class="toc-number">6.</span> <span class="toc-text">安裝 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-DNS"><span class="toc-number">7.</span> <span class="toc-text">設定 DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-MySQL"><span class="toc-number">8.</span> <span class="toc-text">安裝 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">9.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">10.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">11.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Ubuntu 上建立 LNMP 環境
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-02-06T15:44:04.000Z" itemprop="datePublished">2019-02-06</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/環境部署/Linux/">Linux</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/Nginx/">Nginx</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Ubuntu/">Ubuntu</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Ubuntu 18.04.1 LTS</li>
+</ul>
+<h2 id="安裝-PHP"><a href="#安裝-PHP" class="headerlink" title="安裝 PHP"></a>安裝 PHP</h2><p>更新 apt 套件工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<p>安裝 PHP 及擴充套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y php php7.2-fpm php-mysql php-zip php-cli php-mbstring php-xml php-curl</span><br></pre></td></tr></table></figure>
+
+<p>查看 PHP 版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php --version</span><br></pre></td></tr></table></figure>
+
+<p>查看 PHP-FPM 版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php-fpm7.2 --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝相關套件"><a href="#安裝相關套件" class="headerlink" title="安裝相關套件"></a>安裝相關套件</h2><p>安裝 Git 及相關套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y curl git unzip</span><br></pre></td></tr></table></figure>
+
+<p>查看 Git 版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Composer"><a href="#安裝-Composer" class="headerlink" title="安裝 Composer"></a>安裝 Composer</h2><p>下載 Composer 並安裝。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">curl -sS https://getcomposer.org/installer -o composer-setup.php</span><br><span class="line">HASH=48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5</span><br><span class="line">php -r <span class="string">"if (hash_file('SHA384', 'composer-setup.php') === '<span class="variable">$HASH</span>') &#123; echo 'Installer verified'; &#125; else &#123; echo 'Installer corrupt'; unlink('composer-setup.php'); &#125; echo PHP_EOL;"</span></span><br><span class="line">Installer verified</span><br><span class="line">sudo php composer-setup.php --install-dir=/usr/<span class="built_in">local</span>/bin --filename=composer</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>正確 <code>HASH</code> 值，見 <a href="https://composer.github.io/pubkeys.html" target="_blank" rel="noopener">https://composer.github.io/pubkeys.html</a></li>
+</ul>
+<p>查看 Composer 版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer --version</span><br></pre></td></tr></table></figure>
+
+<p>修改權限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R <span class="variable">$&#123;USER&#125;</span>:<span class="variable">$&#123;USER&#125;</span> ~/.composer</span><br></pre></td></tr></table></figure>
+
+<p>將套件執行檔路徑寫進環境變數。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH="$PATH:$HOME/.composer/vendor/bin"'</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>重新加載啟動文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Laravel-安裝器"><a href="#安裝-Laravel-安裝器" class="headerlink" title="安裝 Laravel 安裝器"></a>安裝 Laravel 安裝器</h2><p>使用 Composer 安裝。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer global require laravel/installer</span><br></pre></td></tr></table></figure>
+
+<p>查看 Laravel 安裝器版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Nginx"><a href="#安裝-Nginx" class="headerlink" title="安裝 Nginx"></a>安裝 Nginx</h2><p>安裝 Nginx。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y nginx</span><br></pre></td></tr></table></figure>
+
+<p>查看 Nginx 版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -v</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>/etc/nginx/sites-availabl</code> 資料夾新增 <code>laravel.xxx.com.conf</code> 檔：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  listen [::]:80;</span><br><span class="line"></span><br><span class="line">  root /var/www/laravel/public;</span><br><span class="line"></span><br><span class="line">  index index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line">  server_name laravel.xxx.com;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    try_files $uri $uri/ =404;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location ~ \.php$ &#123;</span><br><span class="line">    fastcgi_pass   unix:/run/php/php7.2-fpm.sock;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立設定檔軟連結。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /etc/nginx/sites-available/laravel.xxx.com.conf /etc/nginx/sites-enabled/laravel.xxx.com.conf</span><br></pre></td></tr></table></figure>
+
+<p>重啟 Nginx 服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定-DNS"><a href="#設定-DNS" class="headerlink" title="設定 DNS"></a>設定 DNS</h2><p>新增子網域：laravel.xxx.com，並指向主機的 IP。</p>
+<h2 id="安裝-MySQL"><a href="#安裝-MySQL" class="headerlink" title="安裝 MySQL"></a>安裝 MySQL</h2><p>安裝 MySQL。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y mysql-server</span><br></pre></td></tr></table></figure>
+
+<p>查看 MySQL 版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql --version</span><br></pre></td></tr></table></figure>
+
+<p>進行安全設定。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>root</code> 使用者進入資料庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql</span><br></pre></td></tr></table></figure>
+
+<p>查看所有使用者。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>root</code> 使用者的認證套件為 <code>mysql_native_password</code>。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';</span><br><span class="line">&gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>ubuntu</code> 使用者，並設定權限。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE USER 'ubuntu'@'localhost' IDENTIFIED BY 'password';</span><br><span class="line">&gt; GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'localhost';</span><br><span class="line">&gt; FLUSH PRIVILEGES;</span><br><span class="line">&gt; quit;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ubuntu</code> 使用者進入資料庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u ubuntu -p</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>homestead</code> 資料庫。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE DATABASE `homestead`;</span><br><span class="line">&gt; quit;</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>修改 <code>/var/www</code> 資料夾的權限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R <span class="variable">$&#123;USER&#125;</span>:<span class="variable">$&#123;USER&#125;</span> /var/www</span><br></pre></td></tr></table></figure>
+
+<p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www</span><br><span class="line">laravel new laravel</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.env</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DB_USERNAME=ubuntu</span><br><span class="line">DB_PASSWORD=password</span><br></pre></td></tr></table></figure>
+
+<p>執行遷移。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate --seed</span><br></pre></td></tr></table></figure>
+
+<p>修改權限，讓 Nginx 使用者可以存取 <code>storage</code> 和 <code>bootstrap/cache</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo setfacl -R -m u:www-data:rwx /var/www/laravel/storage /var/www/laravel/bootstrap/cache</span><br></pre></td></tr></table></figure>
+
+<h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往 <a href="http://laravel.xxx.com" target="_blank" rel="noopener">http://laravel.xxx.com</a> 瀏覽。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04" target="_blank" rel="noopener">How To Install Linux, Apache, MySQL, PHP (LAMP) stack on Ubuntu 18.04</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-PHP"><span class="toc-number">2.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相關套件"><span class="toc-number">3.</span> <span class="toc-text">安裝相關套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Composer"><span class="toc-number">4.</span> <span class="toc-text">安裝 Composer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laravel-安裝器"><span class="toc-number">5.</span> <span class="toc-text">安裝 Laravel 安裝器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Nginx"><span class="toc-number">6.</span> <span class="toc-text">安裝 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-DNS"><span class="toc-number">7.</span> <span class="toc-text">設定 DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-MySQL"><span class="toc-number">8.</span> <span class="toc-text">安裝 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">9.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">10.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">11.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&text=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&is_video=false&description=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Ubuntu 上建立 LNMP 環境&body=Check out this article: https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&title=在 Ubuntu 上建立 LNMP 環境"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-LNMP-環境/&name=在 Ubuntu 上建立 LNMP 環境&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

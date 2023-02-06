@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  測試許多 PHP 開發者將測試視為不必要且浪費時間的行為，而且現存太多的測試工具，有著不易上手的學習曲線。但其實測試是一個會發生在應用程式開發流程的開始、中途和結束的程序。 為何要做測試測試可以幫助開發者在第一時間就運作良好的程式，不需要在未來浪費無數小時來為程式除錯並重構。 何時要做測試測試是一個在開">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（廿二）：測試">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  測試許多 PHP 開發者將測試視為不必要且浪費時間的行為，而且現存太多的測試工具，有著不易上手的學習曲線。但其實測試是一個會發生在應用程式開發流程的開始、中途和結束的程序。 為何要做測試測試可以幫助開發者在第一時間就運作良好的程式，不需要在未來浪費無數小時來為程式除錯並重構。 何時要做測試測試是一個在開">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（廿二）：測試">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  測試許多 PHP 開發者將測試視為不必要且浪費時間的行為，而且現存太多的測試工具，有著不易上手的學習曲線。但其實測試是一個會發生在應用程式開發流程的開始、中途和結束的程序。 為何要做測試測試可以幫助開發者在第一時間就運作良好的程式，不需要在未來浪費無數小時來為程式除錯並重構。 何時要做測試測試是一個在開">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（廿二）：測試</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/《現代-PHP》學習筆記（廿一）：調教/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/職場日語（三）：謙讓語、丁重語/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&text=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&is_video=false&description=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（廿二）：測試&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&name=《現代 PHP》學習筆記（廿二）：測試&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">3.</span> <span class="toc-text">測試</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#為何要做測試"><span class="toc-number">3.1.</span> <span class="toc-text">為何要做測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何時要做測試"><span class="toc-number">3.2.</span> <span class="toc-text">何時要做測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#測試什麼"><span class="toc-number">3.3.</span> <span class="toc-text">測試什麼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何測試"><span class="toc-number">3.4.</span> <span class="toc-text">如何測試</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#單元測試"><span class="toc-number">3.4.1.</span> <span class="toc-text">單元測試</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#測試驅動開發（TDD）"><span class="toc-number">3.4.2.</span> <span class="toc-text">測試驅動開發（TDD）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#行為驅動開發（BDD）"><span class="toc-number">3.4.3.</span> <span class="toc-text">行為驅動開發（BDD）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHPUnit"><span class="toc-number">4.</span> <span class="toc-text">PHPUnit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#目錄架構"><span class="toc-number">4.1.</span> <span class="toc-text">目錄架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#啟用-Xdebug"><span class="toc-number">4.2.</span> <span class="toc-text">啟用 Xdebug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安裝-PHPUnit"><span class="toc-number">4.3.</span> <span class="toc-text">安裝 PHPUnit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置-PHPUnit"><span class="toc-number">4.4.</span> <span class="toc-text">配置 PHPUnit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作"><span class="toc-number">4.5.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#執行測試"><span class="toc-number">4.6.</span> <span class="toc-text">執行測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式碼覆蓋率"><span class="toc-number">4.7.</span> <span class="toc-text">程式碼覆蓋率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Travic-CI"><span class="toc-number">5.</span> <span class="toc-text">Travic CI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#執行"><span class="toc-number">5.1.</span> <span class="toc-text">執行</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（廿二）：測試
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-15T03:18:35.000Z" itemprop="datePublished">2018-06-15</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Wnmp 3.1.0</li>
+</ul>
+<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>許多 PHP 開發者將測試視為不必要且浪費時間的行為，而且現存太多的測試工具，有著不易上手的學習曲線。但其實測試是一個會發生在應用程式開發流程的開始、中途和結束的程序。</p>
+<h3 id="為何要做測試"><a href="#為何要做測試" class="headerlink" title="為何要做測試"></a>為何要做測試</h3><p>測試可以幫助開發者在第一時間就運作良好的程式，不需要在未來浪費無數小時來為程式除錯並重構。</p>
+<h3 id="何時要做測試"><a href="#何時要做測試" class="headerlink" title="何時要做測試"></a>何時要做測試</h3><p>測試是一個在開發前、開發中、開發後都存在的議題，敷衍地建立幾個測試並且通過它，這是錯誤的行為。</p>
+<ul>
+<li><p>開發前：安裝並部署測試工具。</p>
+</li>
+<li><p>開發中：建立應用程式中的每個部分時，都撰寫測試並執行測試。</p>
+</li>
+<li><p>開發後：持續性地修正並改良測試，就像應用程式本身一樣。</p>
+</li>
+</ul>
+<h3 id="測試什麼"><a href="#測試什麼" class="headerlink" title="測試什麼"></a>測試什麼</h3><p>獨立地測試應用程式中最小的區塊，如每個類別、方法和函式，以確保他們如預期執行，這種測試稱為「單元測試」。</p>
+<p>但測試區塊並不能保證整個應用程式都能如期運作，因此還需要利用自動化的工具測試應用程式高層級的行為，這種測試稱為「功能測試」。</p>
+<h3 id="如何測試"><a href="#如何測試" class="headerlink" title="如何測試"></a>如何測試</h3><p>PHP 開發者使用了幾種熱門的方式進行測試，他們之間並不互斥。</p>
+<h4 id="單元測試"><a href="#單元測試" class="headerlink" title="單元測試"></a>單元測試</h4><p>單元測試是最熱門的，現在標準的 PHP 單元測試框架為由 Sebastian Bergmann 所撰寫的 PHPUnit。</p>
+<h4 id="測試驅動開發（TDD）"><a href="#測試驅動開發（TDD）" class="headerlink" title="測試驅動開發（TDD）"></a>測試驅動開發（TDD）</h4><p>測試驅動開發（Test-driven development）是在撰寫程式碼之前先撰寫測試，這些測試會故意失敗，因為它描述了應用程式應當擁有的行為。</p>
+<p>TDD 不停重複「撰寫測試並建立功能」的這個過程，直到應用程式完成為止。</p>
+<h4 id="行為驅動開發（BDD）"><a href="#行為驅動開發（BDD）" class="headerlink" title="行為驅動開發（BDD）"></a>行為驅動開發（BDD）</h4><p>行為驅動開發（Behavior-driven development）有兩種形式：SpecBDD 和 StoryBDD。</p>
+<p>BDD 使用流暢的人性化語言來描述應用程式的實作層面，SpecBDD 測試以開發者的角度組合事情，而 StoryBDD 以專案管理者的角度組合事情，他們經常被一起使用。</p>
+<h2 id="PHPUnit"><a href="#PHPUnit" class="headerlink" title="PHPUnit"></a>PHPUnit</h2><p>PHPUnit 測試會集合成測試案例，測試案例會集合成測試程序，PHPUnit 會使用測試執行器來進行測試。</p>
+<p>每個案例都包含了名稱以 <code>test</code> 為前綴的公開方法，這些方法是獨立的測試，用來測試特別的情況是否如預期執行。</p>
+<blockquote>
+<p>一個測試類別通常以 <code>Test</code> 結尾。</p>
+</blockquote>
+<p>初始的 PHPUnit 測試執行器是命令列執行器，可以在終端機使用 <code>phpunit</code> 指令來觸發。</p>
+<h3 id="目錄架構"><a href="#目錄架構" class="headerlink" title="目錄架構"></a>目錄架構</h3><p>範例的目錄架構如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|- src/</span><br><span class="line">|- tests/</span><br><span class="line">    |- bootstrap.php</span><br><span class="line">|- composer.json</span><br><span class="line">|- phpunit.xml</span><br><span class="line">|- .travis.yml</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>src</code> 目錄包含 PHP 專案的原始碼。</li>
+<li><code>tests</code> 目錄包含 PHP 專案的 PHPUnit 測試，其中的 <code>bootstrap.php</code> 檔在單元測試執行前，會由 PHPUnit 所匯入。</li>
+<li><code>composer.json</code> 列出 Composer 所管理的相依性元件。</li>
+<li><code>phpunit.xml</code> 提供 PHPUnit 測試執行器的設定細節。</li>
+<li><code>.travis.yml</code> 提供 Travis CI 持續測試網頁服務所需要的設定細節。</li>
+</ul>
+<h3 id="啟用-Xdebug"><a href="#啟用-Xdebug" class="headerlink" title="啟用 Xdebug"></a>啟用 Xdebug</h3><p>Xdebug 剖析器可以用來產生有用的程式碼覆蓋率資訊。</p>
+<p>如果是在 <code>Wnmp</code> 的環境，打開 <code>php.ini</code> 檔並取消以下註解以啟用 Xdebug PHP 擴充。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;zend_extension=php_xdebug.dll</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝-PHPUnit"><a href="#安裝-PHPUnit" class="headerlink" title="安裝 PHPUnit"></a>安裝 PHPUnit</h3><p>Composer 是安裝 PHPUnit 測試框架最方便的方式之一。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require --dev phpunit/phpunit</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-PHPUnit"><a href="#配置-PHPUnit" class="headerlink" title="配置 PHPUnit"></a>配置 PHPUnit</h3><p>在專案的 <code>phpunit.xml</code> 檔中配置 PHPUnit。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">phpunit</span> <span class="attr">bootstrap</span>=<span class="string">"tests/bootstrap.php"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">testsuites</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">testsuite</span> <span class="attr">name</span>=<span class="string">"whovian"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span> <span class="attr">suffix</span>=<span class="string">"Test.php"</span>&gt;</span>tests<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">testsuite</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">testsuites</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">whitelist</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">whitelist</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">phpunit</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;phpunit&gt;</code> 根元素的屬性是 PHPUnit 測試執行器的設定，最重要的設定是 <code>bootstrap</code> 設定，它指明在 PHPUnit 測試執行前，會被匯入的 PHP 檔案路徑。</li>
+<li><code>&lt;testsuites&gt;</code> 元素定義 <code>tests</code> 資料夾中，以 <code>Test.php</code> 結尾的檔案將被 PHPUnit 執行。</li>
+<li><code>&lt;filter&gt;</code> 元素列出所有包含在程式碼覆蓋率檢測中的目錄。</li>
+<li><code>&lt;whitelist&gt;</code> 元素告訴 PHPUnit 只要針對 <code>src</code> 目錄進行程式碼覆蓋率檢測。</li>
+</ul>
+<h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><p>假想一個 <code>Whovian</code> 類別作為測試範例。</p>
+<p>範例 10-1：<code>Whovian</code> 類別</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Whovian</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@var</span> string</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">protected</span> $favoriteDoctor;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructor</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  string $favoriteDoctor</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($favoriteDoctor)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;favoriteDoctor = (string)$favoriteDoctor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Say</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">say</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'The best doctor is '</span> . <span class="keyword">$this</span>-&gt;favoriteDoctor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Respond to</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  string $input</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> \Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">respondTo</span><span class="params">($input)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $input = strtolower($input);</span><br><span class="line">        $myDoctor = strtolower(<span class="keyword">$this</span>-&gt;favoriteDoctor);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (strpos($input, $myDoctor) === <span class="keyword">false</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(</span><br><span class="line">                sprintf(</span><br><span class="line">                    <span class="string">'No way! %s is the best doctor ever!'</span>,</span><br><span class="line">                    <span class="keyword">$this</span>-&gt;favoriteDoctor</span><br><span class="line">                )</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'I agree!'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每個測試案例都需要繼承 <code>PHPUnit_Framework_TestCase</code> 類別。</p>
+<p>範例 10-2：<code>WhovianTest</code> 測試案例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require</span> dirname(<span class="keyword">__DIR__</span>) . <span class="string">'/src/Whovian.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WhovianTest</span> <span class="keyword">extends</span> <span class="title">PHPUnit_Framework_TestCase</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testSetsDoctorWithConstructor</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $whovian = <span class="keyword">new</span> Whovian(<span class="string">'Peter Capaldi'</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assertAttributeEquals(<span class="string">'Peter Capaldi'</span>, <span class="string">'favoriteDoctor'</span>, $whovian);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testSaysDoctorName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $whovian = <span class="keyword">new</span> Whovian(<span class="string">'David Tennant'</span>);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assertEquals(<span class="string">'The best doctor is David Tennant'</span>, $whovian-&gt;say());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testRespondToInAgreement</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $whovian = <span class="keyword">new</span> Whovian(<span class="string">'David Tennant'</span>);</span><br><span class="line"></span><br><span class="line">        $opinion = <span class="string">'David Tennant is the best doctor, period'</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;assertEquals(<span class="string">'I agree!'</span>, $whovian-&gt;respondTo($opinion));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@expectedException</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">testRespondToInDisagreement</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $whovian = <span class="keyword">new</span> Whovian(<span class="string">'David Tennant'</span>);</span><br><span class="line"></span><br><span class="line">        $opinion = <span class="string">'No way. Matt Smith was awesome!'</span>;</span><br><span class="line">        $whovian-&gt;respondTo($opinion);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>assertAttributeEquals()</code> 方法斷言預期的値與指定物件的屬性的値相同。</li>
+<li><code>assertEquals()</code> 方法斷言預期的値與結果的値相同。</li>
+</ul>
+<h3 id="執行測試"><a href="#執行測試" class="headerlink" title="執行測試"></a>執行測試</h3><p>打開終端機，進入專案的最上層目錄，使用以下指令啟動 PHPUnit 測試執行器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vendor/bin/phpunit -c phpunit.xml</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-c</code> 或 <code>--configuration</code> 選項可以使用不同的設定檔。</li>
+</ul>
+<h3 id="程式碼覆蓋率"><a href="#程式碼覆蓋率" class="headerlink" title="程式碼覆蓋率"></a>程式碼覆蓋率</h3><p>PHPUnit 的程式碼覆蓋率報表，可以觀看哪些程式碼被測試（或未被測試）。</p>
+<p>使用以下指令生成報表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vendor/bin/phpunit -c phpunit.xml --coverage-html coverage</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--coverage-html</code> 的値代表存放報表的資料夾路徑。</li>
+</ul>
+<p>接著，在 <a href="http://localhost/php/modern-php/10-testing/coverage/" target="_blank" rel="noopener">http://localhost/php/modern-php/10-testing/coverage/</a> 可以查看報表。</p>
+<blockquote>
+<p>通常 100% 的覆蓋率是不切實際的，覆蓋率多寡的程度根據每個專案而有所不同。</p>
+</blockquote>
+<h2 id="Travic-CI"><a href="#Travic-CI" class="headerlink" title="Travic CI"></a>Travic CI</h2><p>測試應當自動化執行，Travic CI 是很好的持續測試網頁服務，因為它可以原生地和 GitHub 儲存庫結合。</p>
+<p>前往 <a href="https://travis-ci.org/" target="_blank" rel="noopener">Travic CI</a>，以 GitHub 帳戶登入，選擇要測試的儲存庫。</p>
+<p>範例的 <code>.travis.yml</code> 檔如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">php</span></span><br><span class="line"></span><br><span class="line"><span class="attr">php:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">5.3</span><span class="number">.3</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">5.3</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">5.4</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">5.5</span></span><br><span class="line"><span class="bullet">    -</span> <span class="number">5.6</span></span><br><span class="line"></span><br><span class="line"><span class="attr">before_script:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">COMPOSER_ROOT_VERSION=dev-master</span> <span class="string">composer</span> <span class="string">install</span> <span class="bullet">--prefer-source</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span> <span class="string">vendor/bin/phpunit</span> <span class="bullet">--configuration</span> <span class="string">./build/travis-ci.xml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  email:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  irc:</span></span><br><span class="line"><span class="attr">    channels:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"irc.freenode.org#phpunit"</span></span><br><span class="line"><span class="attr">    use_notice:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>language</code> 是應用程式所使用的語言。</li>
+<li><code>php</code> 是 Travic CI 要測試應用程式的 PHP 版本。</li>
+<li><code>before_script</code> 是在 Travic CI 要測試應用程式之前會執行的指令。</li>
+<li><code>script</code> 是在 Travic CI 要測試應用程式時執行的指令。</li>
+<li><code>notification</code> 是通知的相關設定。</li>
+</ul>
+<h3 id="執行"><a href="#執行" class="headerlink" title="執行"></a>執行</h3><p>每次提交新的程式碼到 GitHub 儲存庫時，Travic CI 會自動執行應用程式測試，並將測試結果以電子郵件通知。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">3.</span> <span class="toc-text">測試</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#為何要做測試"><span class="toc-number">3.1.</span> <span class="toc-text">為何要做測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何時要做測試"><span class="toc-number">3.2.</span> <span class="toc-text">何時要做測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#測試什麼"><span class="toc-number">3.3.</span> <span class="toc-text">測試什麼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何測試"><span class="toc-number">3.4.</span> <span class="toc-text">如何測試</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#單元測試"><span class="toc-number">3.4.1.</span> <span class="toc-text">單元測試</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#測試驅動開發（TDD）"><span class="toc-number">3.4.2.</span> <span class="toc-text">測試驅動開發（TDD）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#行為驅動開發（BDD）"><span class="toc-number">3.4.3.</span> <span class="toc-text">行為驅動開發（BDD）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHPUnit"><span class="toc-number">4.</span> <span class="toc-text">PHPUnit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#目錄架構"><span class="toc-number">4.1.</span> <span class="toc-text">目錄架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#啟用-Xdebug"><span class="toc-number">4.2.</span> <span class="toc-text">啟用 Xdebug</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安裝-PHPUnit"><span class="toc-number">4.3.</span> <span class="toc-text">安裝 PHPUnit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置-PHPUnit"><span class="toc-number">4.4.</span> <span class="toc-text">配置 PHPUnit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作"><span class="toc-number">4.5.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#執行測試"><span class="toc-number">4.6.</span> <span class="toc-text">執行測試</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式碼覆蓋率"><span class="toc-number">4.7.</span> <span class="toc-text">程式碼覆蓋率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Travic-CI"><span class="toc-number">5.</span> <span class="toc-text">Travic CI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#執行"><span class="toc-number">5.1.</span> <span class="toc-text">執行</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&text=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&is_video=false&description=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（廿二）：測試&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&title=《現代 PHP》學習筆記（廿二）：測試"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿二）：測試/&name=《現代 PHP》學習筆記（廿二）：測試&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

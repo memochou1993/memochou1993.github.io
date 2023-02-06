@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言TapPay 在 GitHub 有提供完整的範例，包括 App ID 和 App Key 等必要資訊。本文僅利用 TapPay SDK 和 Go 來實作一個簡單的付款流程。 前端設定進入後台，在「開發者」的「應用程式」，將 App ID 和 App Key 複製下來。 實作建立一個 index.html 檔，引入 TapPay SDK。 12345678910111213141516&amp;lt;!">
+<meta name="keywords" content="JavaScript,Go,金流,TapPay">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 TapPay SDK 串接金流服務">
+<meta property="og:url" content="https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言TapPay 在 GitHub 有提供完整的範例，包括 App ID 和 App Key 等必要資訊。本文僅利用 TapPay SDK 和 Go 來實作一個簡單的付款流程。 前端設定進入後台，在「開發者」的「應用程式」，將 App ID 和 App Key 複製下來。 實作建立一個 index.html 檔，引入 TapPay SDK。 12345678910111213141516&amp;lt;!">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 TapPay SDK 串接金流服務">
+<meta name="twitter:description" content="前言TapPay 在 GitHub 有提供完整的範例，包括 App ID 和 App Key 等必要資訊。本文僅利用 TapPay SDK 和 Go 來實作一個簡單的付款流程。 前端設定進入後台，在「開發者」的「應用程式」，將 App ID 和 App Key 複製下來。 實作建立一個 index.html 檔，引入 TapPay SDK。 12345678910111213141516&amp;lt;!">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 TapPay SDK 串接金流服務</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/09/實作「線上翻譯管理系統」應用程式/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/09/使用-CloudFront-為-AWS-S3-物件建立分佈/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&text=使用 TapPay SDK 串接金流服務"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&is_video=false&description=使用 TapPay SDK 串接金流服務"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 TapPay SDK 串接金流服務&body=Check out this article: https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&name=使用 TapPay SDK 串接金流服務&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端"><span class="toc-number">2.</span> <span class="toc-text">前端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定"><span class="toc-number">2.1.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作"><span class="toc-number">2.2.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#後端"><span class="toc-number">3.</span> <span class="toc-text">後端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定-1"><span class="toc-number">3.1.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作-1"><span class="toc-number">3.2.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 TapPay SDK 串接金流服務
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-09-03T12:40:56.000Z" itemprop="datePublished">2021-09-03</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/其他/金流/">金流</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/TapPay/">TapPay</a>, <a class="tag-link" href="/tags/金流/">金流</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>TapPay 在 <a href="https://github.com/TapPay/tappay-web-example" target="_blank" rel="noopener">GitHub</a> 有提供完整的範例，包括 App ID 和 App Key 等必要資訊。本文僅利用 TapPay SDK 和 Go 來實作一個簡單的付款流程。</p>
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><h3 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h3><p>進入後台，在「開發者」的「應用程式」，將 App ID 和 App Key 複製下來。</p>
+<h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><p>建立一個 <code>index.html</code> 檔，引入 TapPay SDK。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"tappay-iframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"message"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"submit"</span> <span class="attr">disabled</span>&gt;</span>Pay<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://js.tappaysdk.com/tpdirect/v5.7.0"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/assets/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>assets</code> 資料夾建立 <code>app.js</code> 檔：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> APP_ID = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">const</span> APP_KEY = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> submitButton = <span class="built_in">document</span>.querySelector(<span class="string">'#submit'</span>);</span><br><span class="line"><span class="keyword">const</span> status = &#123;</span><br><span class="line">  <span class="string">'0'</span>: <span class="string">'欄位已填妥'</span>,</span><br><span class="line">  <span class="string">'1'</span>: <span class="string">'欄位未填妥'</span>,</span><br><span class="line">  <span class="string">'2'</span>: <span class="string">'欄位有錯誤'</span>,</span><br><span class="line">  <span class="string">'3'</span>: <span class="string">'輸入中'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> style = &#123;</span><br><span class="line">  color: <span class="string">'black'</span>,</span><br><span class="line">  fontSize: <span class="string">'16px'</span>,</span><br><span class="line">  lineHeight: <span class="string">'24px'</span>,</span><br><span class="line">  fontWeight: <span class="string">'300'</span>,</span><br><span class="line">  errorColor: <span class="string">'red'</span>,</span><br><span class="line">  placeholderColor: <span class="string">''</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  isUsedCcv: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 APP_ID 和 APP_KEY 初始化</span></span><br><span class="line">TPDirect.setupSDK(APP_ID, APP_KEY, <span class="string">'sandbox'</span>);</span><br><span class="line"><span class="comment">// 載入表單</span></span><br><span class="line">TPDirect.card.setup(<span class="string">'#tappay-iframe'</span>, style, config);</span><br><span class="line"><span class="comment">// 監聽表單輸入狀態</span></span><br><span class="line">TPDirect.card.onUpdate(<span class="function">(<span class="params">update</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'message'</span>).innerHTML = <span class="string">`</span></span><br><span class="line"><span class="string">    Card Number Status: <span class="subst">$&#123;status[update.status.number]&#125;</span> &lt;br&gt;</span></span><br><span class="line"><span class="string">    Card Expiry Status: <span class="subst">$&#123;status[update.status.expiry]&#125;</span> &lt;br&gt;</span></span><br><span class="line"><span class="string">    Cvc Status: <span class="subst">$&#123;status[update.status.ccv]&#125;</span></span></span><br><span class="line"><span class="string">  `</span>;</span><br><span class="line">  update.canGetPrime</span><br><span class="line">    ? submitButton.removeAttribute(<span class="string">'disabled'</span>)</span><br><span class="line">    : submitButton.setAttribute(<span class="string">'disabled'</span>, <span class="string">'true'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">submitButton.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  TPDirect.card.getPrime(<span class="keyword">async</span> (result) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> pay(&#123;</span><br><span class="line">      prime: result.card.prime,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'message'</span>).innerHTML = <span class="string">`</span></span><br><span class="line"><span class="string">      Message: <span class="subst">$&#123;res.msg&#125;</span> &lt;br&gt;</span></span><br><span class="line"><span class="string">      Amount: <span class="subst">$&#123;res.amount&#125;</span> &lt;br&gt;</span></span><br><span class="line"><span class="string">      Currency: <span class="subst">$&#123;res.currency&#125;</span> &lt;br&gt;</span></span><br><span class="line"><span class="string">      Merchant ID: <span class="subst">$&#123;res.merchant_id&#125;</span></span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">    submitButton.setAttribute(<span class="string">'hidden'</span>, <span class="string">'true'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 Prime Token 送往應用程式後端</span></span><br><span class="line"><span class="keyword">const</span> pay = <span class="keyword">async</span> (data) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> fetch(<span class="string">'/api/pay'</span>, &#123;</span><br><span class="line">      method: <span class="string">'POST'</span>,</span><br><span class="line">      body: <span class="built_in">JSON</span>.stringify(data),</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> res.json();</span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="後端"><a href="#後端" class="headerlink" title="後端"></a>後端</h2><h3 id="設定-1"><a href="#設定-1" class="headerlink" title="設定"></a>設定</h3><p>進入後台，在「帳戶資訊」將 Partner Key 複製下來，以及在「商家管理」的「商家設置」將要使用的 Merchant ID 複製下來。最後，在「開發者」的「系統設定」，將「後台 IP 限制」設為「<code>0.0.0.0/0</code>」方便本地測試。</p>
+<h3 id="實作-1"><a href="#實作-1" class="headerlink" title="實作"></a>實作</h3><p>建立一個 <code>config.yaml</code> 檔，讓後端讀取 Partner Key 和 Merchant ID：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">partner_key:</span></span><br><span class="line"><span class="attr">merchant_id:</span></span><br></pre></td></tr></table></figure>
+
+<p>後端將前端送來的 Prime Token 連同 Partner Key 和 Merchant ID 一起發送至 TapPay 服務端：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bytes"</span></span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"gopkg.in/yaml.v2"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"text/template"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	client = &amp;http.Client&#123;</span><br><span class="line">		Timeout: <span class="number">10</span> * time.Second,</span><br><span class="line">	&#125;</span><br><span class="line">	templates = template.Must(template.ParseFiles(<span class="string">"index.html"</span>))</span><br><span class="line">	config    Config</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Config <span class="keyword">struct</span> &#123;</span><br><span class="line">	PartnerKey <span class="keyword">string</span> <span class="string">`yaml:"partner_key"`</span></span><br><span class="line">	MerchantID <span class="keyword">string</span> <span class="string">`yaml:"merchant_id"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Payload <span class="keyword">struct</span> &#123;</span><br><span class="line">	PartnerKey <span class="keyword">string</span> <span class="string">`json:"partner_key"`</span></span><br><span class="line">	Prime      <span class="keyword">string</span> <span class="string">`json:"prime"`</span></span><br><span class="line">	Amount     <span class="keyword">int</span>    <span class="string">`json:"amount"`</span></span><br><span class="line">	MerchantID <span class="keyword">string</span> <span class="string">`json:"merchant_id"`</span></span><br><span class="line">	Details    <span class="keyword">string</span> <span class="string">`json:"details"`</span></span><br><span class="line">	Cardholder <span class="keyword">struct</span> &#123;</span><br><span class="line">		PhoneNumber <span class="keyword">string</span> <span class="string">`json:"phone_number"`</span></span><br><span class="line">		Name        <span class="keyword">string</span> <span class="string">`json:"name"`</span></span><br><span class="line">		Email       <span class="keyword">string</span> <span class="string">`json:"email"`</span></span><br><span class="line">		ZipCode     <span class="keyword">string</span> <span class="string">`json:"zip_code"`</span></span><br><span class="line">		Address     <span class="keyword">string</span> <span class="string">`json:"address"`</span></span><br><span class="line">		NationalID  <span class="keyword">string</span> <span class="string">`json:"national_id"`</span></span><br><span class="line">	&#125; <span class="string">`json:"cardholder"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Result <span class="keyword">struct</span> &#123;</span><br><span class="line">	Status            <span class="keyword">int</span>    <span class="string">`json:"status"`</span></span><br><span class="line">	Msg               <span class="keyword">string</span> <span class="string">`json:"msg"`</span></span><br><span class="line">	Amount            <span class="keyword">int</span>    <span class="string">`json:"amount"`</span></span><br><span class="line">	Acquirer          <span class="keyword">string</span> <span class="string">`json:"acquirer"`</span></span><br><span class="line">	Currency          <span class="keyword">string</span> <span class="string">`json:"currency"`</span></span><br><span class="line">	RecTradeID        <span class="keyword">string</span> <span class="string">`json:"rec_trade_id"`</span></span><br><span class="line">	BankTransactionID <span class="keyword">string</span> <span class="string">`json:"bank_transaction_id"`</span></span><br><span class="line">	OrderNumber       <span class="keyword">string</span> <span class="string">`json:"order_number"`</span></span><br><span class="line">	AuthCode          <span class="keyword">string</span> <span class="string">`json:"auth_code"`</span></span><br><span class="line">	CardInfo          <span class="keyword">struct</span> &#123;</span><br><span class="line">		Issuer      <span class="keyword">string</span> <span class="string">`json:"issuer"`</span></span><br><span class="line">		Funding     <span class="keyword">int</span>    <span class="string">`json:"funding"`</span></span><br><span class="line">		Type        <span class="keyword">int</span>    <span class="string">`json:"type"`</span></span><br><span class="line">		Level       <span class="keyword">string</span> <span class="string">`json:"level"`</span></span><br><span class="line">		Country     <span class="keyword">string</span> <span class="string">`json:"country"`</span></span><br><span class="line">		LastFour    <span class="keyword">string</span> <span class="string">`json:"last_four"`</span></span><br><span class="line">		BinCode     <span class="keyword">string</span> <span class="string">`json:"bin_code"`</span></span><br><span class="line">		IssuerZhTw  <span class="keyword">string</span> <span class="string">`json:"issuer_zh_tw"`</span></span><br><span class="line">		BankID      <span class="keyword">string</span> <span class="string">`json:"bank_id"`</span></span><br><span class="line">		CountryCode <span class="keyword">string</span> <span class="string">`json:"country_code"`</span></span><br><span class="line">	&#125; <span class="string">`json:"card_info"`</span></span><br><span class="line">	TransactionTimeMillis <span class="keyword">int64</span> <span class="string">`json:"transaction_time_millis"`</span></span><br><span class="line">	BankTransactionTime   <span class="keyword">struct</span> &#123;</span><br><span class="line">		StartTimeMillis <span class="keyword">string</span> <span class="string">`json:"start_time_millis"`</span></span><br><span class="line">		EndTimeMillis   <span class="keyword">string</span> <span class="string">`json:"end_time_millis"`</span></span><br><span class="line">	&#125; <span class="string">`json:"bank_transaction_time"`</span></span><br><span class="line">	BankResultCode           <span class="keyword">string</span> <span class="string">`json:"bank_result_code"`</span></span><br><span class="line">	BankResultMsg            <span class="keyword">string</span> <span class="string">`json:"bank_result_msg"`</span></span><br><span class="line">	CardIdentifier           <span class="keyword">string</span> <span class="string">`json:"card_identifier"`</span></span><br><span class="line">	MerchantID               <span class="keyword">string</span> <span class="string">`json:"merchant_id"`</span></span><br><span class="line">	IsRbaVerified            <span class="keyword">bool</span>   <span class="string">`json:"is_rba_verified"`</span></span><br><span class="line">	TransactionMethodDetails <span class="keyword">struct</span> &#123;</span><br><span class="line">		TransactionMethodReference <span class="keyword">string</span> <span class="string">`json:"transaction_method_reference"`</span></span><br><span class="line">		TransactionMethod          <span class="keyword">string</span> <span class="string">`json:"transaction_method"`</span></span><br><span class="line">	&#125; <span class="string">`json:"transaction_method_details"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> err := parseConfig(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.HandleFunc(<span class="string">"/"</span>, Index)</span><br><span class="line">	http.HandleFunc(<span class="string">"/api/pay"</span>, Pay)</span><br><span class="line">	http.Handle(<span class="string">"/assets/"</span>, http.StripPrefix(<span class="string">"/assets/"</span>, http.FileServer(http.Dir(<span class="string">"assets"</span>))))</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">":8080"</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">parseConfig</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	file := <span class="string">"config.yaml"</span></span><br><span class="line">	b, err := ioutil.ReadFile(file)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> yaml.Unmarshal(b, &amp;config)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 渲染前端</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Index</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> err := templates.ExecuteTemplate(w, <span class="string">"index.html"</span>, <span class="literal">nil</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理付款</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Pay</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> r.Method == http.MethodOptions &#123;</span><br><span class="line">		response(w, http.StatusOK, <span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	payload := Payload&#123;</span><br><span class="line">		PartnerKey: config.PartnerKey,</span><br><span class="line">		Amount:     <span class="number">1</span>,</span><br><span class="line">		MerchantID: config.MerchantID,</span><br><span class="line">	&#125;</span><br><span class="line">	err := json.NewDecoder(r.Body).Decode(&amp;payload)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		response(w, http.StatusBadRequest, <span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	b, err := json.Marshal(payload)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		response(w, http.StatusInternalServerError, <span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	resp, err := payByPrime(bytes.NewBuffer(b))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		response(w, http.StatusInternalServerError, <span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	result := Result&#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> err := json.Unmarshal(resp, &amp;result); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		response(w, http.StatusInternalServerError, <span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	response(w, http.StatusOK, result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">payByPrime</span><span class="params">(body io.Reader)</span> <span class="params">(b []<span class="keyword">byte</span>, err error)</span></span> &#123;</span><br><span class="line">	url := <span class="string">"https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"</span></span><br><span class="line">	req, _ := http.NewRequest(http.MethodPost, url, body)</span><br><span class="line">	req.Header.Set(<span class="string">"x-api-key"</span>, config.PartnerKey)</span><br><span class="line">	resp, err := client.Do(req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> resp.StatusCode != http.StatusOK &#123;</span><br><span class="line">		err = fmt.Errorf(<span class="string">"unexpected response code: %v"</span>, resp.StatusCode)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> closeBody(resp.Body)</span><br><span class="line">	b, err = ioutil.ReadAll(resp.Body)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">closeBody</span><span class="params">(reader io.ReadCloser)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> err := reader.Close(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">response</span><span class="params">(w http.ResponseWriter, code <span class="keyword">int</span>, v <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	w.Header().Set(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>)</span><br><span class="line">	w.Header().Set(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"*"</span>)</span><br><span class="line">	w.WriteHeader(code)</span><br><span class="line">	<span class="keyword">if</span> v == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> err := json.NewEncoder(w).Encode(v); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/tappay-example" target="_blank" rel="noopener">tappay-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://github.com/TapPay/tappay-web-example" target="_blank" rel="noopener">tappay-web-example</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端"><span class="toc-number">2.</span> <span class="toc-text">前端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定"><span class="toc-number">2.1.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作"><span class="toc-number">2.2.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#後端"><span class="toc-number">3.</span> <span class="toc-text">後端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#設定-1"><span class="toc-number">3.1.</span> <span class="toc-text">設定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作-1"><span class="toc-number">3.2.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&text=使用 TapPay SDK 串接金流服務"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&is_video=false&description=使用 TapPay SDK 串接金流服務"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 TapPay SDK 串接金流服務&body=Check out this article: https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&title=使用 TapPay SDK 串接金流服務"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/09/使用-TapPay-SDK-串接金流服務/&name=使用 TapPay SDK 串接金流服務&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

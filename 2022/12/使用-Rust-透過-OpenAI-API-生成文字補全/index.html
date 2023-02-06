@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前置作業在 OpenAI 註冊一個帳號，並且在 API keys 頁面產生一個 API 金鑰。 建立專案建立專案。 12cargo new openai-cli-rustcd openai-cli-rust  安裝依賴套件。 12345[dependencies]reqwest = &amp;#123; version = &quot;0.11&quot;, features = [&quot;json&quot;] &amp;#125;serde =">
+<meta name="keywords" content="程式設計,Rust,GPT,AI,OpenAI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Rust 透過 OpenAI API 生成文字補全">
+<meta property="og:url" content="https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業在 OpenAI 註冊一個帳號，並且在 API keys 頁面產生一個 API 金鑰。 建立專案建立專案。 12cargo new openai-cli-rustcd openai-cli-rust  安裝依賴套件。 12345[dependencies]reqwest = &amp;#123; version = &quot;0.11&quot;, features = [&quot;json&quot;] &amp;#125;serde =">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2023-01-18T11:08:48.539Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Rust 透過 OpenAI API 生成文字補全">
+<meta name="twitter:description" content="前置作業在 OpenAI 註冊一個帳號，並且在 API keys 頁面產生一個 API 金鑰。 建立專案建立專案。 12cargo new openai-cli-rustcd openai-cli-rust  安裝依賴套件。 12345[dependencies]reqwest = &amp;#123; version = &quot;0.11&quot;, features = [&quot;json&quot;] &amp;#125;serde =">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Rust 透過 OpenAI API 生成文字補全</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/12/使用-Node-透過-OpenAI-API-生成文字補全/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/12/使用「GPT-AI-Assistant」與-AI-聊天/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&text=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&is_video=false&description=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 透過 OpenAI API 生成文字補全&body=Check out this article: https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&name=使用 Rust 透過 OpenAI API 生成文字補全&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Rust 透過 OpenAI API 生成文字補全
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-12-08T16:17:05.000Z" itemprop="datePublished">2022-12-09</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/AI/">AI</a>, <a class="tag-link" href="/tags/GPT/">GPT</a>, <a class="tag-link" href="/tags/OpenAI/">OpenAI</a>, <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>在 <a href="https://openai.com/api/" target="_blank" rel="noopener">OpenAI</a> 註冊一個帳號，並且在 <a href="https://beta.openai.com/account/api-keys" target="_blank" rel="noopener">API keys</a> 頁面產生一個 API 金鑰。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new openai-cli-rust</span><br><span class="line"><span class="built_in">cd</span> openai-cli-rust</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">reqwest</span> = &#123; version = <span class="string">"0.11"</span>, features = [<span class="string">"json"</span>] &#125;</span><br><span class="line"><span class="attr">serde</span> = &#123; version = <span class="string">"1.0"</span>, features = [<span class="string">"derive"</span>] &#125;</span><br><span class="line"><span class="attr">tokio</span> = &#123; version = <span class="string">"1.23"</span>, features = [<span class="string">"full"</span>] &#125;</span><br><span class="line"><span class="attr">dotenvy</span> = &#123; version = <span class="string">"0.15"</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OPENAI_API_URL=https://api.openai.com/v1</span><br><span class="line">OPENAI_API_KEY=</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.gitignore</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/target</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>新增 <code>src/lib.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> reqwest::header::HeaderMap;</span><br><span class="line"><span class="keyword">use</span> serde::&#123;Deserialize, Serialize&#125;;</span><br><span class="line"><span class="keyword">use</span> std::&#123;env, error::Error&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> async <span class="function"><span class="keyword">fn</span> <span class="title">fetch</span></span>() -&gt; <span class="built_in">Result</span>&lt;Response, <span class="built_in">Box</span>&lt;dyn Error&gt;&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> api_url = env::var(<span class="string">"OPENAI_API_URL"</span>).unwrap();</span><br><span class="line">    <span class="keyword">let</span> api_key = env::var(<span class="string">"OPENAI_API_KEY"</span>).unwrap();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> headers = HeaderMap::new();</span><br><span class="line">    headers.insert(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>.parse().unwrap());</span><br><span class="line">    headers.insert(</span><br><span class="line">        <span class="string">"Authorization"</span>,</span><br><span class="line">        <span class="built_in">format!</span>(<span class="string">"Bearer &#123;&#125;"</span>, api_key).parse().unwrap(),</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> body = Request&#123;</span><br><span class="line">        model: <span class="built_in">String</span>::from(<span class="string">"text-davinci-003"</span>),</span><br><span class="line">        prompt: <span class="built_in">String</span>::from(<span class="string">"\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Hello, who are you?"</span>),</span><br><span class="line">        temperature: <span class="number">0.9</span>,</span><br><span class="line">        max_tokens: <span class="number">150</span>,</span><br><span class="line">        top_p: <span class="number">1.0</span>,</span><br><span class="line">        frequency_penalty: <span class="number">0.0</span>,</span><br><span class="line">        presence_penalty: <span class="number">0.6</span>,</span><br><span class="line">        stop: <span class="built_in">vec!</span>[<span class="built_in">String</span>::from(<span class="string">" Human:"</span>), <span class="built_in">String</span>::from(<span class="string">" AI:"</span>)],</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> client = reqwest::Client::new();</span><br><span class="line">    <span class="keyword">let</span> res = client</span><br><span class="line">        .post(<span class="built_in">format!</span>(<span class="string">"&#123;&#125;/completions"</span>, api_url))</span><br><span class="line">        .headers(headers)</span><br><span class="line">        .json(&amp;body)</span><br><span class="line">        .send()</span><br><span class="line">        .await?</span><br><span class="line">        .json::&lt;Response&gt;()</span><br><span class="line">        .await?;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">Ok</span>(res);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Deserialize, Debug)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Response</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> id: <span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> object: <span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> created: <span class="built_in">Option</span>&lt;<span class="built_in">usize</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> model: <span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> choices: <span class="built_in">Option</span>&lt;<span class="built_in">Vec</span>&lt;Choice&gt;&gt;,</span><br><span class="line">    <span class="keyword">pub</span> usage: <span class="built_in">Option</span>&lt;Usage&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Deserialize, Debug)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Choice</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> text: <span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> index: <span class="built_in">Option</span>&lt;<span class="built_in">usize</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> logprobs: <span class="built_in">Option</span>&lt;<span class="built_in">usize</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> finish_reason: <span class="built_in">Option</span>&lt;<span class="built_in">String</span>&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Deserialize, Debug)]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Usage</span></span> &#123;</span><br><span class="line">    <span class="keyword">pub</span> prompt_tokens: <span class="built_in">Option</span>&lt;<span class="built_in">usize</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> completion_tokens: <span class="built_in">Option</span>&lt;<span class="built_in">usize</span>&gt;,</span><br><span class="line">    <span class="keyword">pub</span> total_tokens: <span class="built_in">Option</span>&lt;<span class="built_in">usize</span>&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Serialize)]</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Request</span></span> &#123;</span><br><span class="line">    model: <span class="built_in">String</span>,</span><br><span class="line">    prompt: <span class="built_in">String</span>,</span><br><span class="line">    temperature: <span class="built_in">f32</span>,</span><br><span class="line">    max_tokens: <span class="built_in">usize</span>,</span><br><span class="line">    top_p: <span class="built_in">f32</span>,</span><br><span class="line">    frequency_penalty: <span class="built_in">f32</span>,</span><br><span class="line">    presence_penalty: <span class="built_in">f32</span>,</span><br><span class="line">    stop: <span class="built_in">Vec</span>&lt;<span class="built_in">String</span>&gt;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>src/main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> dotenvy::dotenv;</span><br><span class="line"><span class="keyword">use</span> openai_cli_rust::fetch;</span><br><span class="line"><span class="keyword">use</span> std::error::Error;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[tokio::main]</span></span><br><span class="line">async <span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() -&gt; <span class="built_in">Result</span>&lt;(), <span class="built_in">Box</span>&lt;dyn Error&gt;&gt; &#123;</span><br><span class="line">    dotenv().ok();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> resp = fetch().await?;</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Some</span>(choices) = resp.choices &#123;</span><br><span class="line">        <span class="keyword">for</span> choice <span class="keyword">in</span> choices.iter() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"&#123;:?&#125;"</span>, choice.text);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="literal">Ok</span>(())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/openai-cli-rust" target="_blank" rel="noopener">openai-cli-rust</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://beta.openai.com/docs" target="_blank" rel="noopener">OpenAI - Documentation</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&text=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&is_video=false&description=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 透過 OpenAI API 生成文字補全&body=Check out this article: https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&title=使用 Rust 透過 OpenAI API 生成文字補全"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/12/使用-Rust-透過-OpenAI-API-生成文字補全/&name=使用 Rust 透過 OpenAI API 生成文字補全&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

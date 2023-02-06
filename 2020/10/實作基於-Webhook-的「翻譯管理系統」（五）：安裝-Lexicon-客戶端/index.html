@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="本文本文介紹如何使用 Lexicon 客戶端套件，獲取 Lexicon 服務端的語系資源，並生成 Laravel 使用的語系檔，最終實現網站的在地化（localization）。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  建立專案建立一個新的專案。 1laravel new lexicon-domo  安裝套件安裝 Lexicon 的客戶端套件。 1compo">
+<meta name="keywords" content="程式設計,PHP,Laravel,Localization,Lexicon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端">
+<meta property="og:url" content="https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="本文本文介紹如何使用 Lexicon 客戶端套件，獲取 Lexicon 服務端的語系資源，並生成 Laravel 使用的語系檔，最終實現網站的在地化（localization）。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  建立專案建立一個新的專案。 1laravel new lexicon-domo  安裝套件安裝 Lexicon 的客戶端套件。 1compo">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.964Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端">
+<meta name="twitter:description" content="本文本文介紹如何使用 Lexicon 客戶端套件，獲取 Lexicon 服務端的語系資源，並生成 Laravel 使用的語系檔，最終實現網站的在地化（localization）。 環境 Ubuntu 18.04.1 LTS PHP 7.4 Laradock  建立專案建立一個新的專案。 1laravel new lexicon-domo  安裝套件安裝 Lexicon 的客戶端套件。 1compo">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/10/實作基於-Webhook-的「翻譯管理系統」（四）：安裝-Lexicon-服務端/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/10/在-Go-專案整合-Vue-專案/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&text=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&is_video=false&description=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端&body=Check out this article: https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&name=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本文"><span class="toc-number">1.</span> <span class="toc-text">本文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">4.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境變數"><span class="toc-number">5.</span> <span class="toc-text">環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">6.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制器"><span class="toc-number">7.</span> <span class="toc-text">控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由"><span class="toc-number">8.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#視圖"><span class="toc-number">9.</span> <span class="toc-text">視圖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#權限"><span class="toc-number">10.</span> <span class="toc-text">權限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#線上展示"><span class="toc-number">11.</span> <span class="toc-text">線上展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">12.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-10-28T14:39:03.000Z" itemprop="datePublished">2020-10-28</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/Laravel/">Laravel</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/Lexicon/">Lexicon</a>, <a class="tag-link" href="/tags/Localization/">Localization</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h2><p>本文介紹如何使用 Lexicon 客戶端套件，獲取 Lexicon 服務端的語系資源，並生成 Laravel 使用的語系檔，最終實現網站的在地化（localization）。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Ubuntu 18.04.1 LTS</li>
+<li>PHP 7.4</li>
+<li>Laradock</li>
+</ul>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立一個新的專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new lexicon-domo</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><p>安裝 Lexicon 的客戶端套件。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer <span class="keyword">require</span> memochou1993/lexicon-api-laravel-client</span><br></pre></td></tr></table></figure>
+
+<h2 id="環境變數"><a href="#環境變數" class="headerlink" title="環境變數"></a>環境變數</h2><p>修改 <code>.env</code> 檔，設置 Lexicon 服務端的網址，以及向服務端存取資源的 API 金鑰。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LEXICON_HOST=https://lexicon.epoch.tw</span><br><span class="line">LEXICON_API_KEY=&lt;API_TOKEN&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>修改 <code>app/Console/Kernel.php</code> 檔，以註冊 Lexicon 客戶端的指令。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">MemoChou1993</span>\<span class="title">Lexicon</span>\<span class="title">Console</span>\<span class="title">ClearCommand</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">MemoChou1993</span>\<span class="title">Lexicon</span>\<span class="title">Console</span>\<span class="title">SyncCommand</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Kernel</span> <span class="keyword">extends</span> <span class="title">ConsoleKernel</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> $commands = [</span><br><span class="line">        ClearCommand::class,</span><br><span class="line">        SyncCommand::class,</span><br><span class="line">    ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果要獲取服務端的語系資源，並生成本地的語系檔，執行以下指令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan lexicon:sync</span><br></pre></td></tr></table></figure>
+
+<p>如果要清除本地的語系檔，執行以下指令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan lexicon:clear</span><br></pre></td></tr></table></figure>
+
+<h2 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h2><p>新增一個 <code>DemoController</code> 控制器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:controller DemoController</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>DemoController</code> 控制器。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Contracts</span>\<span class="title">View</span>\<span class="title">View</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">RedirectResponse</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">App</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Artisan</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">MemoChou1993</span>\<span class="title">Lexicon</span>\<span class="title">Console</span>\<span class="title">ClearCommand</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">MemoChou1993</span>\<span class="title">Lexicon</span>\<span class="title">Console</span>\<span class="title">SyncCommand</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Handle the incoming request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  Request  $request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  string  $language</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> RedirectResponse|View</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span><span class="params">(Request $request, string $language = <span class="string">'en'</span>)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 限定語言</span></span><br><span class="line">        <span class="keyword">if</span> (! in_array($language, [<span class="string">'en'</span>, <span class="string">'zh'</span>])) &#123;</span><br><span class="line">            <span class="keyword">return</span> redirect()-&gt;route(<span class="string">'demo'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 設置系統語言</span></span><br><span class="line">        App::setLocale($language);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 同步語系檔</span></span><br><span class="line">        <span class="keyword">if</span> ($request-&gt;input(<span class="string">'sync'</span>)) &#123;</span><br><span class="line">            Artisan::call(SyncCommand::class);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> redirect()-&gt;route(<span class="string">'demo'</span>, [<span class="string">'language'</span> =&gt; $language]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 清除語系檔</span></span><br><span class="line">        <span class="keyword">if</span> ($request-&gt;input(<span class="string">'clear'</span>)) &#123;</span><br><span class="line">            Artisan::call(ClearCommand::class);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> redirect()-&gt;route(<span class="string">'demo'</span>, [<span class="string">'language'</span> =&gt; $language]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $file = sprintf(<span class="string">'%s/%s.php'</span>, lang_path($language), config(<span class="string">'lexicon.filename'</span>));</span><br><span class="line"></span><br><span class="line">        $keys = [];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (file_exists($file)) &#123;</span><br><span class="line">            $keys = <span class="keyword">include</span> $file;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 傾印語系檔</span></span><br><span class="line">            <span class="keyword">if</span> ($request-&gt;input(<span class="string">'dump'</span>)) &#123;</span><br><span class="line">                dd(file_get_contents($file));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> view(<span class="string">'demo'</span>, [</span><br><span class="line">            <span class="string">'language'</span> =&gt; $language,</span><br><span class="line">            <span class="string">'keys'</span> =&gt; $keys,</span><br><span class="line">        ]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>新增一個路由。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">DemoController</span>;</span><br><span class="line"></span><br><span class="line">Route::get(<span class="string">'/&#123;language?&#125;'</span>, DemoController::class)-&gt;name(<span class="string">'demo'</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="視圖"><a href="#視圖" class="headerlink" title="視圖"></a>視圖</h2><p>在 <code>resources/views</code> 資料夾新增 <code>demo.blade.php</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"&#123;&#123; str_replace('_', '-', app()-&gt;getLocale()) &#125;&#125;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>&#123;&#123; ___('project.name') &#125;&#125;<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"icon"</span> <span class="attr">href</span>=<span class="string">"icon.png"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"</span> <span class="attr">integrity</span>=<span class="string">"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"</span> <span class="attr">crossorigin</span>=<span class="string">"anonymous"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"navbar navbar-dark bg-dark"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"navbar-brand"</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; config('app.url') &#125;&#125;/&#123;&#123; $language &#125;&#125;"</span>&gt;</span></span><br><span class="line">                &#123;&#123; ___('project.name') &#125;&#125;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                @if($language == 'en')</span><br><span class="line">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"location.href='/en'"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm bg-light ml-1"</span>&gt;</span></span><br><span class="line">                    EN</span><br><span class="line">                <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"location.href='/zh'"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm btn-outline-light ml-1"</span>&gt;</span></span><br><span class="line">                    ZH</span><br><span class="line">                <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                @endif</span><br><span class="line">                @if($language == 'zh')</span><br><span class="line">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"location.href='/en'"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm btn-outline-light ml-1"</span>&gt;</span></span><br><span class="line">                    EN</span><br><span class="line">                <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"location.href='/zh'"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm bg-light ml-1"</span>&gt;</span></span><br><span class="line">                    ZH</span><br><span class="line">                <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                @endif</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container mb-5"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mt-4"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card bg-light"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-body"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"mr-2"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"location.href='/&#123;&#123; $language  &#125;&#125;?sync=true'"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm btn-info my-1 my-md-0"</span> <span class="attr">id</span>=<span class="string">"sync"</span>&gt;</span></span><br><span class="line">                                &#123;&#123; ___('action.sync') &#125;&#125;</span><br><span class="line">                            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"mr-2"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"location.href='/&#123;&#123; $language  &#125;&#125;?clear=true'"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm btn-danger my-1 my-md-0"</span> <span class="attr">id</span>=<span class="string">"clear"</span>&gt;</span></span><br><span class="line">                                &#123;&#123; ___('action.clear') &#125;&#125;</span><br><span class="line">                            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                        @if(count($keys))</span><br><span class="line">                        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"mr-2"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"window.open('/&#123;&#123; $language  &#125;&#125;?dump=true')"</span> <span class="attr">class</span>=<span class="string">"btn btn-sm btn-secondary my-1 my-md-0"</span>&gt;</span></span><br><span class="line">                                &#123;&#123; ___('action.dump') &#125;&#125;</span><br><span class="line">                            <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                        @endif</span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-4"</span> <span class="attr">id</span>=<span class="string">"table"</span>&gt;</span></span><br><span class="line">                @if(count($keys))</span><br><span class="line">                <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"table table-bordered table-responsive-sm bg-light"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">th</span>&gt;</span>&#123;&#123; ___('table.header.code_in_blade_template') &#125;&#125;<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">th</span>&gt;</span>&#123;&#123; ___('table.header.translation') &#125;&#125;<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">th</span>&gt;</span>&#123;&#123; ___('table.header.code_in_language_file') &#125;&#125;<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">                        @foreach($keys as $key =&gt; $value)</span><br><span class="line">                            @if($language == 'en')</span><br><span class="line">                            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    ___('&#123;&#123; $key &#125;&#125;')</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    &#123;&#123; ___($key) &#125;&#125;</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span> <span class="attr">rowspan</span>=<span class="string">"2"</span>&gt;</span></span><br><span class="line">                                    '&#123;&#123; $key &#125;&#125;' =&gt; '&#123;&#123; $value &#125;&#125;',</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    ___('&#123;&#123; $key &#125;&#125;', 2)</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    &#123;&#123; ___($key, 2) &#125;&#125;</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                            @endif</span><br><span class="line">                            @if($language == 'zh')</span><br><span class="line">                            <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    ___('&#123;&#123; $key &#125;&#125;')</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    &#123;&#123; ___($key) &#125;&#125;</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">                                    '&#123;&#123; $key &#125;&#125;' =&gt; '&#123;&#123; $value &#125;&#125;',</span><br><span class="line">                                <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">                            @endif</span><br><span class="line">                        @endforeach</span><br><span class="line">                    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line">                @endif</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"my-5 text-center"</span> <span class="attr">id</span>=<span class="string">"loading"</span> <span class="attr">hidden</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h5</span> <span class="attr">class</span>=<span class="string">"py-5"</span> <span class="attr">id</span>=<span class="string">"message"</span>&gt;</span><span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"width: 4rem; height: 4rem;"</span> <span class="attr">class</span>=<span class="string">"spinner-grow text-warning"</span> <span class="attr">role</span>=<span class="string">"status"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"sr-only"</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">'sync'</span>).addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'table'</span>).hidden = <span class="literal">true</span>;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'loading'</span>).hidden = <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'message'</span>).innerHTML = <span class="string">'Generating language files...'</span>;</span></span><br><span class="line"><span class="undefined">&#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">'clear'</span>).addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'table'</span>).hidden = <span class="literal">true</span>;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'loading'</span>).hidden = <span class="literal">false</span>;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'message'</span>).innerHTML = <span class="string">'Deleting language files...'</span>;</span></span><br><span class="line"><span class="undefined">&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">body &#123;</span></span><br><span class="line"><span class="undefined">    font-family: 'Microsoft Jhenghei', sans-serif;</span></span><br><span class="line"><span class="css">    <span class="selector-tag">font-size</span>: 0<span class="selector-class">.75rem</span>;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#table</span> &gt; <span class="selector-tag">table</span> &#123;</span></span><br><span class="line"><span class="undefined">    table-layout: fixed;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css"><span class="selector-id">#table</span> &gt; <span class="selector-tag">table</span> &gt; <span class="selector-tag">tbody</span> &gt; <span class="selector-tag">tr</span> &gt; <span class="selector-tag">td</span> &#123;</span></span><br><span class="line"><span class="undefined">    vertical-align: middle;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="權限"><a href="#權限" class="headerlink" title="權限"></a>權限</h2><p>由於 Lexicon 客戶端套件會將語系檔存放至 <code>resources/lang</code> 資料夾中，因此還需要修改資料夾的權限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown laradock:www-data -R resources/lang</span><br></pre></td></tr></table></figure>
+
+<h2 id="線上展示"><a href="#線上展示" class="headerlink" title="線上展示"></a>線上展示</h2><ul>
+<li><a href="https://lexicon-demo.epoch.tw" target="_blank" rel="noopener">Lexicon Demo</a></li>
+</ul>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/lexicon-demo" target="_blank" rel="noopener">lexicon-demo</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本文"><span class="toc-number">1.</span> <span class="toc-text">本文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">4.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境變數"><span class="toc-number">5.</span> <span class="toc-text">環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">6.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制器"><span class="toc-number">7.</span> <span class="toc-text">控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由"><span class="toc-number">8.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#視圖"><span class="toc-number">9.</span> <span class="toc-text">視圖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#權限"><span class="toc-number">10.</span> <span class="toc-text">權限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#線上展示"><span class="toc-number">11.</span> <span class="toc-text">線上展示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">12.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&text=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&is_video=false&description=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端&body=Check out this article: https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&title=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/10/實作基於-Webhook-的「翻譯管理系統」（五）：安裝-Lexicon-客戶端/&name=實作基於 Webhook 的「翻譯管理系統」（五）：安裝 Lexicon 客戶端&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

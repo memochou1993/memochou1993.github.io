@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 前置作業 首先，在 Alchemy 註冊，並新建應用程式，選擇 Rinkeby 測試網路。 下載 MetaMask 到擴充套件，創建錢包後，將「Show test networks」選項開啟。 到 Alchemy Rinkeby faucet 充">
+<meta name="keywords" content="JavaScript,Node,區塊鏈,Ethereum,Alchemy,Web3,MetaMask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易">
+<meta property="og:url" content="https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 前置作業 首先，在 Alchemy 註冊，並新建應用程式，選擇 Rinkeby 測試網路。 下載 MetaMask 到擴充套件，創建錢包後，將「Show test networks」選項開啟。 到 Alchemy Rinkeby faucet 充">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2023-01-18T11:08:48.537Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易">
+<meta name="twitter:description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 前置作業 首先，在 Alchemy 註冊，並新建應用程式，選擇 Rinkeby 測試網路。 下載 MetaMask 到擴充套件，創建錢包後，將「Show test networks」選項開啟。 到 Alchemy Rinkeby faucet 充">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/02/使用-Helm-管理-Kubernetes-設定檔/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&text=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&is_video=false&description=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易&body=Check out this article: https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&name=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-23T14:24:50.000Z" itemprop="datePublished">2022-02-23</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/區塊鏈/Ethereum/">Ethereum</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Alchemy/">Alchemy</a>, <a class="tag-link" href="/tags/Ethereum/">Ethereum</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/MetaMask/">MetaMask</a>, <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/Web3/">Web3</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文參考 Alchemy 的<a href="https://docs.alchemy.com/alchemy/" target="_blank" rel="noopener">範例</a>進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><ol>
+<li>首先，在 <a href="https://dashboard.alchemyapi.io/" target="_blank" rel="noopener">Alchemy</a> 註冊，並新建應用程式，選擇 Rinkeby 測試網路。</li>
+<li>下載 <a href="https://metamask.io/download/" target="_blank" rel="noopener">MetaMask</a> 到擴充套件，創建錢包後，將「Show test networks」選項開啟。</li>
+<li>到 <a href="https://www.rinkebyfaucet.com/" target="_blank" rel="noopener">Alchemy Rinkeby faucet</a> 充值 Rinkeby 測試網路的 ETH 幣到自己的錢包地址。</li>
+</ol>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir web3-sendtx-example</span><br><span class="line"><span class="built_in">cd</span> web3-sendtx-example</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>@alch/alchemy-web3</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @alch/alchemy-web3</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>dot-env</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install dotenv --save</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">API_URL=https://eth-rinkeby.alchemyapi.io/v2/your-api-key</span><br><span class="line">PRIVATE_KEY=your-private-key</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'dotenv'</span>).config();</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; API_URL, PRIVATE_KEY &#125; = process.env;</span><br><span class="line">    <span class="keyword">const</span> &#123; createAlchemyWeb3 &#125; = <span class="built_in">require</span>(<span class="string">"@alch/alchemy-web3"</span>);</span><br><span class="line">    <span class="keyword">const</span> web3 = createAlchemyWeb3(API_URL);</span><br><span class="line">    <span class="keyword">const</span> myAddress = <span class="string">'0x72E6c9390ea3B34bFfD534128Cb86afD66B0ae02'</span> <span class="comment">// 轉出地址：個人錢包</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">const</span> nonce = <span class="keyword">await</span> web3.eth.getTransactionCount(myAddress, <span class="string">'latest'</span>); <span class="comment">// 交易次數，從 0 開始，避免雙重支付</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> transaction = &#123;</span><br><span class="line">      to: <span class="string">'0x31B98D14007bDEe637298086988A0bBd31184523'</span>, <span class="comment">// 轉入地址：Rinkeby faucet</span></span><br><span class="line">      value: <span class="number">100</span>, <span class="comment">// 100 wei</span></span><br><span class="line">      gas: <span class="number">30000</span>,</span><br><span class="line">      maxFeePerGas: <span class="number">2500000000</span>,</span><br><span class="line">      nonce: nonce,</span><br><span class="line">    &#125;;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">const</span> signedTx = <span class="keyword">await</span> web3.eth.accounts.signTransaction(transaction, PRIVATE_KEY);</span><br><span class="line">    </span><br><span class="line">    web3.eth.sendSignedTransaction(signedTx.rawTransaction, <span class="function"><span class="keyword">function</span>(<span class="params">error, hash</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!error) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"🎉 The hash of your transaction is: "</span>, hash, <span class="string">"\n Check Alchemy's Mempool to view the status of your transaction!"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"❗Something went wrong while submitting your transaction:"</span>, error)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">main();</span><br></pre></td></tr></table></figure>
+
+<p>執行腳本。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+
+<p>結果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br><span class="line">🎉 The <span class="built_in">hash</span> of your transaction is:  0x95c59fcbbb6823ceb205ab88bd23a94a2dfdca47f78c10e760a73dc3e4c3e9a5 </span><br><span class="line"> Check Alchemy<span class="string">'s Mempool to view the status of your transaction!</span></span><br></pre></td></tr></table></figure>
+
+<p>到 <a href="https://rinkeby.etherscan.io/address/0x72e6c9390ea3b34bffd534128cb86afd66b0ae02" target="_blank" rel="noopener">Etherscan</a> 可以查詢交易紀錄。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/web3-sendtx-example" target="_blank" rel="noopener">web3-sendtx-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://docs.alchemy.com/alchemy/tutorials/sending-txs" target="_blank" rel="noopener">Alchemy - Sending Transactions Using Web3</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&text=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&is_video=false&description=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易&body=Check out this article: https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&title=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/&name=使用 Alchemy Web3.js 發送 Ethereum 區塊鏈交易&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

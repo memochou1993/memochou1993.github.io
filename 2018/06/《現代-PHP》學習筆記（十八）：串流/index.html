@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  串流串流在 PHP 4.3.0 中被採用，串流用於概括檔案、網路、資料壓縮和其他的程序中共通的函式和行為。一個串流可以用串流線性的方式被讀取或寫入。 串流是從來源到目的地的資料，可以是一個檔案、命令列程序、網路連線、壓縮檔、暫存記憶體、標準輸出／輸入或任何其他在串流包裝中的資源。 串流提供許多 PHP">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（十八）：串流">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  串流串流在 PHP 4.3.0 中被採用，串流用於概括檔案、網路、資料壓縮和其他的程序中共通的函式和行為。一個串流可以用串流線性的方式被讀取或寫入。 串流是從來源到目的地的資料，可以是一個檔案、命令列程序、網路連線、壓縮檔、暫存記憶體、標準輸出／輸入或任何其他在串流包裝中的資源。 串流提供許多 PHP">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（十八）：串流">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  串流串流在 PHP 4.3.0 中被採用，串流用於概括檔案、網路、資料壓縮和其他的程序中共通的函式和行為。一個串流可以用串流線性的方式被讀取或寫入。 串流是從來源到目的地的資料，可以是一個檔案、命令列程序、網路連線、壓縮檔、暫存記憶體、標準輸出／輸入或任何其他在串流包裝中的資源。 串流提供許多 PHP">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（十八）：串流</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/職場日語（一）：敬語類型/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/《學會-C-語言》學習筆記（五）：基本輸入與輸出/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&text=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&is_video=false&description=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（十八）：串流&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&name=《現代 PHP》學習筆記（十八）：串流&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流"><span class="toc-number">3.</span> <span class="toc-text">串流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流包裝"><span class="toc-number">4.</span> <span class="toc-text">串流包裝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#http-串流包裝"><span class="toc-number">4.1.</span> <span class="toc-text">http:// 串流包裝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-串流包裝"><span class="toc-number">4.2.</span> <span class="toc-text">file:// 串流包裝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#php-串流包裝"><span class="toc-number">4.3.</span> <span class="toc-text">php:// 串流包裝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自製串流包裝"><span class="toc-number">5.</span> <span class="toc-text">自製串流包裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流背景"><span class="toc-number">6.</span> <span class="toc-text">串流背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流過濾器"><span class="toc-number">7.</span> <span class="toc-text">串流過濾器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自製串流過濾器"><span class="toc-number">8.</span> <span class="toc-text">自製串流過濾器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（十八）：串流
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-11T01:42:21.000Z" itemprop="datePublished">2018-06-11</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Wnmp 3.1.0</li>
+</ul>
+<h2 id="串流"><a href="#串流" class="headerlink" title="串流"></a>串流</h2><p>串流在 PHP 4.3.0 中被採用，串流用於概括檔案、網路、資料壓縮和其他的程序中共通的函式和行為。一個串流可以用串流線性的方式被讀取或寫入。</p>
+<p>串流是從來源到目的地的資料，可以是一個檔案、命令列程序、網路連線、壓縮檔、暫存記憶體、標準輸出／輸入或任何其他在串流包裝中的資源。</p>
+<p>串流提供許多 PHP 的 I/O 函式底層的實作，例如 <code>file_get_contents()</code>、<code>fopen()</code>、<code>fgets()</code>、<code>fwrite()</code> 函式。</p>
+<h2 id="串流包裝"><a href="#串流包裝" class="headerlink" title="串流包裝"></a>串流包裝</h2><p>許多種不同的串流資料都需要用特殊的協定來讀寫資料，這些協定就是串流包裝。</p>
+<p>可以在檔案系統中讀寫資料、用 <code>HTTP</code>、<code>HTTPS</code> 或 <code>SSH</code> 跟遠端網頁伺服器溝通，或讀寫 ZIP、RAR 或 PHAR 檔。這些所有的通訊方法都可以使用下列相同的程序：</p>
+<ol>
+<li>開啟通訊。</li>
+<li>讀取資料。</li>
+<li>寫入資料。</li>
+<li>關閉通訊。</li>
+</ol>
+<p>每一個串流都有一個 <code>scheme</code> 和 <code>target</code>，藉由以下格式使用串流的辨識碼來指定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;scheme&gt;://&lt;target&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;scheme&gt;</code> 用來辨識串流包裝，而 <code>&lt;target&gt;</code> 用來識別串流資料的來源。</li>
+</ul>
+<h3 id="http-串流包裝"><a href="#http-串流包裝" class="headerlink" title="http:// 串流包裝"></a>http:// 串流包裝</h3><p><code>file_get_contents()</code> 函式的字串參數實際上是個串流辨識碼，URL 其實就是 PHP 串流包裝的一種形式，</p>
+<p>範例 5-28：使用 HTTP 串流包裝的 Flickr API</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$json = file_get_contents(</span><br><span class="line">    <span class="string">'http://api.flickr.com/services/feeds/photos_public.gne?format=json'</span></span><br><span class="line">);</span><br><span class="line"><span class="keyword">echo</span> $json;</span><br></pre></td></tr></table></figure>
+
+<h3 id="file-串流包裝"><a href="#file-串流包裝" class="headerlink" title="file:// 串流包裝"></a>file:// 串流包裝</h3><p>讀取檔案系統的 PHP 串流包裝就是 <code>file://</code>，由於 PHP 視其為預設設定，因此經常省略 <code>file://</code>。</p>
+<p>範例 5-29：不明顯的 file:// 串流包裝</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$handle = fopen(<span class="string">'/etc/hosts'</span>, <span class="string">'rb'</span>);</span><br><span class="line"><span class="keyword">while</span> (feof($handle) !== <span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> fgets($handle);</span><br><span class="line">&#125;</span><br><span class="line">fclose($handle);</span><br></pre></td></tr></table></figure>
+
+<p>範例 5-30：明顯的 file:// 串流包裝</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$handle = fopen(<span class="string">'file:///etc/hosts'</span>, <span class="string">'rb'</span>);</span><br><span class="line"><span class="keyword">while</span> (feof($handle) !== <span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> fgets($handle);</span><br><span class="line">&#125;</span><br><span class="line">fclose($handle);</span><br></pre></td></tr></table></figure>
+
+<h3 id="php-串流包裝"><a href="#php-串流包裝" class="headerlink" title="php:// 串流包裝"></a>php:// 串流包裝</h3><p><code>php://</code> 串流包裝可以和 PHP 腳本的標準輸入／輸出、標準錯誤敘述進行溝通，可以使用 PHP 的檔案系統函式開啟和讀寫這四種串流：</p>
+<ul>
+<li><code>php://stdin</code>，顯示來自標準輸入的資料，例如來自命令列傳入的資訊。</li>
+<li><code>php://stdout</code>，將資料寫入當前的緩衝，這個串流只允許寫入。</li>
+<li><code>php://memory</code>，讀寫資料到系統記憶體。</li>
+<li><code>php://temp</code>，當可用記憶體耗盡時，轉而寫入暫存檔。</li>
+</ul>
+<blockquote>
+<p>PHP 檔案系統函式只是為了檔案系統而存在，這是錯誤的觀念，PHP 檔案系統函式可以跟所有有支援的串流包裝一起使用，例如 Amazon、Dropbox 等服務。</p>
+</blockquote>
+<h2 id="自製串流包裝"><a href="#自製串流包裝" class="headerlink" title="自製串流包裝"></a>自製串流包裝</h2><p>PHP 提供 <code>streamWrapper</code> 類別說明如何撰寫自製的串流包裝，並支援部分或全部的檔案系統函式。</p>
+<h2 id="串流背景"><a href="#串流背景" class="headerlink" title="串流背景"></a>串流背景</h2><p>有些 PHP 串流可以接受一些額外參數，用來客製化串流的行為。使用 <code>stream_context_create()</code> 函式來建立串流背景，它會回傳一個背景物件，可以被大部分的 PHP 檔案系統和串流函式使用。</p>
+<p>範例 5-31：串流背景</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$requestBody = <span class="string">'&#123;"username":"josh"&#125;'</span>;</span><br><span class="line">$context = stream_context_create(<span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'http'</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'method'</span> =&gt; <span class="string">'POST'</span>,</span><br><span class="line">        <span class="string">'header'</span> =&gt; <span class="string">"Content-Type: application/json;charset=utf-8;\r\n"</span> .</span><br><span class="line">                    <span class="string">"Content-Length: "</span> . mb_strlen($requestBody),</span><br><span class="line">        <span class="string">'content'</span> =&gt; $requestBody</span><br><span class="line">    )</span><br><span class="line">));</span><br><span class="line">$response = file_get_contents(<span class="string">'https://my-api.com/users'</span>, <span class="keyword">false</span>, $context);</span><br></pre></td></tr></table></figure>
+
+<h2 id="串流過濾器"><a href="#串流過濾器" class="headerlink" title="串流過濾器"></a>串流過濾器</h2><p>PHP 串流的厲害之處在於傳送時過濾、轉化、添加和移除串流資料的功能。</p>
+<p>以下範例使用 <code>tream_filter_append()</code> 函式將過濾器加裝在串流上。</p>
+<p>範例 5-32：串流過濾器 <code>string.toupper</code> 範例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$handle = fopen(<span class="string">'data.txt'</span>, <span class="string">'rb'</span>);</span><br><span class="line">stream_filter_append($handle, <span class="string">'string.toupper'</span>);</span><br><span class="line"><span class="keyword">while</span>(feof($handle) !== <span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> fgets($handle); <span class="comment">// &lt;--輸出所有大寫字元</span></span><br><span class="line">&#125;</span><br><span class="line">fclose($handle);</span><br></pre></td></tr></table></figure>
+
+<p>以下範例使用 <code>php://filter</code> 串流包裝加裝過濾器到串流。</p>
+<p>範例 5-33：串流過濾器 <code>string.toupper</code> 範例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$handle = fopen(<span class="string">'php://filter/read=string.toupper/resource=data.txt'</span>, <span class="string">'rb'</span>);</span><br><span class="line"><span class="keyword">while</span>(feof($handle) !== <span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> fgets($handle); <span class="comment">// 輸出所有大寫字元</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>有些 PHP 檔案系統函式只能使用 <code>php://filter</code> 串流包裝加裝過濾器。</li>
+</ul>
+<p>假想每天都要開啟 <code>rsync.net</code> 中的日誌檔，每個日誌檔都用 <code>bzip2</code> 壓縮，檔名以 <code>YYYY-MM-DD</code> 作為格式，需要取得前 30 天的日誌紀錄。</p>
+<p>範例 5-34：利用 <code>DateTime</code> 和串流過濾器疊代壓縮的日誌檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$dateStart = <span class="keyword">new</span> \DateTime();</span><br><span class="line">$dateInterval = \DateInterval::createFromDateString(<span class="string">'-1 day'</span>);</span><br><span class="line">$datePeriod = <span class="keyword">new</span> \DatePeriod($dateStart, $dateInterval, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">foreach</span> ($datePeriod <span class="keyword">as</span> $date) &#123;</span><br><span class="line">    $file = <span class="string">'sftp://USER:PASS@rsync.net/'</span> . $date-&gt;format(<span class="string">'Y-m-d'</span>) . <span class="string">'.log.bz2'</span>;</span><br><span class="line">    <span class="keyword">if</span> (file_exists($file)) &#123;</span><br><span class="line">        $handle = fopen($file, <span class="string">'rb'</span>);</span><br><span class="line">        stream_filter_append($handle, <span class="string">'bzip2.decompress'</span>); <span class="comment">// 解壓縮</span></span><br><span class="line">        <span class="keyword">while</span> (feof($handle) !== <span class="keyword">true</span>) &#123;</span><br><span class="line">            $line = fgets($handle);</span><br><span class="line">            <span class="keyword">if</span> (strpos($line, <span class="string">'www.example.com'</span>) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">                fwrite(STDOUT, $line);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        fclose($handle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自製串流過濾器"><a href="#自製串流過濾器" class="headerlink" title="自製串流過濾器"></a>自製串流過濾器</h2><p>自製的串流過濾器繼承了 <code>php_user_filter</code> 內建類別的 PHP 類別。</p>
+<p>PHP 串流將資料分成連續的 <code>bucket</code>，每個 <code>bucket</code> 包含固定長度的串流資料（例如 4096 位元組）。每個串流過濾器可以同時接收並且處理數個 <code>bucket</code>，一段時間內被過濾器接收的 <code>bucket</code> 稱為 <code>bucket brigade</code>。</p>
+<p>假想需要建立一個可以過濾不雅字眼的過濾器。</p>
+<p>範例 5-35：自製的 DirtyWordsFilter 串流過濾器</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DirtyWordsFilter</span> <span class="keyword">extends</span> <span class="title">php_user_filter</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> resource $in       Incoming bucket brigade</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> resource $out      Outgoing bucket brigade</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> int      $consumed Number of bytes consumed</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bool     $closing  Last bucket brigade in stream?</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">filter</span><span class="params">($in, $out, &amp;$consumed, $closing)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $words = <span class="keyword">array</span>(<span class="string">'grime'</span>, <span class="string">'dirt'</span>, <span class="string">'grease'</span>);</span><br><span class="line">        $wordData = <span class="keyword">array</span>();</span><br><span class="line">        <span class="keyword">foreach</span> ($words <span class="keyword">as</span> $word) &#123;</span><br><span class="line">            $replacement = array_fill(<span class="number">0</span>, mb_strlen($word), <span class="string">'*'</span>);</span><br><span class="line">            $wordData[$word] = implode(<span class="string">''</span>, $replacement);</span><br><span class="line">        &#125;</span><br><span class="line">        $bad = array_keys($wordData);</span><br><span class="line">        $good = array_values($wordData);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 從進來的 bucket brigade 中疊代每個 bucket</span></span><br><span class="line">        <span class="keyword">while</span> ($bucket = stream_bucket_make_writeable($in)) &#123;</span><br><span class="line">            <span class="comment">// 過濾掉不雅字眼</span></span><br><span class="line">            $bucket-&gt;data = str_replace($bad, $good, $bucket-&gt;data);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 增加資料的讀取總數</span></span><br><span class="line">            $consumed += $bucket-&gt;datalen;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 將 bucket 發起送下游的 brigade</span></span><br><span class="line">            stream_bucket_append($out, $bucket);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> PSFS_PASS_ON;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>過濾器如果處理成功，回傳 <code>PSFS_PASS_ON</code> 常數。</li>
+</ul>
+<p>上述例子 <code>filter()</code> 函式接受四個參數：</p>
+<ul>
+<li><code>$in</code>，一個 <code>brigade</code> 帶有多個從串流起點而來的 <code>bucket</code>。</li>
+<li><code>$out</code>，一個 <code>brigade</code> 帶有多個通向串流目的地的 <code>bucket</code>。</li>
+<li><code>&amp;$consumed</code>，被自製的過濾器所篩選掉的位元組總數。</li>
+<li><code>$closing</code>，表示 <code>filter()</code> 方法是否接收了最後一個 <code>bucket bragade</code>。</li>
+</ul>
+<p>範例 5-36：註冊自製的 DirtyWordsFilter 串流過濾器</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stream_filter_register(<span class="string">'dirty_words_filter'</span>, <span class="string">'DirtyWordsFilter'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>範例 5-37：使用自製 DirtyWordsFilter 串流過濾器</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$handle = fopen(<span class="string">'data.txt'</span>, <span class="string">'rb'</span>);</span><br><span class="line">stream_filter_append($handle, <span class="string">'dirty_words_filter'</span>); <span class="comment">// 加裝自製的過濾器</span></span><br><span class="line"><span class="keyword">while</span> (feof($handle) !== <span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> fgets($handle); <span class="comment">// 輸出被掃瞄的文字</span></span><br><span class="line">&#125;</span><br><span class="line">fclose($handle);</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>Josh Lockhart（2015）。現代 PHP。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流"><span class="toc-number">3.</span> <span class="toc-text">串流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流包裝"><span class="toc-number">4.</span> <span class="toc-text">串流包裝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#http-串流包裝"><span class="toc-number">4.1.</span> <span class="toc-text">http:// 串流包裝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-串流包裝"><span class="toc-number">4.2.</span> <span class="toc-text">file:// 串流包裝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#php-串流包裝"><span class="toc-number">4.3.</span> <span class="toc-text">php:// 串流包裝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自製串流包裝"><span class="toc-number">5.</span> <span class="toc-text">自製串流包裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流背景"><span class="toc-number">6.</span> <span class="toc-text">串流背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串流過濾器"><span class="toc-number">7.</span> <span class="toc-text">串流過濾器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自製串流過濾器"><span class="toc-number">8.</span> <span class="toc-text">自製串流過濾器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&text=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&is_video=false&description=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（十八）：串流&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&title=《現代 PHP》學習筆記（十八）：串流"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十八）：串流/&name=《現代 PHP》學習筆記（十八）：串流&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

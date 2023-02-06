@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 macOS minikube  服務Kubernetes Pod 是稍縱即逝的。Pod 實際上擁有生命週期。當一個工作 Node 死亡後，在 Node 上運行 Pod 也會消亡。ReplicaSet 會自動地創建新的 Pod 驅動叢集回到目標狀態，以保證應用程式正常運行。這些副本是可替換的；前端系統不應該關心後端副本，即使 Pod 丟">
+<meta name="keywords" content="環境部署,Docker,Kubernetes,minikube">
+<meta property="og:type" content="article">
+<meta property="og:title" content="認識 Kubernetes 容器管理平台（三）：服務、擴展、更新">
+<meta property="og:url" content="https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 macOS minikube  服務Kubernetes Pod 是稍縱即逝的。Pod 實際上擁有生命週期。當一個工作 Node 死亡後，在 Node 上運行 Pod 也會消亡。ReplicaSet 會自動地創建新的 Pod 驅動叢集回到目標狀態，以保證應用程式正常運行。這些副本是可替換的；前端系統不應該關心後端副本，即使 Pod 丟">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="認識 Kubernetes 容器管理平台（三）：服務、擴展、更新">
+<meta name="twitter:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 macOS minikube  服務Kubernetes Pod 是稍縱即逝的。Pod 實際上擁有生命週期。當一個工作 Node 死亡後，在 Node 上運行 Pod 也會消亡。ReplicaSet 會自動地創建新的 Pod 驅動叢集回到目標狀態，以保證應用程式正常運行。這些副本是可替換的；前端系統不應該關心後端副本，即使 Pod 丟">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>認識 Kubernetes 容器管理平台（三）：服務、擴展、更新</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/10/認識-Kubernetes-容器管理平台（二）：叢集、部署、豆莢/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/11/認識-Kubernetes-容器管理平台（四）：使用-ConfigMap-配置-Pod/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&text=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&is_video=false&description=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新&body=Check out this article: https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&name=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服務"><span class="toc-number">3.</span> <span class="toc-text">服務</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴露應用程式"><span class="toc-number">3.1.</span> <span class="toc-text">暴露應用程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#擴展"><span class="toc-number">4.</span> <span class="toc-text">擴展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#縮放應用程式"><span class="toc-number">4.1.</span> <span class="toc-text">縮放應用程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-number">5.</span> <span class="toc-text">更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更新應用程式版本"><span class="toc-number">5.1.</span> <span class="toc-text">更新應用程式版本</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        認識 Kubernetes 容器管理平台（三）：服務、擴展、更新
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-11-01T14:01:41.000Z" itemprop="datePublished">2020-11-01</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/環境部署/Kubernetes/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Kubernetes/">Kubernetes</a>, <a class="tag-link" href="/tags/minikube/">minikube</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener">Kubernetes 官方文件</a>〉的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>macOS</li>
+<li>minikube</li>
+</ul>
+<h2 id="服務"><a href="#服務" class="headerlink" title="服務"></a>服務</h2><p>Kubernetes Pod 是稍縱即逝的。Pod 實際上擁有生命週期。當一個工作 Node 死亡後，在 Node 上運行 Pod 也會消亡。ReplicaSet 會自動地創建新的 Pod 驅動叢集回到目標狀態，以保證應用程式正常運行。這些副本是可替換的；前端系統不應該關心後端副本，即使 Pod 丟失或重新創建。也就是說，Kubernetes 叢集中的每個 Pod（即使是在同一個 Node 上）都有一個唯一的 IP 位址，因此需要一種方法自動調度 Pod 之間的變更，以便應用程式保持運行。</p>
+<p>Kubernetes 中的服務（Service）是一種抽象概念，它定義了 Pod 的邏輯集合訪問 Pod 的協議。Service 使從屬 Pod 之間的低耦合成為可能。和其他 Kubernetes 對象一樣，Service 用 YAML（推薦）或者 JSON 來定義。Service 下的一組 Pod 通常由 LabelSelector 來標記。</p>
+<p>儘管每個 Pod 都有一個唯一的 IP 位址，但是如果沒有 Service，這些 IP 不會暴露在叢集外部。Service 允許應用程式接收流量。</p>
+<p>Service 也可以用在 ServiceSpec 標記 <code>type</code> 的方式暴露：</p>
+<ul>
+<li>ClusterIP：是預設的類型，在叢集的內部 IP 上公開 Service。此類型使得 Service 只能從叢集內訪問。</li>
+<li>NodePort：使用 NAT 在叢集中每個選定 Node 的相同端口上公開 Service。使用 <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code> 從叢集外部訪問 Service。是 ClusterIP 的超集。</li>
+<li>LoadBalancer：在當前雲中創建一個外部負載平衡器（如果支援的話），並為 Service 分配一個固定的外部 IP。是 NodePort 的超集。</li>
+<li>ExternalName：通過返回帶有該名稱的 CNAME 記錄，使用任意名稱（由 spec 中的 externalName 制定）公開 Service。不使用代理。這種類型需要 kube-dns 的 v1.7 或更高版本。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|-----------------------|</span><br><span class="line">|         Service       |</span><br><span class="line">| |--------| |--------| |</span><br><span class="line">| |  Node  | |  Node  | |</span><br><span class="line">| |--------| |--------| |</span><br><span class="line">|-----------------------|</span><br></pre></td></tr></table></figure>
+
+<p>Service 透過一組 Pod 路由通訊。Service 是一種抽象，它允許 Pod 死亡並在 Kubernetes 中複製，而不會影響應用程式。在依賴的 Pod（如應用程式中的前端和後端元件）之間進行發現和路由是由 Kubernetes Service 處理的。</p>
+<p>Service 匹配一組 Pod 是使用標籤（Label）和選擇器（Selector），它們是允許對 Kubernetes 中的對象進行邏輯操作的一種分組原語。標籤是附加在對象上的鍵值對，可以以多種方式使用：</p>
+<ul>
+<li>指定用於開發、測試和生產的對象。</li>
+<li>嵌入版本標籤。</li>
+<li>使用標籤將對象進行分類。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">|---------------------|</span><br><span class="line">|       Service       |</span><br><span class="line">|       s:App=A       |</span><br><span class="line">| |-------| |-------| |</span><br><span class="line">| |  Node | |  Node | |</span><br><span class="line">| | app=A | | app=A | |</span><br><span class="line">| |-------| |-------| |</span><br><span class="line">|---------------------|</span><br></pre></td></tr></table></figure>
+
+<h3 id="暴露應用程式"><a href="#暴露應用程式" class="headerlink" title="暴露應用程式"></a>暴露應用程式</h3><p>首先，查看所有的 Pods。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<p>查看所有的 Services。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>NodePort</code> 類型暴露此服務。此 Service 將擁有一個唯一的叢集 IP、內部埠號和外部 IP（Node 的 IP）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment/kubernetes-bootcamp --<span class="built_in">type</span>=<span class="string">"NodePort"</span> --port 8080</span><br></pre></td></tr></table></figure>
+
+<p>查看此 Service 的外部埠號。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe services/kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>取得此 Service 的 Node 的埠號，記錄一下，存進 <code>NODE_PORT</code> 環境變數中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template=<span class="string">'&#123;&#123;(index .spec.ports 0).nodePort&#125;&#125;'</span>)</span><br><span class="line"><span class="built_in">echo</span> NODE_PORT=<span class="variable">$NODE_PORT</span></span><br></pre></td></tr></table></figure>
+
+<p>從本機透過 minikube 執行應用程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube service kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>或進到 minikube 虛擬機中，訪問此 Service。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">minikube ssh</span><br><span class="line">docker@minikube:~$ curl localhost:&lt;NODE_PORT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Deployment 會自動幫 Pod 建立標籤，查看一下 Deployment 的詳細資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe deployment</span><br></pre></td></tr></table></figure>
+
+<p>可以使用標籤來查詢符合條件的所有 Pods：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -l app=kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>也可以查詢 Services：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services -l app=kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>套用一個新的標籤給 Pod：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label pod <span class="variable">$POD_NAME</span> run=v1</span><br></pre></td></tr></table></figure>
+
+<p>使用新的標籤查詢 Pods：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -l run=v1</span><br></pre></td></tr></table></figure>
+
+<p>使用標籤刪除符合查詢條件的 Service：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete service -l app=kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>進到 minikube 虛擬機中，此 Service 已無法從外部被訪問。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">minikube ssh</span><br><span class="line">docker@minikube:~$ curl localhost:&lt;NODE_PORT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但是其實 Service 還是在 Pod 中運行，因為此應用程式仍被 Deployment 所管理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">exec</span> -ti <span class="variable">$POD_NAME</span> -- curl localhost:8080</span><br></pre></td></tr></table></figure>
+
+<h2 id="擴展"><a href="#擴展" class="headerlink" title="擴展"></a>擴展</h2><p>我們創建了一個 Deployment，並透過 Service 讓其可以被公開訪問。但 Deployment 只為運行這個應用程式創建一個 Pod 而已。當流量增加時，我們需要擴容應用程式，以滿足使用者需求。</p>
+<p>所謂「擴縮」，是透過改變 Deployment 中的副本數量來實現的。在執行 <code>kubectl run</code> 指令時，可以透過<code>--replicas</code> 參數來設置 Deployment 的副本數量，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">|-------------------------|    |-------------------------|</span><br><span class="line">|         Service         |    |         Service         |</span><br><span class="line">| |---------------------| |    | |---------| |---------| |</span><br><span class="line">| |        Node         | |    | |  Node   | |  Node   | |</span><br><span class="line">| |       |-----|       | |    | | |-----| | | |-----| | |</span><br><span class="line">| |       | Pod |       | |    | | | Pod | | | | Pod | | |</span><br><span class="line">| |       |-----|       | | -&gt; | | |-----| | | |-----| | |</span><br><span class="line">| |                     | |    | |         | |         | |</span><br><span class="line">| |                     | |    | | |-----| | |         | |</span><br><span class="line">| |                     | |    | | | Pod | | |         | |</span><br><span class="line">| |                     | |    | | |-----| | |         | |</span><br><span class="line">| |---------------------| |    | |---------| |---------| |</span><br><span class="line">|-------------------------|    |-------------------------|</span><br></pre></td></tr></table></figure>
+
+<p>擴展 Deployment 將創建新的 Pods，並將資源調度請求分配到有可用資源的節點上，收縮 Deployment 會將 Pods 數量減少至所需的狀態。Kubernetes 還支援 Pods 的自動縮放，將 Pods 數量收縮到 0 也是可以的，但這會終止 Deployment 上所有已經部署的 Pods。</p>
+<p>運行應用程式的多個實例，需要在它們之間分配流量。Service 有一種負載平衡器類型（LoadBalancer），可以將網路流量均衡分配到外部可以訪問的 Pods 上。服務將會一直通過端點來監聽 Pods 的運行，保證流量只分配到可用的 Pods 上。</p>
+<p>一旦有了多個應用實例，就可以在不停機的情況下滾動更新。</p>
+<h3 id="縮放應用程式"><a href="#縮放應用程式" class="headerlink" title="縮放應用程式"></a>縮放應用程式</h3><p>首先，查看所有的 Deployments 資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br><span class="line">NAME                  READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">kubernetes-bootcamp   1/1     1            1           26s</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>欄位 <code>NAME</code> 會顯示叢集中 Deployment 的名字。</li>
+<li>欄位 <code>READY</code> 會顯示運行中副本和預期副本的比例。</li>
+<li>欄位 <code>UP-TO-DATE</code> 會顯示已經達到預期副本的數量。</li>
+<li>欄位 <code>AVAILABLE</code> 會顯示已經可供使用者使用的副本數量。</li>
+<li>欄位 <code>AGE</code> 會顯示應用程式的運行時間。</li>
+</ul>
+<p>再來，查看由 Deployment 所創建的 <code>ReplicaSet</code> 資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get rs</span><br><span class="line">NAME                             DESIRED   CURRENT   READY   AGE</span><br><span class="line">kubernetes-bootcamp-57978f5f5d   1         1         1       9m28s</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>欄位 <code>DESIRED</code> 會顯示預期副本的數量。</li>
+<li>欄位 <code>CURRENT</code> 會顯示運行中副本的數量。</li>
+</ul>
+<p>現在，使用 <code>kubectl scale</code> 指令，將 Deployment 調整到 4 個副本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale deployments/kubernetes-bootcamp --replicas=4</span><br></pre></td></tr></table></figure>
+
+<p>再查看一次 Deployments 資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments                                                                                                             4.28G </span><br><span class="line">NAME                  READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">kubernetes-bootcamp   4/4     4            4           15m</span><br></pre></td></tr></table></figure>
+
+<p>然後查看所有的 Pods 資訊，現在有 4 個不同 IP 位址的 Pods 了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -o wide</span><br><span class="line">NAME                                   READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES</span><br><span class="line">kubernetes-bootcamp-57978f5f5d-9lxcn   1/1     Running   0          16m     172.17.0.2   minikube   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kubernetes-bootcamp-57978f5f5d-j6692   1/1     Running   0          3m10s   172.17.0.6   minikube   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kubernetes-bootcamp-57978f5f5d-kwsdv   1/1     Running   0          3m10s   172.17.0.5   minikube   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">kubernetes-bootcamp-57978f5f5d-z7glk   1/1     Running   0          3m10s   172.17.0.4   minikube   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+
+<p>這個改變會被記錄到 Deployment 的活動日誌中，查看 Deployment 的詳細資訊：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe deployments/kubernetes-bootcamp</span><br><span class="line">...</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason             Age    From                   Message</span><br><span class="line">  ----    ------             ----   ----                   -------</span><br><span class="line">  Normal  ScalingReplicaSet  18m    deployment-controller  Scaled up replica <span class="built_in">set</span> kubernetes-bootcamp-57978f5f5d to 1</span><br><span class="line">  Normal  ScalingReplicaSet  5m28s  deployment-controller  Scaled up replica <span class="built_in">set</span> kubernetes-bootcamp-57978f5f5d to 4</span><br></pre></td></tr></table></figure>
+
+<p>現在確認一下 Service 是否有負載平衡流量，查看 Service 的詳細資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe services/kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>取得此 Service 的 Node 的埠號，記錄一下，存進 <code>NODE_PORT</code> 環境變數中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template=<span class="string">'&#123;&#123;(index .spec.ports 0).nodePort&#125;&#125;'</span>)</span><br><span class="line"><span class="built_in">echo</span> NODE_PORT=<span class="variable">$NODE_PORT</span></span><br></pre></td></tr></table></figure>
+
+<p>進到 minikube 虛擬機中，訪問此 Service。現在每一次的請求都是觸及到不同的 Pod，這代表負載平衡已經成功運作了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">minikube ssh</span><br><span class="line">docker@minikube:~$ curl localhost:&lt;NODE_PORT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果要收縮 Service 到 2 個副本，執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale deployments/kubernetes-bootcamp --replicas=2</span><br></pre></td></tr></table></figure>
+
+<p>查看一下 Deployment 資訊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br></pre></td></tr></table></figure>
+
+<p>並確認一下 Pods，已經有 2 個 Pods 被終止了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -o wide</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>使用者會希望應用程式始終可用，而開發人員則需要每天多次部署它們的新版本。在 Kubernetes 中，這些是透過滾動更新（Rolling Updates）完成的。滾動更新允許透過使用新的實例逐步更新 Pod 實例，零停機進行 Deployment 更新。新的 Pod 將在具有可用資源的節點上進行調度。</p>
+<p>前面我們將應用程式擴展為運行多個實例，這是在不影響應用程式可用性的情況下執行更新的要求。預設情形下，更新期間不可用的 Pod 的最大值和可以創建的新的 Pod 數量都是 1。這兩個選項都可以被設置為數字或百分比。在 Kubernetes 中，更新是經過版本控制的，任何 Deployment 更新都可以恢復到以前的版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">|-------------------------|    |-------------------------|    |-------------------------|</span><br><span class="line">|         Service         |    |         Service         |    |         Service         |</span><br><span class="line">| |---------| |---------| |    | |---------| |---------| |    | |---------| |---------| |</span><br><span class="line">| |  Node   | |  Node   | |    | |  Node   | |  Node   | |    | |  Node   | |  Node   | |</span><br><span class="line">| | |-----| | | |-----| | |    | | |-----| | | |-----| | |    | | |-----| | | |-----| | |</span><br><span class="line">| | | App | | | | App | | | -&gt; | | | New | | | | App | | | -&gt; | | | New | | | | New | | |</span><br><span class="line">| | |     | | | |-----| | |    | | | App | | | |     | | |    | | | App | | | | App | | |</span><br><span class="line">| | |-----| | | |-----| | |    | | |-----| | | |-----| | |    | | |-----| | | |-----| | |</span><br><span class="line">| |---------| |---------| |    | |---------| |---------| |    | |---------| |---------| |</span><br><span class="line">|-------------------------|    |-------------------------|    |-------------------------|</span><br></pre></td></tr></table></figure>
+
+<p>與應用程式擴展類似，如果公開了 Deployment，Service 將在更新期間僅對可用的 Pod 進行負載平衡。滾動更新允許以下操作：</p>
+<ul>
+<li>將應用程式從一個環境提升到另一個環境（通過容器鏡像更新）。</li>
+<li>回滾到以前的版本。</li>
+<li>持續整合（CI）和持續部署（CD），無需停機。</li>
+</ul>
+<h3 id="更新應用程式版本"><a href="#更新應用程式版本" class="headerlink" title="更新應用程式版本"></a>更新應用程式版本</h3><p>首先，查看所有的 Deployments。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br></pre></td></tr></table></figure>
+
+<p>查看所有的 Pods。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<p>查看應用程式的映像檔版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe pods</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>set image</code> 指令，更新映像檔版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">set</span> image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2</span><br></pre></td></tr></table></figure>
+
+<p>取得此 Service 的 Node 的埠號，記錄一下，存進 <code>NODE_PORT</code> 環境變數中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template=<span class="string">'&#123;&#123;(index .spec.ports 0).nodePort&#125;&#125;'</span>)</span><br><span class="line"><span class="built_in">echo</span> NODE_PORT=<span class="variable">$NODE_PORT</span></span><br></pre></td></tr></table></figure>
+
+<p>進到 minikube 虛擬機中，訪問此 Service。現在此應用程式已經被更新為版本 2 了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">minikube ssh</span><br><span class="line">docker@minikube:~$ curl localhost:&lt;NODE_PORT&gt;</span><br></pre></td></tr></table></figure>
+
+<p>確認一下更新狀態。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout status deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>現在，更新映像檔版本到 10。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">set</span> image deployments/kubernetes-bootcamp kubernetes-bootcamp=gcr.io/google-samples/kubernetes-bootcamp:v10</span><br></pre></td></tr></table></figure>
+
+<p>查看一下 Deployments，發現預期副本的數量和可供使用者使用的副本數量不一樣。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br><span class="line">NAME                  READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">kubernetes-bootcamp   2/4     3            2           21m</span><br></pre></td></tr></table></figure>
+
+<p>查看所有的 Pods，有一些 Pods 的狀態可能會顯示為 <code>ErrImagePull</code> 或 <code>ImagePullBackOff</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br><span class="line">NAME                                  READY   STATUS             RESTARTS   AGE</span><br><span class="line">kubernetes-bootcamp-597654dbd-j5xmt   0/1     ImagePullBackOff   0          5m22s</span><br><span class="line">kubernetes-bootcamp-597654dbd-m74dc   0/1     ImagePullBackOff   0          5m23s</span><br><span class="line">kubernetes-bootcamp-597654dbd-tkbgf   0/1     ImagePullBackOff   0          6m17s</span><br><span class="line">kubernetes-bootcamp-769746fd4-59wpw   1/1     Running            0          24m</span><br><span class="line">kubernetes-bootcamp-769746fd4-t9zf9   1/1     Running            0          5m22s</span><br></pre></td></tr></table></figure>
+
+<p>由於根本沒有版本 10 的映像檔，因此需要回復到先前的版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl rollout undo deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure>
+
+<p>現在，查看所有的 Deployments。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployments</span><br><span class="line">NAME                  READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">kubernetes-bootcamp   4/4     4            4           34m</span><br></pre></td></tr></table></figure>
+
+<p>再查看所有的 Pods，全部都回復正常了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NAME                                  READY   STATUS    RESTARTS   AGE</span><br><span class="line">kubernetes-bootcamp-769746fd4-59wpw   1/1     Running   0          26m</span><br><span class="line">kubernetes-bootcamp-769746fd4-qd4tz   1/1     Running   0          44s</span><br><span class="line">kubernetes-bootcamp-769746fd4-rrpq4   1/1     Running   0          44s</span><br><span class="line">kubernetes-bootcamp-769746fd4-t9zf9   1/1     Running   0          7m10s</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服務"><span class="toc-number">3.</span> <span class="toc-text">服務</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴露應用程式"><span class="toc-number">3.1.</span> <span class="toc-text">暴露應用程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#擴展"><span class="toc-number">4.</span> <span class="toc-text">擴展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#縮放應用程式"><span class="toc-number">4.1.</span> <span class="toc-text">縮放應用程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更新"><span class="toc-number">5.</span> <span class="toc-text">更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更新應用程式版本"><span class="toc-number">5.1.</span> <span class="toc-text">更新應用程式版本</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&text=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&is_video=false&description=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新&body=Check out this article: https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&title=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/11/認識-Kubernetes-容器管理平台（三）：服務、擴展、更新/&name=認識 Kubernetes 容器管理平台（三）：服務、擴展、更新&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

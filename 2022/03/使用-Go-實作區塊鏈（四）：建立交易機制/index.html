@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「Building a Blockchain in Golang」教學影片的學習筆記。 實作在 blockchain 資料夾裡建立一個 transaction.go 檔。 1touch blockchain/transaction.go  建立一個 Transaction 結構體，代表一個交易紀錄。建立一個 TxInput 結構體，代表一個轉入紀錄。建立一個 TxOutput 結構體，代">
+<meta name="keywords" content="Go,區塊鏈,BadgerDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Go 實作區塊鏈（四）：建立交易機制">
+<meta property="og:url" content="https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「Building a Blockchain in Golang」教學影片的學習筆記。 實作在 blockchain 資料夾裡建立一個 transaction.go 檔。 1touch blockchain/transaction.go  建立一個 Transaction 結構體，代表一個交易紀錄。建立一個 TxInput 結構體，代表一個轉入紀錄。建立一個 TxOutput 結構體，代">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Go 實作區塊鏈（四）：建立交易機制">
+<meta name="twitter:description" content="前言本文為「Building a Blockchain in Golang」教學影片的學習筆記。 實作在 blockchain 資料夾裡建立一個 transaction.go 檔。 1touch blockchain/transaction.go  建立一個 Transaction 結構體，代表一個交易紀錄。建立一個 TxInput 結構體，代表一個轉入紀錄。建立一個 TxOutput 結構體，代">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Go 實作區塊鏈（四）：建立交易機制</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/03/使用-Go-實作區塊鏈（三）：建立持久化資料和命令列介面/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/03/在-React-17-0-安裝-Tailwind-CSS-UI-框架/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&text=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&is_video=false&description=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 實作區塊鏈（四）：建立交易機制&body=Check out this article: https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&name=使用 Go 實作區塊鏈（四）：建立交易機制&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Go 實作區塊鏈（四）：建立交易機制
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-03-22T07:16:33.000Z" itemprop="datePublished">2022-03-22</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/區塊鏈/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/BadgerDB/">BadgerDB</a>, <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="(https://youtu.be/mYlHT9bB6OE)">Building a Blockchain in Golang</a>」教學影片的學習筆記。</p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>在 <code>blockchain</code> 資料夾裡建立一個 <code>transaction.go</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch blockchain/transaction.go</span><br></pre></td></tr></table></figure>
+
+<p>建立一個 <code>Transaction</code> 結構體，代表一個交易紀錄。建立一個 <code>TxInput</code> 結構體，代表一個轉入紀錄。建立一個 <code>TxOutput</code> 結構體，代表一個對應轉入紀錄的轉出紀錄。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Transaction <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID      []<span class="keyword">byte</span></span><br><span class="line">	Inputs  []TxInput</span><br><span class="line">	Outputs []TxOutput</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> TxInput <span class="keyword">struct</span> &#123;</span><br><span class="line">	ID  []<span class="keyword">byte</span></span><br><span class="line">	Out <span class="keyword">int</span>    <span class="comment">// 對應的 TxOutput 紀錄</span></span><br><span class="line">	Sig <span class="keyword">string</span> <span class="comment">// 簽名</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> TxOutput <span class="keyword">struct</span> &#123;</span><br><span class="line">	Value  <span class="keyword">int</span>    <span class="comment">// 金額</span></span><br><span class="line">	PubKey <span class="keyword">string</span> <span class="comment">// 公鑰</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立一個 <code>CoinbaseTx</code> 方法，用來建立系統的第一筆交易，並且會生成初始代幣。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CoinbaseTx</span><span class="params">(to, data <span class="keyword">string</span>)</span> *<span class="title">Transaction</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> data == <span class="string">""</span> &#123;</span><br><span class="line">		data = fmt.Sprintf(<span class="string">"Coins to %s"</span>, to)</span><br><span class="line">	&#125;</span><br><span class="line">	txIn := TxInput&#123;[]<span class="keyword">byte</span>&#123;&#125;, <span class="number">-1</span>, data&#125; <span class="comment">// 初始輸入不會對應到任何 TxOutput 紀錄</span></span><br><span class="line">	txOut := TxOutput&#123;<span class="number">100</span>, to&#125; <span class="comment">// 初始代幣設為 100 顆</span></span><br><span class="line">	tx := &amp;Transaction&#123;<span class="literal">nil</span>, []TxInput&#123;txIn&#125;, []TxOutput&#123;txOut&#125;&#125;</span><br><span class="line">	tx.SetID()</span><br><span class="line">	<span class="keyword">return</span> tx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>Transaction</code> 結構體建立一個 <code>SetID</code> 方法，用來產生一個唯一的交易 ID。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tx *Transaction)</span> <span class="title">SetID</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> encoded bytes.Buffer</span><br><span class="line">	<span class="keyword">var</span> hash [<span class="number">32</span>]<span class="keyword">byte</span></span><br><span class="line">	encoder := gob.NewEncoder(&amp;encoded)</span><br><span class="line">	<span class="keyword">if</span> err := encoder.Encode(tx); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	&#125;</span><br><span class="line">	hash = sha256.Sum256(encoded.Bytes())</span><br><span class="line">	tx.ID = hash[:]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>Transaction</code> 結構體建立一個 <code>IsCoinbase</code> 方法，判斷交易紀錄是否為系統所生成的代幣。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(tx *Transaction)</span> <span class="title">IsCoinbase</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(tx.Inputs) == <span class="number">1</span> &amp;&amp; <span class="built_in">len</span>(tx.Inputs[<span class="number">0</span>].ID) == <span class="number">0</span> &amp;&amp; tx.Inputs[<span class="number">0</span>].Out == <span class="number">-1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>TxInput</code> 結構體建立一個 <code>CanUnlock</code> 方法，判斷用戶是否擁有存取交易中轉入紀錄的權限。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(in *TxInput)</span> <span class="title">CanUnlock</span><span class="params">(data <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> in.Sig == data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>TxOutput</code> 結構體建立一個 <code>CanBeUnlocked</code> 方法，判斷用戶是否擁有存取交易中轉出紀錄的權限。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(out *TxOutput)</span> <span class="title">CanBeUnlocked</span><span class="params">(data <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> out.PubKey == data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>block.go</code> 檔中的 <code>Block</code> 結構體。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Block <span class="keyword">struct</span> &#123;</span><br><span class="line">	Hash         []<span class="keyword">byte</span></span><br><span class="line">	Transactions []*Transaction</span><br><span class="line">	PrevHash     []<span class="keyword">byte</span></span><br><span class="line">	Nonce        <span class="keyword">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>block.go</code> 檔中的 <code>CreateBlock</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CreateBlock</span><span class="params">(txs []*Transaction, prevHash []<span class="keyword">byte</span>)</span> *<span class="title">Block</span></span> &#123;</span><br><span class="line">	block := &amp;Block&#123;[]<span class="keyword">byte</span>&#123;&#125;, txs, prevHash, <span class="number">0</span>&#125;</span><br><span class="line">	pow := NewProof(block)</span><br><span class="line">	nonce, hash := pow.Run()</span><br><span class="line">	block.Hash = hash[:]</span><br><span class="line">	block.Nonce = nonce</span><br><span class="line">	<span class="keyword">return</span> block</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>block.go</code> 檔中的 <code>Genesis</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Genesis</span><span class="params">(coinbase *Transaction)</span> *<span class="title">Block</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> CreateBlock([]*Transaction&#123;coinbase&#125;, []<span class="keyword">byte</span>&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>Block</code> 結構體建立一個 <code>HashTransactions</code> 方法，使用區塊中的所有交易 ID 來為區塊建立一個唯一的雜湊值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *Block)</span> <span class="title">HashTransactions</span><span class="params">()</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> txHashIDs [][]<span class="keyword">byte</span></span><br><span class="line">	<span class="keyword">var</span> txHash [<span class="number">32</span>]<span class="keyword">byte</span></span><br><span class="line">	<span class="keyword">for</span> _, tx := <span class="keyword">range</span> b.Transactions &#123;</span><br><span class="line">		txHashIDs = <span class="built_in">append</span>(txHashIDs, tx.ID)</span><br><span class="line">	&#125;</span><br><span class="line">	txHash = sha256.Sum256(bytes.Join(txHashIDs, []<span class="keyword">byte</span>&#123;&#125;))</span><br><span class="line">	<span class="keyword">return</span> txHash[:]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>proof.go</code> 檔中的 <code>InitData</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(pow *ProofOfWork)</span> <span class="title">InitData</span><span class="params">(nonce <span class="keyword">int</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> bytes.Join(</span><br><span class="line">		[][]<span class="keyword">byte</span>&#123;</span><br><span class="line">			pow.Block.PrevHash,</span><br><span class="line">			pow.Block.HashTransactions(),</span><br><span class="line">			ToHex(<span class="keyword">int64</span>(nonce)),</span><br><span class="line">			ToHex(<span class="keyword">int64</span>(Difficulty)),</span><br><span class="line">		&#125;, []<span class="keyword">byte</span>&#123;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增一些常數。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	dbPath = <span class="string">"./tmp/blocks"</span></span><br><span class="line">	dbFile = <span class="string">"./tmp/blocks/MANIFEST"</span> <span class="comment">// 用來確認 DB 是否已經被建立</span></span><br><span class="line">	genesisData = <span class="string">"First Transaction from Genesis"</span> <span class="comment">// 初始代幣交易的資料</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>blockchain.go</code> 檔中建立一個 <code>DatabaseExists</code> 方法，用來判斷資料庫是否已被建立。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">DatabaseExists</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> _, err := os.Stat(dbFile); os.IsNotExist(err) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>InitBlockChain</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitBlockChain</span><span class="params">(address <span class="keyword">string</span>)</span> *<span class="title">BlockChain</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> lastHash []<span class="keyword">byte</span></span><br><span class="line">	<span class="keyword">if</span> DatabaseExists() &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Blockchain already exists"</span>)</span><br><span class="line">		runtime.Goexit()</span><br><span class="line">	&#125;</span><br><span class="line">	opts := badger.DefaultOptions(dbPath)</span><br><span class="line">	opts.Logger = <span class="literal">nil</span></span><br><span class="line">	db, err := badger.Open(opts)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	&#125;</span><br><span class="line">	err = db.Update(<span class="function"><span class="keyword">func</span><span class="params">(txn *badger.Txn)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		cbTx := CoinbaseTx(address, genesisData)</span><br><span class="line">		genesis := Genesis(cbTx)</span><br><span class="line">		fmt.Println(<span class="string">"Genesis proved"</span>)</span><br><span class="line">		<span class="keyword">if</span> err = txn.Set(genesis.Hash, genesis.Serialize()); err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatalln(err)</span><br><span class="line">		&#125;</span><br><span class="line">		err = txn.Set([]<span class="keyword">byte</span>(<span class="string">"lh"</span>), genesis.Hash)</span><br><span class="line">		lastHash = genesis.Hash</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;BlockChain&#123;lastHash, db&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>blockchain.go</code> 檔中建立一個 <code>ContinueBlockChain</code> 方法，用來取得當前的區塊鏈。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ContinueBlockChain</span><span class="params">(address <span class="keyword">string</span>)</span> *<span class="title">BlockChain</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> !DatabaseExists() &#123;</span><br><span class="line">		fmt.Println(<span class="string">"No existing blockchain found, create one!"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> lastHash []<span class="keyword">byte</span></span><br><span class="line">	opts := badger.DefaultOptions(dbPath)</span><br><span class="line">	opts.Logger = <span class="literal">nil</span></span><br><span class="line">	db, err := badger.Open(opts)</span><br><span class="line">	err = db.View(<span class="function"><span class="keyword">func</span><span class="params">(txn *badger.Txn)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		item, err := txn.Get([]<span class="keyword">byte</span>(<span class="string">"lh"</span>))</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatalln(err)</span><br><span class="line">		&#125;</span><br><span class="line">		lastHash, err = item.ValueCopy(<span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> &amp;BlockChain&#123;lastHash, db&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>BlockChain</code> 結構體建立一個 <code>FindUnspentTransactions</code> 方法，找出未花費的交易。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *BlockChain)</span> <span class="title">FindUnspentTransactions</span><span class="params">(address <span class="keyword">string</span>)</span> []<span class="title">Transaction</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> unspentTxs []Transaction</span><br><span class="line">	spentTxOutputs := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">int</span>)</span><br><span class="line">	iter := chain.Iterator()</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		block := iter.Next()</span><br><span class="line">		<span class="keyword">for</span> _, tx := <span class="keyword">range</span> block.Transactions &#123;</span><br><span class="line">			txID := hex.EncodeToString(tx.ID)</span><br><span class="line">		Outputs:</span><br><span class="line">			<span class="keyword">for</span> outIdx, out := <span class="keyword">range</span> tx.Outputs &#123;</span><br><span class="line">				<span class="keyword">if</span> spentTxOutputs[txID] != <span class="literal">nil</span> &#123;</span><br><span class="line">					<span class="keyword">for</span> _, spentOut := <span class="keyword">range</span> spentTxOutputs[txID] &#123;</span><br><span class="line">						<span class="keyword">if</span> spentOut == outIdx &#123;</span><br><span class="line">							<span class="keyword">continue</span> Outputs</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> out.CanBeUnlocked(address) &#123;</span><br><span class="line">					unspentTxs = <span class="built_in">append</span>(unspentTxs, *tx)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> !tx.IsCoinbase() &#123;</span><br><span class="line">				<span class="keyword">for</span> _, in := <span class="keyword">range</span> tx.Inputs &#123;</span><br><span class="line">					<span class="keyword">if</span> in.CanUnlock(address) &#123;</span><br><span class="line">						inTxID := hex.EncodeToString(in.ID)</span><br><span class="line">						spentTxOutputs[inTxID] = <span class="built_in">append</span>(spentTxOutputs[inTxID], in.Out)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(block.PrevHash) == <span class="number">0</span> &#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> unspentTxs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>BlockChain</code> 結構體建立一個 <code>FindUnspentTxOutputs</code> 方法，找出用戶未花費的輸出紀錄。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *BlockChain)</span> <span class="title">FindUnspentTxOutputs</span><span class="params">(address <span class="keyword">string</span>)</span> []<span class="title">TxOutput</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> unspentTxOutputs []TxOutput</span><br><span class="line">	unspentTransactions := chain.FindUnspentTransactions(address)</span><br><span class="line">	<span class="keyword">for</span> _, tx := <span class="keyword">range</span> unspentTransactions &#123;</span><br><span class="line">		<span class="keyword">for</span> _, out := <span class="keyword">range</span> tx.Outputs &#123;</span><br><span class="line">			<span class="keyword">if</span> out.CanBeUnlocked(address) &#123;</span><br><span class="line">				unspentTxOutputs = <span class="built_in">append</span>(unspentTxOutputs, out)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> unspentTxOutputs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為 <code>BlockChain</code> 結構體建立一個 <code>FindSpendableOutputs</code> 方法，找出用戶可花費的交易餘額。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *BlockChain)</span> <span class="title">FindSpendableOutputs</span><span class="params">(address <span class="keyword">string</span>, amount <span class="keyword">int</span>)</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	unspentOutputs := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">int</span>)</span><br><span class="line">	unspentTxs := chain.FindUnspentTransactions(address)</span><br><span class="line">	accumulated := <span class="number">0</span></span><br><span class="line">Work:</span><br><span class="line">	<span class="keyword">for</span> _, tx := <span class="keyword">range</span> unspentTxs &#123;</span><br><span class="line">		txID := hex.EncodeToString(tx.ID)</span><br><span class="line">		<span class="keyword">for</span> outIdx, out := <span class="keyword">range</span> tx.Outputs &#123;</span><br><span class="line">			<span class="keyword">if</span> out.CanBeUnlocked(address) &amp;&amp; accumulated &lt; amount &#123;</span><br><span class="line">				accumulated += out.Value</span><br><span class="line">				unspentOutputs[txID] = <span class="built_in">append</span>(unspentOutputs[txID], outIdx)</span><br><span class="line">				<span class="keyword">if</span> accumulated &gt;= amount &#123;</span><br><span class="line">					<span class="keyword">break</span> Work</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> accumulated, unspentOutputs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>BlockChain</code> 結構體的 <code>AddBlock</code> 方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(chain *BlockChain)</span> <span class="title">AddBlock</span><span class="params">(transactions []*Transaction)</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> lastHash []<span class="keyword">byte</span></span><br><span class="line">	err := chain.Database.View(<span class="function"><span class="keyword">func</span><span class="params">(txn *badger.Txn)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		item, err := txn.Get([]<span class="keyword">byte</span>(<span class="string">"lh"</span>))</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatalln(err)</span><br><span class="line">		&#125;</span><br><span class="line">		lastHash, err = item.ValueCopy(<span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	&#125;</span><br><span class="line">	newBlock := CreateBlock(transactions, lastHash)</span><br><span class="line">	err = chain.Database.Update(<span class="function"><span class="keyword">func</span><span class="params">(txn *badger.Txn)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> err := txn.Set(newBlock.Hash, newBlock.Serialize()); err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatalln(err)</span><br><span class="line">		&#125;</span><br><span class="line">		err = txn.Set([]<span class="keyword">byte</span>(<span class="string">"lh"</span>), newBlock.Hash)</span><br><span class="line">		chain.LastHash = newBlock.Hash</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>transaction.go</code> 檔建立一個 <code>NewTransaction</code> 方法，用來為用戶建立一筆新的交易紀錄。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewTransaction</span><span class="params">(from, to <span class="keyword">string</span>, amount <span class="keyword">int</span>, chain *BlockChain)</span> *<span class="title">Transaction</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> inputs []TxInput</span><br><span class="line">	<span class="keyword">var</span> outputs []TxOutput</span><br><span class="line">	acc, validOutputs := chain.FindSpendableOutputs(from, amount)</span><br><span class="line">	<span class="keyword">if</span> acc &lt; amount &#123;</span><br><span class="line">		log.Fatalln(<span class="string">"Not enough funds"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> txIdx, outs := <span class="keyword">range</span> validOutputs &#123;</span><br><span class="line">		txID, err := hex.DecodeString(txIdx)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatalln(err)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> _, out := <span class="keyword">range</span> outs &#123;</span><br><span class="line">			input := TxInput&#123;txID, out, from&#125;</span><br><span class="line">			inputs = <span class="built_in">append</span>(inputs, input)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 將金額轉給對方的輸出紀錄</span></span><br><span class="line">	outputs = <span class="built_in">append</span>(outputs, TxOutput&#123;amount, to&#125;)</span><br><span class="line">	<span class="keyword">if</span> acc &gt; amount &#123;</span><br><span class="line">		<span class="comment">// 將餘額轉給自己的輸出紀錄</span></span><br><span class="line">		outputs = <span class="built_in">append</span>(outputs, TxOutput&#123;acc - amount, from&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	tx := &amp;Transaction&#123;<span class="literal">nil</span>, inputs, outputs&#125;</span><br><span class="line">	tx.SetID()</span><br><span class="line">	<span class="keyword">return</span> tx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重構有關 <code>CommandLine</code> 結構體的相關方法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> CommandLine <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">printUsage</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"Usage:"</span>)</span><br><span class="line">	fmt.Println(<span class="string">"  get-balance -address ADDRESS - gets the balance for the address"</span>)</span><br><span class="line">	fmt.Println(<span class="string">"  create-blockchain -address ADDRESS - creates a blockchain and sends genesis reward to address"</span>)</span><br><span class="line">	fmt.Println(<span class="string">"  print-chain - prints the blocks in the chain"</span>)</span><br><span class="line">	fmt.Println(<span class="string">"  send -from FROM -to TO -amount AMOUNT - sends amount of coins"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">validateArgs</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(os.Args) &lt; <span class="number">2</span> &#123;</span><br><span class="line">		cli.printUsage()</span><br><span class="line">		runtime.Goexit()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">printChain</span><span class="params">()</span></span> &#123;</span><br><span class="line">	chain := blockchain.ContinueBlockChain(<span class="string">""</span>)</span><br><span class="line">	<span class="keyword">defer</span> chain.Database.Close()</span><br><span class="line">	iter := chain.Iterator()</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		block := iter.Next()</span><br><span class="line">		fmt.Printf(<span class="string">"Previous Hash: %x\n"</span>, block.PrevHash)</span><br><span class="line">		fmt.Printf(<span class="string">"Hash: %x\n"</span>, block.Hash)</span><br><span class="line">		pow := blockchain.NewProof(block)</span><br><span class="line">		fmt.Printf(<span class="string">"Pow: %s\n"</span>, strconv.FormatBool(pow.Validate()))</span><br><span class="line">		fmt.Println()</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(block.PrevHash) == <span class="number">0</span> &#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">createBlockChain</span><span class="params">(address <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	chain := blockchain.InitBlockChain(address)</span><br><span class="line">	chain.Database.Close()</span><br><span class="line">	fmt.Println(<span class="string">"Finished!"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">getBalance</span><span class="params">(address <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	chain := blockchain.ContinueBlockChain(address)</span><br><span class="line">	<span class="keyword">defer</span> chain.Database.Close()</span><br><span class="line">	balance := <span class="number">0</span></span><br><span class="line">	unspentTxOutputs := chain.FindUnspentTxOutputs(address)</span><br><span class="line">	<span class="keyword">for</span> _, out := <span class="keyword">range</span> unspentTxOutputs &#123;</span><br><span class="line">		balance += out.Value</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">"Balance of %s: %d\n"</span>, address, balance)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">send</span><span class="params">(from, to <span class="keyword">string</span>, amount <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	chain := blockchain.ContinueBlockChain(from)</span><br><span class="line">	<span class="keyword">defer</span> chain.Database.Close()</span><br><span class="line">	tx := blockchain.NewTransaction(from, to, amount, chain)</span><br><span class="line">	chain.AddBlock([]*blockchain.Transaction&#123;tx&#125;)</span><br><span class="line">	fmt.Println(<span class="string">"Success!"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cli *CommandLine)</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">	cli.validateArgs()</span><br><span class="line">	getBalanceCmd := flag.NewFlagSet(<span class="string">"get-balance"</span>, flag.ExitOnError)</span><br><span class="line">	createBlockchainCmd := flag.NewFlagSet(<span class="string">"create-blockchain"</span>, flag.ExitOnError)</span><br><span class="line">	sendCmd := flag.NewFlagSet(<span class="string">"send"</span>, flag.ExitOnError)</span><br><span class="line">	printChainCmd := flag.NewFlagSet(<span class="string">"print-chain"</span>, flag.ExitOnError)</span><br><span class="line">	getBalanceAddress := getBalanceCmd.String(<span class="string">"address"</span>, <span class="string">""</span>, <span class="string">"The address to get balance for"</span>)</span><br><span class="line">	createBlockchainAddress := createBlockchainCmd.String(<span class="string">"address"</span>, <span class="string">""</span>, <span class="string">"The address to send genesis block reward to"</span>)</span><br><span class="line">	sendFrom := sendCmd.String(<span class="string">"from"</span>, <span class="string">""</span>, <span class="string">"Source wallet address"</span>)</span><br><span class="line">	sendTo := sendCmd.String(<span class="string">"to"</span>, <span class="string">""</span>, <span class="string">"Destination wallet address"</span>)</span><br><span class="line">	sendAmount := sendCmd.Int(<span class="string">"amount"</span>, <span class="number">0</span>, <span class="string">"Amount to send"</span>)</span><br><span class="line">	<span class="keyword">switch</span> os.Args[<span class="number">1</span>] &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">"get-balance"</span>:</span><br><span class="line">		err := getBalanceCmd.Parse(os.Args[<span class="number">2</span>:])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Panic(err)</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">"create-blockchain"</span>:</span><br><span class="line">		err := createBlockchainCmd.Parse(os.Args[<span class="number">2</span>:])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Panic(err)</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">"print-chain"</span>:</span><br><span class="line">		err := printChainCmd.Parse(os.Args[<span class="number">2</span>:])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Panic(err)</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">"send"</span>:</span><br><span class="line">		err := sendCmd.Parse(os.Args[<span class="number">2</span>:])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Panic(err)</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		cli.printUsage()</span><br><span class="line">		runtime.Goexit()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> getBalanceCmd.Parsed() &#123;</span><br><span class="line">		<span class="keyword">if</span> *getBalanceAddress == <span class="string">""</span> &#123;</span><br><span class="line">			getBalanceCmd.Usage()</span><br><span class="line">			runtime.Goexit()</span><br><span class="line">		&#125;</span><br><span class="line">		cli.getBalance(*getBalanceAddress)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> createBlockchainCmd.Parsed() &#123;</span><br><span class="line">		<span class="keyword">if</span> *createBlockchainAddress == <span class="string">""</span> &#123;</span><br><span class="line">			createBlockchainCmd.Usage()</span><br><span class="line">			runtime.Goexit()</span><br><span class="line">		&#125;</span><br><span class="line">		cli.createBlockChain(*createBlockchainAddress)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> printChainCmd.Parsed() &#123;</span><br><span class="line">		cli.printChain()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> sendCmd.Parsed() &#123;</span><br><span class="line">		<span class="keyword">if</span> *sendFrom == <span class="string">""</span> || *sendTo == <span class="string">""</span> || *sendAmount &lt;= <span class="number">0</span> &#123;</span><br><span class="line">			sendCmd.Usage()</span><br><span class="line">			runtime.Goexit()</span><br><span class="line">		&#125;</span><br><span class="line">		cli.send(*sendFrom, *sendTo, *sendAmount)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.go</code> 檔，處理命令列介面的執行。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> os.Exit(<span class="number">0</span>)</span><br><span class="line">	cli := CommandLine&#123;&#125;</span><br><span class="line">	cli.run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>create-blockchain</code> 指令，創建一個新的區塊鏈。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go create-blockchain -address <span class="string">"Memo Chou"</span></span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">00065a1879cf312d59dd2e8dd5e82d6db266b5a3beb0ed43a98067f8db6a6688</span><br><span class="line">Genesis proved</span><br><span class="line">Finished!</span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>print-chain</code> 指令，將區塊鏈印出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go <span class="built_in">print</span>-chain</span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Previous Hash: </span><br><span class="line">Hash: 00065a1879cf312d59dd2e8dd5e82d6db266b5a3beb0ed43a98067f8db6a6688</span><br><span class="line">Pow: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>get-balance</code> 指令，取得 <code>Memo Chou</code> 用戶的餘額。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go get-balance -address <span class="string">"Memo Chou"</span></span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Balance of Memo: 100</span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>send</code> 指令，將 <code>Memo Chou</code> 用戶的 60 個代幣轉給 <code>Tensor</code> 用戶。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go send -from <span class="string">"Memo Chou"</span> -to <span class="string">"Tensor"</span> -amount 60</span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">000717be0cf982076997a54cbd6988055c097065e03e5b0dc32ad03d72257fec</span><br><span class="line">Success!</span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>print-chain</code> 指令，將區塊鏈印出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go <span class="built_in">print</span>-chain</span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下，多了一個新的區塊。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Previous Hash: 00065a1879cf312d59dd2e8dd5e82d6db266b5a3beb0ed43a98067f8db6a6688</span><br><span class="line">Hash: 000717be0cf982076997a54cbd6988055c097065e03e5b0dc32ad03d72257fec</span><br><span class="line">Pow: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">Previous Hash: </span><br><span class="line">Hash: 00065a1879cf312d59dd2e8dd5e82d6db266b5a3beb0ed43a98067f8db6a6688</span><br><span class="line">Pow: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>get-balance</code> 指令，取得 <code>Tensor</code> 用戶的餘額。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go get-balance -address <span class="string">"Tensor"</span></span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Balance of Tensor: 60</span><br></pre></td></tr></table></figure>
+
+<p>執行 <code>get-balance</code> 指令，取得 <code>Memo Chou</code> 用戶的餘額。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go get-balance -address <span class="string">"Memo Chou"</span></span><br></pre></td></tr></table></figure>
+
+<p>結果顯示如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Balance of Tensor: 40</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/go-blockchain" target="_blank" rel="noopener">go-blockchain</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://youtu.be/mYlHT9bB6OE" target="_blank" rel="noopener">Building a Blockchain in Golang</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&text=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&is_video=false&description=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 實作區塊鏈（四）：建立交易機制&body=Check out this article: https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&title=使用 Go 實作區塊鏈（四）：建立交易機制"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/03/使用-Go-實作區塊鏈（四）：建立交易機制/&name=使用 Go 實作區塊鏈（四）：建立交易機制&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

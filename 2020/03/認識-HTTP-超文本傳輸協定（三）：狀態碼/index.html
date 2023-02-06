@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 狀態碼HTTP 響應狀態代碼指示特定的 HTTP 請求是否已成功完成，分為以下五類：  訊息響應（100 – 199） 成功響應（200 – 299） 重定向（300 – 399） 客戶端錯誤（400 – 499） 伺服器錯誤（500 – 599）  訊息響應（Information responses）100 Continue此臨">
+<meta name="keywords" content="TCP&#x2F;IP,HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="認識 HTTP 超文本傳輸協定（三）：狀態碼">
+<meta property="og:url" content="https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 狀態碼HTTP 響應狀態代碼指示特定的 HTTP 請求是否已成功完成，分為以下五類：  訊息響應（100 – 199） 成功響應（200 – 299） 重定向（300 – 399） 客戶端錯誤（400 – 499） 伺服器錯誤（500 – 599）  訊息響應（Information responses）100 Continue此臨">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-06T15:34:46.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="認識 HTTP 超文本傳輸協定（三）：狀態碼">
+<meta name="twitter:description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 狀態碼HTTP 響應狀態代碼指示特定的 HTTP 請求是否已成功完成，分為以下五類：  訊息響應（100 – 199） 成功響應（200 – 299） 重定向（300 – 399） 客戶端錯誤（400 – 499） 伺服器錯誤（500 – 599）  訊息響應（Information responses）100 Continue此臨">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>認識 HTTP 超文本傳輸協定（三）：狀態碼</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/03/在-Laravel-7-0-使用-Sanctum-實作-API-認證/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&text=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&is_video=false&description=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（三）：狀態碼&body=Check out this article: https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&name=認識 HTTP 超文本傳輸協定（三）：狀態碼&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#狀態碼"><span class="toc-number">2.</span> <span class="toc-text">狀態碼</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#訊息響應（Information-responses）"><span class="toc-number">2.1.</span> <span class="toc-text">訊息響應（Information responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#100-Continue"><span class="toc-number">2.1.1.</span> <span class="toc-text">100 Continue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#101-Switching-Protocol"><span class="toc-number">2.1.2.</span> <span class="toc-text">101 Switching Protocol</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#102-Processing-WebDAV"><span class="toc-number">2.1.3.</span> <span class="toc-text">102 Processing (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#103-Early-Hints"><span class="toc-number">2.1.4.</span> <span class="toc-text">103 Early Hints</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成功響應（Successful-responses）"><span class="toc-number">2.2.</span> <span class="toc-text">成功響應（Successful responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#200-OK"><span class="toc-number">2.2.1.</span> <span class="toc-text">200 OK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#201-Created"><span class="toc-number">2.2.2.</span> <span class="toc-text">201 Created</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#202-Accepted"><span class="toc-number">2.2.3.</span> <span class="toc-text">202 Accepted</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#203-Non-Authoritative-Information"><span class="toc-number">2.2.4.</span> <span class="toc-text">203 Non-Authoritative Information</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#204-No-Content"><span class="toc-number">2.2.5.</span> <span class="toc-text">204 No Content</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#205-Reset-Content"><span class="toc-number">2.2.6.</span> <span class="toc-text">205 Reset Content</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#206-Partial-Content"><span class="toc-number">2.2.7.</span> <span class="toc-text">206 Partial Content</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#207-Multi-Status-WebDAV"><span class="toc-number">2.2.8.</span> <span class="toc-text">207 Multi-Status (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#208-Already-Reported-WebDAV"><span class="toc-number">2.2.9.</span> <span class="toc-text">208 Already Reported (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#226-IM-Used-HTTP-Delta-encoding"><span class="toc-number">2.2.10.</span> <span class="toc-text">226 IM Used (HTTP Delta encoding)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重定向（Redirection-messages）"><span class="toc-number">2.3.</span> <span class="toc-text">重定向（Redirection messages）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#300-Multiple-Choice"><span class="toc-number">2.3.1.</span> <span class="toc-text">300 Multiple Choice</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#301-Moved-Permanently"><span class="toc-number">2.3.2.</span> <span class="toc-text">301 Moved Permanently</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#302-Found"><span class="toc-number">2.3.3.</span> <span class="toc-text">302 Found</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#303-See-Other"><span class="toc-number">2.3.4.</span> <span class="toc-text">303 See Other</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#304-Not-Modified"><span class="toc-number">2.3.5.</span> <span class="toc-text">304 Not Modified</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#305-Use-Proxy"><span class="toc-number">2.3.6.</span> <span class="toc-text">305 Use Proxy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#306-unused"><span class="toc-number">2.3.7.</span> <span class="toc-text">306 unused</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#307-Temporary-Redirect"><span class="toc-number">2.3.8.</span> <span class="toc-text">307 Temporary Redirect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#308-Permanent-Redirect"><span class="toc-number">2.3.9.</span> <span class="toc-text">308 Permanent Redirect</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客戶端錯誤（Client-error-responses）"><span class="toc-number">2.4.</span> <span class="toc-text">客戶端錯誤（Client error responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#400-Bad-Request"><span class="toc-number">2.4.1.</span> <span class="toc-text">400 Bad Request</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#401-Unauthorized"><span class="toc-number">2.4.2.</span> <span class="toc-text">401 Unauthorized</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#402-Payment-Required"><span class="toc-number">2.4.3.</span> <span class="toc-text">402 Payment Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#403-Forbidden"><span class="toc-number">2.4.4.</span> <span class="toc-text">403 Forbidden</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#404-Not-Found"><span class="toc-number">2.4.5.</span> <span class="toc-text">404 Not Found</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#405-Method-Not-Allowed"><span class="toc-number">2.4.6.</span> <span class="toc-text">405 Method Not Allowed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#406-Not-Acceptable"><span class="toc-number">2.4.7.</span> <span class="toc-text">406 Not Acceptable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#407-Proxy-Authentication-Required"><span class="toc-number">2.4.8.</span> <span class="toc-text">407 Proxy Authentication Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#408-Request-Timeout"><span class="toc-number">2.4.9.</span> <span class="toc-text">408 Request Timeout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#409-Conflict"><span class="toc-number">2.4.10.</span> <span class="toc-text">409 Conflict</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#410-Gone"><span class="toc-number">2.4.11.</span> <span class="toc-text">410 Gone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#411-Length-Required"><span class="toc-number">2.4.12.</span> <span class="toc-text">411 Length Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#412-Precondition-Failed"><span class="toc-number">2.4.13.</span> <span class="toc-text">412 Precondition Failed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#413-Payload-Too-Large"><span class="toc-number">2.4.14.</span> <span class="toc-text">413 Payload Too Large</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#414-URI-Too-Long"><span class="toc-number">2.4.15.</span> <span class="toc-text">414 URI Too Long</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#415-Unsupported-Media-Type"><span class="toc-number">2.4.16.</span> <span class="toc-text">415 Unsupported Media Type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#416-Range-Not-Satisfiable"><span class="toc-number">2.4.17.</span> <span class="toc-text">416 Range Not Satisfiable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#417-Expectation-Failed"><span class="toc-number">2.4.18.</span> <span class="toc-text">417 Expectation Failed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#418-I’m-a-teapot"><span class="toc-number">2.4.19.</span> <span class="toc-text">418 I’m a teapot</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#421-Misdirected-Request"><span class="toc-number">2.4.20.</span> <span class="toc-text">421 Misdirected Request</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#422-Unprocessable-Entity-WebDAV"><span class="toc-number">2.4.21.</span> <span class="toc-text">422 Unprocessable Entity (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#423-Locked-WebDAV"><span class="toc-number">2.4.22.</span> <span class="toc-text">423 Locked (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#424-Failed-Dependency-WebDAV"><span class="toc-number">2.4.23.</span> <span class="toc-text">424 Failed Dependency (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#425-Too-Early"><span class="toc-number">2.4.24.</span> <span class="toc-text">425 Too Early</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#426-Upgrade-Required"><span class="toc-number">2.4.25.</span> <span class="toc-text">426 Upgrade Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#428-Precondition-Required"><span class="toc-number">2.4.26.</span> <span class="toc-text">428 Precondition Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#429-Too-Many-Requests"><span class="toc-number">2.4.27.</span> <span class="toc-text">429 Too Many Requests</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#431-Request-Header-Fields-Too-Large"><span class="toc-number">2.4.28.</span> <span class="toc-text">431 Request Header Fields Too Large</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#451-Unavailable-For-Legal-Reasons"><span class="toc-number">2.4.29.</span> <span class="toc-text">451 Unavailable For Legal Reasons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伺服器錯誤（Server-error-responses）"><span class="toc-number">2.5.</span> <span class="toc-text">伺服器錯誤（Server error responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#500-Internal-Server-Error"><span class="toc-number">2.5.1.</span> <span class="toc-text">500 Internal Server Error</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#501-Not-Implemented"><span class="toc-number">2.6.</span> <span class="toc-text">501 Not Implemented</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#502-Bad-Gateway"><span class="toc-number">2.7.</span> <span class="toc-text">502 Bad Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#503-Service-Unavailable"><span class="toc-number">2.8.</span> <span class="toc-text">503 Service Unavailable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#504-Gateway-Timeout"><span class="toc-number">2.9.</span> <span class="toc-text">504 Gateway Timeout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#505-HTTP-Version-Not-Supported"><span class="toc-number">2.10.</span> <span class="toc-text">505 HTTP Version Not Supported</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#506-Variant-Also-Negotiates"><span class="toc-number">2.11.</span> <span class="toc-text">506 Variant Also Negotiates</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#507-Insufficient-Storage-WebDAV"><span class="toc-number">2.12.</span> <span class="toc-text">507 Insufficient Storage (WebDAV)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#508-Loop-Detected-WebDAV"><span class="toc-number">2.13.</span> <span class="toc-text">508 Loop Detected (WebDAV)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#510-Not-Extended"><span class="toc-number">2.14.</span> <span class="toc-text">510 Not Extended</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#511-Network-Authentication-Required"><span class="toc-number">2.15.</span> <span class="toc-text">511 Network Authentication Required</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        認識 HTTP 超文本傳輸協定（三）：狀態碼
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-03-17T14:30:04.000Z" itemprop="datePublished">2020-03-17</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/其他/TCP-IP/">TCP/IP</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/HTTP/">HTTP</a>, <a class="tag-link" href="/tags/TCP-IP/">TCP/IP</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://s0developer0mozilla0org。icopy。site/zh-TW/docs/Web/HTTP" target="_blank" rel="noopener">HTTP - MDN Web docs</a>〉的學習筆記。</p>
+<h2 id="狀態碼"><a href="#狀態碼" class="headerlink" title="狀態碼"></a>狀態碼</h2><p>HTTP 響應狀態代碼指示特定的 HTTP 請求是否已成功完成，分為以下五類：</p>
+<ol>
+<li>訊息響應（100 – 199）</li>
+<li>成功響應（200 – 299）</li>
+<li>重定向（300 – 399）</li>
+<li>客戶端錯誤（400 – 499）</li>
+<li>伺服器錯誤（500 – 599）</li>
+</ol>
+<h3 id="訊息響應（Information-responses）"><a href="#訊息響應（Information-responses）" class="headerlink" title="訊息響應（Information responses）"></a>訊息響應（Information responses）</h3><h4 id="100-Continue"><a href="#100-Continue" class="headerlink" title="100 Continue"></a>100 Continue</h4><p>此臨時響應指示到目前為止一切正常，客戶端應繼續該請求，如果請求已完成，則忽略響應。</p>
+<h4 id="101-Switching-Protocol"><a href="#101-Switching-Protocol" class="headerlink" title="101 Switching Protocol"></a>101 Switching Protocol</h4><p>發送此代碼是為了響應來自客戶端的 Upgrade 請求標頭，並指示伺服器要切換到的協議。</p>
+<h4 id="102-Processing-WebDAV"><a href="#102-Processing-WebDAV" class="headerlink" title="102 Processing (WebDAV)"></a>102 Processing (WebDAV)</h4><p>此代碼表示伺服器已接收並正在處理請求，但是尚無響應。</p>
+<h4 id="103-Early-Hints"><a href="#103-Early-Hints" class="headerlink" title="103 Early Hints"></a>103 Early Hints</h4><p>此狀態代碼主要用於 Link 頭，使用戶代理在伺服準備響應時開始預加載資源。</p>
+<h3 id="成功響應（Successful-responses）"><a href="#成功響應（Successful-responses）" class="headerlink" title="成功響應（Successful responses）"></a>成功響應（Successful responses）</h3><h4 id="200-OK"><a href="#200-OK" class="headerlink" title="200 OK"></a>200 OK</h4><p>該請求已成功，成功的含義取決於 HTTP 方法：</p>
+<ul>
+<li>GET：資源已被獲取並在消息正文中傳輸。</li>
+<li>HEAD：實體標題位於消息正文中。</li>
+<li>PUT 或 POST：描述操作結果的資源在消息正文中傳輸。</li>
+<li>TRACE：消息正文包含伺服接收到的請求消息。</li>
+</ul>
+<h4 id="201-Created"><a href="#201-Created" class="headerlink" title="201 Created"></a>201 Created</h4><p>請求成功，並因此創建了新資源。這通常是在 POST 請求或某些 PUT 請求之後發送的響應。</p>
+<h4 id="202-Accepted"><a href="#202-Accepted" class="headerlink" title="202 Accepted"></a>202 Accepted</h4><p>伺服器已接受請求，但尚未處理。最終該請求可能會也可能不會被執行，並且可能在處理發生時被禁止。</p>
+<h4 id="203-Non-Authoritative-Information"><a href="#203-Non-Authoritative-Information" class="headerlink" title="203 Non-Authoritative Information"></a>203 Non-Authoritative Information</h4><p>此響應代碼表示返回的後設資料與原始伺服提供的後設資料不完全相同，而是從本地或第三方副本中收集的。這主要用於其他資源的鏡像或備份。除該特定情況外，「200 OK」響應優先於此狀態。</p>
+<h4 id="204-No-Content"><a href="#204-No-Content" class="headerlink" title="204 No Content"></a>204 No Content</h4><p>沒有要發送的內容，但標頭可能有用。用戶代理可以使用新的代理更新該資源的快取頭。</p>
+<h4 id="205-Reset-Content"><a href="#205-Reset-Content" class="headerlink" title="205 Reset Content"></a>205 Reset Content</h4><p>告訴用戶代理重置發送此請求的文件。</p>
+<h4 id="206-Partial-Content"><a href="#206-Partial-Content" class="headerlink" title="206 Partial Content"></a>206 Partial Content</h4><p>從客戶端發送 Range 標頭僅請求資源的一部分時，將使用此響應代碼。</p>
+<h4 id="207-Multi-Status-WebDAV"><a href="#207-Multi-Status-WebDAV" class="headerlink" title="207 Multi-Status (WebDAV)"></a>207 Multi-Status (WebDAV)</h4><p>在可能需要多個狀態代碼的情況下，傳達有關多種資源的信息。</p>
+<h4 id="208-Already-Reported-WebDAV"><a href="#208-Already-Reported-WebDAV" class="headerlink" title="208 Already Reported (WebDAV)"></a>208 Already Reported (WebDAV)</h4><p>在 <a href="dav:propstat" target="_blank" rel="noopener">dav:propstat</a> 響應元素中使用，以避免重複枚舉與同一集合的多個綁定的內部成員。</p>
+<h4 id="226-IM-Used-HTTP-Delta-encoding"><a href="#226-IM-Used-HTTP-Delta-encoding" class="headerlink" title="226 IM Used (HTTP Delta encoding)"></a>226 IM Used (HTTP Delta encoding)</h4><p>伺服已完成對資源的 GET 請求，並且響應表示應用於當前實例的一個或多個實例操作的結果。</p>
+<h3 id="重定向（Redirection-messages）"><a href="#重定向（Redirection-messages）" class="headerlink" title="重定向（Redirection messages）"></a>重定向（Redirection messages）</h3><h4 id="300-Multiple-Choice"><a href="#300-Multiple-Choice" class="headerlink" title="300 Multiple Choice"></a>300 Multiple Choice</h4><p>該請求有多個可能的響應，用戶代理或用戶應選擇其中之一。（沒有標準化的方法來選擇一種響應，但是建議使用 HTML 連結指向可能性，以便用戶選擇。）</p>
+<h4 id="301-Moved-Permanently"><a href="#301-Moved-Permanently" class="headerlink" title="301 Moved Permanently"></a>301 Moved Permanently</h4><p>所請求資源的 URL 已永久更改，新的 URL 在響應中給出。</p>
+<h4 id="302-Found"><a href="#302-Found" class="headerlink" title="302 Found"></a>302 Found</h4><p>此響應代碼表示所請求資源的 URI 已臨時更改，將來可能會在 URI 中進行進一步的更改。因此，客戶端在以後的請求中應使用相同的 URI。</p>
+<h4 id="303-See-Other"><a href="#303-See-Other" class="headerlink" title="303 See Other"></a>303 See Other</h4><p>伺服器發送此響應以指示客戶端使用 GET 請求在另一個 URI 上獲取請求的資源。</p>
+<h4 id="304-Not-Modified"><a href="#304-Not-Modified" class="headerlink" title="304 Not Modified"></a>304 Not Modified</h4><p>這用於快取目的，它告訴客戶端尚未修改響應，因此客戶端可以繼續使用響應的相同快取版本。</p>
+<h4 id="305-Use-Proxy"><a href="#305-Use-Proxy" class="headerlink" title="305 Use Proxy"></a>305 Use Proxy</h4><p>在 HTTP 規範的先前版本中定義，以指示代理必須訪問請求的響應。由於與代理的帶內配置有關的安全性考慮，已棄用該文件。</p>
+<h4 id="306-unused"><a href="#306-unused" class="headerlink" title="306 unused"></a>306 unused</h4><p>該響應代碼已不再使用。它只是保留的。在先前版本的 HTTP/1.1 規範中使用了它。</p>
+<h4 id="307-Temporary-Redirect"><a href="#307-Temporary-Redirect" class="headerlink" title="307 Temporary Redirect"></a>307 Temporary Redirect</h4><p>伺服器發送此響應以指示客戶端使用先前請求中使用的相同方法在另一個 URI 中獲取請求的資源。這與「302 Found」HTTP 響應代碼具有相同的語義，不同之處在於用戶代理必須不改變使用的 HTTP 方法；如果 POST 是在第一請求中所使用的，則 POST 必須在第二請求中被使用。</p>
+<h4 id="308-Permanent-Redirect"><a href="#308-Permanent-Redirect" class="headerlink" title="308 Permanent Redirect"></a>308 Permanent Redirect</h4><p>這意味著資源現在永久位於「Location:HTTP Response」標頭指定的另一個 URI。這與「301 Moved Permanently」HTTP 響應代碼具有相同的語義，不同之處在於用戶代理必須不改變使用的 HTTP 方法；如果 POST 是在第一請求中所使用的，則 POST 必須在第二請求被使用。</p>
+<h3 id="客戶端錯誤（Client-error-responses）"><a href="#客戶端錯誤（Client-error-responses）" class="headerlink" title="客戶端錯誤（Client error responses）"></a>客戶端錯誤（Client error responses）</h3><h4 id="400-Bad-Request"><a href="#400-Bad-Request" class="headerlink" title="400 Bad Request"></a>400 Bad Request</h4><p>由於語法無效，伺服器無法理解該請求。</p>
+<h4 id="401-Unauthorized"><a href="#401-Unauthorized" class="headerlink" title="401 Unauthorized"></a>401 Unauthorized</h4><p>儘管 HTTP 標準指定了「未經授權」，但從語義上來說，此響應表示「未經驗證」。也就是說，客戶端必須對自己進行身份驗證才能獲得請求的響應。</p>
+<h4 id="402-Payment-Required"><a href="#402-Payment-Required" class="headerlink" title="402 Payment Required"></a>402 Payment Required</h4><p>此狀態碼是為了將來可能的需求而預留的。最初的意圖可能被用作某種形式的數字現金或線上支付方案的一部分，但幾乎沒有哪家服務商使用，而且這個狀態碼通常不被使用。</p>
+<h4 id="403-Forbidden"><a href="#403-Forbidden" class="headerlink" title="403 Forbidden"></a>403 Forbidden</h4><p>客戶端無權訪問內容。也就是說，它是未經授權的，因此伺服器拒絕提供所請求的資源。由於伺服器知道客戶端的身份，因此與「401 Unauthorized」響應不同。</p>
+<h4 id="404-Not-Found"><a href="#404-Not-Found" class="headerlink" title="404 Not Found"></a>404 Not Found</h4><p>伺服器找不到請求的資源。在瀏覽器中，這意味著無法識別 URL。在 API 中，這也可能意味著端點有效，但是資源本身不存在。伺服器也可以發送此響應而不是 403，以隱藏來自未授權客戶端的資源。由於此響應代碼在網路上經常出現，因此可能是最著名的響應代碼。</p>
+<h4 id="405-Method-Not-Allowed"><a href="#405-Method-Not-Allowed" class="headerlink" title="405 Method Not Allowed"></a>405 Method Not Allowed</h4><p>伺服器知道該請求方法，但已被禁用、無法使用。例如，API 可能禁止刪除資源。決不能禁用這兩個強制方法 GET 和 HEAD，並且不應返回此錯誤代碼。</p>
+<h4 id="406-Not-Acceptable"><a href="#406-Not-Acceptable" class="headerlink" title="406 Not Acceptable"></a>406 Not Acceptable</h4><p>當 Web 伺服器在執行伺服器驅動的內容協商後，未找到符合用戶代理給出的條件的任何內容時，將發送此響應。</p>
+<h4 id="407-Proxy-Authentication-Required"><a href="#407-Proxy-Authentication-Required" class="headerlink" title="407 Proxy Authentication Required"></a>407 Proxy Authentication Required</h4><p>這類似於「401 Unauthorized」，但需要由代理進行身份驗證。</p>
+<h4 id="408-Request-Timeout"><a href="#408-Request-Timeout" class="headerlink" title="408 Request Timeout"></a>408 Request Timeout</h4><p>即使沒有客戶端的任何先前請求，某些伺服器也會在空閒連接上發送此響應。這意味著伺服器要關閉此未使用的連接。由於某些瀏覽器使用 HTTP 預連接機制來加快瀏覽速度，因此使用該響應的次數更多。另需注意，某些伺服器僅關閉連接不發送此消息。</p>
+<h4 id="409-Conflict"><a href="#409-Conflict" class="headerlink" title="409 Conflict"></a>409 Conflict</h4><p>當請求與伺服器的當前狀態衝突時，將發送此響應。</p>
+<h4 id="410-Gone"><a href="#410-Gone" class="headerlink" title="410 Gone"></a>410 Gone</h4><p>當請求的內容已從伺服器中永久刪除且沒有轉發地址時，將發送此響應。客戶端應刪除其快取和資源鏈接。HTTP 規範打算將此狀態代碼用於「限時促銷服務」。不應強迫 API 指示已使用此狀態代碼刪除的資源。</p>
+<h4 id="411-Length-Required"><a href="#411-Length-Required" class="headerlink" title="411 Length Required"></a>411 Length Required</h4><p>伺服器拒絕了該請求，因為未定義 Content-Length 頭字段，並且伺服器需要它。</p>
+<h4 id="412-Precondition-Failed"><a href="#412-Precondition-Failed" class="headerlink" title="412 Precondition Failed"></a>412 Precondition Failed</h4><p>客戶端在其標頭中指示伺服器不滿足的前提條件。</p>
+<h4 id="413-Payload-Too-Large"><a href="#413-Payload-Too-Large" class="headerlink" title="413 Payload Too Large"></a>413 Payload Too Large</h4><p>請求實體大於伺服器定義的限制；伺服器可能會關閉連接或返回 Retry-After 標頭字段。</p>
+<h4 id="414-URI-Too-Long"><a href="#414-URI-Too-Long" class="headerlink" title="414 URI Too Long"></a>414 URI Too Long</h4><p>客戶端請求的 URI 比伺服器願意解釋的長。</p>
+<h4 id="415-Unsupported-Media-Type"><a href="#415-Unsupported-Media-Type" class="headerlink" title="415 Unsupported Media Type"></a>415 Unsupported Media Type</h4><p>伺服器不支持所請求數據的媒體格式，因此伺服器拒絕了該請求。</p>
+<h4 id="416-Range-Not-Satisfiable"><a href="#416-Range-Not-Satisfiable" class="headerlink" title="416 Range Not Satisfiable"></a>416 Range Not Satisfiable</h4><p>無法滿足請求中 Range 標頭字段指定的 Range；範圍可能超出目標 URI 數據的大小。</p>
+<h4 id="417-Expectation-Failed"><a href="#417-Expectation-Failed" class="headerlink" title="417 Expectation Failed"></a>417 Expectation Failed</h4><p>此響應代碼表示伺服器無法滿足 ExpectRequest 標頭字段指示的 Expect。</p>
+<h4 id="418-I’m-a-teapot"><a href="#418-I’m-a-teapot" class="headerlink" title="418 I’m a teapot"></a>418 I’m a teapot</h4><p>用戶端錯誤碼表明了伺服器是個茶壺，所以拒絕煮咖啡。這個錯誤是源自於 1998 的愚人節玩笑「超文字咖啡壺控制協定」（Hyper Text Coffee Pot Control Protocol）。</p>
+<h4 id="421-Misdirected-Request"><a href="#421-Misdirected-Request" class="headerlink" title="421 Misdirected Request"></a>421 Misdirected Request</h4><p>該請求被定向到不能產生響應的伺服器。這可以由未配置為對請求 URI 中包含的方案和權限的組合產生響應的伺服器發送。</p>
+<h4 id="422-Unprocessable-Entity-WebDAV"><a href="#422-Unprocessable-Entity-WebDAV" class="headerlink" title="422 Unprocessable Entity (WebDAV)"></a>422 Unprocessable Entity (WebDAV)</h4><p>該請求格式正確，但由於語義錯誤而無法遵循。</p>
+<h4 id="423-Locked-WebDAV"><a href="#423-Locked-WebDAV" class="headerlink" title="423 Locked (WebDAV)"></a>423 Locked (WebDAV)</h4><p>被訪問的資源被鎖定。</p>
+<h4 id="424-Failed-Dependency-WebDAV"><a href="#424-Failed-Dependency-WebDAV" class="headerlink" title="424 Failed Dependency (WebDAV)"></a>424 Failed Dependency (WebDAV)</h4><p>由於前一個請求失敗，因此請求失敗。</p>
+<h4 id="425-Too-Early"><a href="#425-Too-Early" class="headerlink" title="425 Too Early"></a>425 Too Early</h4><p>表示伺服器不願意冒險處理可能重播的請求。</p>
+<h4 id="426-Upgrade-Required"><a href="#426-Upgrade-Required" class="headerlink" title="426 Upgrade Required"></a>426 Upgrade Required</h4><p>伺服器拒絕使用當前協議執行請求，但是在客戶端升級到其他協議後，伺服器可能願意這樣做。伺服器在 426 響應中發送一個 Upgrade 標頭，以指示所需的協議。</p>
+<h4 id="428-Precondition-Required"><a href="#428-Precondition-Required" class="headerlink" title="428 Precondition Required"></a>428 Precondition Required</h4><p>原始伺服器要求該請求是有條件的。此響應旨在防止「丟失更新」問題，在這種情況下，客戶端獲取資源的狀態，然後對其進行修改，然後將其重新放置到伺服器上，而此時第三方已修改了伺服器上的狀態，從而導致衝突。</p>
+<h4 id="429-Too-Many-Requests"><a href="#429-Too-Many-Requests" class="headerlink" title="429 Too Many Requests"></a>429 Too Many Requests</h4><p>用戶在給定的時間內發送了太多請求。</p>
+<h4 id="431-Request-Header-Fields-Too-Large"><a href="#431-Request-Header-Fields-Too-Large" class="headerlink" title="431 Request Header Fields Too Large"></a>431 Request Header Fields Too Large</h4><p>伺服器不願意處理該請求，因為其標頭字段太大。在減小請求頭字段的大小之後，可以重新提交請求。</p>
+<h4 id="451-Unavailable-For-Legal-Reasons"><a href="#451-Unavailable-For-Legal-Reasons" class="headerlink" title="451 Unavailable For Legal Reasons"></a>451 Unavailable For Legal Reasons</h4><p>用戶代理請求了無法合法提供的資源，例如政府審查的網頁。</p>
+<h3 id="伺服器錯誤（Server-error-responses）"><a href="#伺服器錯誤（Server-error-responses）" class="headerlink" title="伺服器錯誤（Server error responses）"></a>伺服器錯誤（Server error responses）</h3><h4 id="500-Internal-Server-Error"><a href="#500-Internal-Server-Error" class="headerlink" title="500 Internal Server Error"></a>500 Internal Server Error</h4><p>伺服器遇到了不知道如何處理的情況。</p>
+<h3 id="501-Not-Implemented"><a href="#501-Not-Implemented" class="headerlink" title="501 Not Implemented"></a>501 Not Implemented</h3><p>伺服器不支持請求方法，無法處理該請求方法。要求伺服器支持的唯一方法是 GET 和 HEAD。</p>
+<h3 id="502-Bad-Gateway"><a href="#502-Bad-Gateway" class="headerlink" title="502 Bad Gateway"></a>502 Bad Gateway</h3><p>此錯誤響應意味著伺服器在充當閘道器以獲取處理請求所需的響應的同時，獲得了無效的響應。</p>
+<h3 id="503-Service-Unavailable"><a href="#503-Service-Unavailable" class="headerlink" title="503 Service Unavailable"></a>503 Service Unavailable</h3><p>伺服器尚未準備好處理請求，常見原因是伺服器因維護而停機或過載。與此響應一起，應發送一個說明問題的用戶友好頁面。此響應應用於臨時條件，並且 Retry-After:HTTP 標頭應盡可能包含恢復服務之前的估計時間。網站管理員還必須注意與該響應一起發送的與快取相關的標頭，因為這些臨時條件響應通常不應被快取。</p>
+<h3 id="504-Gateway-Timeout"><a href="#504-Gateway-Timeout" class="headerlink" title="504 Gateway Timeout"></a>504 Gateway Timeout</h3><p>當伺服器充當閘道器並且無法及時獲得響應時，將給出此錯誤響應。</p>
+<h3 id="505-HTTP-Version-Not-Supported"><a href="#505-HTTP-Version-Not-Supported" class="headerlink" title="505 HTTP Version Not Supported"></a>505 HTTP Version Not Supported</h3><p>伺服器不支持請求中使用的 HTTP 版本。</p>
+<h3 id="506-Variant-Also-Negotiates"><a href="#506-Variant-Also-Negotiates" class="headerlink" title="506 Variant Also Negotiates"></a>506 Variant Also Negotiates</h3><p>伺服器有一個內部配置錯誤：所選變體資源被配置為本身參與透明的內容協商，因此不是協商過程中的適當終點。</p>
+<h3 id="507-Insufficient-Storage-WebDAV"><a href="#507-Insufficient-Storage-WebDAV" class="headerlink" title="507 Insufficient Storage (WebDAV)"></a>507 Insufficient Storage (WebDAV)</h3><p>由於伺服器無法存儲成功完成請求所需的表示，因此無法在資源上執行該方法。</p>
+<h3 id="508-Loop-Detected-WebDAV"><a href="#508-Loop-Detected-WebDAV" class="headerlink" title="508 Loop Detected (WebDAV)"></a>508 Loop Detected (WebDAV)</h3><p>伺服器在處理請求時檢測到無限循環。</p>
+<h3 id="510-Not-Extended"><a href="#510-Not-Extended" class="headerlink" title="510 Not Extended"></a>510 Not Extended</h3><p>取得資源所需要的策略並沒有被滿足。</p>
+<h3 id="511-Network-Authentication-Required"><a href="#511-Network-Authentication-Required" class="headerlink" title="511 Network Authentication Required"></a>511 Network Authentication Required</h3><p>表示客戶端需要進行身份驗證才能獲得網路訪問權限。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#狀態碼"><span class="toc-number">2.</span> <span class="toc-text">狀態碼</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#訊息響應（Information-responses）"><span class="toc-number">2.1.</span> <span class="toc-text">訊息響應（Information responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#100-Continue"><span class="toc-number">2.1.1.</span> <span class="toc-text">100 Continue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#101-Switching-Protocol"><span class="toc-number">2.1.2.</span> <span class="toc-text">101 Switching Protocol</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#102-Processing-WebDAV"><span class="toc-number">2.1.3.</span> <span class="toc-text">102 Processing (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#103-Early-Hints"><span class="toc-number">2.1.4.</span> <span class="toc-text">103 Early Hints</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成功響應（Successful-responses）"><span class="toc-number">2.2.</span> <span class="toc-text">成功響應（Successful responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#200-OK"><span class="toc-number">2.2.1.</span> <span class="toc-text">200 OK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#201-Created"><span class="toc-number">2.2.2.</span> <span class="toc-text">201 Created</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#202-Accepted"><span class="toc-number">2.2.3.</span> <span class="toc-text">202 Accepted</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#203-Non-Authoritative-Information"><span class="toc-number">2.2.4.</span> <span class="toc-text">203 Non-Authoritative Information</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#204-No-Content"><span class="toc-number">2.2.5.</span> <span class="toc-text">204 No Content</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#205-Reset-Content"><span class="toc-number">2.2.6.</span> <span class="toc-text">205 Reset Content</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#206-Partial-Content"><span class="toc-number">2.2.7.</span> <span class="toc-text">206 Partial Content</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#207-Multi-Status-WebDAV"><span class="toc-number">2.2.8.</span> <span class="toc-text">207 Multi-Status (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#208-Already-Reported-WebDAV"><span class="toc-number">2.2.9.</span> <span class="toc-text">208 Already Reported (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#226-IM-Used-HTTP-Delta-encoding"><span class="toc-number">2.2.10.</span> <span class="toc-text">226 IM Used (HTTP Delta encoding)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重定向（Redirection-messages）"><span class="toc-number">2.3.</span> <span class="toc-text">重定向（Redirection messages）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#300-Multiple-Choice"><span class="toc-number">2.3.1.</span> <span class="toc-text">300 Multiple Choice</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#301-Moved-Permanently"><span class="toc-number">2.3.2.</span> <span class="toc-text">301 Moved Permanently</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#302-Found"><span class="toc-number">2.3.3.</span> <span class="toc-text">302 Found</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#303-See-Other"><span class="toc-number">2.3.4.</span> <span class="toc-text">303 See Other</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#304-Not-Modified"><span class="toc-number">2.3.5.</span> <span class="toc-text">304 Not Modified</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#305-Use-Proxy"><span class="toc-number">2.3.6.</span> <span class="toc-text">305 Use Proxy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#306-unused"><span class="toc-number">2.3.7.</span> <span class="toc-text">306 unused</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#307-Temporary-Redirect"><span class="toc-number">2.3.8.</span> <span class="toc-text">307 Temporary Redirect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#308-Permanent-Redirect"><span class="toc-number">2.3.9.</span> <span class="toc-text">308 Permanent Redirect</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客戶端錯誤（Client-error-responses）"><span class="toc-number">2.4.</span> <span class="toc-text">客戶端錯誤（Client error responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#400-Bad-Request"><span class="toc-number">2.4.1.</span> <span class="toc-text">400 Bad Request</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#401-Unauthorized"><span class="toc-number">2.4.2.</span> <span class="toc-text">401 Unauthorized</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#402-Payment-Required"><span class="toc-number">2.4.3.</span> <span class="toc-text">402 Payment Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#403-Forbidden"><span class="toc-number">2.4.4.</span> <span class="toc-text">403 Forbidden</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#404-Not-Found"><span class="toc-number">2.4.5.</span> <span class="toc-text">404 Not Found</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#405-Method-Not-Allowed"><span class="toc-number">2.4.6.</span> <span class="toc-text">405 Method Not Allowed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#406-Not-Acceptable"><span class="toc-number">2.4.7.</span> <span class="toc-text">406 Not Acceptable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#407-Proxy-Authentication-Required"><span class="toc-number">2.4.8.</span> <span class="toc-text">407 Proxy Authentication Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#408-Request-Timeout"><span class="toc-number">2.4.9.</span> <span class="toc-text">408 Request Timeout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#409-Conflict"><span class="toc-number">2.4.10.</span> <span class="toc-text">409 Conflict</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#410-Gone"><span class="toc-number">2.4.11.</span> <span class="toc-text">410 Gone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#411-Length-Required"><span class="toc-number">2.4.12.</span> <span class="toc-text">411 Length Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#412-Precondition-Failed"><span class="toc-number">2.4.13.</span> <span class="toc-text">412 Precondition Failed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#413-Payload-Too-Large"><span class="toc-number">2.4.14.</span> <span class="toc-text">413 Payload Too Large</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#414-URI-Too-Long"><span class="toc-number">2.4.15.</span> <span class="toc-text">414 URI Too Long</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#415-Unsupported-Media-Type"><span class="toc-number">2.4.16.</span> <span class="toc-text">415 Unsupported Media Type</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#416-Range-Not-Satisfiable"><span class="toc-number">2.4.17.</span> <span class="toc-text">416 Range Not Satisfiable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#417-Expectation-Failed"><span class="toc-number">2.4.18.</span> <span class="toc-text">417 Expectation Failed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#418-I’m-a-teapot"><span class="toc-number">2.4.19.</span> <span class="toc-text">418 I’m a teapot</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#421-Misdirected-Request"><span class="toc-number">2.4.20.</span> <span class="toc-text">421 Misdirected Request</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#422-Unprocessable-Entity-WebDAV"><span class="toc-number">2.4.21.</span> <span class="toc-text">422 Unprocessable Entity (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#423-Locked-WebDAV"><span class="toc-number">2.4.22.</span> <span class="toc-text">423 Locked (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#424-Failed-Dependency-WebDAV"><span class="toc-number">2.4.23.</span> <span class="toc-text">424 Failed Dependency (WebDAV)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#425-Too-Early"><span class="toc-number">2.4.24.</span> <span class="toc-text">425 Too Early</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#426-Upgrade-Required"><span class="toc-number">2.4.25.</span> <span class="toc-text">426 Upgrade Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#428-Precondition-Required"><span class="toc-number">2.4.26.</span> <span class="toc-text">428 Precondition Required</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#429-Too-Many-Requests"><span class="toc-number">2.4.27.</span> <span class="toc-text">429 Too Many Requests</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#431-Request-Header-Fields-Too-Large"><span class="toc-number">2.4.28.</span> <span class="toc-text">431 Request Header Fields Too Large</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#451-Unavailable-For-Legal-Reasons"><span class="toc-number">2.4.29.</span> <span class="toc-text">451 Unavailable For Legal Reasons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伺服器錯誤（Server-error-responses）"><span class="toc-number">2.5.</span> <span class="toc-text">伺服器錯誤（Server error responses）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#500-Internal-Server-Error"><span class="toc-number">2.5.1.</span> <span class="toc-text">500 Internal Server Error</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#501-Not-Implemented"><span class="toc-number">2.6.</span> <span class="toc-text">501 Not Implemented</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#502-Bad-Gateway"><span class="toc-number">2.7.</span> <span class="toc-text">502 Bad Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#503-Service-Unavailable"><span class="toc-number">2.8.</span> <span class="toc-text">503 Service Unavailable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#504-Gateway-Timeout"><span class="toc-number">2.9.</span> <span class="toc-text">504 Gateway Timeout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#505-HTTP-Version-Not-Supported"><span class="toc-number">2.10.</span> <span class="toc-text">505 HTTP Version Not Supported</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#506-Variant-Also-Negotiates"><span class="toc-number">2.11.</span> <span class="toc-text">506 Variant Also Negotiates</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#507-Insufficient-Storage-WebDAV"><span class="toc-number">2.12.</span> <span class="toc-text">507 Insufficient Storage (WebDAV)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#508-Loop-Detected-WebDAV"><span class="toc-number">2.13.</span> <span class="toc-text">508 Loop Detected (WebDAV)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#510-Not-Extended"><span class="toc-number">2.14.</span> <span class="toc-text">510 Not Extended</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#511-Network-Authentication-Required"><span class="toc-number">2.15.</span> <span class="toc-text">511 Network Authentication Required</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&text=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&is_video=false&description=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（三）：狀態碼&body=Check out this article: https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&title=認識 HTTP 超文本傳輸協定（三）：狀態碼"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/&name=認識 HTTP 超文本傳輸協定（三）：狀態碼&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

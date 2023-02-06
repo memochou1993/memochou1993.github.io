@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言目標是製作一個能夠在一般視窗下，藉由指定關鍵字或網域名稱，使特定網址不被記錄的擴充功能。 建立專案目錄結構如下： 123456|- src/  |- css/  |- html/  |- images/  |- js/  |- manifest.json  manifest.json在 src 資料夾建立 manifest.json 檔： 123456789101112131415161718">
+<meta name="keywords" content="程式設計,JavaScript,Chrome,Chrome Extension">
+<meta property="og:type" content="article">
+<meta property="og:title" content="實作「History Eraser」Chrome Extension 擴充功能">
+<meta property="og:url" content="https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言目標是製作一個能夠在一般視窗下，藉由指定關鍵字或網域名稱，使特定網址不被記錄的擴充功能。 建立專案目錄結構如下： 123456|- src/  |- css/  |- html/  |- images/  |- js/  |- manifest.json  manifest.json在 src 資料夾建立 manifest.json 檔： 123456789101112131415161718">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="實作「History Eraser」Chrome Extension 擴充功能">
+<meta name="twitter:description" content="前言目標是製作一個能夠在一般視窗下，藉由指定關鍵字或網域名稱，使特定網址不被記錄的擴充功能。 建立專案目錄結構如下： 123456|- src/  |- css/  |- html/  |- images/  |- js/  |- manifest.json  manifest.json在 src 資料夾建立 manifest.json 檔： 123456789101112131415161718">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>實作「History Eraser」Chrome Extension 擴充功能</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/10/在-Laravel-6-0-使用-Macros-巨集/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/11/在-macOS-上安裝-Go/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&text=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&is_video=false&description=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作「History Eraser」Chrome Extension 擴充功能&body=Check out this article: https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&name=實作「History Eraser」Chrome Extension 擴充功能&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#manifest-json"><span class="toc-number">3.</span> <span class="toc-text">manifest.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#擴充功能選項"><span class="toc-number">4.</span> <span class="toc-text">擴充功能選項</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要程式"><span class="toc-number">5.</span> <span class="toc-text">主要程式</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        實作「History Eraser」Chrome Extension 擴充功能
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-10-21T14:59:11.000Z" itemprop="datePublished">2019-10-21</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/程式設計/Chrome-Extension/">Chrome Extension</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Chrome/">Chrome</a>, <a class="tag-link" href="/tags/Chrome-Extension/">Chrome Extension</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目標是製作一個能夠在一般視窗下，藉由指定關鍵字或網域名稱，使特定網址不被記錄的擴充功能。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>目錄結構如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|- src/</span><br><span class="line">  |- css/</span><br><span class="line">  |- html/</span><br><span class="line">  |- images/</span><br><span class="line">  |- js/</span><br><span class="line">  |- manifest.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="manifest-json"><a href="#manifest-json" class="headerlink" title="manifest.json"></a>manifest.json</h2><p>在 <code>src</code> 資料夾建立 <code>manifest.json</code> 檔：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"manifest_version"</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"History Eraser"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"Clear browsing history by keywords or domain name."</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0"</span>,</span><br><span class="line">  <span class="attr">"browser_action"</span>: &#123;</span><br><span class="line">    <span class="attr">"default_title"</span>: <span class="string">"History Eraser"</span>,</span><br><span class="line">    <span class="attr">"default_icon"</span>: <span class="string">"images/icon.png"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"background"</span>: &#123;</span><br><span class="line">    <span class="attr">"scripts"</span>: [</span><br><span class="line">      <span class="string">"js/main.js"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"options_ui"</span>: &#123;</span><br><span class="line">    <span class="attr">"page"</span>: <span class="string">"html/options.html"</span>,</span><br><span class="line">    <span class="attr">"open_in_tab"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"permissions"</span>: [</span><br><span class="line">    <span class="string">"history"</span>,</span><br><span class="line">    <span class="string">"storage"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="擴充功能選項"><a href="#擴充功能選項" class="headerlink" title="擴充功能選項"></a>擴充功能選項</h2><p>選項表單的樣式採用 <a href="https://getmdl.io/" target="_blank" rel="noopener">Material Design Lite</a> 框架，下載後將 <code>material.min.css</code> 檔放在 <code>css</code> 資料夾，將 <code>material.min.js</code> 檔放在 <code>js</code> 資料夾。</p>
+<p>在 <code>html</code> 資料夾建立 <code>options.html</code> 檔：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"../css/material.min.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Options<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-grid"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-cell mdl-cell--12-col"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-card"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-card__supporting-text"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"keywords"</span>&gt;</span>Keywords (one per line)<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-textfield mdl-js-textfield"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"keywords"</span> <span class="attr">rows</span>=<span class="string">"10"</span> <span class="attr">class</span>=<span class="string">"mdl-textfield__input"</span> <span class="attr">id</span>=<span class="string">"keywords"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"mdl-textfield__label"</span>&gt;</span><span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"mdl-radio mdl-js-radio mdl-js-ripple-effect"</span> <span class="attr">for</span>=<span class="string">"history.onVisited"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"event"</span> <span class="attr">value</span>=<span class="string">"history.onVisited"</span> <span class="attr">class</span>=<span class="string">"mdl-radio__button"</span> <span class="attr">id</span>=<span class="string">"history.onVisited"</span> <span class="attr">checked</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"mdl-radio__label"</span>&gt;</span>Delete when page is visited<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"mdl-radio mdl-js-radio mdl-js-ripple-effect"</span> <span class="attr">for</span>=<span class="string">"windows.onRemoved"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"event"</span> <span class="attr">value</span>=<span class="string">"windows.onRemoved"</span> <span class="attr">class</span>=<span class="string">"mdl-radio__button"</span> <span class="attr">id</span>=<span class="string">"windows.onRemoved"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"mdl-radio__label"</span>&gt;</span>Delete when window is closed<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-card__actions mdl-card--border"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"</span> <span class="attr">id</span>=<span class="string">"save"</span>&gt;</span></span><br><span class="line">                        Save</span><br><span class="line">                    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../js/options.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">"../js/material.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">    <span class="selector-class">.mdl-card</span> &#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    div &#123;</span></span><br><span class="line"><span class="undefined">        padding: 8px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    textarea &#123;</span></span><br><span class="line"><span class="undefined">        width: 100px;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>js</code> 資料夾建立選項程式 <code>options.js</code> 檔：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 儲存選項</span></span><br><span class="line"><span class="keyword">const</span> saveOptions = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> keywords = <span class="built_in">document</span>.querySelector(<span class="string">'textarea[name="keywords"]'</span>).value;</span><br><span class="line">  <span class="keyword">const</span> event = <span class="built_in">document</span>.querySelector(<span class="string">'input[name="event"]:checked'</span>).value;</span><br><span class="line"></span><br><span class="line">  chrome.storage.sync.set(&#123;</span><br><span class="line">    keywords,</span><br><span class="line">    event,</span><br><span class="line">  &#125;, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">window</span>.close();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 回填選項</span></span><br><span class="line"><span class="keyword">const</span> restoreOptions = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  chrome.storage.sync.get(&#123;</span><br><span class="line">    keywords: <span class="string">''</span>,</span><br><span class="line">    event: <span class="string">'history.onVisited'</span>,</span><br><span class="line">  &#125;, (items) =&gt; &#123;</span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">'textarea[name="keywords"]'</span>).value = items.keywords;</span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">`input[value="<span class="subst">$&#123;items.event&#125;</span>"]`</span>).checked = <span class="literal">true</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, restoreOptions);</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'save'</span>).addEventListener(<span class="string">'click'</span>, saveOptions);</span><br></pre></td></tr></table></figure>
+
+<h2 id="主要程式"><a href="#主要程式" class="headerlink" title="主要程式"></a>主要程式</h2><p>在 <code>js</code> 資料夾建立主要程式 <code>main.js</code> 檔：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> execute = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 從 storage 獲得使用者希望刪除的關鍵字選項</span></span><br><span class="line">  chrome.storage.sync.get(&#123;</span><br><span class="line">    keywords: <span class="string">''</span>,</span><br><span class="line">  &#125;, (items) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> keywords = items.keywords.split(<span class="string">'\n'</span>);</span><br><span class="line"></span><br><span class="line">    keywords.forEach(<span class="function">(<span class="params">keyword</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 利用 search 方法搜尋歷史紀錄</span></span><br><span class="line">      chrome.history.search(&#123;</span><br><span class="line">        text: keyword,</span><br><span class="line">      &#125;, (records) =&gt; &#123;</span><br><span class="line">        records.forEach(<span class="function">(<span class="params">record</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 利用 deleteUrl 方法刪除歷史紀錄</span></span><br><span class="line">          chrome.history.deleteUrl(&#123;</span><br><span class="line">            url: record.url,</span><br><span class="line">          &#125;, () =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.info(<span class="string">`Deleted record: <span class="subst">$&#123;record.url&#125;</span>`</span>);</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handle = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 從 storage 獲得使用者希望觸發的事件選項</span></span><br><span class="line">  chrome.storage.sync.get(&#123;</span><br><span class="line">    event: <span class="string">''</span>,</span><br><span class="line">  &#125;, (items) =&gt; &#123;</span><br><span class="line">    <span class="keyword">switch</span> (items.event) &#123;</span><br><span class="line">      <span class="comment">// 在進入頁面時觸發</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'history.onVisited'</span>: &#123;</span><br><span class="line">        chrome.history.onVisited.addListener(execute);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="comment">// 在關閉視窗時觸發</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">'windows.onRemoved'</span>: &#123;</span><br><span class="line">        chrome.windows.onRemoved.addListener(execute);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="keyword">default</span>: &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在選項變更時觸發</span></span><br><span class="line">chrome.storage.onChanged.addListener(handle);</span><br><span class="line"></span><br><span class="line">handle();</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>icon.png</code> 檔。</p>
+<p>前往<a href="chrome://extensions/" target="_blank" rel="noopener">擴充功能</a>打開「開發人員模式」，點選「載入未封裝項目」。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#manifest-json"><span class="toc-number">3.</span> <span class="toc-text">manifest.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#擴充功能選項"><span class="toc-number">4.</span> <span class="toc-text">擴充功能選項</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要程式"><span class="toc-number">5.</span> <span class="toc-text">主要程式</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&text=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&is_video=false&description=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=實作「History Eraser」Chrome Extension 擴充功能&body=Check out this article: https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&title=實作「History Eraser」Chrome Extension 擴充功能"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/10/實作「History-Eraser」Chrome-Extension-擴充功能/&name=實作「History Eraser」Chrome Extension 擴充功能&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

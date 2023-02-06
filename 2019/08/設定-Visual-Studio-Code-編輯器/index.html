@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="記錄平常使用的設定。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+<meta name="keywords" content="編輯器,Visual Studio Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設定 Visual Studio Code 編輯器">
+<meta property="og:url" content="https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="記錄平常使用的設定。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-12-01T13:41:54.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="設定 Visual Studio Code 編輯器">
+<meta name="twitter:description" content="記錄平常使用的設定。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>設定 Visual Studio Code 編輯器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/08/在-MacOS-上安裝-docker-sync-鏡像同步工具/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/08/在-MacOS-上使用-Laradock-自動化腳本/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&text=設定 Visual Studio Code 編輯器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&is_video=false&description=設定 Visual Studio Code 編輯器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=設定 Visual Studio Code 編輯器&body=Check out this article: https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&name=設定 Visual Studio Code 編輯器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        設定 Visual Studio Code 編輯器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-08-15T16:55:04.000Z" itemprop="datePublished">2019-08-16</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/其他/編輯器/">編輯器</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Visual-Studio-Code/">Visual Studio Code</a>, <a class="tag-link" href="/tags/編輯器/">編輯器</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>記錄平常使用的設定。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"editor.fontSize"</span>: <span class="number">16</span>,</span><br><span class="line">  <span class="attr">"files.autoSaveDelay"</span>: <span class="number">250</span>,</span><br><span class="line">  <span class="attr">"php-cs-fixer.lastDownload"</span>: <span class="number">1668616728236</span>,</span><br><span class="line">  <span class="attr">"window.zoomLevel"</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">"editor.fontFamily"</span>: <span class="string">"Operator Mono"</span>,</span><br><span class="line">  <span class="attr">"editor.suggestSelection"</span>: <span class="string">"first"</span>,</span><br><span class="line">  <span class="attr">"files.autoSave"</span>: <span class="string">"afterDelay"</span>,</span><br><span class="line">  <span class="attr">"go.formatTool"</span>: <span class="string">"goimports"</span>,</span><br><span class="line">  <span class="attr">"javascript.updateImportsOnFileMove.enabled"</span>: <span class="string">"always"</span>,</span><br><span class="line">  <span class="attr">"php-cs-fixer.executablePath"</span>: <span class="string">"$&#123;extensionPath&#125;/php-cs-fixer.phar"</span>,</span><br><span class="line">  <span class="attr">"powermode.combo.counterEnabled"</span>: <span class="string">"default"</span>,</span><br><span class="line">  <span class="attr">"powermode.combo.location"</span>: <span class="string">"statusbar"</span>,</span><br><span class="line">  <span class="attr">"powermode.combo.timerEnabled"</span>: <span class="string">"hide"</span>,</span><br><span class="line">  <span class="attr">"terminal.integrated.cursorStyle"</span>: <span class="string">"underline"</span>,</span><br><span class="line">  <span class="attr">"terminal.integrated.fontFamily"</span>: <span class="string">"SauceCodePro Nerd Font"</span>,</span><br><span class="line">  <span class="attr">"vsintellicode.modify.editor.suggestSelection"</span>: <span class="string">"automaticallyOverrodeDefaultValue"</span>,</span><br><span class="line">  <span class="attr">"workbench.colorTheme"</span>: <span class="string">"Super One Dark"</span>,</span><br><span class="line">  <span class="attr">"workbench.editor.untitled.hint"</span>: <span class="string">"hidden"</span>,</span><br><span class="line">  <span class="attr">"workbench.startupEditor"</span>: <span class="string">"none"</span>,</span><br><span class="line">  <span class="attr">"[css]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"vscode.css-language-features"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[dart]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.suggestSelection"</span>: <span class="string">"first"</span>,</span><br><span class="line">    <span class="attr">"editor.tabCompletion"</span>: <span class="string">"onlySnippets"</span>,</span><br><span class="line">    <span class="attr">"editor.rulers"</span>: [</span><br><span class="line">      <span class="number">80</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnType"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"editor.selectionHighlight"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"editor.suggest.snippetsPreventQuickSuggestions"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"editor.wordBasedSuggestions"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[javascript]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"vscode.typescript-language-features"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[javascriptreact]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"vscode.typescript-language-features"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[json]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"vscode.json-language-features"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[php]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">4</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"junstyle.php-cs-fixer"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[rust]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"rust-lang.rust-analyzer"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[typescript]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"vscode.typescript-language-features"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[typescriptreact]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"vscode.typescript-language-features"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"[vue]"</span>: &#123;</span><br><span class="line">    <span class="attr">"editor.tabSize"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">"editor.defaultFormatter"</span>: <span class="string">"octref.vetur"</span>,</span><br><span class="line">    <span class="attr">"editor.formatOnSave"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"emmet.includeLanguages"</span>: &#123;</span><br><span class="line">    <span class="attr">"javascript"</span>: <span class="string">"javascriptreact"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"markdownlint.config"</span>: &#123;</span><br><span class="line">    <span class="attr">"MD029"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"MD033"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"rust-analyzer.checkOnSave.extraArgs"</span>: [</span><br><span class="line">    <span class="string">"--target-dir"</span>,</span><br><span class="line">    <span class="string">"/tmp/rust-analyzer-check"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"rust-analyzer.server.extraEnv"</span>: &#123;</span><br><span class="line">    <span class="attr">"RUSTFLAGS"</span>: <span class="string">"--cfg=web_sys_unstable_apis"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"diffEditor.ignoreTrimWhitespace"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"eslint.alwaysShowStatus"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"git.autofetch"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"git.confirmSync"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"go.toolsManagement.autoUpdate"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"go.useLanguageServer"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"headwind.runOnSave"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"liveServer.settings.donotShowInfoMsg"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"namespaceResolver.sortAlphabetically"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"powermode.enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"powermode.shake.enabled"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"tabnine.experimentalAutoImports"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"terminal.integrated.cursorBlinking"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&text=設定 Visual Studio Code 編輯器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&is_video=false&description=設定 Visual Studio Code 編輯器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=設定 Visual Studio Code 編輯器&body=Check out this article: https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&title=設定 Visual Studio Code 編輯器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/08/設定-Visual-Studio-Code-編輯器/&name=設定 Visual Studio Code 編輯器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

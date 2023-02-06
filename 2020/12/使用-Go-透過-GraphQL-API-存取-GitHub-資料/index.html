@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="做法申請令牌先至 GitHub 的 Personal access tokens 頁面申請一個存取令牌。根據需求選擇令牌的作用域，例如要存取公開的儲存庫，就將 public_repo 打勾。 探索使用 GitHub GraphQL API Explorer 進行探索。 實作新增 main.go 檔： 1234567891011121314151617181920212223242526272829">
+<meta name="keywords" content="程式設計,GitHub,GraphQL,Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Go 透過 GraphQL API 存取 GitHub 資料">
+<meta property="og:url" content="https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="做法申請令牌先至 GitHub 的 Personal access tokens 頁面申請一個存取令牌。根據需求選擇令牌的作用域，例如要存取公開的儲存庫，就將 public_repo 打勾。 探索使用 GitHub GraphQL API Explorer 進行探索。 實作新增 main.go 檔： 1234567891011121314151617181920212223242526272829">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Go 透過 GraphQL API 存取 GitHub 資料">
+<meta name="twitter:description" content="做法申請令牌先至 GitHub 的 Personal access tokens 頁面申請一個存取令牌。根據需求選擇令牌的作用域，例如要存取公開的儲存庫，就將 public_repo 打勾。 探索使用 GitHub GraphQL API Explorer 進行探索。 實作新增 main.go 檔： 1234567891011121314151617181920212223242526272829">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Go 透過 GraphQL API 存取 GitHub 資料</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/12/使用-Go-為陣列平均分組/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/12/認識-MongoDB-資料庫的-BSON-資料交換格式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&text=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&is_video=false&description=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 透過 GraphQL API 存取 GitHub 資料&body=Check out this article: https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&name=使用 Go 透過 GraphQL API 存取 GitHub 資料&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#申請令牌"><span class="toc-number">1.1.</span> <span class="toc-text">申請令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索"><span class="toc-number">1.2.</span> <span class="toc-text">探索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作"><span class="toc-number">1.3.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#補充"><span class="toc-number">2.</span> <span class="toc-text">補充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Go 透過 GraphQL API 存取 GitHub 資料
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-12-03T12:53:42.000Z" itemprop="datePublished">2020-12-03</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Go/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/GitHub/">GitHub</a>, <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/GraphQL/">GraphQL</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><h3 id="申請令牌"><a href="#申請令牌" class="headerlink" title="申請令牌"></a>申請令牌</h3><p>先至 GitHub 的 <a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Personal access tokens</a> 頁面申請一個存取令牌。根據需求選擇令牌的作用域，例如要存取公開的儲存庫，就將 <code>public_repo</code> 打勾。</p>
+<h3 id="探索"><a href="#探索" class="headerlink" title="探索"></a>探索</h3><p>使用 <a href="https://developer.github.com/v4/explorer/" target="_blank" rel="noopener">GitHub GraphQL API Explorer</a> 進行探索。</p>
+<h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><p>新增 <code>main.go</code> 檔：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bytes"</span></span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根據查詢條件的回應結果定義一個回應結構體</span></span><br><span class="line"><span class="keyword">type</span> Response <span class="keyword">struct</span> &#123;</span><br><span class="line">	Data <span class="keyword">struct</span> &#123;</span><br><span class="line">		User <span class="keyword">struct</span> &#123;</span><br><span class="line">			Repositories <span class="keyword">struct</span> &#123;</span><br><span class="line">				Nodes []<span class="keyword">struct</span> &#123;</span><br><span class="line">					Name       <span class="keyword">string</span> <span class="string">`json:"name"`</span></span><br><span class="line">				&#125; <span class="string">`json:"nodes"`</span></span><br><span class="line">			&#125; <span class="string">`json:"repositories"`</span></span><br><span class="line">		&#125; <span class="string">`json:"user"`</span></span><br><span class="line">	&#125; <span class="string">`json:"data"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 獲取資源</span></span><br><span class="line">	response, err := Fetch(context.Background())</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Println(err.Error())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(response)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 獲取資源</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Fetch</span><span class="params">(ctx context.Context)</span> <span class="params">(Response, error)</span></span> &#123;</span><br><span class="line">	response := Response&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 制定查詢條件</span></span><br><span class="line">	q := <span class="keyword">struct</span> &#123;</span><br><span class="line">		Query <span class="keyword">string</span> <span class="string">`json:"query"`</span></span><br><span class="line">	&#125;&#123;</span><br><span class="line">		Query: <span class="string">`</span></span><br><span class="line"><span class="string">			query &#123;</span></span><br><span class="line"><span class="string">			  user(login: "memochou1993") &#123;</span></span><br><span class="line"><span class="string">				repositories(first: 10) &#123;</span></span><br><span class="line"><span class="string">				  nodes &#123;</span></span><br><span class="line"><span class="string">					name</span></span><br><span class="line"><span class="string">				  &#125;</span></span><br><span class="line"><span class="string">				&#125;</span></span><br><span class="line"><span class="string">			  &#125;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		`</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	body := &amp;bytes.Buffer&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 序列化到 body 變數</span></span><br><span class="line">	<span class="keyword">if</span> err := json.NewEncoder(body).Encode(q); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> response, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 建立請求</span></span><br><span class="line">	req, err := http.NewRequest(http.MethodPost, <span class="string">"https://api.github.com/graphql"</span>, body)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> response, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	req.Header.Add(<span class="string">"Authorization"</span>, fmt.Sprintf(<span class="string">"Bearer %s"</span>, <span class="string">"&lt;TOKEN&gt;"</span>))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 發送請求</span></span><br><span class="line">	resp, err := http.DefaultClient.Do(req.WithContext(ctx))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> response, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> err := resp.Body.Close(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Println(err.Error())</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 反序列化到 response 變數</span></span><br><span class="line">	<span class="keyword">if</span> err := json.NewDecoder(resp.Body).Decode(&amp;response); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> response, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> response, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出結果：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&#123;&#123;[&#123;kuntai&#125; &#123;portfolio&#125; &#123;surl&#125; &#123;memochou1993.github.io&#125; &#123;blog&#125; &#123;jwt-lumen&#125; &#123;doaj&#125; &#123;laravel-foundation-preset&#125; &#123;journal&#125; &#123;post&#125;]&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h2><p>回應的結構體可以使用 <a href="https://mholt.github.io/json-to-go/" target="_blank" rel="noopener">JSON-to-Go</a> 這個線上工具將 JSON 轉換成 Go 的結構體。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/github-graphql-api-example" target="_blank" rel="noopener">github-graphql-api-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://docs.github.com/en/free-pro-team@latest/developers/apps/scopes-for-oauth-apps" target="_blank" rel="noopener">GitHub Docs - Scopes for OAuth Apps</a></li>
+<li><a href="https://www.youtube.com/watch?v=rxjJubDU80U" target="_blank" rel="noopener">Getting GitHub Stars with Go and GraphQL</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#申請令牌"><span class="toc-number">1.1.</span> <span class="toc-text">申請令牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#探索"><span class="toc-number">1.2.</span> <span class="toc-text">探索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#實作"><span class="toc-number">1.3.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#補充"><span class="toc-number">2.</span> <span class="toc-text">補充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&text=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&is_video=false&description=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 透過 GraphQL API 存取 GitHub 資料&body=Check out this article: https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&title=使用 Go 透過 GraphQL API 存取 GitHub 資料"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/12/使用-Go-透過-GraphQL-API-存取-GitHub-資料/&name=使用 Go 透過 GraphQL API 存取 GitHub 資料&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="簡介網際網路協定（Internet Protocol，簡稱 IP）是用於封包交換資料網路的協定。 IP 是在 TCP/IP 協定套組中網路層的主要協定，任務僅僅是根據來源主機和目的主機的位址來傳送資料。為此目的，IP 定義了定址方法和資料報的封裝結構。第一個架構的主要版本為 IPv4，目前仍然是廣泛使用的網際網路協定，而世界各地正在積極部署 IPv6。 IP 位址IP 位址的全名是「網際網路協定位">
+<meta name="keywords" content="TCP&#x2F;IP,IP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="認識 IP 網際網路協定">
+<meta property="og:url" content="https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="簡介網際網路協定（Internet Protocol，簡稱 IP）是用於封包交換資料網路的協定。 IP 是在 TCP/IP 協定套組中網路層的主要協定，任務僅僅是根據來源主機和目的主機的位址來傳送資料。為此目的，IP 定義了定址方法和資料報的封裝結構。第一個架構的主要版本為 IPv4，目前仍然是廣泛使用的網際網路協定，而世界各地正在積極部署 IPv6。 IP 位址IP 位址的全名是「網際網路協定位">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-06T15:34:46.395Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="認識 IP 網際網路協定">
+<meta name="twitter:description" content="簡介網際網路協定（Internet Protocol，簡稱 IP）是用於封包交換資料網路的協定。 IP 是在 TCP/IP 協定套組中網路層的主要協定，任務僅僅是根據來源主機和目的主機的位址來傳送資料。為此目的，IP 定義了定址方法和資料報的封裝結構。第一個架構的主要版本為 IPv4，目前仍然是廣泛使用的網際網路協定，而世界各地正在積極部署 IPv6。 IP 位址IP 位址的全名是「網際網路協定位">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>認識 IP 網際網路協定</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/02/認識-TCP-傳輸控制協定和-UDP-用戶資料包協定/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/02/認識-DNS-網域名稱系統/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&text=認識 IP 網際網路協定"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&is_video=false&description=認識 IP 網際網路協定"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 IP 網際網路協定&body=Check out this article: https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&name=認識 IP 網際網路協定&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-位址"><span class="toc-number">2.</span> <span class="toc-text">IP 位址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子網路遮罩"><span class="toc-number">3.</span> <span class="toc-text">子網路遮罩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#切割與計算"><span class="toc-number">3.1.</span> <span class="toc-text">切割與計算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同屬一個子網路的判斷"><span class="toc-number">3.2.</span> <span class="toc-text">同屬一個子網路的判斷</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#位址一：192-168-1-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">位址一：192.168.1.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#位址二：192-168-1-2"><span class="toc-number">3.2.2.</span> <span class="toc-text">位址二：192.168.1.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#位址三：192-168-2-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">位址三：192.168.2.1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#類別"><span class="toc-number">4.</span> <span class="toc-text">類別</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-類位址"><span class="toc-number">4.1.</span> <span class="toc-text">A 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-類位址"><span class="toc-number">4.2.</span> <span class="toc-text">B 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-類位址"><span class="toc-number">4.3.</span> <span class="toc-text">C 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-類位址"><span class="toc-number">4.4.</span> <span class="toc-text">D 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#E-類位址"><span class="toc-number">4.5.</span> <span class="toc-text">E 類位址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        認識 IP 網際網路協定
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-21T12:13:48.000Z" itemprop="datePublished">2022-02-21</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/其他/TCP-IP/">TCP/IP</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/IP/">IP</a>, <a class="tag-link" href="/tags/TCP-IP/">TCP/IP</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>網際網路協定（Internet Protocol，簡稱 IP）是用於封包交換資料網路的協定。</p>
+<p>IP 是在 TCP/IP 協定套組中網路層的主要協定，任務僅僅是根據來源主機和目的主機的位址來傳送資料。為此目的，IP 定義了定址方法和資料報的封裝結構。第一個架構的主要版本為 IPv4，目前仍然是廣泛使用的網際網路協定，而世界各地正在積極部署 IPv6。</p>
+<h2 id="IP-位址"><a href="#IP-位址" class="headerlink" title="IP 位址"></a>IP 位址</h2><p>IP 位址的全名是「網際網路協定位址」（Internet Protocol Address）。這是一組數字，用來識別連接到網路的設備。IP 位址是由 32 位元的二進位數組成，例如 <code>10101100 00000000 00000000 00000001</code>。但這樣的數字不易於理解。為了方便記憶，通常會將 IP 位址表示為十進位數，中間以小數點隔開，例如 <code>172.0.0.1</code>。</p>
+<p>公用 IP 位址是由網際網路服務提供者（ISP）所分配的，是路由器用於與廣域網路通訊的位址。</p>
+<p>家庭網路上的每個設備（包含筆記型電腦、智慧電視或手機）都擁有由路由器分配的唯一私人 IP 位址。私人 IP 位址僅在區域網路中運作。相同區域網路（LAN）上的兩個設備不能使用相同的私人 IP 位址。</p>
+<p>之所以需要私人 IP 位址，是因為人們使用的設備數量無法分配到足够的 IP 位址。在 1980 年代，當 IPv4 協定建立時，引入了 32 位元數字 IP 位址。相當於大約 43 億個唯一的 IP 位址。不過，專家很快就發現，人們需要更多 IP 位址。</p>
+<p>採用私人 IP 位址和網路位址轉換（NAT）解決了這個問題。NAT 位於路由器上，將流量從廣域網路重新導向到位於相同網路上的所有設備。路由器也會為這些設備分配唯一的私人 IP 位址。這些設備無法透過網際網路進行路由，因此全球許多設備可以擁有相同的私人 IP 而不會發生衝突。</p>
+<h2 id="子網路遮罩"><a href="#子網路遮罩" class="headerlink" title="子網路遮罩"></a>子網路遮罩</h2><p>子網路遮罩（subnet mask）可用規劃子網路，將 IP 分成不同網段，可以用來有效管理和規劃區域網路。</p>
+<p>IP 位址由網路元件和主機元件組成，例如以 <code>192.168.123.132</code> 為例。前三個八位元組（<code>192.168.123.</code>）代表網路，最後一個八位元組定義網路上的設備。</p>
+<p>IP 位址由 32 個二進位位元（4x8）組成，但由於攏長且難以閱讀，通常使用十進位小數點系統來表示。</p>
+<pre><code>`192.168.123.132` = `11000000.10101000.01111011.10000100`</code></pre><p>子網路遮罩反映 IP 位址中的網路部分。它可能看起來像這樣：</p>
+<pre><code>`255.255.255.0` = `11111111.11111111.11111111.00000000`</code></pre><h3 id="切割與計算"><a href="#切割與計算" class="headerlink" title="切割與計算"></a>切割與計算</h3><p>以下子網路遮罩有 8 個連續的 <code>1</code>，用 <code>/8</code> 表示，有 16,777,216 個 IP 可使用。</p>
+<pre><code>`255.0.0.0` = `11111111.00000000.00000000.00000000`</code></pre><p>以下子網路遮罩有 16 個連續的 <code>1</code>，用 <code>/16</code> 表示，有 65,536 個 IP 可使用。</p>
+<pre><code>`255.255.0.0` = `11111111.11111111.00000000.00000000`</code></pre><p>以下子網路遮罩有 24 個連續的 <code>1</code>，用 <code>/24</code> 表示，有 256 個 IP 可使用。</p>
+<pre><code>`255.255.255.0` = `11111111.11111111.11111111.00000000`</code></pre><p>以下子網路遮罩有 25 個連續的 <code>1</code>，用 <code>/25</code> 表示，有 128 個 IP 可使用。</p>
+<pre><code>`255.255.255.128` = `11111111.11111111.11111111.10000000`</code></pre><h3 id="同屬一個子網路的判斷"><a href="#同屬一個子網路的判斷" class="headerlink" title="同屬一個子網路的判斷"></a>同屬一個子網路的判斷</h3><p>判斷 IP 位置是否同屬一個子網路時，先轉換成二進制，再使用 AND 運算方法。</p>
+<h4 id="位址一：192-168-1-1"><a href="#位址一：192-168-1-1" class="headerlink" title="位址一：192.168.1.1"></a>位址一：<code>192.168.1.1</code></h4><pre><code>    11000000 10101000 00000001 00000001 (192.168.1.1)
+AND 11111111 11111111 11111111 00000000 (255.255.255.0)
+  = 11000000 10101000 00000001 00000000 (192.168.1.0)</code></pre><h4 id="位址二：192-168-1-2"><a href="#位址二：192-168-1-2" class="headerlink" title="位址二：192.168.1.2"></a>位址二：<code>192.168.1.2</code></h4><pre><code>    11000000 10101000 00000001 00000010 (192.168.1.2)
+AND 11111111 11111111 11111111 00000000 (255.255.255.0)
+  = 11000000 10101000 00000001 00000000 (192.168.1.0)</code></pre><h4 id="位址三：192-168-2-1"><a href="#位址三：192-168-2-1" class="headerlink" title="位址三：192.168.2.1"></a>位址三：<code>192.168.2.1</code></h4><pre><code>    11000000 10101000 00000010 00000001 (192.168.2.1)
+AND 11111111 11111111 11111111 00000000 (255.255.255.0)
+  = 11000000 10101000 00000001 00000000 (192.168.2.0)</code></pre><p>得到的結果為，前兩個 IP 位置屬於同一個子網路，而第三個則屬於其它子網路。</p>
+<h2 id="類別"><a href="#類別" class="headerlink" title="類別"></a>類別</h2><p>IP 位址分為三類：A、B 和 C，也存在 D 和 E，但最終不會使用 D 和 E。每個類別都有不同的預設子網路遮罩。</p>
+<h3 id="A-類位址"><a href="#A-類位址" class="headerlink" title="A 類位址"></a>A 類位址</h3><p>A 類網路使用 <code>255.0.0.0</code> 的子網路遮罩，並將 0-127 作為其第一個八位元組。它允許 126 個網路和每個網路約 1700 萬台主機。</p>
+<h3 id="B-類位址"><a href="#B-類位址" class="headerlink" title="B 類位址"></a>B 類位址</h3><p>B 類位址使用 <code>255.255.0.0</code> 的子網路遮罩，並將 128-191 作為其第一個八位元組。它被中大型網路使用。B 類位址允許大約 16000 個網路和每個網路 65000 台主機。</p>
+<h3 id="C-類位址"><a href="#C-類位址" class="headerlink" title="C 類位址"></a>C 類位址</h3><p>C 類位址用於區域網路（LAN），允許 200 萬個網路，每個網路有 254 台主機。C 類位址使用 <code>255.255.255.0</code> 的子網路遮罩，第一個八位元組為 192-223。</p>
+<h3 id="D-類位址"><a href="#D-類位址" class="headerlink" title="D 類位址"></a>D 類位址</h3><p>D 類保留用於（為多個用戶傳輸串流媒體和其他資料）。它的範圍從 224 到 239，並且沒有子網路遮罩，因為不會針對特定主機進行多播。</p>
+<h3 id="E-類位址"><a href="#E-類位址" class="headerlink" title="E 類位址"></a>E 類位址</h3><p>E 類的範圍為 240 到 255，並且沒有子網路遮罩。用於實驗和研究目的。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://nordvpn.com/zh-tw/blog/ip-weizhi-leixing/" target="_blank" rel="noopener">IP 位址類型</a></li>
+<li><a href="https://nordvpn.com/zh-tw/blog/ziwanglu-zhezhao/" target="_blank" rel="noopener">子網路遮罩是什麼？</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP-位址"><span class="toc-number">2.</span> <span class="toc-text">IP 位址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子網路遮罩"><span class="toc-number">3.</span> <span class="toc-text">子網路遮罩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#切割與計算"><span class="toc-number">3.1.</span> <span class="toc-text">切割與計算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同屬一個子網路的判斷"><span class="toc-number">3.2.</span> <span class="toc-text">同屬一個子網路的判斷</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#位址一：192-168-1-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">位址一：192.168.1.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#位址二：192-168-1-2"><span class="toc-number">3.2.2.</span> <span class="toc-text">位址二：192.168.1.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#位址三：192-168-2-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">位址三：192.168.2.1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#類別"><span class="toc-number">4.</span> <span class="toc-text">類別</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-類位址"><span class="toc-number">4.1.</span> <span class="toc-text">A 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-類位址"><span class="toc-number">4.2.</span> <span class="toc-text">B 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-類位址"><span class="toc-number">4.3.</span> <span class="toc-text">C 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#D-類位址"><span class="toc-number">4.4.</span> <span class="toc-text">D 類位址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#E-類位址"><span class="toc-number">4.5.</span> <span class="toc-text">E 類位址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&text=認識 IP 網際網路協定"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&is_video=false&description=認識 IP 網際網路協定"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 IP 網際網路協定&body=Check out this article: https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&title=認識 IP 網際網路協定"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/認識-IP-網際網路協定/&name=認識 IP 網際網路協定&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

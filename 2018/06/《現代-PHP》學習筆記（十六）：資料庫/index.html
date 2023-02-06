@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  資料庫PHP 應用程式以各種資料庫來儲存資料，例如 MySQL、PostgreSQL、SQLite 等。MySQL 使用了 mysqli 擴充，添加了許多 mysqli_*() 函式到 PHP 中。 PDO 擴充PDO（PHP Data Objects）是一組 PHP 類別，可以使用單一使用者介面和許多">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（十六）：資料庫">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  資料庫PHP 應用程式以各種資料庫來儲存資料，例如 MySQL、PostgreSQL、SQLite 等。MySQL 使用了 mysqli 擴充，添加了許多 mysqli_*() 函式到 PHP 中。 PDO 擴充PDO（PHP Data Objects）是一組 PHP 類別，可以使用單一使用者介面和許多">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（十六）：資料庫">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  資料庫PHP 應用程式以各種資料庫來儲存資料，例如 MySQL、PostgreSQL、SQLite 等。MySQL 使用了 mysqli 擴充，添加了許多 mysqli_*() 函式到 PHP 中。 PDO 擴充PDO（PHP Data Objects）是一組 PHP 類別，可以使用單一使用者介面和許多">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（十六）：資料庫</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/《學會-C-語言》學習筆記（二）：流程圖/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&text=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&is_video=false&description=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（十六）：資料庫&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&name=《現代 PHP》學習筆記（十六）：資料庫&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫"><span class="toc-number">3.</span> <span class="toc-text">資料庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PDO-擴充"><span class="toc-number">4.</span> <span class="toc-text">PDO 擴充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫連線和-DSN"><span class="toc-number">5.</span> <span class="toc-text">資料庫連線和 DSN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫認證資訊"><span class="toc-number">6.</span> <span class="toc-text">資料庫認證資訊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#預備陳述式"><span class="toc-number">7.</span> <span class="toc-text">預備陳述式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查詢結果"><span class="toc-number">8.</span> <span class="toc-text">查詢結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交易"><span class="toc-number">9.</span> <span class="toc-text">交易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（十六）：資料庫
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-07T01:59:37.000Z" itemprop="datePublished">2018-06-07</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Wnmp 3.1.0</li>
+</ul>
+<h2 id="資料庫"><a href="#資料庫" class="headerlink" title="資料庫"></a>資料庫</h2><p>PHP 應用程式以各種資料庫來儲存資料，例如 <code>MySQL</code>、<code>PostgreSQL</code>、<code>SQLite</code> 等。<code>MySQL</code> 使用了 <code>mysqli</code> 擴充，添加了許多 <code>mysqli_*()</code> 函式到 PHP 中。</p>
+<h2 id="PDO-擴充"><a href="#PDO-擴充" class="headerlink" title="PDO 擴充"></a>PDO 擴充</h2><p>PDO（PHP Data Objects）是一組 PHP 類別，可以使用單一使用者介面和許多不同的 SQL 資料庫溝通，讓資料庫的實作方法被抽象化出來。</p>
+<blockquote>
+<p>即使 PDO 提供單一介面給不同資料庫，仍然需要撰寫 SQL 陳述式。建議在使用 PDO 時撰寫 ANSI/ISO SQL，避免在切換資料庫系統時導致 SQL 無法使用。</p>
+</blockquote>
+<h2 id="資料庫連線和-DSN"><a href="#資料庫連線和-DSN" class="headerlink" title="資料庫連線和 DSN"></a>資料庫連線和 DSN</h2><p>在 PHP 中實例化 PDO 類別，利用 PDO 實體可以建立一個 PHP 和資料庫之間的連線。</p>
+<p>PDO 類別建構式接受一個字串參數，稱作 <code>DSN</code> 或資料來源名稱，<code>DSN</code> 的連線字串大致上包含了以下：</p>
+<ul>
+<li>主機名稱（<code>host</code>）</li>
+<li>資料庫名稱（<code>dbname</code>）</li>
+<li>埠號碼（<code>port</code>）</li>
+<li>字元組（<code>charset</code>）</li>
+</ul>
+<p>範例 5-18：PDO 建構式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    $pdo = <span class="keyword">new</span> PDO(</span><br><span class="line">        <span class="string">'mysql:host=127.0.0.1;dbname=books;port=3306;charset=utf8'</span>,</span><br><span class="line">        <span class="string">'USERNAME'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span></span><br><span class="line">    );</span><br><span class="line">&#125; <span class="keyword">catch</span> (PDOException $e) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Database connection failed"</span>;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>DSN</code> 以 <code>mysql:</code> 開頭，在「<code>:</code>」後指定 <code>host</code>、<code>dbname</code>、<code>port</code> 和 <code>charset</code>。</li>
+</ul>
+<h2 id="資料庫認證資訊"><a href="#資料庫認證資訊" class="headerlink" title="資料庫認證資訊"></a>資料庫認證資訊</h2><p>絕對不要在 PHP 檔案中寫入資料庫認證資訊，應該要把資料庫認證資訊移到根目錄之下的部署檔，在需要時引用到 PHP 檔案。</p>
+<blockquote>
+<p>絕對不要版本控制資料庫認證資訊，應該要寫入 <code>.gitignore</code> 檔以忽略版本控制。</p>
+</blockquote>
+<p>接下來的範例，其目錄結構如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">|- settings.php</span><br><span class="line">|- public_html/</span><br><span class="line">  |- index.php</span><br></pre></td></tr></table></figure>
+
+<p><code>settings.php</code> 檔如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$settings = [</span><br><span class="line">    <span class="string">'host'</span> =&gt; <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    <span class="string">'port'</span> =&gt; <span class="string">'3306'</span>,</span><br><span class="line">    <span class="string">'name'</span> =&gt; <span class="string">'books'</span>,</span><br><span class="line">    <span class="string">'username'</span> =&gt; <span class="string">'root'</span>,</span><br><span class="line">    <span class="string">'password'</span> =&gt; <span class="string">'jlwaxhaw'</span>,</span><br><span class="line">    <span class="string">'charset'</span> =&gt; <span class="string">'utf8'</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>範例 5-19：外部設定的 PDO 建構式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'settings.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    $pdo = <span class="keyword">new</span> PDO(</span><br><span class="line">        sprintf(</span><br><span class="line">            <span class="string">'mysql:host=%s;dbname=%s;port=%s;charset=%s'</span>,</span><br><span class="line">            $settings[<span class="string">'host'</span>],</span><br><span class="line">            $settings[<span class="string">'name'</span>],</span><br><span class="line">            $settings[<span class="string">'port'</span>],</span><br><span class="line">            $settings[<span class="string">'charset'</span>]</span><br><span class="line">        ),</span><br><span class="line">        $settings[<span class="string">'username'</span>],</span><br><span class="line">        $settings[<span class="string">'password'</span>]</span><br><span class="line">    );</span><br><span class="line">&#125; <span class="keyword">catch</span> (PDOException $e) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Database connection failed"</span>;</span><br><span class="line">    <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="預備陳述式"><a href="#預備陳述式" class="headerlink" title="預備陳述式"></a>預備陳述式</h2><p>初學的開發者可能會建立一個 SQL 陳述式如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$sql = sprintf(</span><br><span class="line">    <span class="string">'SELECT id FROM users WHERE email = "%s"'</span>,</span><br><span class="line">    filter_input(INPUT_GET, <span class="string">'email'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>這提供了一個好方法讓駭客入侵資料庫，幸好 PDO 擴充引入了預備陳述式和範圍（<code>bound</code>）參數，讓消毒使用者輸入變得非常簡單。</li>
+</ul>
+<p>以 PDO 實體的 <code>prepare()</code> 方法獲取預備陳述式的物件，此方法接受一個 SQL 陳述式字串作為第一個參數，並回傳一個 <code>PDOStatement</code> 實體。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$sql = <span class="string">'SELECT id FROM users WHERE email = :email'</span>;</span><br><span class="line">$statement = $pdo-&gt;prepare($sql);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>:email</code> 作為名稱占位符，可以安全地綁定任何値。</li>
+</ul>
+<p>範例 5-20：帶有電子郵件位址的預備陳述式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$sql = <span class="string">'SELECT id FROM users WHERE email = :email'</span>;</span><br><span class="line">$email = filter_input(INPUT_GET, <span class="string">'email'</span>);</span><br><span class="line"></span><br><span class="line">$statement = $pdo-&gt;prepare($sql);</span><br><span class="line">$statement-&gt;bindValue(<span class="string">':email'</span>, $email);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>bindValue()</code> 方法的第三個參數是資料型態，沒有的話會假設資料為字串型態。</li>
+</ul>
+<p>範例 5-21：帶有 ID 的預備陳述式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$sql = <span class="string">'SELECT email FROM users WHERE id = :id'</span>;</span><br><span class="line">$userId = filter_input(INPUT_GET, <span class="string">'id'</span>);</span><br><span class="line"></span><br><span class="line">$statement = $pdo-&gt;prepare($sql);</span><br><span class="line">$statement-&gt;bindValue(<span class="string">':id'</span>, $userId, PDO::PARAM_INT);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 <code>PDO::PARAM_INT</code> 常數作為 <code>bindValue()</code> 方法的第三個參數。</li>
+</ul>
+<p>其他的 PDO 常數還有：</p>
+<ul>
+<li><code>PDO::PARAM_BOOL</code></li>
+<li><code>PDO::PARAM_NULL</code></li>
+<li><code>PDO::PARAM_INT</code></li>
+<li><code>PDO::PARAM_STR</code></li>
+</ul>
+<h2 id="查詢結果"><a href="#查詢結果" class="headerlink" title="查詢結果"></a>查詢結果</h2><p>使用預備陳述式的 <code>execute()</code> 方法執行 SQL 陳述式，包括 <code>INSERT</code>、<code>UPDATE</code> 或 <code>DELETE</code> 陳述式。</p>
+<p>使用 <code>fetch()</code>、<code>fetchAll()</code>、<code>fetchColumn</code> 和 <code>fetchObject()</code> 方法，可以擷取查詢結果。</p>
+<p>範例 5-22：預備陳述式的結果作為關聯陣列</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;execute();</span><br><span class="line"><span class="keyword">while</span> (($result = $statement-&gt;fetch(PDO::FETCH_ASSOC)) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $result[<span class="string">'email'</span>], PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>fetch()</code> 方法適合用在記憶體無法完全容納整個查詢結果的時候。</li>
+</ul>
+<p>以下常數皆可作為 <code>fetch()</code> 方法的第一個參數：</p>
+<ul>
+<li><code>PDO::FETCH_ASSOC</code> 會回傳以資料庫欄位名稱作為索引鍵的陣列</li>
+<li><code>PDO::FETCH_NUM</code> 會回傳以數字作為索引鍵的陣列</li>
+<li><code>PDO::FETCH_BOTH</code> 是 <code>PDO::FETCH_ASSOC</code> 和 <code>PDO::FETCH_NUM</code> 的結合</li>
+<li><code>PDO::FETCH_OBJ</code> 會回傳物件，屬性為資料庫欄位名稱</li>
+</ul>
+<p>如果處理較小的資料集，並且百分之百確定記憶體可以容納整個查詢結果，則可以使用 <code>fetchAll()</code> 方法擷取所有查詢結果。</p>
+<p>範例 5-23：預備陳述式擷取整個結果</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;execute();</span><br><span class="line">$allResults = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);</span><br><span class="line"><span class="keyword">foreach</span> ($allResults <span class="keyword">as</span> $result) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $result[<span class="string">'email'</span>], PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果只要查詢結果中的一個欄位，可以使用預備陳述式的 <code>fetchColumn()</code> 方法，其唯一參數是目標欄位的索引値。</p>
+<p>範例 5-24：預備陳述式擷取單一欄位單一列</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;execute();</span><br><span class="line"><span class="keyword">while</span> (($email = $statement-&gt;fetchColumn(<span class="number">1</span>)) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $email, PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用預備陳述式的 <code>fetchObject()</code> 方法擷取查詢結果作為一個物件。</p>
+<p>範例 5-25：預備陳述式擷取列作為物件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$statement-&gt;execute();</span><br><span class="line"><span class="keyword">while</span> (($result = $statement-&gt;fetchObject()) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> $result-&gt;email, PHP_EOL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="交易"><a href="#交易" class="headerlink" title="交易"></a>交易</h2><p>「交易」是一組自動執行的資料庫陳述式，同時執行成功或同時執行失敗的 SQL 查詢，可有效提升效能。</p>
+<p>交易要使用 PDO 實體的 <code>beginTransaction()</code> 和 <code>commit()</code> 方法包覆 SQL 陳述式，如果交易中的任何查詢失敗，所有交易中的查詢都不會被執行。</p>
+<p>範例 5-26：不使用交易的資料庫查詢</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$stmtSubtract = $pdo-&gt;prepare(<span class="string">'</span></span><br><span class="line"><span class="string">    UPDATE accounts</span></span><br><span class="line"><span class="string">    SET amount = amount - :amount</span></span><br><span class="line"><span class="string">    WHERE name = :name</span></span><br><span class="line"><span class="string">'</span>);</span><br><span class="line">$stmtAdd = $pdo-&gt;prepare(<span class="string">'</span></span><br><span class="line"><span class="string">    UPDATE accounts</span></span><br><span class="line"><span class="string">    SET amount = amount + :amount</span></span><br><span class="line"><span class="string">    WHERE name = :name</span></span><br><span class="line"><span class="string">'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提款</span></span><br><span class="line">$fromAccount = <span class="string">'Checking'</span>;</span><br><span class="line">$withdrawal = <span class="number">50</span>;</span><br><span class="line">$stmtSubtract-&gt;bindParam(<span class="string">':name'</span>, $fromAccount);</span><br><span class="line">$stmtSubtract-&gt;bindParam(<span class="string">':amount'</span>, $withDrawal, PDO::PARAM_INT);</span><br><span class="line">$stmtSubtract-&gt;execute();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 存款</span></span><br><span class="line">$toAccount = <span class="string">'Savings'</span>;</span><br><span class="line">$deposit = <span class="number">50</span>;</span><br><span class="line">$stmtAdd-&gt;bindParam(<span class="string">':name'</span>, $toAccount);</span><br><span class="line">$stmtAdd-&gt;bindParam(<span class="string">':amount'</span>, $deposit, PDO::PARAM_INT);</span><br><span class="line">$stmtAdd-&gt;execute();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果從第一個帳戶提款後，發生斷電，這筆帳款將不會存入第二個帳戶。</li>
+</ul>
+<p>以下範例將提款和存款包裝成單一的資料庫交易，確保兩個動作會同時執行成功，或是同時執行失敗。</p>
+<p>範例 5-27：以交易使用資料庫查詢</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$stmtSubtract = $pdo-&gt;prepare(<span class="string">'</span></span><br><span class="line"><span class="string">    UPDATE accounts</span></span><br><span class="line"><span class="string">    SET amount = amount - :amount</span></span><br><span class="line"><span class="string">    WHERE name = :name</span></span><br><span class="line"><span class="string">'</span>);</span><br><span class="line">$stmtAdd = $pdo-&gt;prepare(<span class="string">'</span></span><br><span class="line"><span class="string">    UPDATE accounts</span></span><br><span class="line"><span class="string">    SET amount = amount + :amount</span></span><br><span class="line"><span class="string">    WHERE name = :name</span></span><br><span class="line"><span class="string">'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 開始交易</span></span><br><span class="line">$pdo-&gt;beginTransaction();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提款</span></span><br><span class="line">$fromAccount = <span class="string">'Checking'</span>;</span><br><span class="line">$withdrawal = <span class="number">50</span>;</span><br><span class="line">$stmtSubtract-&gt;bindParam(<span class="string">':name'</span>, $fromAccount);</span><br><span class="line">$stmtSubtract-&gt;bindParam(<span class="string">':amount'</span>, $withDrawal, PDO::PARAM_INT);</span><br><span class="line">$stmtSubtract-&gt;execute();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 存款</span></span><br><span class="line">$toAccount = <span class="string">'Savings'</span>;</span><br><span class="line">$deposit = <span class="number">50</span>;</span><br><span class="line">$stmtAdd-&gt;bindParam(<span class="string">':name'</span>, $toAccount);</span><br><span class="line">$stmtAdd-&gt;bindParam(<span class="string">':amount'</span>, $deposit, PDO::PARAM_INT);</span><br><span class="line">$stmtAdd-&gt;execute();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 承認交易</span></span><br><span class="line">$pdo-&gt;commit();</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>Josh Lockhart（2015）。現代 PHP。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫"><span class="toc-number">3.</span> <span class="toc-text">資料庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PDO-擴充"><span class="toc-number">4.</span> <span class="toc-text">PDO 擴充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫連線和-DSN"><span class="toc-number">5.</span> <span class="toc-text">資料庫連線和 DSN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料庫認證資訊"><span class="toc-number">6.</span> <span class="toc-text">資料庫認證資訊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#預備陳述式"><span class="toc-number">7.</span> <span class="toc-text">預備陳述式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查詢結果"><span class="toc-number">8.</span> <span class="toc-text">查詢結果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交易"><span class="toc-number">9.</span> <span class="toc-text">交易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&text=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&is_video=false&description=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（十六）：資料庫&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&title=《現代 PHP》學習筆記（十六）：資料庫"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（十六）：資料庫/&name=《現代 PHP》學習筆記（十六）：資料庫&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

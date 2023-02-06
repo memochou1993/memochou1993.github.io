@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  php.ini 檔PHP 調教雖然不能解決不良的 SQL 查詢，或是不負責任的 API 呼叫問題，但是 PHP 調教可以增進 PHP 效率和應用程式的效能。 PHP 直譯器用 php.ini 檔來部署和調教，這個檔案可能位於作業系統多個目錄的其中之一。 PHP-FRMPHP-FRM（PHP FastCG">
+<meta name="keywords" content="程式設計,PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《現代 PHP》學習筆記（廿一）：調教">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  php.ini 檔PHP 調教雖然不能解決不良的 SQL 查詢，或是不負責任的 API 呼叫問題，但是 PHP 調教可以增進 PHP 效率和應用程式的效能。 PHP 直譯器用 php.ini 檔來部署和調教，這個檔案可能位於作業系統多個目錄的其中之一。 PHP-FRMPHP-FRM（PHP FastCG">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《現代 PHP》學習筆記（廿一）：調教">
+<meta name="twitter:description" content="前言本文為《現代 PHP》一書的學習筆記。 環境 Windows 10 Wnmp 3.1.0  php.ini 檔PHP 調教雖然不能解決不良的 SQL 查詢，或是不負責任的 API 呼叫問題，但是 PHP 調教可以增進 PHP 效率和應用程式的效能。 PHP 直譯器用 php.ini 檔來部署和調教，這個檔案可能位於作業系統多個目錄的其中之一。 PHP-FRMPHP-FRM（PHP FastCG">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>《現代 PHP》學習筆記（廿一）：調教</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/職場日語（二）：尊敬語/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/《現代-PHP》學習筆記（廿二）：測試/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&text=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&is_video=false&description=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（廿一）：調教&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&name=《現代 PHP》學習筆記（廿一）：調教&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-ini-檔"><span class="toc-number">3.</span> <span class="toc-text">php.ini 檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-FRM"><span class="toc-number">4.</span> <span class="toc-text">PHP-FRM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#記憶體"><span class="toc-number">5.</span> <span class="toc-text">記憶體</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#記憶體分配"><span class="toc-number">5.1.</span> <span class="toc-text">記憶體分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#記憶體消耗"><span class="toc-number">5.2.</span> <span class="toc-text">記憶體消耗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式負擔"><span class="toc-number">5.3.</span> <span class="toc-text">程式負擔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系統資源"><span class="toc-number">5.4.</span> <span class="toc-text">系統資源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zend-OPcache"><span class="toc-number">6.</span> <span class="toc-text">Zend OPcache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#檔案上傳"><span class="toc-number">7.</span> <span class="toc-text">檔案上傳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最大運行時間"><span class="toc-number">8.</span> <span class="toc-text">最大運行時間</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session-處理"><span class="toc-number">9.</span> <span class="toc-text">Session 處理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸出緩衝區"><span class="toc-number">10.</span> <span class="toc-text">輸出緩衝區</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#真實路徑快取"><span class="toc-number">11.</span> <span class="toc-text">真實路徑快取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">12.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《現代 PHP》學習筆記（廿一）：調教
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-14T08:12:34.000Z" itemprop="datePublished">2018-06-14</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/PHP/《現代-PHP》學習筆記/">《現代 PHP》學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為《現代 PHP》一書的學習筆記。</p>
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Windows 10</li>
+<li>Wnmp 3.1.0</li>
+</ul>
+<h2 id="php-ini-檔"><a href="#php-ini-檔" class="headerlink" title="php.ini 檔"></a>php.ini 檔</h2><p>PHP 調教雖然不能解決不良的 SQL 查詢，或是不負責任的 API 呼叫問題，但是 PHP 調教可以增進 PHP 效率和應用程式的效能。</p>
+<p>PHP 直譯器用 <code>php.ini</code> 檔來部署和調教，這個檔案可能位於作業系統多個目錄的其中之一。</p>
+<h2 id="PHP-FRM"><a href="#PHP-FRM" class="headerlink" title="PHP-FRM"></a>PHP-FRM</h2><p>PHP-FRM（PHP FastCGI 程式管理者）是一套管理 PHP 相關程式的軟體，可以接收並處理來自網頁伺服器（如 nginx）的請求。</p>
+<p>PHP-FRM 軟體建立一個主要程式（通常由作業系統最高權限使用者執行），並且控制 HTTP 請求如何和何時發送給子程式，PHP-FRM 主程式同樣也控制子 PHP 程式何時被建立（用來回應多餘的網頁應用程式流量）和摧毀（如果存在不需要的程序）。</p>
+<p>每一個 PHP-FRM 程式都比單一 HTTP 請求存活更久，並且可以處理 10、50、100、500 或更多的 HTTP 請求。</p>
+<h2 id="記憶體"><a href="#記憶體" class="headerlink" title="記憶體"></a>記憶體</h2><p><code>php.ini</code> 檔中的 <code>memory_limit</code> 設定會決定每個 PHP 程式可以使用的最大限度系統記憶體。</p>
+<h3 id="記憶體分配"><a href="#記憶體分配" class="headerlink" title="記憶體分配"></a>記憶體分配</h3><p>如果執行的是微型 PHP 應用程式，可以將値降低至 <code>64M</code>，如果執行的是需要大量記憶體的 PHP 應用程式（例如 Drupal），可能會需要用到 <code>512M</code> 來達到更好的效能。</p>
+<h3 id="記憶體消耗"><a href="#記憶體消耗" class="headerlink" title="記憶體消耗"></a>記憶體消耗</h3><p>可以在 PHP 腳本的尾端呼叫 <code>memory_get_peak_usage()</code> 函式，來輸出當前腳本所使用的記憶體。</p>
+<p>PHP 程式平均消耗為 5 到 20MB 的記憶體，如果上傳檔案、使用圖片，這個値會更高。</p>
+<h3 id="程式負擔"><a href="#程式負擔" class="headerlink" title="程式負擔"></a>程式負擔</h3><p>假如分配給 PHP 總共 512MB 的記憶體，每個 PHP 程式平均消耗大約 15MB 的記憶體，那大概可以負擔 34 個 PHP-FPM 程式，但這只是估計。</p>
+<h3 id="系統資源"><a href="#系統資源" class="headerlink" title="系統資源"></a>系統資源</h3><p>確保有足夠的系統資源來執行 PHP 應用程式並且處理網站的流量，如果不行則需要添加更多的記憶體。</p>
+<h2 id="Zend-OPcache"><a href="#Zend-OPcache" class="headerlink" title="Zend OPcache"></a>Zend OPcache</h2><p>PHP Zend OPcache 擴充，是一個 <code>opcode</code> 快取。利用快取編譯過的 <code>opcode</code> 來加速每個 PHP 腳本，不用為每個 HTTP 請求重複尋找、讀取、編譯 PHP 腳本。</p>
+<p>以下是在 <code>php.ini</code> 檔中，建議的 Zend OPcache 設定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">opcache.validate_timestamps=1</span><br><span class="line">opcache.revalidate_freq=0</span><br><span class="line">opcache.memory_consumption=64</span><br><span class="line">opcache.interned_strings_buffer=16</span><br><span class="line">opcache.max_accelerated_files=4000</span><br><span class="line">opcache.fast_shutdown=1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>validate_timestamps</code> 被啟用時，PHP 會根據設定的時間區間檢查 PHP 腳本是否變動。在產品階段停用這個設定即可。</li>
+<li><code>revalidate_freq</code> 是 PHP 檢查編譯過的 PHP 檔是否變動的頻率。設為 <code>0</code> 表示 PHP 必須在接受每次請求時都重新驗證檔案是否變動。</li>
+<li><code>memory_consumption</code> 是分配給 <code>opcode</code> 快取的記憶體數量。</li>
+<li><code>interned_strings_buffer</code> 是用來儲存實習字串的記憶體總量。實習字串是被 PHP 直譯器在幕後偵測多次出現的字串。</li>
+<li><code>max_accelerated_file</code> 是可以被儲存在 <code>opcode</code> 快取中最大數量的 PHP 腳本。</li>
+<li><code>fast_shutdown</code> 會要求 <code>opcache</code> 使用快速終結程序，釋放記憶體給 Zend Engine 記憶體管理者。這個設定總是設為開啟。</li>
+</ul>
+<h2 id="檔案上傳"><a href="#檔案上傳" class="headerlink" title="檔案上傳"></a>檔案上傳</h2><p>如果 PHP 應用程式不接受檔案上傳時，則將檔案上傳的功能關閉，以增進應用程式的安全性。</p>
+<p>如果接受檔案上傳，可以將 <code>php.ini</code>檔設定如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_uploads=1</span><br><span class="line">upload_max_filesize=10M</span><br><span class="line">max_file_uploads=3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>file_uploads</code> 設為 <code>1</code> 代表開啟檔案上傳的功能。</li>
+<li><code>upload_max_filesize</code> 代表上傳的檔案大小上限。</li>
+<li><code>max_file_uploads</code> 代表一次最多可以上傳的檔案數量。</li>
+</ul>
+<h2 id="最大運行時間"><a href="#最大運行時間" class="headerlink" title="最大運行時間"></a>最大運行時間</h2><p>每個 PHP 程式在終結前，預設可以執行的最長時間為 30 秒。</p>
+<p>PHP 執行的時間不應該太久。如果某個任務需要花費 10 分鐘來完成，那應該將其建立在獨立的 PHP 檔，在背景用獨立程式的方式執行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">max_execution_time=5</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>max_execution_time</code> 代表最大運行時間。</li>
+</ul>
+<h2 id="Session-處理"><a href="#Session-處理" class="headerlink" title="Session 處理"></a>Session 處理</h2><p>PHP 的初始 Session 處理器讓大型的應用程式更加緩慢，因為它將 Session 資料儲存於硬碟中，導致不必要的檔案 I/O 時間。</p>
+<p>使用 Memcached 或 Redis，可以在記憶體中處理 Session 資料，被任意數量的分散式 PHP-FPM 伺服器存取，並且大幅增加未來的擴展性。</p>
+<h2 id="輸出緩衝區"><a href="#輸出緩衝區" class="headerlink" title="輸出緩衝區"></a>輸出緩衝區</h2><p>使用較少的區塊，每個區塊裝載更多的資料在網路中傳遞的話，網路效能會有更高的效率，並且應該要降低傳遞到使用者瀏覽器的 HTTP 請求數量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output_buffering=4096</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>output_bufferin</code> 使 PHP 的輸出緩衝區在釋放到伺服器之前收集最多 4096 個位元組。</li>
+</ul>
+<h2 id="真實路徑快取"><a href="#真實路徑快取" class="headerlink" title="真實路徑快取"></a>真實路徑快取</h2><p>在每次引用檔案時，不用再次尋找檔案的路徑，這個快取稱為真實路徑快取。</p>
+<p>執行大型的 PHP 應用程式時，增加 PHP 真實路徑快取的大小，可以明顯地感受到效能的提升。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">realpath_cache_size=64k</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>realpath_cache_size</code> 代表真實路徑快取的大小。</li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li>Josh Lockhart（2015）。現代 PHP。台北市：碁峯資訊。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-ini-檔"><span class="toc-number">3.</span> <span class="toc-text">php.ini 檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-FRM"><span class="toc-number">4.</span> <span class="toc-text">PHP-FRM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#記憶體"><span class="toc-number">5.</span> <span class="toc-text">記憶體</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#記憶體分配"><span class="toc-number">5.1.</span> <span class="toc-text">記憶體分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#記憶體消耗"><span class="toc-number">5.2.</span> <span class="toc-text">記憶體消耗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式負擔"><span class="toc-number">5.3.</span> <span class="toc-text">程式負擔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系統資源"><span class="toc-number">5.4.</span> <span class="toc-text">系統資源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zend-OPcache"><span class="toc-number">6.</span> <span class="toc-text">Zend OPcache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#檔案上傳"><span class="toc-number">7.</span> <span class="toc-text">檔案上傳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最大運行時間"><span class="toc-number">8.</span> <span class="toc-text">最大運行時間</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session-處理"><span class="toc-number">9.</span> <span class="toc-text">Session 處理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸出緩衝區"><span class="toc-number">10.</span> <span class="toc-text">輸出緩衝區</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#真實路徑快取"><span class="toc-number">11.</span> <span class="toc-text">真實路徑快取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">12.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&text=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&is_video=false&description=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《現代 PHP》學習筆記（廿一）：調教&body=Check out this article: https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&title=《現代 PHP》學習筆記（廿一）：調教"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《現代-PHP》學習筆記（廿一）：調教/&name=《現代 PHP》學習筆記（廿一）：調教&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

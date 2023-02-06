@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「成為 Python 數據分析達人的第一堂課」課程的學習筆記。 條件判斷使用比較運算子進行條件判斷。 123456789&amp;gt;&amp;gt;&amp;gt; a = 6&amp;gt;&amp;gt;&amp;gt; a &amp;lt; 3 # 小於False&amp;gt;&amp;gt;&amp;gt; a &amp;gt; 3 # 大於True&amp;gt;&amp;gt;&amp;gt; a == 6 # 等於True&amp;gt;&amp;gt;&amp;gt; a != 6 # 不等於Fal">
+<meta name="keywords" content="程式設計,Python,數據分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Python 數據分析」學習筆記（二）">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「成為 Python 數據分析達人的第一堂課」課程的學習筆記。 條件判斷使用比較運算子進行條件判斷。 123456789&amp;gt;&amp;gt;&amp;gt; a = 6&amp;gt;&amp;gt;&amp;gt; a &amp;lt; 3 # 小於False&amp;gt;&amp;gt;&amp;gt; a &amp;gt; 3 # 大於True&amp;gt;&amp;gt;&amp;gt; a == 6 # 等於True&amp;gt;&amp;gt;&amp;gt; a != 6 # 不等於Fal">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「Python 數據分析」學習筆記（二）">
+<meta name="twitter:description" content="前言本文為「成為 Python 數據分析達人的第一堂課」課程的學習筆記。 條件判斷使用比較運算子進行條件判斷。 123456789&amp;gt;&amp;gt;&amp;gt; a = 6&amp;gt;&amp;gt;&amp;gt; a &amp;lt; 3 # 小於False&amp;gt;&amp;gt;&amp;gt; a &amp;gt; 3 # 大於True&amp;gt;&amp;gt;&amp;gt; a == 6 # 等於True&amp;gt;&amp;gt;&amp;gt; a != 6 # 不等於Fal">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「Python 數據分析」學習筆記（二）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（十八）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2018/06/職場日語（一）：敬語類型/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&text=「Python 數據分析」學習筆記（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&is_video=false&description=「Python 數據分析」學習筆記（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Python 數據分析」學習筆記（二）&body=Check out this article: https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&name=「Python 數據分析」學習筆記（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#條件判斷"><span class="toc-number">2.</span> <span class="toc-text">條件判斷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#while-迴圈"><span class="toc-number">3.</span> <span class="toc-text">while 迴圈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字串格式化"><span class="toc-number">4.</span> <span class="toc-text">字串格式化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定義函數"><span class="toc-number">5.</span> <span class="toc-text">定義函數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串列切割"><span class="toc-number">6.</span> <span class="toc-text">串列切割</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串列生成"><span class="toc-number">7.</span> <span class="toc-text">串列生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for-迴圈"><span class="toc-number">8.</span> <span class="toc-text">for 迴圈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尋找元素"><span class="toc-number">9.</span> <span class="toc-text">尋找元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制"><span class="toc-number">10.</span> <span class="toc-text">流程控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成亂數"><span class="toc-number">11.</span> <span class="toc-text">生成亂數</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「Python 數據分析」學習筆記（二）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-06-10T14:31:19.000Z" itemprop="datePublished">2018-06-10</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Python/「Python-數據分析」學習筆記/">「Python 數據分析」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Python/">Python</a>, <a class="tag-link" href="/tags/數據分析/">數據分析</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="http://moocs.nccu.edu.tw/" target="_blank" rel="noopener">成為 Python 數據分析達人的第一堂課</a>」課程的學習筆記。</p>
+<h2 id="條件判斷"><a href="#條件判斷" class="headerlink" title="條件判斷"></a>條件判斷</h2><p>使用比較運算子進行條件判斷。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">6</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a &lt; <span class="number">3</span> <span class="comment"># 小於</span></span><br><span class="line"><span class="keyword">False</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a &gt; <span class="number">3</span> <span class="comment"># 大於</span></span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a == <span class="number">6</span> <span class="comment"># 等於</span></span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a != <span class="number">6</span> <span class="comment"># 不等於</span></span><br><span class="line"><span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+
+<p>使用邏輯運算子進行條件判斷。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>(a &gt; <span class="number">3</span>) <span class="keyword">and</span> (a &lt; <span class="number">9</span>)</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(a &gt; <span class="number">12</span>) <span class="keyword">or</span> (a &lt; <span class="number">15</span>)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="while-迴圈"><a href="#while-迴圈" class="headerlink" title="while 迴圈"></a>while 迴圈</h2><p>使用 <code>while</code> 迴圈。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> s &lt;= <span class="number">5</span>:</span><br><span class="line">        print(<span class="string">"*"</span> * s)</span><br><span class="line">        s += <span class="number">1</span></span><br><span class="line">*</span><br><span class="line">**</span><br><span class="line">***</span><br><span class="line">****</span><br><span class="line">*****</span><br></pre></td></tr></table></figure>
+
+<p>改進拍拍機器人，讓它持續問候。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">message = <span class="string">""</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">while</span> message != <span class="string">"夠了"</span>:</span><br><span class="line">        message = input(<span class="string">"&gt;&gt; "</span>)</span><br><span class="line">        print(<span class="string">"拍拍"</span>)</span><br><span class="line"><span class="comment"># 輸入"空虛"</span></span><br><span class="line">拍拍</span><br><span class="line"><span class="comment"># 輸入"寂寞"</span></span><br><span class="line">拍拍</span><br><span class="line"><span class="comment"># 輸入"覺得冷"</span></span><br><span class="line">拍拍</span><br><span class="line"><span class="comment"># 輸入"夠了"</span></span><br><span class="line">拍拍</span><br></pre></td></tr></table></figure>
+
+<h2 id="字串格式化"><a href="#字串格式化" class="headerlink" title="字串格式化"></a>字串格式化</h2><p>使用 <code>format()</code> 函數和 <code>{}</code> 占位符進行格式化。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>name = <span class="string">"阿威"</span></span><br><span class="line">    place = <span class="string">"新竹"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">"你好, 來自&#123;&#125;的&#123;&#125;！"</span>.format(place, name)</span><br><span class="line">    print(message)</span><br><span class="line">你好, 來自新竹的阿威！</span><br></pre></td></tr></table></figure>
+
+<p>可以不用擔心資料型態的問題。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>m = <span class="number">270</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(<span class="string">"美金 &#123;&#125; 合新台幣 &#123;&#125; 元"</span>.format(m, m * <span class="number">30.5</span>))</span><br><span class="line">美金 <span class="number">270</span> 合新台幣 <span class="number">8235.0</span> 元</span><br></pre></td></tr></table></figure>
+
+<h2 id="定義函數"><a href="#定義函數" class="headerlink" title="定義函數"></a>定義函數</h2><p>使用 <code>def</code> 關鍵字定義函數。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">return</span> x ** <span class="number">2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>square(<span class="number">3</span>)</span><br><span class="line"><span class="number">9</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">say_hi</span><span class="params">(name, place)</span>:</span></span><br><span class="line">        message = <span class="string">"你好，來自&#123;&#125;的&#123;&#125;！"</span>.format(name, place)</span><br><span class="line">        <span class="keyword">return</span> message</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>say_hi(<span class="string">"阿威"</span>, <span class="string">"新竹"</span>)</span><br><span class="line"><span class="string">'你好，來自阿威的新竹！'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="串列切割"><a href="#串列切割" class="headerlink" title="串列切割"></a>串列切割</h2><p>使用「<code>:</code>」字元進行串列的切割。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>l = [<span class="number">3</span>, <span class="number">97</span>, <span class="number">12</span>, <span class="number">-5</span>, <span class="number">-4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">0</span>]</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">[<span class="number">97</span>, <span class="number">12</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">2</span>:]</span><br><span class="line">[<span class="number">12</span>, <span class="number">-5</span>, <span class="number">-4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[:<span class="number">4</span>]</span><br><span class="line">[<span class="number">3</span>, <span class="number">97</span>, <span class="number">12</span>, <span class="number">-5</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">-1</span>]</span><br><span class="line"><span class="number">-4</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">-2</span>:]</span><br><span class="line">[<span class="number">-5</span>, <span class="number">-4</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="串列生成"><a href="#串列生成" class="headerlink" title="串列生成"></a>串列生成</h2><p>使用 <code>range()</code> 函數建立整數列表。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">10</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">3</span>, <span class="number">15</span>))</span><br><span class="line">[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="for-迴圈"><a href="#for-迴圈" class="headerlink" title="for 迴圈"></a>for 迴圈</h2><p>使用 <code>for</code> 迴圈。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>l = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">        print(i)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>, <span class="number">8</span>):</span><br><span class="line">        print(i * <span class="number">3</span>)</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="number">15</span></span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">21</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">        print(<span class="string">'*'</span> * i)</span><br><span class="line">*</span><br><span class="line">**</span><br><span class="line">***</span><br><span class="line">****</span><br><span class="line">*****</span><br></pre></td></tr></table></figure>
+
+<h2 id="尋找元素"><a href="#尋找元素" class="headerlink" title="尋找元素"></a>尋找元素</h2><p>判斷關鍵字是否在字串當中。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>keyword = <span class="string">"悲傷"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">"我今天覺得很悲傷。"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>keyword <span class="keyword">in</span> message</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">"我今天覺得很開心。"</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>keyword <span class="keyword">in</span> message</span><br><span class="line"><span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+
+<p>判斷關鍵字是否在串列當中。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>L = [<span class="number">2</span>, <span class="number">88</span>, <span class="number">64</span>, <span class="number">-66</span>, <span class="number">-4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">29</span> <span class="keyword">in</span> L</span><br><span class="line"><span class="keyword">False</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">88</span> <span class="keyword">in</span> L</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><p>使用 <code>if</code>、<code>elif</code> 以及 <code>else</code> 進行條件判斷。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="number">3</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; <span class="number">7</span>:</span><br><span class="line">        print(<span class="string">"OK"</span>)</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<p>改進拍拍機器人，讓它根據使用者的輸入是否包含關鍵字來回應。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>message = input(<span class="string">"&gt;&gt; "</span>)</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">"悲傷"</span> <span class="keyword">in</span> message):</span><br><span class="line">        print(<span class="string">"拍拍"</span>)</span><br><span class="line">    <span class="keyword">elif</span> (<span class="string">"開心"</span> <span class="keyword">in</span> message):</span><br><span class="line">        print(<span class="string">"不就好棒"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">"知道了"</span>)</span><br><span class="line"><span class="comment"># 輸入"今天很悲傷"</span></span><br><span class="line">拍拍</span><br><span class="line"><span class="comment"># 輸入"今天很開心"</span></span><br><span class="line">不就好棒</span><br><span class="line"><span class="comment"># 輸入"今天天氣很好"</span></span><br><span class="line">知道了</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成亂數"><a href="#生成亂數" class="headerlink" title="生成亂數"></a>生成亂數</h2><p>使用 <code>randint()</code> 函數生成亂數。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>%pylab inline</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>randint(<span class="number">3</span>, <span class="number">21</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        k = randint(<span class="number">3</span>, <span class="number">21</span>)</span><br><span class="line">        print(<span class="string">" "</span> * k + <span class="string">"*"</span>)</span><br><span class="line">          *</span><br><span class="line">        *</span><br><span class="line">        *</span><br><span class="line">   *</span><br><span class="line">                  *</span><br><span class="line">              *</span><br><span class="line">        *</span><br><span class="line">                 *</span><br><span class="line">                  *</span><br><span class="line">   *</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#條件判斷"><span class="toc-number">2.</span> <span class="toc-text">條件判斷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#while-迴圈"><span class="toc-number">3.</span> <span class="toc-text">while 迴圈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字串格式化"><span class="toc-number">4.</span> <span class="toc-text">字串格式化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定義函數"><span class="toc-number">5.</span> <span class="toc-text">定義函數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串列切割"><span class="toc-number">6.</span> <span class="toc-text">串列切割</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串列生成"><span class="toc-number">7.</span> <span class="toc-text">串列生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for-迴圈"><span class="toc-number">8.</span> <span class="toc-text">for 迴圈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尋找元素"><span class="toc-number">9.</span> <span class="toc-text">尋找元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制"><span class="toc-number">10.</span> <span class="toc-text">流程控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成亂數"><span class="toc-number">11.</span> <span class="toc-text">生成亂數</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&text=「Python 數據分析」學習筆記（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&is_video=false&description=「Python 數據分析」學習筆記（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Python 數據分析」學習筆記（二）&body=Check out this article: https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&title=「Python 數據分析」學習筆記（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/「Python-數據分析」學習筆記（二）/&name=「Python 數據分析」學習筆記（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

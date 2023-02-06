@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言當使用者發生過多的錯誤認證時，則禁止使用者繼續操作一段時間。 做法在 mixinx 資料夾新增一個 throttle.js 混入。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707">
+<meta name="keywords" content="程式設計,JavaScript,Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Vue 2.5 實作「認證節流閥」功能">
+<meta property="og:url" content="https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言當使用者發生過多的錯誤認證時，則禁止使用者繼續操作一段時間。 做法在 mixinx 資料夾新增一個 throttle.js 混入。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 Vue 2.5 實作「認證節流閥」功能">
+<meta name="twitter:description" content="前言當使用者發生過多的錯誤認證時，則禁止使用者繼續操作一段時間。 做法在 mixinx 資料夾新增一個 throttle.js 混入。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Vue 2.5 實作「認證節流閥」功能</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/04/在-Vue-2-5-實作「令牌自動刷新」功能/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/05/在-Laravel-5-8-使用帳號或信箱進行-Passport-認證/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&text=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&is_video=false&description=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Vue 2.5 實作「認證節流閥」功能&body=Check out this article: https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&name=在 Vue 2.5 實作「認證節流閥」功能&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Vue 2.5 實作「認證節流閥」功能
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-04-25T17:51:28.000Z" itemprop="datePublished">2019-04-26</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/JavaScript/Vue/">Vue</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Vue/">Vue</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>當使用者發生過多的錯誤認證時，則禁止使用者繼續操作一段時間。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>在 <code>mixinx</code> 資料夾新增一個 <code>throttle.js</code> 混入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> moment <span class="keyword">from</span> <span class="string">'moment'</span>;</span><br><span class="line"><span class="keyword">import</span> cookie <span class="keyword">from</span> <span class="string">'@/helpers/cookie'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> throttle = &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="comment">// 嘗試上限</span></span><br><span class="line">      limit: <span class="number">3</span>,</span><br><span class="line">      <span class="comment">// 間隔時間</span></span><br><span class="line">      period: <span class="number">10</span>,</span><br><span class="line">      <span class="comment">// 倒數計時</span></span><br><span class="line">      counter: <span class="number">0</span>,</span><br><span class="line">      <span class="comment">// 每一次的嘗試時間戳</span></span><br><span class="line">      attempts: cookie.get(<span class="string">'attempts'</span>) || [],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    attempts(value) &#123;</span><br><span class="line">      <span class="comment">// 當嘗試時間戳歸零時，關閉警告視窗</span></span><br><span class="line">      <span class="keyword">if</span> (!value.length) &#123;</span><br><span class="line">        <span class="keyword">this</span>.setError(<span class="literal">null</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 如果使用者被禁用，則開始倒數</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.isSuspended) &#123;</span><br><span class="line">        <span class="keyword">this</span>.countdown();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    <span class="comment">// 從 cookie 獲取嘗試時間戳</span></span><br><span class="line">    <span class="keyword">const</span> attempts = cookie.get(<span class="string">'attempts'</span>);</span><br><span class="line">    <span class="keyword">this</span>.setAttempts(attempts ? attempts.data : []);</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    <span class="comment">// 嘗試的次數</span></span><br><span class="line">    times() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.attempts.length;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 最初的嘗試時間戳</span></span><br><span class="line">    begin() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.attempts[<span class="keyword">this</span>.times - <span class="keyword">this</span>.limit];</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 最後的嘗試時間戳</span></span><br><span class="line">    end() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.attempts[<span class="keyword">this</span>.times - <span class="number">1</span>];</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 剩餘秒數</span></span><br><span class="line">    remaining() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.period - <span class="keyword">this</span>.isExpended();</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 是否被禁用</span></span><br><span class="line">    isSuspended() &#123;</span><br><span class="line">      <span class="comment">// 嘗試次數小於嘗試上限則不做事</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.times &lt; <span class="keyword">this</span>.limit) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 判斷最初與最後的嘗試時間戳間距是否超過間格時間</span></span><br><span class="line">      <span class="keyword">return</span> moment.duration(moment(<span class="keyword">this</span>.end).diff(<span class="keyword">this</span>.begin)).seconds() &lt; <span class="keyword">this</span>.period;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    setCounter(counter) &#123;</span><br><span class="line">      <span class="keyword">this</span>.counter = counter;</span><br><span class="line">    &#125;,</span><br><span class="line">    setAttempts(attempts) &#123;</span><br><span class="line">      <span class="keyword">this</span>.attempts = attempts;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 計算最後的嘗試時間戳到當前所花費的時間</span></span><br><span class="line">    isExpended() &#123;</span><br><span class="line">      <span class="keyword">return</span> moment.duration(moment().diff(<span class="keyword">this</span>.end)).seconds();</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 當使用者發生錯誤認證時，就存入當前的時間戳</span></span><br><span class="line">    suspend() &#123;</span><br><span class="line">      <span class="keyword">const</span> attempts = [...this.attempts, <span class="built_in">Date</span>.now()];</span><br><span class="line">      cookie.set(<span class="string">'attempts'</span>, attempts, moment().add(<span class="keyword">this</span>.period, <span class="string">'s'</span>).toDate());</span><br><span class="line">      <span class="keyword">this</span>.setAttempts(attempts);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 倒數</span></span><br><span class="line">    countdown() &#123;</span><br><span class="line">      <span class="keyword">this</span>.setCounter(<span class="keyword">this</span>.remaining);</span><br><span class="line">      <span class="keyword">const</span> counter = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setCounter(<span class="keyword">this</span>.counter - <span class="number">1</span>);</span><br><span class="line">      &#125;, <span class="number">1000</span> * <span class="number">1</span>);</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setAttempts([]);</span><br><span class="line">        clearInterval(counter);</span><br><span class="line">      &#125;, <span class="number">1000</span> * <span class="keyword">this</span>.remaining);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> throttle;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>Login.vue</code> 元件使用節流閥，只需要在使用者發生錯誤認證時，使用 <code>suspend()</code> 方法即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> throttle <span class="keyword">from</span> <span class="string">'@/mixins/throttle'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  mixins: [</span><br><span class="line">    throttle,</span><br><span class="line">  ],</span><br><span class="line">methods: &#123;</span><br><span class="line">...mapMutations([</span><br><span class="line">  <span class="string">'setSettings'</span>,</span><br><span class="line">]),</span><br><span class="line">...mapActions(<span class="string">'auth'</span>, [</span><br><span class="line">  <span class="string">'fetchToken'</span>,</span><br><span class="line">]),</span><br><span class="line"><span class="keyword">async</span> login() &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">this</span>.beforeProcess();</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">this</span>.fetchToken(&#123;</span><br><span class="line">    params: &#123;</span><br><span class="line">      username: <span class="keyword">this</span>.username,</span><br><span class="line">      password: <span class="keyword">this</span>.password,</span><br><span class="line">      grant_type: <span class="string">'password'</span>,</span><br><span class="line">      client_id: process.env.VUE_APP_API_CLIENT_ID,</span><br><span class="line">      client_secret: process.env.VUE_APP_API_CLIENT_SECRET,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.process();</span><br><span class="line">      &#125;, <span class="number">1000</span> * <span class="number">0.25</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 存入時間戳</span></span><br><span class="line">      <span class="keyword">this</span>.suspend();</span><br><span class="line">      <span class="keyword">this</span>.setError(error);</span><br><span class="line">      <span class="keyword">this</span>.setNoData(<span class="literal">true</span>);</span><br><span class="line">      <span class="keyword">this</span>.setPassword(<span class="string">''</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .finally(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.setLoading(<span class="literal">false</span>);</span><br><span class="line">      &#125;, <span class="number">1000</span> * <span class="number">0.25</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&text=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&is_video=false&description=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Vue 2.5 實作「認證節流閥」功能&body=Check out this article: https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&title=在 Vue 2.5 實作「認證節流閥」功能"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/04/在-Vue-2-5-實作「認證節流閥」功能/&name=在 Vue 2.5 實作「認證節流閥」功能&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

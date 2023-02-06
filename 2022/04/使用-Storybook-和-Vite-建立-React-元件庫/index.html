@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="建立專案建立專案。 12mkdir react-storybookcd react-storybook  初始化專案。 1npm init  新增 .gitignore 檔。 12/node_modules/dist  安裝依賴套件安裝 Vite 工具。 1npm i vite -D  安裝 React 框架。 1npm i react@17.0.0 react-dom@17.0.0 -D  安裝">
+<meta name="keywords" content="程式設計,JavaScript,React,TypeScript,Vite,Storybook">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Storybook 和 Vite 建立 React 元件庫">
+<meta property="og:url" content="https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12mkdir react-storybookcd react-storybook  初始化專案。 1npm init  新增 .gitignore 檔。 12/node_modules/dist  安裝依賴套件安裝 Vite 工具。 1npm i vite -D  安裝 React 框架。 1npm i react@17.0.0 react-dom@17.0.0 -D  安裝">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-12-01T13:41:54.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Storybook 和 Vite 建立 React 元件庫">
+<meta name="twitter:description" content="建立專案建立專案。 12mkdir react-storybookcd react-storybook  初始化專案。 1npm init  新增 .gitignore 檔。 12/node_modules/dist  安裝依賴套件安裝 Vite 工具。 1npm i vite -D  安裝 React 框架。 1npm i react@17.0.0 react-dom@17.0.0 -D  安裝">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Storybook 和 Vite 建立 React 元件庫</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/04/「The-Rust-Programming-Language」學習筆記（三）：基礎語法/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/04/在-Next-12-0-實作-Solana-區塊鏈的-Swap-介面/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&text=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&is_video=false&description=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Storybook 和 Vite 建立 React 元件庫&body=Check out this article: https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&name=使用 Storybook 和 Vite 建立 React 元件庫&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝依賴套件"><span class="toc-number">2.</span> <span class="toc-text">安裝依賴套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動介面"><span class="toc-number">3.</span> <span class="toc-text">啟動介面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#編譯"><span class="toc-number">4.</span> <span class="toc-text">編譯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#發布"><span class="toc-number">5.</span> <span class="toc-text">發布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Storybook 和 Vite 建立 React 元件庫
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-04-20T07:24:54.000Z" itemprop="datePublished">2022-04-20</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/JavaScript/React/">React</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/React/">React</a>, <a class="tag-link" href="/tags/Storybook/">Storybook</a>, <a class="tag-link" href="/tags/TypeScript/">TypeScript</a>, <a class="tag-link" href="/tags/Vite/">Vite</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir react-storybook</span><br><span class="line"><span class="built_in">cd</span> react-storybook</span><br></pre></td></tr></table></figure>
+
+<p>初始化專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.gitignore</code> 檔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/node_modules</span><br><span class="line">/dist</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝依賴套件"><a href="#安裝依賴套件" class="headerlink" title="安裝依賴套件"></a>安裝依賴套件</h2><p>安裝 Vite 工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vite -D</span><br></pre></td></tr></table></figure>
+
+<p>安裝 React 框架。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i react@17.0.0 react-dom@17.0.0 -D</span><br></pre></td></tr></table></figure>
+
+<p>安裝 Storybook 工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx sb@latest init</span><br></pre></td></tr></table></figure>
+
+<h2 id="啟動介面"><a href="#啟動介面" class="headerlink" title="啟動介面"></a>啟動介面</h2><p>啟動 Storybook 介面。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run storybook</span><br></pre></td></tr></table></figure>
+
+<h2 id="編譯"><a href="#編譯" class="headerlink" title="編譯"></a>編譯</h2><p>新增 <code>index.ts</code> 檔，將元件匯出。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Button <span class="keyword">from</span> <span class="string">"./components/Button"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> components = &#123;</span><br><span class="line">  Button,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  components <span class="keyword">as</span> <span class="keyword">default</span>,</span><br><span class="line">  Button,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>package.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"@memochou1993/react-storybook"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.1.0"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"./dist/index.cjs.js"</span>,</span><br><span class="line">  <span class="attr">"module"</span>: <span class="string">"./dist/index.es.js"</span>,</span><br><span class="line">  <span class="attr">"types"</span>: <span class="string">"./dist/index.d.ts"</span>,</span><br><span class="line">  <span class="attr">"files"</span>: [</span><br><span class="line">    <span class="string">"dist"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"repository"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"vite build"</span>,</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>,</span><br><span class="line">    <span class="attr">"storybook"</span>: <span class="string">"start-storybook -p 6006"</span>,</span><br><span class="line">    <span class="attr">"build-storybook"</span>: <span class="string">"build-storybook"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"eslint src --ext .jsx,.js,.tsx,.ts"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"author"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="attr">"license"</span>: <span class="string">"ISC"</span>,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"react"</span>: <span class="string">"^17.0.0"</span>,</span><br><span class="line">    <span class="attr">"react-dom"</span>: <span class="string">"^17.0.0"</span>,</span><br><span class="line">    <span class="attr">"styled-components"</span>: <span class="string">"^5.3.5"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@storybook/addon-actions"</span>: <span class="string">"^6.4.22"</span>,</span><br><span class="line">    <span class="attr">"@storybook/addon-essentials"</span>: <span class="string">"^6.4.22"</span>,</span><br><span class="line">    <span class="attr">"@storybook/addon-interactions"</span>: <span class="string">"^6.4.22"</span>,</span><br><span class="line">    <span class="attr">"@storybook/addon-links"</span>: <span class="string">"^6.4.22"</span>,</span><br><span class="line">    <span class="attr">"@storybook/react"</span>: <span class="string">"^6.4.22"</span>,</span><br><span class="line">    <span class="attr">"@storybook/testing-library"</span>: <span class="string">"^0.0.11"</span>,</span><br><span class="line">    <span class="attr">"@types/styled-components"</span>: <span class="string">"^5.1.25"</span>,</span><br><span class="line">    <span class="attr">"@typescript-eslint/eslint-plugin"</span>: <span class="string">"^5.21.0"</span>,</span><br><span class="line">    <span class="attr">"@vitejs/plugin-react"</span>: <span class="string">"^1.3.2"</span>,</span><br><span class="line">    <span class="attr">"eslint-plugin-react"</span>: <span class="string">"^7.29.4"</span>,</span><br><span class="line">    <span class="attr">"vite"</span>: <span class="string">"^2.9.5"</span>,</span><br><span class="line">    <span class="attr">"vite-plugin-dts"</span>: <span class="string">"^1.1.1"</span>,</span><br><span class="line">    <span class="attr">"vue-tsc"</span>: <span class="string">"^0.34.11"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"exports"</span>: &#123;</span><br><span class="line">    <span class="attr">"."</span>: &#123;</span><br><span class="line">      <span class="attr">"import"</span>: <span class="string">"./dist/index.es.js"</span>,</span><br><span class="line">      <span class="attr">"require"</span>: <span class="string">"./dist/index.cjs.js"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>vite.config.ts</code> 檔：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> react <span class="keyword">from</span> <span class="string">'@vitejs/plugin-react'</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">'node:path'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">'vite'</span>;</span><br><span class="line"><span class="keyword">import</span> dts <span class="keyword">from</span> <span class="string">'vite-plugin-dts'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> defineConfig(&#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    react(),</span><br><span class="line">    dts(&#123;</span><br><span class="line">      insertTypesEntry: <span class="literal">true</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">  build: &#123;</span><br><span class="line">    lib: &#123;</span><br><span class="line">      entry: path.resolve(__dirname, <span class="string">'src/index.ts'</span>),</span><br><span class="line">      name: <span class="string">'Web3'</span>,</span><br><span class="line">      formats: [<span class="string">'es'</span>, <span class="string">'cjs'</span>],</span><br><span class="line">      fileName: <span class="function">(<span class="params">format</span>) =&gt;</span> <span class="string">`index.<span class="subst">$&#123;format&#125;</span>.js`</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    rollupOptions: &#123;</span><br><span class="line">      external: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>, <span class="string">'styled-components'</span>],</span><br><span class="line">      output: &#123;</span><br><span class="line">        exports: <span class="string">"named"</span>,</span><br><span class="line">        globals: &#123;</span><br><span class="line">          react: <span class="string">'React'</span>,</span><br><span class="line">          <span class="string">'react-dom'</span>: <span class="string">'ReactDOM'</span>,</span><br><span class="line">          <span class="string">'styled-components'</span>: <span class="string">'styled'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>tsconfig.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"isolatedModules"</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行編譯。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<h2 id="發布"><a href="#發布" class="headerlink" title="發布"></a>發布</h2><p>修改 <code>package.json</code> 檔，注意套件名稱必須是獨一無二的。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"@memochou1993/react-storybook"</span>,</span><br><span class="line">  <span class="attr">"repository"</span>: <span class="string">"https://github.com/memochou1993/react-storybook.git"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"Initial commit"</span></span><br></pre></td></tr></table></figure>
+
+<p>新增版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm version 0.1.0 -m <span class="string">"First release"</span></span><br></pre></td></tr></table></figure>
+
+<p>登入 npm。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm login</span><br></pre></td></tr></table></figure>
+
+<p>發布套件。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish --access=public</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/react-storybook" target="_blank" rel="noopener">react-storybook</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://divotion.com/blog/creating-a-component-library-with-vite-and-storybook" target="_blank" rel="noopener">Creating a component library with Vite and Storybook</a></li>
+<li><a href="https://dev.to/nicolaserny/create-a-react-component-library-with-vite-and-typescript-1ih9" target="_blank" rel="noopener">Create a React component library with Vite and Typescript</a></li>
+<li><a href="https://storybook.js.org/tutorials/intro-to-storybook/react/zh-TW/get-started/" target="_blank" rel="noopener">Storybook for React tutorial</a></li>
+<li><a href="https://cn.vitejs.dev/guide/build.html" target="_blank" rel="noopener">Vite - Building for Production</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝依賴套件"><span class="toc-number">2.</span> <span class="toc-text">安裝依賴套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動介面"><span class="toc-number">3.</span> <span class="toc-text">啟動介面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#編譯"><span class="toc-number">4.</span> <span class="toc-text">編譯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#發布"><span class="toc-number">5.</span> <span class="toc-text">發布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&text=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&is_video=false&description=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Storybook 和 Vite 建立 React 元件庫&body=Check out this article: https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&title=使用 Storybook 和 Vite 建立 React 元件庫"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/使用-Storybook-和-Vite-建立-React-元件庫/&name=使用 Storybook 和 Vite 建立 React 元件庫&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。 簡介Pause 容器又稱 Infrastucture Container，每個 Pod 裡運行著一個特殊的被稱之爲 Pause 的容器，其他容器則爲業務容器，這些業務容器共享 Pause 容器的網路和儲存空間。 因此它們之間通訊和資料交換更為高效，同一個 Pod 裡的容器之間僅需通過 localhost 就能互相通訊。 實作">
+<meta name="keywords" content="環境部署,Docker,Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器">
+<meta property="og:url" content="https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。 簡介Pause 容器又稱 Infrastucture Container，每個 Pod 裡運行著一個特殊的被稱之爲 Pause 的容器，其他容器則爲業務容器，這些業務容器共享 Pause 容器的網路和儲存空間。 因此它們之間通訊和資料交換更為高效，同一個 Pod 裡的容器之間僅需通過 localhost 就能互相通訊。 實作">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器">
+<meta name="twitter:description" content="前言本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。 簡介Pause 容器又稱 Infrastucture Container，每個 Pod 裡運行著一個特殊的被稱之爲 Pause 的容器，其他容器則爲業務容器，這些業務容器共享 Pause 容器的網路和儲存空間。 因此它們之間通訊和資料交換更為高效，同一個 Pod 裡的容器之間僅需通過 localhost 就能互相通訊。 實作">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十一）：認識宣告式指令/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/12/在-JavaScript-專案使用-ESLint-分析工具並套用-Airbnb-程式碼風格/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&text=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&is_video=false&description=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器&body=Check out this article: https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&name=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker"><span class="toc-number">3.1.</span> <span class="toc-text">Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.2.</span> <span class="toc-text">Kubernetes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-12-18T09:09:55.000Z" itemprop="datePublished">2021-12-18</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/環境部署/Kubernetes/「Kubernetes-實作手冊：基礎入門篇」學習筆記/">「Kubernetes 實作手冊：基礎入門篇」學習筆記</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Kubernetes/">Kubernetes</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。</p>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>Pause 容器又稱 Infrastucture Container，每個 Pod 裡運行著一個特殊的被稱之爲 Pause 的容器，其他容器則爲業務容器，這些業務容器共享 Pause 容器的網路和儲存空間。</p>
+<p>因此它們之間通訊和資料交換更為高效，同一個 Pod 裡的容器之間僅需通過 localhost 就能互相通訊。</p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>首先，使用 Docker 運行一個範例容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name hwchiu hwchiu/netutils</span><br></pre></td></tr></table></figure>
+
+<p>運行另一個範例容器，將網路綁定到第一個範例容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --net=container:hwchiu --name hwchiu2 hwchiu/netutils</span><br></pre></td></tr></table></figure>
+
+<p>檢查所有範例容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps | grep hwchiu</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ifconfig</code> 指令查看第一個範例容器的網卡。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it hwchiu ifconfig</span><br></pre></td></tr></table></figure>
+
+<p>第一個範例容器的 IP 位址是 <code>172.17.0.2</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:ac:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:14 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1116 (1.1 KB)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ifconfig</code> 指令查看第二個範例容器的網卡。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it hwchiu2 ifconfig</span><br></pre></td></tr></table></figure>
+
+<p>第二個範例容器的 IP 位址同樣是 <code>172.17.0.2</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:ac:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:14 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1116 (1.1 KB)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+
+<p>在第一個範例容器使用 <code>ping</code> 指令將封包往外送。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it hwchiu ping 8.8.8.8</span><br></pre></td></tr></table></figure>
+
+<p>可以看到兩個範例容器接收到的 packets 是一樣的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TX packets:7</span><br></pre></td></tr></table></figure>
+
+<p>將第一個範例容器刪除。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f hwchiu</span><br></pre></td></tr></table></figure>
+
+<p>再次查看第二個範例容器的網卡。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it hwchiu2 ifconfig</span><br></pre></td></tr></table></figure>
+
+<p>會發現網卡 <code>eth0</code> 已經不見。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+
+<p>如果 Container A 做為第一個 Container 提供 <code>172.17.0.2</code> 的 IP 位址，而 Container B 和 Container C 掛載在 Container A 的網路上，如果 Container A 的網路出問題，Container B 和 Container C 都會跟著有問題。</p>
+<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>首先，查看 <code>introduction/pod</code> 範例資料夾中的 <code>pause.yaml</code> 配置檔如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">two-containers</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">myapp</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">client</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">hwchiu/netutils</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">www-server</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>kubectl apply</code> 指令來創建 Pod。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f introduction/pod/pause.yaml</span><br></pre></td></tr></table></figure>
+
+<p>查看 Pod 列表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<p>如果要用 <code>kubectl logs</code> 指令查看日誌的話，需要用 <code>-c</code> 參數來指定容器名稱。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs -f two-containers -c client</span><br></pre></td></tr></table></figure>
+
+<p>如果要用 <code>kubectl exec</code> 進到容器的話，也需要用 <code>-c</code> 參數來指定容器名稱。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">exec</span> -it two-containers -c client bash</span><br></pre></td></tr></table></figure>
+
+<p>由於此 Pod 中的兩個容器都處於相同的 Network Namespace，因此可以用 <code>127.0.0.1</code> 相互溝通。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget 127.0.0.1</span><br><span class="line">cat index.html</span><br></pre></td></tr></table></figure>
+
+<p>列出所有的 Docker 容器，會發現當 Pod 被創建時，至少會有一個 Pause 容器在其中。因此 Pause 容器是整個 Pod 中網路的核心，也可以自己用 Docker 創建一個容器後，直接將網路掛載到此 Pause 容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker ps | grep two-containers</span><br><span class="line">k8s_www-server_two-containers_default_f1b30d6e-e3c3-4730-ac30-e6bc023d675b_0</span><br><span class="line">k8s_client_two-containers_default_f1b30d6e-e3c3-4730-ac30-e6bc023d675b_0</span><br><span class="line">k8s_POD_two-containers_default_f1b30d6e-e3c3-4730-ac30-e6bc023d675b_0</span><br></pre></td></tr></table></figure>
+
+<p>總結來說，在 Kubernetes 中，當 Pod 被創建時，Pause 容器就會被建立，CNI 框架會掛在 Pause 容器身上，使它具有網路能力，而其他的所有 Pod 都會將網路掛在此 Pause 容器身上。由於 Pause 容器在 Kubernetes 中的設計相當輕量、簡單，因此不太會有 crash 的情形發生。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://hiskio.com/courses/349/about" target="_blank" rel="noopener">Kubernetes 實作手冊：基礎入門篇</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker"><span class="toc-number">3.1.</span> <span class="toc-text">Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.2.</span> <span class="toc-text">Kubernetes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&text=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&is_video=false&description=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器&body=Check out this article: https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/12/「Kubernetes-實作手冊：基礎入門篇」學習筆記（十二）：認識-Pause-容器/&name=「Kubernetes 實作手冊：基礎入門篇」學習筆記（十二）：認識 Pause 容器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

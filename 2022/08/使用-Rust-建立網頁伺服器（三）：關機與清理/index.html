@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 做法使用執行緒池可以來同時回應多重請求，但警告顯示 workers、id 與 thread 欄位沒有被直接使用，這提醒目前尚未清理所有內容。當使用比較不優雅的 ctrl-c 方式來中斷主執行緒時，所有其他執行緒也會立即停止，不管它們是否正在處理請求。 現在要實作 Drop 特徵來對池中的每個執行緒呼叫 j">
+<meta name="keywords" content="程式設計,Rust">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Rust 建立網頁伺服器（三）：關機與清理">
+<meta property="og:url" content="https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 做法使用執行緒池可以來同時回應多重請求，但警告顯示 workers、id 與 thread 欄位沒有被直接使用，這提醒目前尚未清理所有內容。當使用比較不優雅的 ctrl-c 方式來中斷主執行緒時，所有其他執行緒也會立即停止，不管它們是否正在處理請求。 現在要實作 Drop 特徵來對池中的每個執行緒呼叫 j">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-10-16T17:28:09.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 Rust 建立網頁伺服器（三）：關機與清理">
+<meta name="twitter:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 做法使用執行緒池可以來同時回應多重請求，但警告顯示 workers、id 與 thread 欄位沒有被直接使用，這提醒目前尚未清理所有內容。當使用比較不優雅的 ctrl-c 方式來中斷主執行緒時，所有其他執行緒也會立即停止，不管它們是否正在處理請求。 現在要實作 Drop 特徵來對池中的每個執行緒呼叫 j">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Rust 建立網頁伺服器（三）：關機與清理</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/08/使用-Rust-建立網頁伺服器（二）：多執行緒伺服器/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/08/「The-Rust-Programming-Language」學習筆記（九）：錯誤處理/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&text=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&is_video=false&description=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 建立網頁伺服器（三）：關機與清理&body=Check out this article: https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&name=使用 Rust 建立網頁伺服器（三）：關機與清理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#實作-Drop-特徵"><span class="toc-number">2.1.</span> <span class="toc-text">實作 Drop 特徵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#發送停止接收任務的信號"><span class="toc-number">2.2.</span> <span class="toc-text">發送停止接收任務的信號</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Rust 建立網頁伺服器（三）：關機與清理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-08-14T13:00:37.000Z" itemprop="datePublished">2022-08-14</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/程式設計/Rust/其他/">其他</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a>」語言指南的學習筆記。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>使用執行緒池可以來同時回應多重請求，但警告顯示 <code>workers</code>、<code>id</code> 與 <code>thread</code> 欄位沒有被直接使用，這提醒目前尚未清理所有內容。當使用比較不優雅的 ctrl-c 方式來中斷主執行緒時，所有其他執行緒也會立即停止，不管它們是否正在處理請求。</p>
+<p>現在要實作 <code>Drop</code> 特徵來對池中的每個執行緒呼叫 <code>join</code> 方法，讓它們能在關閉前把任務處理完畢。然後要告訴執行緒它們該停止接收新的請求並關閉。為了觀察此程式碼的實際運作，以下會修改伺服器讓它在正常關機（graceful shutdown）前，只接收兩個請求。</p>
+<h3 id="實作-Drop-特徵"><a href="#實作-Drop-特徵" class="headerlink" title="實作 Drop 特徵"></a>實作 Drop 特徵</h3><p>先對執行緒池實作 <code>Drop</code> 特徵。當池被釋放時，執行緒都該加入（join）回來以確保它們有完成它們的工作。首先，遍歷執行緒池中的每個 <code>workers</code>。對此使用 <code>&amp;mut</code> 是因為 <code>self</code> 是個可變引用，而且我們也需要能夠改變 <code>worker</code>。對每個工作者印出訊息來說明此工作者正要關閉，然後對工作者的執行緒呼叫 <code>join</code>。如果 <code>join</code> 的呼叫失敗的話，我們使用 <code>unwrap</code> 來讓 Rust 恐慌，使其變成較不正常的關機方式。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="built_in">Drop</span> <span class="keyword">for</span> ThreadPool &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">drop</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> worker <span class="keyword">in</span> &amp;<span class="keyword">mut</span> <span class="keyword">self</span>.workers &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"Shutting down worker &#123;&#125;"</span>, worker.id);</span><br><span class="line"></span><br><span class="line">            worker.thread.join().unwrap();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>目前並無法呼叫 <code>join</code>，因為我們只有每個 <code>worker</code> 的可變借用，而 <code>join</code> 會取走其引數的所有權。要解決此問題，需要將 <code>thread</code> 中的執行緒移出 <code>Worker</code> 實例，讓 <code>join</code> 可以消耗該執行緒。如果 <code>Worker</code> 改持有 <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> 的話，可以對 <code>Option</code> 呼叫 <code>take</code> 方法來移動 <code>Some</code> 變體中的數值，並在原處留下 <code>None</code> 變體。換句話說，<code>thread</code> 中有 <code>Some</code> 變體的話就代表 <code>Worker</code> 正在執行，而當我們清理 <code>Worker</code> 時，我們會將 <code>Some</code> 換成 <code>None</code> 來讓 <code>Worker</code> 沒有任何執行緒可以執行。</p>
+<p>更新 <code>Worker</code> 的定義如以下。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Worker</span></span> &#123;</span><br><span class="line">    id: <span class="built_in">usize</span>,</span><br><span class="line">    thread: <span class="built_in">Option</span>&lt;thread::JoinHandle&lt;()&gt;&gt;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>當建立新的 <code>Worker</code>，需要將 <code>thread</code> 的數值封裝到 <code>Some</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> Worker &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(id: <span class="built_in">usize</span>, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">        Worker &#123;</span><br><span class="line">            id,</span><br><span class="line">            thread: <span class="literal">Some</span>(thread),</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>對 <code>Option</code> 呼叫 <code>take</code> 來將 <code>thread</code> 移出 <code>worker</code>。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="built_in">Drop</span> <span class="keyword">for</span> ThreadPool &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">drop</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> worker <span class="keyword">in</span> &amp;<span class="keyword">mut</span> <span class="keyword">self</span>.workers &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"Shutting down worker &#123;&#125;"</span>, worker.id);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Some</span>(thread) = worker.thread.take() &#123;</span><br><span class="line">                thread.join().unwrap();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Option</code> 的 <code>take</code> 方法會取走 <code>Some</code> 變體的數值並在原地留下 <code>None</code>。我們使用 <code>if let</code> 來解構 <code>Some</code> 並取得執行緒，然後我們對執行緒呼叫 <code>join</code>。如果工作者的執行緒已經是 <code>None</code>，就知道該該工作者已經清理其執行緒了，所以沒有必要再處理。</p>
+<h3 id="發送停止接收任務的信號"><a href="#發送停止接收任務的信號" class="headerlink" title="發送停止接收任務的信號"></a>發送停止接收任務的信號</h3><p>現在雖然有呼叫 <code>join</code>，但這無法關閉執行緒，因為它們會一直 <code>loop</code> 來尋找任務執行。如果嘗試以目前的 <code>drop</code> 實作釋放 <code>ThreadPool</code> 的話，主執行緒會被阻擋，一直等待第一個執行緒處理完成。</p>
+<p>要修正此問題，要修改執行緒，讓它們除了接收 <code>Job</code> 來執行以外，也要能收到告訴它們要停止接收並離開無限迴圈的信號。所以我們的通道將傳送以下兩種枚舉變體，而不再是 <code>Job</code> 實例。</p>
+<p>修改 <code>src/lib.rs</code> 檔，<code>Message</code> 枚舉可以是存有該執行緒要執行的 <code>Job</code> 的 <code>NewJob</code> 變體，或是通知執行緒離開其迴圈並停止的 <code>Terminate</code> 變體。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Message</span></span> &#123;</span><br><span class="line">    NewJob(Job),</span><br><span class="line">    Terminate,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要調整通道來使用 <code>Message</code> 型別，而不是 <code>Job</code> 型別。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">ThreadPool</span></span> &#123;</span><br><span class="line">    workers: <span class="built_in">Vec</span>&lt;Worker&gt;,</span><br><span class="line">    sender: mpsc::Sender&lt;Message&gt;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> ThreadPool &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">execute</span></span>&lt;F&gt;(&amp;<span class="keyword">self</span>, f: F)</span><br><span class="line">    <span class="keyword">where</span></span><br><span class="line">        F: <span class="built_in">FnOnce</span>() + <span class="built_in">Send</span> + <span class="symbol">'static</span>,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">let</span> job = <span class="built_in">Box</span>::new(f);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.sender.send(Message::NewJob(job)).unwrap();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Worker &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">new</span></span>(id: <span class="built_in">usize</span>, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Message&gt;&gt;&gt;) -&gt; Worker &#123;</span><br><span class="line">        <span class="keyword">let</span> thread = thread::spawn(<span class="keyword">move</span> || <span class="keyword">loop</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> message = receiver.lock().unwrap().recv().unwrap();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">match</span> message &#123;</span><br><span class="line">                Message::NewJob(job) =&gt; &#123;</span><br><span class="line">                    <span class="built_in">println!</span>(<span class="string">"Worker &#123;&#125; got a job; executing."</span>, id);</span><br><span class="line"></span><br><span class="line">                    job();</span><br><span class="line">                &#125;</span><br><span class="line">                Message::Terminate =&gt; &#123;</span><br><span class="line">                    <span class="built_in">println!</span>(<span class="string">"Worker &#123;&#125; was told to terminate."</span>, id);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Worker &#123;</span><br><span class="line">            id,</span><br><span class="line">            thread: <span class="literal">Some</span>(thread),</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>為了改用 <code>Message</code> 枚舉，有兩個地方得將 <code>Job</code> 改成 <code>Message</code>：<code>ThreadPool</code> 的定義與 <code>Worker::new</code> 的簽名。<code>ThreadPool</code> 的 <code>execute</code> 方法需要傳送封裝成 <code>Message::NewJob</code> 的任務。然後在 <code>Worker::new</code> 中，也就是取得 <code>Message</code> 的通道接收端中，如果收到 <code>NewJob</code> 變體的話，其就會處理任務；而如果收到 <code>Terminate</code> 變體的話，執行緒就會打破迴圈。</p>
+<p>有了這些改變，程式碼就能編譯並繼續執行。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">impl</span> <span class="built_in">Drop</span> <span class="keyword">for</span> ThreadPool &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">drop</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Sending terminate message to all workers."</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> &amp;<span class="keyword">self</span>.workers &#123;</span><br><span class="line">            <span class="keyword">self</span>.sender.send(Message::Terminate).unwrap();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Shutting down all workers."</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> worker <span class="keyword">in</span> &amp;<span class="keyword">mut</span> <span class="keyword">self</span>.workers &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">"Shutting down worker &#123;&#125;"</span>, worker.id);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Some</span>(thread) = worker.thread.take() &#123;</span><br><span class="line">                thread.join().unwrap();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>現在會遍歷工作者們 2 次，一次是傳送 <code>Terminate</code> 訊息給每個工作者，另一次是對每個工作者執行緒呼叫 <code>join</code>。如果我們嘗試在同個迴圈中傳送訊息並立即呼叫 <code>join</code> 的話，會無法保證在當前疊代中的工作者就是從通道中取得訊息的工作者。</p>
+<p>為了更好理解為何我們需要兩個分開的迴圈，想像一個情境中有 2 個工作者。如果用一個迴圈來遍歷每個工作者，在第一次疊代中會有個關機訊息傳至通道，並對第一個工作者執行緒呼叫 <code>join</code>。如果第一個工作者正在忙於處理請求的話，第二個工作者就會從通道取得關機訊息並關閉。這樣會變成持續等待第一個工作者關閉，但是它永遠不會關閉，因為是第二個執行緒取得關機訊息的。死結（deadlock）就發生了！</p>
+<p>為了預防此情形，我們首先在一個迴圈中對通道傳送所有的 <code>Terminate</code> 訊息，然後我們在另一個迴圈才將所有的執行緒加回來。每個工作者一旦收到關機訊息後，就會停止從通道中接收訊息。所以可以確定如果我們發送與執行緒數量相當的關機訊息的話，每個工作者都會在其執行緒被呼叫 <code>join</code> 前收到關機訊息。</p>
+<p>要實際看到此程式碼的運作情形，修改 <code>main</code> 來在正常關閉伺服器前，只接收兩個請求。</p>
+<p>修改 <code>src/bin/main.rs</code> 檔。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> listener = TcpListener::bind(<span class="string">"127.0.0.1:7878"</span>).unwrap();</span><br><span class="line">    <span class="keyword">let</span> pool = ThreadPool::new(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> stream <span class="keyword">in</span> listener.incoming().take(<span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> stream = stream.unwrap();</span><br><span class="line"></span><br><span class="line">        pool.execute(|| &#123;</span><br><span class="line">            handle_connection(stream);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"Shutting down."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在真實世界中的網頁伺服器當然不會只處理 2 個請求就關機。此程式碼只是用來說明正常關機與清理的運作流程。</p>
+<p><code>take</code> 方法是由 <code>Iterator</code> 特徵所定義，且限制該疊代最多只會取得前兩項。<code>ThreadPool</code> 會在 <code>main</code> 結束時離開作用域，然後 <code>drop</code> 的實作就會執行。</p>
+<p>執行程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo run</span><br></pre></td></tr></table></figure>
+
+<p>輸出以下訊息。</p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ cargo run</span><br><span class="line">   Compiling hello v0.<span class="number">1.0</span> (file:<span class="comment">///projects/hello)</span></span><br><span class="line">    Finished dev [unoptimized + debuginfo] target(s) <span class="keyword">in</span> <span class="number">1.0</span>s</span><br><span class="line">     Running `target/debug/main`</span><br><span class="line">Worker <span class="number">0</span> got a job; executing.</span><br><span class="line">Worker <span class="number">3</span> got a job; executing.</span><br><span class="line">Shutting down.</span><br><span class="line">Sending terminate message to all workers.</span><br><span class="line">Shutting down all workers.</span><br><span class="line">Shutting down worker <span class="number">0</span></span><br><span class="line">Worker <span class="number">1</span> was told to terminate.</span><br><span class="line">Worker <span class="number">2</span> was told to terminate.</span><br><span class="line">Worker <span class="number">0</span> was told to terminate.</span><br><span class="line">Worker <span class="number">3</span> was told to terminate.</span><br><span class="line">Shutting down worker <span class="number">1</span></span><br><span class="line">Shutting down worker <span class="number">2</span></span><br><span class="line">Shutting down worker <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>可能會看到不同順序的工作者與訊息輸出。可以從訊息中看到此程式碼如何執行的，工作者 0 與 3 獲得前兩個請求。然後對於第三個請求，伺服器會停止接受連線。當 <code>ThreadPool</code> 在 <code>main</code> 結尾離開作用域時，它 <code>Drop</code> 的實作就會生效，然後執行緒池告訴所有工作者關閉。當工作者看到關機訊息時，它們就會印出訊息，然後執行緒池會呼叫 <code>join</code> 來關閉每個工作者的執行緒。</p>
+<p>此特定執行方式中有個有趣的地方值得注意：<code>ThreadPool</code> 傳送關機訊息至通道，且在任何工作者收到訊息前，我們就已經著將工作者 0 加入回來。工作者 0 此時尚未收到關機訊息，所以主執行緒會被擋住並等待工作者 0 完成。同一時間，每個工作者會開始收到關機訊息。當工作者 0 完成時，主執行緒會等待剩下的工作者完成任務。屆時，它們都會收到關機訊息並能夠關閉。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a href="https://github.com/memochou1993/rust-web-server" target="_blank" rel="noopener">rust-web-server</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://doc.rust-lang.org/stable/book/" target="_blank" rel="noopener">The Rust Programming Language</a></li>
+<li><a href="https://www.youtube.com/watch?v=qjx8vutWaUQ" target="_blank" rel="noopener">Building a Web Server in Rust - Part 3</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#實作-Drop-特徵"><span class="toc-number">2.1.</span> <span class="toc-text">實作 Drop 特徵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#發送停止接收任務的信號"><span class="toc-number">2.2.</span> <span class="toc-text">發送停止接收任務的信號</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&text=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&is_video=false&description=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Rust 建立網頁伺服器（三）：關機與清理&body=Check out this article: https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&title=使用 Rust 建立網頁伺服器（三）：關機與清理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/使用-Rust-建立網頁伺服器（三）：關機與清理/&name=使用 Rust 建立網頁伺服器（三）：關機與清理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
