@@ -10,13 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="做法建立工作資料夾。 12mkdir -p terraform-practice&#x2F;ec2cd terraform-practice&#x2F;ec2  使用 init 指令初始化工作資料夾，需要的供應商外掛（provider plugins）將會被下載下來。 1terraform init  在工作資料夾新增 main.tf 檔： 12345678910111213141516171819202122232">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 Terraform 在 AWS EC2 服務建立實體">
-<meta property="og:url" content="https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/index.html">
+<meta property="og:title" content="使用 Terraform 在 AWS EC2 服務建立資源">
+<meta property="og:url" content="https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法建立工作資料夾。 12mkdir -p terraform-practice&#x2F;ec2cd terraform-practice&#x2F;ec2  使用 init 指令初始化工作資料夾，需要的供應商外掛（provider plugins）將會被下載下來。 1terraform init  在工作資料夾新增 main.tf 檔： 12345678910111213141516171819202122232">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-10-26T08:59:49.000Z">
-<meta property="article:modified_time" content="2022-10-06T17:37:16.506Z">
+<meta property="article:modified_time" content="2023-07-10T18:15:32.899Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="環境部署">
 <meta property="article:tag" content="AWS">
@@ -42,7 +42,7 @@
         
     
     <!-- title -->
-    <title>使用 Terraform 在 AWS EC2 服務建立實體</title>
+    <title>使用 Terraform 在 AWS EC2 服務建立資源</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
@@ -112,16 +112,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&text=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&is_video=false&description=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Terraform 在 AWS EC2 服務建立實體&body=Check out this article: https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&name=使用 Terraform 在 AWS EC2 服務建立實體&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&text=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&is_video=false&description=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Terraform 在 AWS EC2 服務建立資源&body=Check out this article: https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&name=使用 Terraform 在 AWS EC2 服務建立資源&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -138,7 +138,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        使用 Terraform 在 AWS EC2 服務建立實體
+        使用 Terraform 在 AWS EC2 服務建立資源
     </h1>
 
 
@@ -244,16 +244,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&text=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&is_video=false&description=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Terraform 在 AWS EC2 服務建立實體&body=Check out this article: https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&title=使用 Terraform 在 AWS EC2 服務建立實體"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E5%AF%A6%E9%AB%94/&name=使用 Terraform 在 AWS EC2 服務建立實體&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&text=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&is_video=false&description=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Terraform 在 AWS EC2 服務建立資源&body=Check out this article: https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&title=使用 Terraform 在 AWS EC2 服務建立資源"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/10/%E4%BD%BF%E7%94%A8-Terraform-%E5%9C%A8-AWS-EC2-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/&name=使用 Terraform 在 AWS EC2 服務建立資源&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
