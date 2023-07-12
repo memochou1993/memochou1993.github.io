@@ -10,13 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh:&#x2F;&#x2F;g">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用 GitLab CI&#x2F;CD 和 Envoy 為 Laravel 專案建立自動化部署">
-<meta property="og:url" content="https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:title" content="在 GitLab CI&#x2F;CD 使用 Envoy 為 Laravel 專案建立自動化部署">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Ubuntu（遠端伺服器） macOS（本機）  建立專案在本機新增 Laravel 專案，並推送至 GitLab 儲存庫。 1234567laravel new laravel-envoycd laravel-envoygit initgit add .git commit -m &quot;Initial Commit&quot;git remote add origin ssh:&#x2F;&#x2F;g">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-02-06T17:51:29.000Z">
-<meta property="article:modified_time" content="2022-10-06T17:33:26.469Z">
+<meta property="article:modified_time" content="2023-07-12T19:42:14.521Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Laravel">
 <meta property="article:tag" content="環境部署">
@@ -44,7 +44,7 @@
         
     
     <!-- title -->
-    <title>使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署</title>
+    <title>在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
@@ -114,16 +114,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&text=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&is_video=false&description=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&body=Check out this article: https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&name=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&text=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&is_video=false&description=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&name=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -140,7 +140,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署
+        在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署
     </h1>
 
 
@@ -166,7 +166,9 @@
             
         
             
-                <a href="/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/">CI/CD</a>
+        
+            
+                <a href="/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/GitLab/">GitLab</a>
             
         
     </div>
@@ -352,16 +354,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&text=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&is_video=false&description=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&body=Check out this article: https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&name=使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&text=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&is_video=false&description=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&title=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/&name=在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

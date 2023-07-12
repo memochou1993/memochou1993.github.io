@@ -8,15 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="建立專案建立專案。 12mkdir flask-examplecd flask-example  建立環境。 12pyenv virtualenv 3.9.6 flask-examplepyenv local flask-example  做法新增 .gitignore 檔。 123__pycache__.vercel.env  新增 requirements.txt 檔 1Flask&#x3D;&#x3D;2.2.">
+    <meta name="description" content="建立專案建立專案。 12mkdir flask-examplecd flask-example  建立環境。 12pyenv virtualenv 3.11.4 flask-examplepyenv local flask-example  做法新增 .gitignore 檔。 123__pycache__.vercel.env  新增 requirements.txt 檔 1Flask&#x3D;&#x3D;2.2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="將 Flask 專案部署至 Vercel 平台">
 <meta property="og:url" content="https://blog.epoch.tw/2023/07/%E5%B0%87-Flask-%E5%B0%88%E6%A1%88%E9%83%A8%E7%BD%B2%E8%87%B3-Vercel-%E5%B9%B3%E5%8F%B0/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="建立專案建立專案。 12mkdir flask-examplecd flask-example  建立環境。 12pyenv virtualenv 3.9.6 flask-examplepyenv local flask-example  做法新增 .gitignore 檔。 123__pycache__.vercel.env  新增 requirements.txt 檔 1Flask&#x3D;&#x3D;2.2.">
+<meta property="og:description" content="建立專案建立專案。 12mkdir flask-examplecd flask-example  建立環境。 12pyenv virtualenv 3.11.4 flask-examplepyenv local flask-example  做法新增 .gitignore 檔。 123__pycache__.vercel.env  新增 requirements.txt 檔 1Flask&#x3D;&#x3D;2.2">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-07-11T15:45:08.000Z">
-<meta property="article:modified_time" content="2023-07-11T15:51:42.751Z">
+<meta property="article:modified_time" content="2023-07-12T19:42:14.544Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="程式設計">
 <meta property="article:tag" content="Python">
@@ -98,6 +98,8 @@
         
         <li><a class="icon" href="/2023/07/%E4%BD%BF%E7%94%A8-Python-%E5%92%8C-LangChain-%E9%80%8F%E9%81%8E-OpenAI-API-%E5%92%8C-Google-Drive-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
+        
+        <li><a class="icon" href="/2023/07/%E4%BD%BF%E7%94%A8-Flask-%E5%BB%BA%E7%AB%8B-Line-Bot-%E6%9C%8D%E5%8B%99/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -186,7 +188,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> flask-example</span><br><span class="line"><span class="built_in">cd</span> flask-example</span><br></pre></td></tr></table></figure>
 
 <p>建立環境。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pyenv virtualenv 3.9.6 flask-example</span><br><span class="line">pyenv <span class="built_in">local</span> flask-example</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pyenv virtualenv 3.11.4 flask-example</span><br><span class="line">pyenv <span class="built_in">local</span> flask-example</span><br></pre></td></tr></table></figure>
 
 <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>.gitignore</code> 檔。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">__pycache__</span><br><span class="line">.vercel</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>

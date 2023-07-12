@@ -6,7 +6,7 @@
   <link href="https://blog.epoch.tw/atom.xml" rel="self"/>
   
   <link href="https://blog.epoch.tw/"/>
-  <updated>2023-07-11T15:51:42.751Z</updated>
+  <updated>2023-07-12T19:42:14.524Z</updated>
   <id>https://blog.epoch.tw/</id>
   
   <author>
@@ -17,11 +17,130 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在 GitLab CI/CD 使用 Git Submodules 子模組</title>
+    <link href="https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/"/>
+    <id>https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/</id>
+    <published>2023-07-12T18:17:49.000Z</published>
+    <updated>2023-07-12T19:42:14.524Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;做法&quot;&gt;&lt;a href=&quot;#做法&quot; class=&quot;headerlink&quot; title=&quot;做法&quot;&gt;&lt;/a&gt;做法&lt;/h2&gt;&lt;p&gt;在當前專案，檢查 &lt;code&gt;.gitmodules&lt;/code&gt; 檔，每個子模組的 &lt;code&gt;url&lt;/code&gt; 必須以 &lt;code&gt;</summary>
+      
+    
+    
+    
+    <category term="環境部署" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    
+    <category term="CI/CD" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/GitLab/"/>
+    
+    
+    <category term="環境部署" scheme="https://blog.epoch.tw/tags/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    
+    <category term="版本控制" scheme="https://blog.epoch.tw/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"/>
+    
+    <category term="Git" scheme="https://blog.epoch.tw/tags/Git/"/>
+    
+    <category term="CI/CD" scheme="https://blog.epoch.tw/tags/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/tags/GitLab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 GitLab CI/CD 使用 SSH keys 克隆儲存庫</title>
+    <link href="https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-SSH-keys-%E5%85%8B%E9%9A%86%E5%84%B2%E5%AD%98%E5%BA%AB/"/>
+    <id>https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-SSH-keys-%E5%85%8B%E9%9A%86%E5%84%B2%E5%AD%98%E5%BA%AB/</id>
+    <published>2023-07-12T17:59:15.000Z</published>
+    <updated>2023-07-12T19:42:14.524Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;做法&quot;&gt;&lt;a href=&quot;#做法&quot; class=&quot;headerlink&quot; title=&quot;做法&quot;&gt;&lt;/a&gt;做法&lt;/h2&gt;&lt;p&gt;首先建立一組 SSH 金鑰對。&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td clas</summary>
+      
+    
+    
+    
+    <category term="環境部署" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    
+    <category term="CI/CD" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/GitLab/"/>
+    
+    
+    <category term="環境部署" scheme="https://blog.epoch.tw/tags/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    
+    <category term="SSH" scheme="https://blog.epoch.tw/tags/SSH/"/>
+    
+    <category term="CI/CD" scheme="https://blog.epoch.tw/tags/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/tags/GitLab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 GitLab CI/CD 將 Docker 映像檔推送至 GitLab Container Registry</title>
+    <link href="https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E5%B0%87-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E6%8E%A8%E9%80%81%E8%87%B3-GitLab-Container-Registry/"/>
+    <id>https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E5%B0%87-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E6%8E%A8%E9%80%81%E8%87%B3-GitLab-Container-Registry/</id>
+    <published>2023-07-12T17:49:50.000Z</published>
+    <updated>2023-07-12T19:42:14.525Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;做法&quot;&gt;&lt;a href=&quot;#做法&quot; class=&quot;headerlink&quot; title=&quot;做法&quot;&gt;&lt;/a&gt;做法&lt;/h2&gt;&lt;p&gt;新增 &lt;code&gt;.gitlab-ci.yml&lt;/code&gt; 檔。&lt;/p&gt;
+&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="環境部署" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    
+    <category term="CI/CD" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/GitLab/"/>
+    
+    
+    <category term="環境部署" scheme="https://blog.epoch.tw/tags/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
+    
+    <category term="Docker" scheme="https://blog.epoch.tw/tags/Docker/"/>
+    
+    <category term="CI/CD" scheme="https://blog.epoch.tw/tags/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/tags/GitLab/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 Flask 建立 Line Bot 服務</title>
+    <link href="https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-Flask-%E5%BB%BA%E7%AB%8B-Line-Bot-%E6%9C%8D%E5%8B%99/"/>
+    <id>https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-Flask-%E5%BB%BA%E7%AB%8B-Line-Bot-%E6%9C%8D%E5%8B%99/</id>
+    <published>2023-07-11T16:07:11.000Z</published>
+    <updated>2023-07-11T16:09:28.762Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;建立專案&quot;&gt;&lt;a href=&quot;#建立專案&quot; class=&quot;headerlink&quot; title=&quot;建立專案&quot;&gt;&lt;/a&gt;建立專案&lt;/h2&gt;&lt;p&gt;建立專案。&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>將 Flask 專案部署至 Vercel 平台</title>
     <link href="https://blog.epoch.tw/2023/07/%E5%B0%87-Flask-%E5%B0%88%E6%A1%88%E9%83%A8%E7%BD%B2%E8%87%B3-Vercel-%E5%B9%B3%E5%8F%B0/"/>
     <id>https://blog.epoch.tw/2023/07/%E5%B0%87-Flask-%E5%B0%88%E6%A1%88%E9%83%A8%E7%BD%B2%E8%87%B3-Vercel-%E5%B9%B3%E5%8F%B0/</id>
     <published>2023-07-11T15:45:08.000Z</published>
-    <updated>2023-07-11T15:51:42.751Z</updated>
+    <updated>2023-07-12T19:42:14.544Z</updated>
     
     
       
@@ -54,7 +173,7 @@
     <link href="https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-Python-%E5%92%8C-LangChain-%E9%80%8F%E9%81%8E-OpenAI-API-%E5%92%8C-Google-Drive-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"/>
     <id>https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-Python-%E5%92%8C-LangChain-%E9%80%8F%E9%81%8E-OpenAI-API-%E5%92%8C-Google-Drive-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/</id>
     <published>2023-07-10T15:15:18.000Z</published>
-    <updated>2023-07-10T18:15:32.927Z</updated>
+    <updated>2023-07-12T19:42:14.543Z</updated>
     
     
       
@@ -10807,11 +10926,11 @@
   </entry>
   
   <entry>
-    <title>使用 Git Submodules 管理模組</title>
-    <link href="https://blog.epoch.tw/2020/10/%E4%BD%BF%E7%94%A8-Git-Submodules-%E7%AE%A1%E7%90%86%E6%A8%A1%E7%B5%84/"/>
-    <id>https://blog.epoch.tw/2020/10/%E4%BD%BF%E7%94%A8-Git-Submodules-%E7%AE%A1%E7%90%86%E6%A8%A1%E7%B5%84/</id>
+    <title>使用 Git Submodules 子模組</title>
+    <link href="https://blog.epoch.tw/2020/10/%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/"/>
+    <id>https://blog.epoch.tw/2020/10/%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/</id>
     <published>2020-10-09T15:04:05.000Z</published>
-    <updated>2022-10-06T17:26:45.169Z</updated>
+    <updated>2023-07-12T19:42:14.522Z</updated>
     
     
       
@@ -15300,11 +15419,11 @@
   </entry>
   
   <entry>
-    <title>使用 GitLab CI/CD 和 Envoy 為 Laravel 專案建立自動化部署</title>
-    <link href="https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
-    <id>https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-GitLab-CI-CD-%E5%92%8C-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</id>
+    <title>在 GitLab CI/CD 使用 Envoy 為 Laravel 專案建立自動化部署</title>
+    <link href="https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
+    <id>https://blog.epoch.tw/2019/02/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Envoy-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</id>
     <published>2019-02-06T17:51:29.000Z</published>
-    <updated>2022-10-06T17:33:26.469Z</updated>
+    <updated>2023-07-12T19:42:14.521Z</updated>
     
     
       
@@ -15321,6 +15440,8 @@
     <category term="環境部署" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
     
     <category term="CI/CD" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/"/>
+    
+    <category term="GitLab" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/GitLab/"/>
     
     
     <category term="Laravel" scheme="https://blog.epoch.tw/tags/Laravel/"/>
@@ -15379,7 +15500,7 @@
     <link href="https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
     <id>https://blog.epoch.tw/2019/02/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/</id>
     <published>2019-02-05T16:42:17.000Z</published>
-    <updated>2022-10-06T17:26:45.231Z</updated>
+    <updated>2023-07-12T19:42:14.521Z</updated>
     
     
       
@@ -15396,6 +15517,8 @@
     <category term="環境部署" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/"/>
     
     <category term="CI/CD" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/"/>
+    
+    <category term="其他" scheme="https://blog.epoch.tw/categories/%E7%92%B0%E5%A2%83%E9%83%A8%E7%BD%B2/CI-CD/%E5%85%B6%E4%BB%96/"/>
     
     
     <category term="Laravel" scheme="https://blog.epoch.tw/tags/Laravel/"/>
