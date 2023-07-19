@@ -16,7 +16,7 @@
 <meta property="og:description" content="前置作業首先，到 Google Cloud 頁面，建立一個 langchain-google-drive 專案。 然後，進到啟用 API 精靈頁面，啟用 Google Drive API。 使用 OAuth 2.0點選「建立憑證」，選擇「建立 OAuth 用戶端 ID」，選擇「電腦版應用程式」。 建立並下載憑證後，重新命名為 credentials.json 檔。 使用服務帳戶或者點選「建立憑證」">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-07-10T15:15:18.000Z">
-<meta property="article:modified_time" content="2023-07-18T13:06:52.452Z">
+<meta property="article:modified_time" content="2023-07-18T16:10:56.010Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="程式設計">
 <meta property="article:tag" content="Python">
@@ -199,7 +199,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.11.4</span><br><span class="line">pyenv virtualenv 3.11.4 langchain-google-drive</span><br><span class="line">pyenv <span class="built_in">local</span> langchain-google-drive</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>requirements.txt</code> 檔。</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">chroma</span><br><span class="line">chromadb</span><br><span class="line">google-api-python-client</span><br><span class="line">google-auth-httplib2</span><br><span class="line">google-auth-oauthlib</span><br><span class="line">langchain</span><br><span class="line">openai</span><br><span class="line">pypdf2</span><br><span class="line">python-dotenv</span><br><span class="line">tiktoken</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">chromadb==0.3.29</span><br><span class="line">google-api-python-client</span><br><span class="line">google-auth-httplib2</span><br><span class="line">google-auth-oauthlib</span><br><span class="line">langchain</span><br><span class="line">openai</span><br><span class="line">pypdf2</span><br><span class="line">python-dotenv</span><br><span class="line">tiktoken</span><br></pre></td></tr></table></figure>
 
 <p>安裝依賴套件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
