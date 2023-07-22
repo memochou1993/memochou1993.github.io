@@ -8,19 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="做法建立專案。 12laravel new line-bot-laravelcd line-bot-laravel  安裝 LINE Bot SDK 套件。 1composer require linecorp&#x2F;line-bot-sdk  安裝 laravel-dump-server 測試工具。 1composer require --dev beyondcode&#x2F;laravel-dump-ser">
+    <meta name="description" content="做法建立專案。 12laravel new line-bot-laravelcd line-bot-laravel  安裝 LINE Bot SDK 套件。 1composer require linecorp&#x2F;line-bot-sdk:^7.6  安裝 laravel-dump-server 測試工具。 1composer require --dev beyondcode&#x2F;laravel-dum">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Laravel 9.0 建立 LINE Bot 聊天機器人">
 <meta property="og:url" content="https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法建立專案。 12laravel new line-bot-laravelcd line-bot-laravel  安裝 LINE Bot SDK 套件。 1composer require linecorp&#x2F;line-bot-sdk  安裝 laravel-dump-server 測試工具。 1composer require --dev beyondcode&#x2F;laravel-dump-ser">
+<meta property="og:description" content="做法建立專案。 12laravel new line-bot-laravelcd line-bot-laravel  安裝 LINE Bot SDK 套件。 1composer require linecorp&#x2F;line-bot-sdk:^7.6  安裝 laravel-dump-server 測試工具。 1composer require --dev beyondcode&#x2F;laravel-dum">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-22T02:35:35.000Z">
-<meta property="article:modified_time" content="2023-02-22T03:09:27.148Z">
+<meta property="article:modified_time" content="2023-07-22T15:38:49.039Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="程式設計">
-<meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="PHP">
 <meta property="article:tag" content="LINE">
 <meta property="article:tag" content="chatbot">
 <meta name="twitter:card" content="summary">
@@ -127,7 +127,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">2.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">2.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -189,7 +189,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">laravel new line-bot-laravel</span><br><span class="line"><span class="built_in">cd</span> line-bot-laravel</span><br></pre></td></tr></table></figure>
 
 <p>安裝 LINE Bot SDK 套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require linecorp/line-bot-sdk</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require linecorp/line-bot-sdk:^7.6</span><br></pre></td></tr></table></figure>
 
 <p>安裝 <code>laravel-dump-server</code> 測試工具。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require --dev beyondcode/laravel-dump-server</span><br></pre></td></tr></table></figure>
@@ -212,13 +212,16 @@
 <p>啟動本地伺服器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artisan server</span><br></pre></td></tr></table></figure>
 
-<p>啟動本地伺服器。</p>
+<p>啟動代理伺服器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 8000</span><br></pre></td></tr></table></figure>
 
 <p>在 LINE 平台上，修改 Webhook URL：<a target="_blank" rel="noopener" href="https://xxx.jp.ngrok.io/api/webhook">https://xxx.jp.ngrok.io/api/webhook</a></p>
 <p>認證 Webhook URL，並使用手機測試訊息。</p>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/line-bot-laravel">line-bot-laravel</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/line/line-bot-sdk-php">line&#x2F;line-bot-sdk-php</a></li>
 </ul>
 
   </div>
@@ -256,7 +259,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">2.</span> <span class="toc-text">程式碼</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">2.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
