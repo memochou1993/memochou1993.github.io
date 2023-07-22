@@ -16,11 +16,11 @@
 <meta property="og:description" content="做法下載並啟動 postgres 映像檔。 1docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD&#x3D;root postgres  進入容器。 1docker exec -it postgres bash  或使用 psql 指令直接進入 PostgreSQL 互動介面。 1docker exec -it postgres p">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-23T13:49:58.000Z">
-<meta property="article:modified_time" content="2022-10-06T17:26:45.220Z">
+<meta property="article:modified_time" content="2023-07-22T16:00:57.605Z">
 <meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Docker">
 <meta property="article:tag" content="資料庫">
 <meta property="article:tag" content="SQL">
-<meta property="article:tag" content="Docker">
 <meta property="article:tag" content="PostgreSQL">
 <meta name="twitter:card" content="summary">
     
@@ -126,7 +126,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%A3%E7%B7%9A"><span class="toc-number">2.</span> <span class="toc-text">連線</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -206,6 +206,15 @@
 <p>離開互動介面。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres&gt; \q</span><br></pre></td></tr></table></figure>
 
+<h2 id="連線"><a href="#連線" class="headerlink" title="連線"></a>連線</h2><p>如果要在沒有暴露通訊埠的情況下使用，可以先建立一個網路。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create my_network</span><br></pre></td></tr></table></figure>
+
+<p>啟動容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name postgres-container --network my_network -e POSTGRES_PASSWORD=mysecretpassword postgres:latest</span><br></pre></td></tr></table></figure>
+
+<p>啟動臨時容器，在該容器中使用 <code>psql</code> 連線工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --<span class="built_in">rm</span> --name postgres-client --network my_network postgres:latest psql -h postgres-container -U postgres</span><br></pre></td></tr></table></figure>
+
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/postgres">postgres</a></li>
 </ul>
@@ -245,7 +254,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%A3%E7%B7%9A"><span class="toc-number">2.</span> <span class="toc-text">連線</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
