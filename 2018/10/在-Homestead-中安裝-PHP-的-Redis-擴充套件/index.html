@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言如使用 CodeIgniter 框架，需安裝 PHP 的 Redis 擴充套件；如使用 Laravel 框架，則只要在專案使用 Composer 安裝 predis&#x2F;predis 套件即可。 步驟查看 PHP 版本。 1vagrant@homestead:~$ php -v  新增 ondrej&#x2F;php 套件庫。 1vagrant@homestead:~$ sudo add-apt-">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-10-17T13:44:25.000Z">
-<meta property="article:modified_time" content="2022-10-06T17:26:45.218Z">
+<meta property="article:modified_time" content="2023-07-21T18:17:23.622Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="程式設計">
 <meta property="article:tag" content="PHP">
@@ -220,13 +220,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ sudo service php7.2-fpm restart</span><br></pre></td></tr></table></figure>
 
 <p>使用指令查看安裝是否成功：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -m |grep redis</span><br><span class="line">redis</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -m | grep redis</span><br><span class="line">redis</span><br></pre></td></tr></table></figure>
 
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>查看詳細資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php --ri redis</span><br></pre></td></tr></table></figure>
 
 <p>查看擴充套件的安裝位置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -i|grep extension_dir</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php -i | grep extension_dir</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
