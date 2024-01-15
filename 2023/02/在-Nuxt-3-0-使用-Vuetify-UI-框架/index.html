@@ -8,15 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="做法建立專案。 12npx nuxi init nuxt-appcd nuxt-app  安裝依賴套件。 1npm i  安裝 Vuetify 框架。 1npm i vuetify@next sass  新增 plugins&#x2F;vuetify.js 檔。 1234567891011121314import &amp;#123; createVuetify &amp;#125; from &amp;#x27;vuetify&amp;">
+    <meta name="description" content="做法建立專案。 12npx nuxi init nuxt-appcd nuxt-app  安裝依賴套件。 1npm i  安裝 Vuetify 框架。 1npm i -D vuetify vite-plugin-vuetify sass  新增 plugins&#x2F;vuetify.js 檔。 1234567891011121314import &amp;#123; createVuetify &amp;#125; f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Nuxt 3.0 使用 Vuetify UI 框架">
 <meta property="og:url" content="https://blog.epoch.tw/2023/02/%E5%9C%A8-Nuxt-3-0-%E4%BD%BF%E7%94%A8-Vuetify-UI-%E6%A1%86%E6%9E%B6/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法建立專案。 12npx nuxi init nuxt-appcd nuxt-app  安裝依賴套件。 1npm i  安裝 Vuetify 框架。 1npm i vuetify@next sass  新增 plugins&#x2F;vuetify.js 檔。 1234567891011121314import &amp;#123; createVuetify &amp;#125; from &amp;#x27;vuetify&amp;">
+<meta property="og:description" content="做法建立專案。 12npx nuxi init nuxt-appcd nuxt-app  安裝依賴套件。 1npm i  安裝 Vuetify 框架。 1npm i -D vuetify vite-plugin-vuetify sass  新增 plugins&#x2F;vuetify.js 檔。 1234567891011121314import &amp;#123; createVuetify &amp;#125; f">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-19T06:37:41.000Z">
-<meta property="article:modified_time" content="2023-11-13T07:51:31.920Z">
+<meta property="article:modified_time" content="2024-01-15T16:38:02.521Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="JavaScript">
@@ -191,7 +191,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
 
 <p>安裝 Vuetify 框架。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vuetify@next sass</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D vuetify vite-plugin-vuetify sass</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>plugins/vuetify.js</code> 檔。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createVuetify &#125; <span class="keyword">from</span> <span class="string">&#x27;vuetify&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vuetify/styles&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> components <span class="keyword">from</span> <span class="string">&#x27;vuetify/components&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> directives <span class="keyword">from</span> <span class="string">&#x27;vuetify/directives&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@mdi/font/css/materialdesignicons.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtPlugin</span>(<span class="function">(<span class="params">nuxtApp</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> vuetify = <span class="title function_">createVuetify</span>(&#123;</span><br><span class="line">    <span class="attr">ssr</span>: <span class="literal">true</span>,</span><br><span class="line">    components,</span><br><span class="line">    directives,</span><br><span class="line">  &#125;);</span><br><span class="line">  nuxtApp.<span class="property">vueApp</span>.<span class="title function_">use</span>(vuetify);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
