@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 請求方法HTTP 定義了一組請求方法，以指示要對給定資源執行的所需操作。儘管它們也可以是名詞，但這些請求方法有時也稱為 HTTP 動詞。每個方法都實現了不同的語義，一些方法則共享了一些共有的功能：例如，請求方法可以是安全的、冪等的或可快取的。 GETGET 方法請求指定資源的表示形式。使用 GET 請求應僅檢索資料。    特性 是">
-<meta name="keywords" content="TCP&#x2F;IP,HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="認識 HTTP 超文本傳輸協定（二）：請求方法">
-<meta property="og:url" content="https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 請求方法HTTP 定義了一組請求方法，以指示要對給定資源執行的所需操作。儘管它們也可以是名詞，但這些請求方法有時也稱為 HTTP 動詞。每個方法都實現了不同的語義，一些方法則共享了一些共有的功能：例如，請求方法可以是安全的、冪等的或可快取的。 GETGET 方法請求指定資源的表示形式。使用 GET 請求應僅檢索資料。    特性 是">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.959Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-15T15:05:31.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.676Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="TCP&#x2F;IP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="認識 HTTP 超文本傳輸協定（二）：請求方法">
-<meta name="twitter:description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 請求方法HTTP 定義了一組請求方法，以指示要對給定資源執行的所需操作。儘管它們也可以是名詞，但這些請求方法有時也稱為 HTTP 動詞。每個方法都實現了不同的語義，一些方法則共享了一些共有的功能：例如，請求方法可以是安全的、冪等的或可快取的。 GETGET 方法請求指定資源的表示形式。使用 GET 請求應僅檢索資料。    特性 是">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/03/認識-HTTP-超文本傳輸協定（三）：狀態碼/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%8B%80%E6%85%8B%E7%A2%BC/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&text=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&is_video=false&description=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（二）：請求方法&body=Check out this article: https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&name=認識 HTTP 超文本傳輸協定（二）：請求方法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&text=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&is_video=false&description=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（二）：請求方法&body=Check out this article: https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&name=認識 HTTP 超文本傳輸協定（二）：請求方法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#請求方法"><span class="toc-number">2.</span> <span class="toc-text">請求方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GET"><span class="toc-number">2.1.</span> <span class="toc-text">GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEAD"><span class="toc-number">2.2.</span> <span class="toc-text">HEAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POST"><span class="toc-number">2.3.</span> <span class="toc-text">POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUT"><span class="toc-number">2.4.</span> <span class="toc-text">PUT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DELETE"><span class="toc-number">2.5.</span> <span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CONNECT"><span class="toc-number">2.6.</span> <span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPTIONS"><span class="toc-number">2.7.</span> <span class="toc-text">OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TRACE"><span class="toc-number">2.8.</span> <span class="toc-text">TRACE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PATCH"><span class="toc-number">2.9.</span> <span class="toc-text">PATCH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#術語"><span class="toc-number">3.</span> <span class="toc-text">術語</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全的"><span class="toc-number">3.1.</span> <span class="toc-text">安全的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#冪等的"><span class="toc-number">3.2.</span> <span class="toc-text">冪等的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可快取的"><span class="toc-number">3.3.</span> <span class="toc-text">可快取的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技術指標"><span class="toc-number">4.</span> <span class="toc-text">技術指標</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">請求方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GET"><span class="toc-number">2.1.</span> <span class="toc-text">GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEAD"><span class="toc-number">2.2.</span> <span class="toc-text">HEAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POST"><span class="toc-number">2.3.</span> <span class="toc-text">POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUT"><span class="toc-number">2.4.</span> <span class="toc-text">PUT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DELETE"><span class="toc-number">2.5.</span> <span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CONNECT"><span class="toc-number">2.6.</span> <span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPTIONS"><span class="toc-number">2.7.</span> <span class="toc-text">OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TRACE"><span class="toc-number">2.8.</span> <span class="toc-text">TRACE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PATCH"><span class="toc-number">2.9.</span> <span class="toc-text">PATCH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%93%E8%AA%9E"><span class="toc-number">3.</span> <span class="toc-text">術語</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%9A%84"><span class="toc-number">3.1.</span> <span class="toc-text">安全的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%AA%E7%AD%89%E7%9A%84"><span class="toc-number">3.2.</span> <span class="toc-text">冪等的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BF%AB%E5%8F%96%E7%9A%84"><span class="toc-number">3.3.</span> <span class="toc-text">可快取的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E8%A1%93%E6%8C%87%E6%A8%99"><span class="toc-number">4.</span> <span class="toc-text">技術指標</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +162,7 @@
             
         
             
-                <a href="/categories/其他/TCP-IP/">TCP/IP</a>
+                <a href="/categories/Others/TCP-IP/">TCP/IP</a>
             
         
     </div>
@@ -165,7 +171,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/HTTP/">HTTP</a>, <a class="tag-link" href="/tags/TCP-IP/">TCP/IP</a>
+        <a class="tag-link-link" href="/tags/HTTP/" rel="tag">HTTP</a>, <a class="tag-link-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a>
     </div>
 
 
@@ -174,7 +180,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://s0developer0mozilla0org.icopy.site/zh-TW/docs/Web/HTTP" target="_blank" rel="noopener">HTTP - MDN Web docs</a>〉的學習筆記。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a target="_blank" rel="noopener" href="https://s0developer0mozilla0org.icopy.site/zh-TW/docs/Web/HTTP">HTTP - MDN Web docs</a>〉的學習筆記。</p>
 <h2 id="請求方法"><a href="#請求方法" class="headerlink" title="請求方法"></a>請求方法</h2><p>HTTP 定義了一組請求方法，以指示要對給定資源執行的所需操作。儘管它們也可以是名詞，但這些請求方法有時也稱為 HTTP 動詞。每個方法都實現了不同的語義，一些方法則共享了一些共有的功能：例如，請求方法可以是安全的、冪等的或可快取的。</p>
 <h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p>GET 方法請求指定資源的表示形式。使用 GET 請求應僅檢索資料。</p>
 <table>
@@ -210,7 +216,7 @@
 </tr>
 </tbody></table>
 <p>語法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /index.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /index.html</span><br></pre></td></tr></table></figure>
 
 <h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><p>HEAD 方法請求的響應與 GET 請求的響應相同，但不是響應主體。</p>
 <table>
@@ -246,7 +252,7 @@
 </tr>
 </tbody></table>
 <p>語法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HEAD /index.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HEAD /index.html</span><br></pre></td></tr></table></figure>
 
 <h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p>POST 方法用於將實體提交給指定的資源，通常會導致狀態更改或對服務器產生副作用。</p>
 <table>
@@ -282,7 +288,7 @@
 </tr>
 </tbody></table>
 <p>語法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST /test</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST /test</span><br></pre></td></tr></table></figure>
 
 <h3 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h3><p>PUT 方法用來創建新資源，或用來替換目標資源。</p>
 <table>
@@ -318,7 +324,7 @@
 </tr>
 </tbody></table>
 <p>語法：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT /new.html HTTP / 1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT /new.html HTTP / 1.1</span><br></pre></td></tr></table></figure>
 
 <h3 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h3><p>DELETE 方法刪除指定的資源。</p>
 <table>
@@ -354,7 +360,7 @@
 </tr>
 </tbody></table>
 <p>語法：</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="string">/file.html</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="string">/file.html</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="CONNECT"><a href="#CONNECT" class="headerlink" title="CONNECT"></a>CONNECT</h3><p>CONNECT 方法與請求的資源進行雙向通訊，它可以用來打開通道。</p>
 <table>
@@ -389,7 +395,7 @@
 <td>不是</td>
 </tr>
 </tbody></table>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CONNECT</span> <span class="string">www.example.com:443</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CONNECT</span> <span class="string">www.example.com:443</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><p>OPTIONS 方法用於描述目標資源的通訊選項。</p>
 <table>
@@ -424,7 +430,7 @@
 <td>不是</td>
 </tr>
 </tbody></table>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">OPTIONS</span> <span class="string">/index.html</span> HTTP/1.1</span><br><span class="line"><span class="keyword">OPTIONS</span> <span class="string">*</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">OPTIONS</span> <span class="string">/index.html</span> <span class="meta">HTTP/1.1</span></span><br><span class="line">OPTIONS * HTTP/1.1</span><br></pre></td></tr></table></figure>
 
 <h3 id="TRACE"><a href="#TRACE" class="headerlink" title="TRACE"></a>TRACE</h3><p>TRACE 方法沿到目標資源的路徑執行消息環回測試。</p>
 <table>
@@ -459,7 +465,7 @@
 <td>不是</td>
 </tr>
 </tbody></table>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRACE /index.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRACE /index.html</span><br></pre></td></tr></table></figure>
 
 <h3 id="PATCH"><a href="#PATCH" class="headerlink" title="PATCH"></a>PATCH</h3><p>PATCH 方法用於對資源進行部分修改。</p>
 <table>
@@ -494,44 +500,44 @@
 <td>不是</td>
 </tr>
 </tbody></table>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PATCH</span> <span class="string">/file.txt</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PATCH</span> <span class="string">/file.txt</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="術語"><a href="#術語" class="headerlink" title="術語"></a>術語</h2><h3 id="安全的"><a href="#安全的" class="headerlink" title="安全的"></a>安全的</h3><p>如果 HTTP 方法不會更改服務器的狀態，則它是安全的。換句話說，如果方法只是讀取，則它是安全的，像是：GET、HEAD 和 OPTIONS 方法。</p>
 <ul>
 <li>GET 方法是安全的。</li>
 </ul>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/pageX.html</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/pageX.html</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>POST 方法是不安全的，可能會更改伺服器狀態：</li>
 </ul>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/pageX.html</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/pageX.html</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>DELETE 方法是不安全的，可能會更改伺服器狀態：</li>
 </ul>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="string">/idX/delete</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="string">/idX/delete</span> <span class="meta">HTTP/1.1</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="冪等的"><a href="#冪等的" class="headerlink" title="冪等的"></a>冪等的</h3><p>如果可以在使服務器處於相同狀態的情況下，連續執行一次或多次相同的請求而產生相同的效果，則此 HTTP 方法稱作是「冪等的」（idempotence）。換句話說，冪等方法不應有任何副作用（保留統計訊息除外）。冪等的方法有：GET、HEAD、PUT 和 DELETE 方法等。</p>
 <ul>
 <li>GET 方法是冪等的。連續調用多次，客戶端將獲得相同的結果：</li>
 </ul>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/pageX</span> HTTP/1.1</span><br><span class="line"><span class="keyword">GET</span> <span class="string">/pageX</span> HTTP/1.1</span><br><span class="line"><span class="keyword">GET</span> <span class="string">/pageX</span> HTTP/1.1</span><br><span class="line"><span class="keyword">GET</span> <span class="string">/pageX</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/pageX</span> <span class="meta">HTTP/1.1</span></span><br><span class="line">GET /pageX HTTP/1.1</span><br><span class="line">GET /pageX HTTP/1.1</span><br><span class="line">GET /pageX HTTP/1.1</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>POST 方法則不是冪等的；如果多次調用，它將添加幾行：</li>
 </ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/add_row</span> HTTP/1.1</span><br><span class="line">POST /add_row HTTP/1.1 -&gt; Adds a 2nd row</span><br><span class="line">POST /add_row HTTP/1.1 -&gt; Adds a 3rd row</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/add_row</span> <span class="meta">HTTP/1.1</span></span><br><span class="line">POST /add_row HTTP/1.1 -&gt; Adds a 2nd row</span><br><span class="line">POST /add_row HTTP/1.1 -&gt; Adds a 3rd row</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>DELETE 方法是冪等的。連續調用多次，客戶端將獲得相同的結果，即使返回的狀態代碼可能不一樣：</li>
 </ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DELETE /idX/delete HTTP/1.1   -&gt; Returns 200 if idX exists</span><br><span class="line">DELETE /idX/delete HTTP/1.1   -&gt; Returns 404 as it just got deleted</span><br><span class="line">DELETE /idX/delete HTTP/1.1   -&gt; Returns 404</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DELETE /idX/delete HTTP/1.1   -&gt; Returns 200 if idX exists</span><br><span class="line">DELETE /idX/delete HTTP/1.1   -&gt; Returns 404 as it just got deleted</span><br><span class="line">DELETE /idX/delete HTTP/1.1   -&gt; Returns 404</span><br></pre></td></tr></table></figure>
 
 <h3 id="可快取的"><a href="#可快取的" class="headerlink" title="可快取的"></a>可快取的</h3><p>可快取的響應是可以快取的 HTTP 響應，將其存儲以供以後檢索和使用，從而將新請求保存到服務器。請求中使用的方法本身是可快取的，即 GET 或 HEAD 方法。而一些響應的狀態碼也可以被快取，像是 200 等。</p>
 <h2 id="技術指標"><a href="#技術指標" class="headerlink" title="技術指標"></a>技術指標</h2><ul>
-<li><a href="https://tools.ietf.org/html/rfc7231#section-4" target="_blank" rel="noopener">RFC 7231</a></li>
-<li><a href="https://tools.ietf.org/html/rfc5789#section-2" target="_blank" rel="noopener">RFC 5789</a></li>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7231#section-4">RFC 7231</a></li>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc5789#section-2">RFC 5789</a></li>
 </ul>
 
   </div>
@@ -569,21 +575,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#請求方法"><span class="toc-number">2.</span> <span class="toc-text">請求方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GET"><span class="toc-number">2.1.</span> <span class="toc-text">GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEAD"><span class="toc-number">2.2.</span> <span class="toc-text">HEAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POST"><span class="toc-number">2.3.</span> <span class="toc-text">POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUT"><span class="toc-number">2.4.</span> <span class="toc-text">PUT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DELETE"><span class="toc-number">2.5.</span> <span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CONNECT"><span class="toc-number">2.6.</span> <span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPTIONS"><span class="toc-number">2.7.</span> <span class="toc-text">OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TRACE"><span class="toc-number">2.8.</span> <span class="toc-text">TRACE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PATCH"><span class="toc-number">2.9.</span> <span class="toc-text">PATCH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#術語"><span class="toc-number">3.</span> <span class="toc-text">術語</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全的"><span class="toc-number">3.1.</span> <span class="toc-text">安全的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#冪等的"><span class="toc-number">3.2.</span> <span class="toc-text">冪等的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可快取的"><span class="toc-number">3.3.</span> <span class="toc-text">可快取的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技術指標"><span class="toc-number">4.</span> <span class="toc-text">技術指標</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">請求方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GET"><span class="toc-number">2.1.</span> <span class="toc-text">GET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HEAD"><span class="toc-number">2.2.</span> <span class="toc-text">HEAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POST"><span class="toc-number">2.3.</span> <span class="toc-text">POST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PUT"><span class="toc-number">2.4.</span> <span class="toc-text">PUT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DELETE"><span class="toc-number">2.5.</span> <span class="toc-text">DELETE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CONNECT"><span class="toc-number">2.6.</span> <span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPTIONS"><span class="toc-number">2.7.</span> <span class="toc-text">OPTIONS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TRACE"><span class="toc-number">2.8.</span> <span class="toc-text">TRACE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PATCH"><span class="toc-number">2.9.</span> <span class="toc-text">PATCH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%93%E8%AA%9E"><span class="toc-number">3.</span> <span class="toc-text">術語</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%9A%84"><span class="toc-number">3.1.</span> <span class="toc-text">安全的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%AA%E7%AD%89%E7%9A%84"><span class="toc-number">3.2.</span> <span class="toc-text">冪等的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BF%AB%E5%8F%96%E7%9A%84"><span class="toc-number">3.3.</span> <span class="toc-text">可快取的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E8%A1%93%E6%8C%87%E6%A8%99"><span class="toc-number">4.</span> <span class="toc-text">技術指標</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&text=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&is_video=false&description=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（二）：請求方法&body=Check out this article: https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/&name=認識 HTTP 超文本傳輸協定（二）：請求方法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&text=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&is_video=false&description=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（二）：請求方法&body=Check out this article: https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&title=認識 HTTP 超文本傳輸協定（二）：請求方法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/&name=認識 HTTP 超文本傳輸協定（二）：請求方法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -601,7 +607,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -627,13 +633,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

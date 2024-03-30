@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文基於《簡潔高效的 PHP &amp;amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。 環境 elementary OS 0.4.1  安裝相關軟體安裝 Google Chrome 瀏覽器。 12cd Downloadssudo apt install ./googl">
-<meta name="keywords" content="Laravel,環境部署,Linux,elementary OS,Docker,Laradock">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文基於《簡潔高效的 PHP &amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。 環境 elementary OS 0.4.1  安裝相關軟體安裝 Google Chrome 瀏覽器。 12cd Downloadssudo apt install .&#x2F;googl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 elementary OS 上建立 Laradock 環境">
-<meta property="og:url" content="https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文基於《簡潔高效的 PHP &amp;amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。 環境 elementary OS 0.4.1  安裝相關軟體安裝 Google Chrome 瀏覽器。 12cd Downloadssudo apt install ./googl">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.927Z">
+<meta property="og:description" content="前言本文基於《簡潔高效的 PHP &amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。 環境 elementary OS 0.4.1  安裝相關軟體安裝 Google Chrome 瀏覽器。 12cd Downloadssudo apt install .&#x2F;googl">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-04-26T02:16:18.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.631Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="elementary OS">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Laradock">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 elementary OS 上建立 Laradock 環境">
-<meta name="twitter:description" content="前言本文基於《簡潔高效的 PHP &amp;amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。 環境 elementary OS 0.4.1  安裝相關軟體安裝 Google Chrome 瀏覽器。 12cd Downloadssudo apt install ./googl">
     
     
         
@@ -44,14 +49,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +98,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/04/在-Windows-上使用-VMware-安裝-Ubuntu/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/04/%E5%9C%A8-Windows-%E4%B8%8A%E4%BD%BF%E7%94%A8-VMware-%E5%AE%89%E8%A3%9D-Ubuntu/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2018/04/在-Windows-上建立-Homestead-環境/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/04/%E5%9C%A8-Windows-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Homestead-%E7%92%B0%E5%A2%83/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +114,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&text=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&is_video=false&description=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 elementary OS 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&name=在 elementary OS 上建立 Laradock 環境&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&text=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&is_video=false&description=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 elementary OS 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&name=在 elementary OS 上建立 Laradock 環境&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相關軟體"><span class="toc-number">3.</span> <span class="toc-text">安裝相關軟體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker"><span class="toc-number">4.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker-Compose"><span class="toc-number">5.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新增使用者到群組"><span class="toc-number">6.</span> <span class="toc-text">新增使用者到群組</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laradock"><span class="toc-number">7.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改環境變數"><span class="toc-number">8.</span> <span class="toc-text">修改環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動-Docker"><span class="toc-number">9.</span> <span class="toc-text">啟動 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊虛擬主機別名"><span class="toc-number">10.</span> <span class="toc-text">註冊虛擬主機別名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重啟-Docker"><span class="toc-number">11.</span> <span class="toc-text">重啟 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">12.</span> <span class="toc-text">測試</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E7%9B%B8%E9%97%9C%E8%BB%9F%E9%AB%94"><span class="toc-number">3.</span> <span class="toc-text">安裝相關軟體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker"><span class="toc-number">4.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker-Compose"><span class="toc-number">5.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E7%BE%A4%E7%B5%84"><span class="toc-number">6.</span> <span class="toc-text">新增使用者到群組</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Laradock"><span class="toc-number">7.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="toc-number">8.</span> <span class="toc-text">修改環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%9F%E5%8B%95-Docker"><span class="toc-number">9.</span> <span class="toc-text">啟動 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A%E8%99%9B%E6%93%AC%E4%B8%BB%E6%A9%9F%E5%88%A5%E5%90%8D"><span class="toc-number">10.</span> <span class="toc-text">註冊虛擬主機別名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%95%9F-Docker"><span class="toc-number">11.</span> <span class="toc-text">重啟 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6"><span class="toc-number">12.</span> <span class="toc-text">測試</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +166,7 @@
             
         
             
-                <a href="/categories/環境部署/Laradock/">Laradock</a>
+                <a href="/categories/Deployment/Laradock/">Laradock</a>
             
         
     </div>
@@ -165,7 +175,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Laradock/">Laradock</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/elementary-OS/">elementary OS</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/Laradock/" rel="tag">Laradock</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/elementary-OS/" rel="tag">elementary OS</a>
     </div>
 
 
@@ -174,7 +184,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文基於《<a href="https://shengyou.gitbooks.io/elementary-os-for-php-developer/" target="_blank" rel="noopener">簡潔高效的 PHP &amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案</a>》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文基於《<a target="_blank" rel="noopener" href="https://shengyou.gitbooks.io/elementary-os-for-php-developer/">簡潔高效的 PHP &amp; Laravel 工作術：從 elementary OS 下手的聰明改造提案</a>》一書，記錄在 elementary OS 上部署 Laradock 環境時遇到的問題與解決辦法。</p>
 <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
 <li>elementary OS 0.4.1</li>
 </ul>
@@ -187,7 +197,7 @@
 <p>安裝 Git。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:git-core/ppa</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install git</span><br></pre></td></tr></table></figure>
 
-<h2 id="安裝-Docker"><a href="#安裝-Docker" class="headerlink" title="安裝 Docker"></a>安裝 Docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL get.docker.com -o get-docker.sh</span><br><span class="line">sh get-docker.sh</span><br><span class="line">rm get-docker.sh</span><br><span class="line">docker -v // 檢查是否安裝成功並查看版本</span><br></pre></td></tr></table></figure>
+<h2 id="安裝-Docker"><a href="#安裝-Docker" class="headerlink" title="安裝 Docker"></a>安裝 Docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL get.docker.com -o get-docker.sh</span><br><span class="line">sh get-docker.sh</span><br><span class="line"><span class="built_in">rm</span> get-docker.sh</span><br><span class="line">docker -v // 檢查是否安裝成功並查看版本</span><br></pre></td></tr></table></figure>
 
 <h2 id="安裝-Docker-Compose"><a href="#安裝-Docker-Compose" class="headerlink" title="安裝 Docker Compose"></a>安裝 Docker Compose</h2><p>這是第一個與原書有所出入的部分，直接使用 <code>apt-get</code> 安裝，會發現 Docker Compose 的版本過舊。</p>
 <p>這裡採取的做法是：</p>
@@ -196,23 +206,23 @@
 <li>調整權限</li>
 <li>把資料夾移回使用者可執行程式目錄</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o ~/docker-compose</span><br><span class="line">sudo chmod +x ~/docker-compose</span><br><span class="line">sudo mv ~/docker-compose /usr/<span class="built_in">local</span>/bin/docker-compose</span><br><span class="line">docker-compose -v // 檢查是否安裝成功並查看版本</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(<span class="built_in">uname</span> -s)-$(<span class="built_in">uname</span> -m) -o ~/docker-compose</span><br><span class="line">sudo <span class="built_in">chmod</span> +x ~/docker-compose</span><br><span class="line">sudo <span class="built_in">mv</span> ~/docker-compose /usr/local/bin/docker-compose</span><br><span class="line">docker-compose -v // 檢查是否安裝成功並查看版本</span><br></pre></td></tr></table></figure>
 
 <h2 id="新增使用者到群組"><a href="#新增使用者到群組" class="headerlink" title="新增使用者到群組"></a>新增使用者到群組</h2><p>新增完必須重新開機。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker &lt;USERNAME&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="安裝-Laradock"><a href="#安裝-Laradock" class="headerlink" title="安裝 Laradock"></a>安裝 Laradock</h2><p>從 GitHub 上下載 Laradock 到根目錄。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/laradock/laradock.git Laradock</span><br><span class="line"><span class="built_in">cd</span> Laradock</span><br><span class="line">cp env-example .env</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/laradock/laradock.git Laradock</span><br><span class="line"><span class="built_in">cd</span> Laradock</span><br><span class="line"><span class="built_in">cp</span> env-example .<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="修改環境變數"><a href="#修改環境變數" class="headerlink" title="修改環境變數"></a>修改環境變數</h2><p>這是第二個與原書有所出入的部分，專案資料夾的路徑參數名稱由 <code>APPLICATION</code> 變成了 <code>APP_CODE_PATH_HOST</code>。</p>
 <p>修改 <code>.env</code> 檔為以下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Point to the path of your applications code on your host</span><br><span class="line">APP_CODE_PATH_HOST=~/Projects/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Point to the path of your applications code on your host</span><br><span class="line">APP_CODE_PATH_HOST=~/Projects/</span><br></pre></td></tr></table></figure>
 
 <p>在根目錄新增一個專案資料夾，但這個做法在之後會遇到權限問題。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/</span><br><span class="line">mkdir Projects</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/</span><br><span class="line"><span class="built_in">mkdir</span> Projects</span><br></pre></td></tr></table></figure>
 
 <p>可以考慮在其他磁碟手動建立專案資料夾。則修改 <code>.env</code> 檔為以下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Point to the path of your applications code on your host</span><br><span class="line">APP_CODE_PATH_HOST=/media/&lt;USERNAME&gt;/[volumn name]/Projects/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Point to the path of your applications code on your host</span><br><span class="line">APP_CODE_PATH_HOST=/media/&lt;USERNAME&gt;/[volumn name]/Projects/</span><br></pre></td></tr></table></figure>
 
 <p>這裡最好再重新開機一次。</p>
 <h2 id="啟動-Docker"><a href="#啟動-Docker" class="headerlink" title="啟動 Docker"></a>啟動 Docker</h2><p>這是第三個和原書有所出入的部分，容器 <code>workspace</code> 必須由使用者自行增加，否則會出現找不到容器 <code>workspace</code> 的警告。</p>
@@ -226,7 +236,7 @@
 
 <p>會有 1 分鐘沒有動靜才開始安裝，等待 5 分鐘安裝後離開容器。</p>
 <p>這裡要建立一個 <code>laravel.test.conf</code> 檔。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock/nginx/sites</span><br><span class="line">cp laravel.conf.example laravel.test.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock/nginx/sites</span><br><span class="line"><span class="built_in">cp</span> laravel.conf.example laravel.test.conf</span><br></pre></td></tr></table></figure>
 
 <h2 id="註冊虛擬主機別名"><a href="#註冊虛擬主機別名" class="headerlink" title="註冊虛擬主機別名"></a>註冊虛擬主機別名</h2><p>先安裝 gedit 文字編輯器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gedit</span><br></pre></td></tr></table></figure>
@@ -235,15 +245,15 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/hosts</span><br></pre></td></tr></table></figure>
 
 <p>增加以下路徑。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 laravel.test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 laravel.test</span><br></pre></td></tr></table></figure>
 
 <h2 id="重啟-Docker"><a href="#重啟-Docker" class="headerlink" title="重啟 Docker"></a>重啟 Docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock</span><br><span class="line">docker-compose down</span><br><span class="line">docker-compose up -d nginx mysql workspace</span><br></pre></td></tr></table></figure>
 
-<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>如果專案資料夾不是放在其他磁碟，使用瀏覽器測試 <a href="http://laravel.test" target="_blank" rel="noopener">http://laravel.test</a> 後，可能會出現錯誤。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The stream or file &quot;/var/www/laravel/storage/logs/laravel.log&quot; could not be opened: failed to open stream: Permission denied</span><br></pre></td></tr></table></figure>
+<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>如果專案資料夾不是放在其他磁碟，使用瀏覽器測試 <a target="_blank" rel="noopener" href="http://laravel.test/">http://laravel.test</a> 後，可能會出現錯誤。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The stream or file &quot;/var/www/laravel/storage/logs/laravel.log&quot; could not be opened: failed to open stream: Permission denied</span><br></pre></td></tr></table></figure>
 
 <p>進到專案資料夾修改專案權限。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/Projects</span><br><span class="line">sudo chmod -R 777 laravel</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~/Projects</span><br><span class="line">sudo <span class="built_in">chmod</span> -R 777 laravel</span><br></pre></td></tr></table></figure>
 
 <p>再使用瀏覽器測試後，可以看到 Laravel 的歡迎頁面了。</p>
 
@@ -282,21 +292,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相關軟體"><span class="toc-number">3.</span> <span class="toc-text">安裝相關軟體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker"><span class="toc-number">4.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker-Compose"><span class="toc-number">5.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新增使用者到群組"><span class="toc-number">6.</span> <span class="toc-text">新增使用者到群組</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laradock"><span class="toc-number">7.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改環境變數"><span class="toc-number">8.</span> <span class="toc-text">修改環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#啟動-Docker"><span class="toc-number">9.</span> <span class="toc-text">啟動 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊虛擬主機別名"><span class="toc-number">10.</span> <span class="toc-text">註冊虛擬主機別名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重啟-Docker"><span class="toc-number">11.</span> <span class="toc-text">重啟 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#測試"><span class="toc-number">12.</span> <span class="toc-text">測試</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E7%9B%B8%E9%97%9C%E8%BB%9F%E9%AB%94"><span class="toc-number">3.</span> <span class="toc-text">安裝相關軟體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker"><span class="toc-number">4.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker-Compose"><span class="toc-number">5.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E4%BD%BF%E7%94%A8%E8%80%85%E5%88%B0%E7%BE%A4%E7%B5%84"><span class="toc-number">6.</span> <span class="toc-text">新增使用者到群組</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Laradock"><span class="toc-number">7.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="toc-number">8.</span> <span class="toc-text">修改環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%9F%E5%8B%95-Docker"><span class="toc-number">9.</span> <span class="toc-text">啟動 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A%E8%99%9B%E6%93%AC%E4%B8%BB%E6%A9%9F%E5%88%A5%E5%90%8D"><span class="toc-number">10.</span> <span class="toc-text">註冊虛擬主機別名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%95%9F-Docker"><span class="toc-number">11.</span> <span class="toc-text">重啟 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6"><span class="toc-number">12.</span> <span class="toc-text">測試</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&text=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&is_video=false&description=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 elementary OS 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/04/在-elementary-OS-上建立-Laradock-環境/&name=在 elementary OS 上建立 Laradock 環境&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&text=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&is_video=false&description=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 elementary OS 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 elementary OS 上建立 Laradock 環境"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/04/%E5%9C%A8-elementary-OS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&name=在 elementary OS 上建立 Laradock 環境&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -314,7 +324,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -340,13 +350,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

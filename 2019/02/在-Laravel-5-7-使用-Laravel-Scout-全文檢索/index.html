@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel/scout 套件。 1composer require laravel/scout  發布資源。 1php artisan vendor:publish --provider=&quot;Laravel\Scout\ScoutServiceProvider&quot;  安裝">
-<meta name="keywords" content="程式設計,PHP,Laravel,全文檢索,Scout,Algolia">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel&#x2F;scout 套件。 1composer require laravel&#x2F;scout  發布資源。 1php artisan vendor:publish --provider&#x3D;&quot;Laravel\Scout\ScoutServiceProvider">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laravel 5.7 使用 Laravel-Scout 全文檢索">
-<meta property="og:url" content="https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel/scout 套件。 1composer require laravel/scout  發布資源。 1php artisan vendor:publish --provider=&quot;Laravel\Scout\ScoutServiceProvider&quot;  安裝">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.947Z">
+<meta property="og:description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel&#x2F;scout 套件。 1composer require laravel&#x2F;scout  發布資源。 1php artisan vendor:publish --provider&#x3D;&quot;Laravel\Scout\ScoutServiceProvider">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-02-17T01:39:34.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.662Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Scout">
+<meta property="article:tag" content="Algolia">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Full-Text Search">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laravel 5.7 使用 Laravel-Scout 全文檢索">
-<meta name="twitter:description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel/scout 套件。 1composer require laravel/scout  發布資源。 1php artisan vendor:publish --provider=&quot;Laravel\Scout\ScoutServiceProvider&quot;  安裝">
     
     
         
@@ -44,14 +49,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +98,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/02/「A-tour-of-Go」學習筆記（二）：控制流程/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/%E3%80%8CA-tour-of-Go%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/02/「A-tour-of-Go」學習筆記（三）：結構體/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/%E3%80%8CA-tour-of-Go%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%B5%90%E6%A7%8B%E9%AB%94/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +114,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&text=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&is_video=false&description=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&body=Check out this article: https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&name=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&text=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&is_video=false&description=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&name=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步驟"><span class="toc-number">3.</span> <span class="toc-text">步驟</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-number">3.</span> <span class="toc-text">步驟</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +168,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/Laravel/">Laravel</a>
+                <a href="/categories/Programming/PHP/Laravel/">Laravel</a>
             
         
     </div>
@@ -167,7 +177,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Algolia/">Algolia</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Scout/">Scout</a>, <a class="tag-link" href="/tags/全文檢索/">全文檢索</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/Algolia/" rel="tag">Algolia</a>, <a class="tag-link-link" href="/tags/Full-Text-Search/" rel="tag">Full-Text Search</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Scout/" rel="tag">Scout</a>
     </div>
 
 
@@ -186,29 +196,28 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require laravel/scout</span><br></pre></td></tr></table></figure>
 
 <p>發布資源。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --provider=<span class="string">"Laravel\Scout\ScoutServiceProvider"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --provider=<span class="string">&quot;Laravel\Scout\ScoutServiceProvider&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>安裝驅動套件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require algolia/algoliasearch-client-php</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>.env</code> 檔。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SCOUT_QUEUE＝true</span><br><span class="line">ALGOLIA_APP_ID=&lt;Application ID&gt;</span><br><span class="line">ALGOLIA_SECRET=&lt;Admin API Key&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SCOUT_QUEUE＝true</span><br><span class="line">ALGOLIA_APP_ID=&lt;Application ID&gt;</span><br><span class="line">ALGOLIA_SECRET=&lt;Admin API Key&gt;</span><br></pre></td></tr></table></figure>
 
 <p>在模型使用 <code>Searchable</code> 特徵機制。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Scout</span>\<span class="title">Searchable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> <span class="keyword">extends</span> <span class="title">Model</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Searchable</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Scout</span>\<span class="title">Searchable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> <span class="keyword">extends</span> <span class="title">Model</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Searchable</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以在模型中使用 <code>shouldBeSearchable()</code> 方法，決定是否將資料加入至檢索索引。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Determine if the model should be searchable.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> bool</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">shouldBeSearchable</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;isPublished();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Determine if the model should be searchable.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> bool</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">shouldBeSearchable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">isPublished</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>一次導入模型的所有資料至檢索索引。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan scout:import <span class="string">"App\Project"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan scout:import <span class="string">&quot;App\Project&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>新增一筆資料至檢索索引。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$project = $user-&gt;projects()-&gt;create($request-&gt;all());</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$project</span> = <span class="variable">$user</span>-&gt;<span class="title function_ invoke__">projects</span>()-&gt;<span class="title function_ invoke__">create</span>(<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">all</span>());</span><br></pre></td></tr></table></figure>
 
 <p>使用全文檢索。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$projects = App\Project::search(<span class="string">'Test Project'</span>)-&gt;get();</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$projects</span> = <span class="title class_">App\Project</span>::<span class="title function_ invoke__">search</span>(<span class="string">&#x27;Test Project&#x27;</span>)-&gt;<span class="title function_ invoke__">get</span>();</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -245,21 +254,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步驟"><span class="toc-number">3.</span> <span class="toc-text">步驟</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-number">3.</span> <span class="toc-text">步驟</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&text=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&is_video=false&description=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&body=Check out this article: https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Laravel-5-7-使用-Laravel-Scout-全文檢索/&name=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&text=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&is_video=false&description=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&name=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -277,7 +286,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -303,13 +312,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

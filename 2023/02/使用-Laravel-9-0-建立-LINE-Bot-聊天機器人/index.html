@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法建立專案。 12laravel new line-bot-laravelcd line-bot-laravel  安裝 LINE Bot SDK 套件。 1composer require linecorp&#x2F;line-bot-sdk:^7.6  安裝 laravel-dump-server 測試工具。 1composer require --dev beyondcode&#x2F;laravel-dum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Laravel 9.0 建立 LINE Bot 聊天機器人">
+<meta property="og:url" content="https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="做法建立專案。 12laravel new line-bot-laravelcd line-bot-laravel  安裝 LINE Bot SDK 套件。 1composer require linecorp&#x2F;line-bot-sdk:^7.6  安裝 laravel-dump-server 測試工具。 1composer require --dev beyondcode&#x2F;laravel-dum">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-22T02:35:35.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.748Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="LINE">
+<meta property="article:tag" content="chatbot">
+<meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Laravel 9.0 建立 LINE Bot 聊天機器人</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/02/%E5%9C%A8-Vue-3-0-%E4%BD%BF%E7%94%A8-OpenAI-API-%E5%AF%A6%E4%BD%9C-AI-%E7%BF%BB%E8%AD%AF%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2023/02/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-8-1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&text=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&is_video=false&description=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Laravel 9.0 建立 LINE Bot 聊天機器人&body=Check out this article: https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&name=使用 Laravel 9.0 建立 LINE Bot 聊天機器人&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">2.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Laravel 9.0 建立 LINE Bot 聊天機器人
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-02-22T02:35:35.000Z" itemprop="datePublished">2023-02-22</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/PHP/Laravel/">Laravel</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/LINE/" rel="tag">LINE</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/chatbot/" rel="tag">chatbot</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">laravel new line-bot-laravel</span><br><span class="line"><span class="built_in">cd</span> line-bot-laravel</span><br></pre></td></tr></table></figure>
+
+<p>安裝 LINE Bot SDK 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require linecorp/line-bot-sdk:^7.6</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>laravel-dump-server</code> 測試工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require --dev beyondcode/laravel-dump-server</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.env</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LINE_CHANNEL_ACCESS_TOKEN=line-channel-access-token</span><br><span class="line">LINE_CHANNEL_SECRET=line-channel-secret</span><br></pre></td></tr></table></figure>
+
+<p>建立控制器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artisan make:controller WebhookController</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>WebhookController.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Exception</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Http</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">LINE</span>\<span class="title">LINEBot</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">LINE</span>\<span class="title">LINEBot</span>\<span class="title">Constant</span>\<span class="title">HTTPHeader</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">LINE</span>\<span class="title">LINEBot</span>\<span class="title">Event</span>\<span class="title">MessageEvent</span>\<span class="title">TextMessage</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">LINE</span>\<span class="title">LINEBot</span>\<span class="title">HTTPClient</span>\<span class="title">CurlHTTPClient</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Symfony</span>\<span class="title">Component</span>\<span class="title">HttpFoundation</span>\<span class="title">Response</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebhookController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleEvents</span>(<span class="params">Request <span class="variable">$request</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$channelToken</span> = <span class="title function_ invoke__">env</span>(<span class="string">&#x27;LINE_CHANNEL_ACCESS_TOKEN&#x27;</span>);</span><br><span class="line">        <span class="variable">$channelSecret</span> = <span class="title function_ invoke__">env</span>(<span class="string">&#x27;LINE_CHANNEL_SECRET&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$httpClient</span> = <span class="keyword">new</span> <span class="title class_">CurlHTTPClient</span>(<span class="variable">$channelToken</span>);</span><br><span class="line">        <span class="variable">$bot</span> = <span class="keyword">new</span> <span class="title class_">LINEBot</span>(<span class="variable">$httpClient</span>, [<span class="string">&#x27;channelSecret&#x27;</span> =&gt; <span class="variable">$channelSecret</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$signature</span> = <span class="variable">$request</span>-&gt;<span class="title function_ invoke__">header</span>(<span class="title class_">HTTPHeader</span>::<span class="variable constant_">LINE_SIGNATURE</span>);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable">$signature</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="literal">null</span>, <span class="title class_">Response</span>::<span class="variable constant_">HTTP_BAD_REQUEST</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable">$events</span> = <span class="variable">$bot</span>-&gt;<span class="title function_ invoke__">parseEventRequest</span>(<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">getContent</span>(), <span class="variable">$signature</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="literal">null</span>, <span class="title class_">Response</span>::<span class="variable constant_">HTTP_BAD_REQUEST</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="title function_ invoke__">collect</span>(<span class="variable">$events</span>)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">filter</span>(fn (<span class="variable">$event</span>) =&gt; <span class="variable">$event</span> <span class="keyword">instanceof</span> TextMessage)</span><br><span class="line">            -&gt;<span class="title function_ invoke__">each</span>(function (<span class="variable">$event</span>) <span class="keyword">use</span> ($<span class="title">bot</span>) &#123;</span><br><span class="line">                $<span class="title">replyText</span> = $<span class="title">event</span>-&gt;<span class="title">getText</span>();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="variable">$bot</span>-&gt;<span class="title function_ invoke__">replyText</span>(<span class="variable">$event</span>-&gt;<span class="title function_ invoke__">getReplyToken</span>(), <span class="variable">$replyText</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span>) &#123;</span><br><span class="line">                    <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="literal">null</span>, <span class="title class_">Response</span>::<span class="variable constant_">HTTP_INTERNAL_SERVER_ERROR</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>([], <span class="title class_">Response</span>::<span class="variable constant_">HTTP_OK</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>routes/api.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>\<span class="title">WebhookController</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Route</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Route</span>::<span class="title function_ invoke__">post</span>(<span class="string">&#x27;/webhook&#x27;</span>, [<span class="title class_">WebhookController</span>::<span class="variable language_">class</span>, <span class="string">&#x27;handleEvents&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>啟動日誌工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artisan dump-server</span><br></pre></td></tr></table></figure>
+
+<p>啟動本地伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">artisan server</span><br></pre></td></tr></table></figure>
+
+<p>啟動代理伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 8000</span><br></pre></td></tr></table></figure>
+
+<p>在 LINE 平台上，修改 Webhook URL：<a target="_blank" rel="noopener" href="https://xxx.jp.ngrok.io/api/webhook">https://xxx.jp.ngrok.io/api/webhook</a></p>
+<p>認證 Webhook URL，並使用手機測試訊息。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/line-bot-laravel">line-bot-laravel</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/line/line-bot-sdk-php">line&#x2F;line-bot-sdk-php</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">2.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&text=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&is_video=false&description=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Laravel 9.0 建立 LINE Bot 聊天機器人&body=Check out this article: https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&title=使用 Laravel 9.0 建立 LINE Bot 聊天機器人"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/02/%E4%BD%BF%E7%94%A8-Laravel-9-0-%E5%BB%BA%E7%AB%8B-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/&name=使用 Laravel 9.0 建立 LINE Bot 聊天機器人&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

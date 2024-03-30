@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="建立專案建立專案。 12mkdir gpt-function-callingcd gpt-function-calling  安裝 openai-php&#x2F;client 套件。 1composer require openai-php&#x2F;client  新增 .gitignore 檔。 12&#x2F;vendor.env  新增 .env 檔。 1OPENAI_API_KEY&#x3D;your-openai-api-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 PHP 透過 OpenAI API 生成文字補全">
+<meta property="og:url" content="https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12mkdir gpt-function-callingcd gpt-function-calling  安裝 openai-php&#x2F;client 套件。 1composer require openai-php&#x2F;client  新增 .gitignore 檔。 12&#x2F;vendor.env  新增 .env 檔。 1OPENAI_API_KEY&#x3D;your-openai-api-">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-26T15:32:34.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.753Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="GPT">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="OpenAI">
+<meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 PHP 透過 OpenAI API 生成文字補全</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/07/%E4%BD%BF%E7%94%A8-Hugo-%E5%BB%BA%E7%AB%8B%E9%83%A8%E8%90%BD%E6%A0%BC/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&text=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&is_video=false&description=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 PHP 透過 OpenAI API 生成文字補全&body=Check out this article: https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&name=使用 PHP 透過 OpenAI API 生成文字補全&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Chat-Completions-API"><span class="toc-number">2.1.</span> <span class="toc-text">Chat Completions API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function-Calling"><span class="toc-number">2.2.</span> <span class="toc-text">Function Calling</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 PHP 透過 OpenAI API 生成文字補全
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-07-26T15:32:34.000Z" itemprop="datePublished">2023-07-26</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/PHP/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AI/" rel="tag">AI</a>, <a class="tag-link-link" href="/tags/GPT/" rel="tag">GPT</a>, <a class="tag-link-link" href="/tags/OpenAI/" rel="tag">OpenAI</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> gpt-function-calling</span><br><span class="line"><span class="built_in">cd</span> gpt-function-calling</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>openai-php/client</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require openai-php/client</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.gitignore</code> 檔。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/vendor</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPENAI_API_KEY=your-openai-api-key</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><h3 id="Chat-Completions-API"><a href="#Chat-Completions-API" class="headerlink" title="Chat Completions API"></a>Chat Completions API</h3><p>新增 <code>index.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span> . <span class="string">&#x27;/vendor/autoload.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$dotenv</span> = <span class="title class_">\Dotenv\Dotenv</span>::<span class="title function_ invoke__">createImmutable</span>(<span class="keyword">__DIR__</span>);</span><br><span class="line"><span class="variable">$dotenv</span>-&gt;<span class="title function_ invoke__">load</span>();</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">ask</span>(<span class="string">&#x27;你好嗎？&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ask</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$question</span></span>): <span class="title">array</span> </span>&#123;</span><br><span class="line">    <span class="variable">$client</span> = OpenAI::<span class="title function_ invoke__">client</span>(<span class="variable">$_ENV</span>[<span class="string">&#x27;OPENAI_API_KEY&#x27;</span>]);</span><br><span class="line">    <span class="variable">$response</span> = <span class="variable">$client</span>-&gt;<span class="title function_ invoke__">chat</span>()-&gt;<span class="title function_ invoke__">create</span>([</span><br><span class="line">        <span class="string">&#x27;model&#x27;</span> =&gt; <span class="string">&#x27;gpt-3.5-turbo-0613&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;messages&#x27;</span> =&gt; [</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;role&#x27;</span> =&gt; <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;content&#x27;</span> =&gt; <span class="variable">$question</span>,</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&#x27;temperature&#x27;</span> =&gt; <span class="number">1</span>,</span><br><span class="line">    ]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$response</span>[<span class="string">&#x27;choices&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;message&#x27;</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">Array</span></span><br><span class="line">(</span><br><span class="line">    [role] =&gt; assistant</span><br><span class="line">    [content] =&gt; 我很好，謝謝你！有什麼我可以幫你的嗎？</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Function-Calling"><a href="#Function-Calling" class="headerlink" title="Function Calling"></a>Function Calling</h3><p>修改 <code>index.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span> . <span class="string">&#x27;/vendor/autoload.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$dotenv</span> = <span class="title class_">\Dotenv\Dotenv</span>::<span class="title function_ invoke__">createImmutable</span>(<span class="keyword">__DIR__</span>);</span><br><span class="line"><span class="variable">$dotenv</span>-&gt;<span class="title function_ invoke__">load</span>();</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">ask</span>(<span class="string">&#x27;我想知道台北的天氣如何？&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ask</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$question</span></span>): <span class="title">array</span> </span>&#123;</span><br><span class="line">    <span class="variable">$client</span> = OpenAI::<span class="title function_ invoke__">client</span>(<span class="variable">$_ENV</span>[<span class="string">&#x27;OPENAI_API_KEY&#x27;</span>]);</span><br><span class="line">    <span class="variable">$response</span> = <span class="variable">$client</span>-&gt;<span class="title function_ invoke__">chat</span>()-&gt;<span class="title function_ invoke__">create</span>([</span><br><span class="line">        <span class="string">&#x27;model&#x27;</span> =&gt; <span class="string">&#x27;gpt-3.5-turbo-0613&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;messages&#x27;</span> =&gt; [</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;role&#x27;</span> =&gt; <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;content&#x27;</span> =&gt; <span class="variable">$question</span>,</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&#x27;temperature&#x27;</span> =&gt; <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;functions&#x27;</span> =&gt; [</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;get_wether&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;Get the current weather in a given location.&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;parameters&#x27;</span> =&gt; [</span><br><span class="line">                    <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;object&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;properties&#x27;</span> =&gt; [</span><br><span class="line">                        <span class="string">&#x27;location&#x27;</span> =&gt; [</span><br><span class="line">                            <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;The city and state, e.g. San Francisco, CA&#x27;</span>,</span><br><span class="line">                        ],</span><br><span class="line">                        <span class="string">&#x27;unit&#x27;</span> =&gt; [</span><br><span class="line">                            <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;enum&#x27;</span> =&gt; [<span class="string">&#x27;celsius&#x27;</span>, <span class="string">&#x27;fahrenheit&#x27;</span>],</span><br><span class="line">                        ],</span><br><span class="line">                    ],</span><br><span class="line">                    <span class="string">&#x27;required&#x27;</span> =&gt; [</span><br><span class="line">                        <span class="string">&#x27;location&#x27;</span>,</span><br><span class="line">                    ],</span><br><span class="line">                ],</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">    ]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$response</span>[<span class="string">&#x27;choices&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;message&#x27;</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">Array</span></span><br><span class="line">(</span><br><span class="line">    [role] =&gt; assistant</span><br><span class="line">    [content] =&gt; </span><br><span class="line">    [function_call] =&gt; <span class="title function_ invoke__">Array</span></span><br><span class="line">        (</span><br><span class="line">            [name] =&gt; get_wether</span><br><span class="line">            [arguments] =&gt; &#123;</span><br><span class="line">                <span class="string">&quot;location&quot;</span>: <span class="string">&quot;Taipei&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>將 Weather API 的查詢結果，發送給 AI 做回應。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="keyword">__DIR__</span> . <span class="string">&#x27;/vendor/autoload.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$dotenv</span> = <span class="title class_">\Dotenv\Dotenv</span>::<span class="title function_ invoke__">createImmutable</span>(<span class="keyword">__DIR__</span>);</span><br><span class="line"><span class="variable">$dotenv</span>-&gt;<span class="title function_ invoke__">load</span>();</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="title function_ invoke__">ask</span>(<span class="string">&#x27;我想知道台北的天氣如何？&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ask</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$question</span></span>): <span class="title">array</span> </span>&#123;</span><br><span class="line">    <span class="variable">$client</span> = OpenAI::<span class="title function_ invoke__">client</span>(<span class="variable">$_ENV</span>[<span class="string">&#x27;OPENAI_API_KEY&#x27;</span>]);</span><br><span class="line">    <span class="variable">$response</span> = <span class="variable">$client</span>-&gt;<span class="title function_ invoke__">chat</span>()-&gt;<span class="title function_ invoke__">create</span>([</span><br><span class="line">        <span class="string">&#x27;model&#x27;</span> =&gt; <span class="string">&#x27;gpt-3.5-turbo-0613&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;messages&#x27;</span> =&gt; [</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;role&#x27;</span> =&gt; <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;content&#x27;</span> =&gt; <span class="variable">$question</span>,</span><br><span class="line">            ],</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;role&#x27;</span> =&gt; <span class="string">&#x27;assistant&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;content&#x27;</span> =&gt; <span class="literal">null</span>,</span><br><span class="line">                <span class="string">&#x27;function_call&#x27;</span> =&gt; [</span><br><span class="line">                    <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;get_current_weather&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;arguments&#x27;</span> =&gt; <span class="string">&#x27;Taipei&#x27;</span>,</span><br><span class="line">                ],</span><br><span class="line">            ],</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;role&#x27;</span> =&gt; <span class="string">&#x27;function&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;get_current_weather&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;content&#x27;</span> =&gt; <span class="title function_ invoke__">json_encode</span>([</span><br><span class="line">                    <span class="string">&#x27;temperature&#x27;</span> =&gt; <span class="number">22</span>,</span><br><span class="line">                    <span class="string">&#x27;unit&#x27;</span> =&gt; <span class="string">&#x27;celsius&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;Sunny&#x27;</span>,</span><br><span class="line">                ]),</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">&#x27;temperature&#x27;</span> =&gt; <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;functions&#x27;</span> =&gt; [</span><br><span class="line">            [</span><br><span class="line">                <span class="string">&#x27;name&#x27;</span> =&gt; <span class="string">&#x27;get_wether&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;Get the current weather in a given location.&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;parameters&#x27;</span> =&gt; [</span><br><span class="line">                    <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;object&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;properties&#x27;</span> =&gt; [</span><br><span class="line">                        <span class="string">&#x27;location&#x27;</span> =&gt; [</span><br><span class="line">                            <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;description&#x27;</span> =&gt; <span class="string">&#x27;The city and state, e.g. San Francisco, CA&#x27;</span>,</span><br><span class="line">                        ],</span><br><span class="line">                        <span class="string">&#x27;unit&#x27;</span> =&gt; [</span><br><span class="line">                            <span class="string">&#x27;type&#x27;</span> =&gt; <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">                            <span class="string">&#x27;enum&#x27;</span> =&gt; [<span class="string">&#x27;celsius&#x27;</span>, <span class="string">&#x27;fahrenheit&#x27;</span>],</span><br><span class="line">                        ],</span><br><span class="line">                    ],</span><br><span class="line">                    <span class="string">&#x27;required&#x27;</span> =&gt; [</span><br><span class="line">                        <span class="string">&#x27;location&#x27;</span>,</span><br><span class="line">                    ],</span><br><span class="line">                ],</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">    ]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$response</span>[<span class="string">&#x27;choices&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;message&#x27;</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">Array</span></span><br><span class="line">(</span><br><span class="line">    [role] =&gt; assistant</span><br><span class="line">    [content] =&gt; 台北的天氣目前是晴天，溫度約為攝氏<span class="number">22</span>度。</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://platform.openai.com/docs/guides/gpt">OpenAI - Documentation</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Chat-Completions-API"><span class="toc-number">2.1.</span> <span class="toc-text">Chat Completions API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function-Calling"><span class="toc-number">2.2.</span> <span class="toc-text">Function Calling</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&text=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&is_video=false&description=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 PHP 透過 OpenAI API 生成文字補全&body=Check out this article: https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 PHP 透過 OpenAI API 生成文字補全"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&name=使用 PHP 透過 OpenAI API 生成文字補全&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="做法建立一個 AppAnimatedNumber 元件，並接收 count 屬性。 123456789101112131415161718192021222324252627282930313233343536373839&amp;lt;template&amp;gt;  &amp;lt;span    v-text=&quot;number.toLocaleString()&quot;  /&amp;gt;&amp;lt;/template&amp;gt;&amp;lt">
-<meta name="keywords" content="程式設計,JavaScript,Vue">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法建立一個 AppAnimatedNumber 元件，並接收 count 屬性。 123456789101112131415161718192021222324252627282930313233343536373839&lt;template&gt;  &lt;span    v-text&#x3D;&quot;number.toLocaleString()&quot;  &#x2F;&gt;&lt;&#x2F;templ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Vue 2.5 實作「動畫化數字」元件">
-<meta property="og:url" content="https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法建立一個 AppAnimatedNumber 元件，並接收 count 屬性。 123456789101112131415161718192021222324252627282930313233343536373839&amp;lt;template&amp;gt;  &amp;lt;span    v-text=&quot;number.toLocaleString()&quot;  /&amp;gt;&amp;lt;/template&amp;gt;&amp;lt">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.971Z">
+<meta property="og:description" content="做法建立一個 AppAnimatedNumber 元件，並接收 count 屬性。 123456789101112131415161718192021222324252627282930313233343536373839&lt;template&gt;  &lt;span    v-text&#x3D;&quot;number.toLocaleString()&quot;  &#x2F;&gt;&lt;&#x2F;templ">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-01T06:34:18.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.694Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Vue 2.5 實作「動畫化數字」元件">
-<meta name="twitter:description" content="做法建立一個 AppAnimatedNumber 元件，並接收 count 屬性。 123456789101112131415161718192021222324252627282930313233343536373839&amp;lt;template&amp;gt;  &amp;lt;span    v-text=&quot;number.toLocaleString()&quot;  /&amp;gt;&amp;lt;/template&amp;gt;&amp;lt">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2021/07/在-Vue-3-0-使用-Vue-Router-制定認證路由/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/07/%E5%9C%A8-Vue-3-0-%E4%BD%BF%E7%94%A8-Vue-Router-%E5%88%B6%E5%AE%9A%E8%AA%8D%E8%AD%89%E8%B7%AF%E7%94%B1/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2021/08/使用-JavaScript-預先載入圖片/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%A0%90%E5%85%88%E8%BC%89%E5%85%A5%E5%9C%96%E7%89%87/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&text=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&is_video=false&description=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Vue 2.5 實作「動畫化數字」元件&body=Check out this article: https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&name=使用 Vue 2.5 實作「動畫化數字」元件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&text=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&is_video=false&description=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 2.5 實作「動畫化數字」元件&body=Check out this article: https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&name=使用 Vue 2.5 實作「動畫化數字」元件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/JavaScript/Vue/">Vue</a>
+                <a href="/categories/Programming/JavaScript/Vue/">Vue</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Vue/">Vue</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Vue/" rel="tag">Vue</a>
     </div>
 
 
@@ -177,8 +184,7 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立一個 <code>AppAnimatedNumber</code> 元件，並接收 <code>count</code> 屬性。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-text</span>=<span class="string">"number.toLocaleString()"</span></span></span><br><span class="line"><span class="tag">  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  name: <span class="string">'AppAnimatedNumber'</span>,</span></span><br><span class="line"><span class="undefined">  props: &#123;</span></span><br><span class="line"><span class="undefined">    count: &#123;</span></span><br><span class="line"><span class="javascript">      type: <span class="built_in">Number</span>,</span></span><br><span class="line"><span class="javascript">      <span class="keyword">default</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  data() &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      interval: <span class="literal">null</span>,</span></span><br><span class="line"><span class="undefined">      number: 0,</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  created() &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">this</span>.number = <span class="keyword">this</span>.count;</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">  watch: &#123;</span></span><br><span class="line"><span class="undefined">    count() &#123;</span></span><br><span class="line"><span class="javascript">      clearInterval(<span class="keyword">this</span>.interval);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (<span class="keyword">this</span>.count === <span class="keyword">this</span>.number) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">this</span>.interval = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> change = (<span class="keyword">this</span>.count - <span class="keyword">this</span>.number) / <span class="number">10</span>;</span></span><br><span class="line"><span class="javascript">        change = change &gt;= <span class="number">0</span> ? <span class="built_in">Math</span>.ceil(change) : <span class="built_in">Math</span>.floor(change);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">this</span>.number += change;</span></span><br><span class="line"><span class="undefined">      &#125;, 1000 * 0.1);</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">  &#125;,</span></span><br><span class="line"><span class="undefined">&#125;;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-text</span>=<span class="string">&quot;number.toLocaleString()&quot;</span></span></span><br><span class="line"><span class="tag">  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">name</span>: <span class="string">&#x27;AppAnimatedNumber&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">count</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">type</span>: <span class="title class_">Number</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">default</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">interval</span>: <span class="literal">null</span>,</span></span><br><span class="line"><span class="language-javascript">      <span class="attr">number</span>: <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="title function_">created</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">this</span>.<span class="property">number</span> = <span class="variable language_">this</span>.<span class="property">count</span>;</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">watch</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">count</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="built_in">clearInterval</span>(<span class="variable language_">this</span>.<span class="property">interval</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">count</span> === <span class="variable language_">this</span>.<span class="property">number</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">this</span>.<span class="property">interval</span> = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> change = (<span class="variable language_">this</span>.<span class="property">count</span> - <span class="variable language_">this</span>.<span class="property">number</span>) / <span class="number">10</span>;</span></span><br><span class="line"><span class="language-javascript">        change = change &gt;= <span class="number">0</span> ? <span class="title class_">Math</span>.<span class="title function_">ceil</span>(change) : <span class="title class_">Math</span>.<span class="title function_">floor</span>(change);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">this</span>.<span class="property">number</span> += change;</span></span><br><span class="line"><span class="language-javascript">      &#125;, <span class="number">1000</span> * <span class="number">0.1</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -215,21 +221,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&text=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&is_video=false&description=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Vue 2.5 實作「動畫化數字」元件&body=Check out this article: https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/使用-Vue-2-5-實作「動畫化數字」元件/&name=使用 Vue 2.5 實作「動畫化數字」元件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&text=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&is_video=false&description=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 2.5 實作「動畫化數字」元件&body=Check out this article: https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&title=使用 Vue 2.5 實作「動畫化數字」元件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/%E4%BD%BF%E7%94%A8-Vue-2-5-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%8B%95%E7%95%AB%E5%8C%96%E6%95%B8%E5%AD%97%E3%80%8D%E5%85%83%E4%BB%B6/&name=使用 Vue 2.5 實作「動畫化數字」元件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -247,7 +253,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -273,13 +279,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

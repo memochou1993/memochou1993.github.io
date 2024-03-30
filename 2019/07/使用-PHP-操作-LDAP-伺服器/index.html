@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言LDAP（Lightweight Directory Access Protocol）是一個開放的、工業標準的應用協定，通過 IP 協定提供存取控制和維護分散式資訊的目錄資訊。LDAP 的一個常用用途是單一登入，用戶可以在多個服務中使用同一個密碼。使用 PHP 操作 LDAP 伺服器，需要將 LDAP 擴充開啟。 範例1234567891011121314$ldap = ldap_connec">
-<meta name="keywords" content="程式設計,PHP,LDAP">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言LDAP（Lightweight Directory Access Protocol）是一個開放的、工業標準的應用協定，通過 IP 協定提供存取控制和維護分散式資訊的目錄資訊。LDAP 的一個常用用途是單一登入，用戶可以在多個服務中使用同一個密碼。使用 PHP 操作 LDAP 伺服器，需要將 LDAP 擴充開啟。 範例1234567891011121314$ldap &#x3D; ldap_connec">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 PHP 操作 LDAP 伺服器">
-<meta property="og:url" content="https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言LDAP（Lightweight Directory Access Protocol）是一個開放的、工業標準的應用協定，通過 IP 協定提供存取控制和維護分散式資訊的目錄資訊。LDAP 的一個常用用途是單一登入，用戶可以在多個服務中使用同一個密碼。使用 PHP 操作 LDAP 伺服器，需要將 LDAP 擴充開啟。 範例1234567891011121314$ldap = ldap_connec">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.950Z">
+<meta property="og:description" content="前言LDAP（Lightweight Directory Access Protocol）是一個開放的、工業標準的應用協定，通過 IP 協定提供存取控制和維護分散式資訊的目錄資訊。LDAP 的一個常用用途是單一登入，用戶可以在多個服務中使用同一個密碼。使用 PHP 操作 LDAP 伺服器，需要將 LDAP 擴充開啟。 範例1234567891011121314$ldap &#x3D; ldap_connec">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-18T09:36:20.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.668Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="LDAP">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 PHP 操作 LDAP 伺服器">
-<meta name="twitter:description" content="前言LDAP（Lightweight Directory Access Protocol）是一個開放的、工業標準的應用協定，通過 IP 協定提供存取控制和維護分散式資訊的目錄資訊。LDAP 的一個常用用途是單一登入，用戶可以在多個服務中使用同一個密碼。使用 PHP 操作 LDAP 伺服器，需要將 LDAP 擴充開啟。 範例1234567891011121314$ldap = ldap_connec">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/07/在-Windows-上建立-Laradock-環境/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/07/%E5%9C%A8-Windows-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/08/在-MacOS-上安裝-Composer-套件管理工具/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D%E4%B8%A6%E4%BD%BF%E7%94%A8-Composer-%E5%A5%97%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&text=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&is_video=false&description=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 PHP 操作 LDAP 伺服器&body=Check out this article: https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&name=使用 PHP 操作 LDAP 伺服器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&text=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&is_video=false&description=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 PHP 操作 LDAP 伺服器&body=Check out this article: https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&name=使用 PHP 操作 LDAP 伺服器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#範例"><span class="toc-number">2.</span> <span class="toc-text">範例</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">範例</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/其他/">其他</a>
+                <a href="/categories/Programming/PHP/Others/">Others</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/LDAP/">LDAP</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/LDAP/" rel="tag">LDAP</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -177,8 +184,7 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>LDAP（Lightweight Directory Access Protocol）是一個開放的、工業標準的應用協定，通過 IP 協定提供存取控制和維護分散式資訊的目錄資訊。LDAP 的一個常用用途是單一登入，用戶可以在多個服務中使用同一個密碼。使用 PHP 操作 LDAP 伺服器，需要將 LDAP 擴充開啟。</p>
-<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ldap = ldap_connect(<span class="string">'xxx.com'</span>);</span><br><span class="line"></span><br><span class="line">ldap_set_option($ldap, LDAP_OPT_REFERRALS, <span class="number">0</span>);</span><br><span class="line">ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">$ldap_bind = ldap_bind($ldap, $email, $password);</span><br><span class="line"></span><br><span class="line">$filter = <span class="string">'(&amp;(objectCategory=user)(objectClass=user)(userPrincipalName='</span>.$email.<span class="string">'))'</span>;</span><br><span class="line">$result = ldap_search($ldap, <span class="string">'DC=xxx,DC=com'</span>, $filter);</span><br><span class="line">$user = ldap_get_entries($ldap, $result);</span><br><span class="line"></span><br><span class="line">ldap_unbind($ldap);</span><br><span class="line"></span><br><span class="line">var_dump($user);</span><br></pre></td></tr></table></figure>
-
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ldap</span> = <span class="title function_ invoke__">ldap_connect</span>(<span class="string">&#x27;xxx.com&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">ldap_set_option</span>(<span class="variable">$ldap</span>, LDAP_OPT_REFERRALS, <span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">ldap_set_option</span>(<span class="variable">$ldap</span>, LDAP_OPT_PROTOCOL_VERSION, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$ldap_bind</span> = <span class="title function_ invoke__">ldap_bind</span>(<span class="variable">$ldap</span>, <span class="variable">$email</span>, <span class="variable">$password</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$filter</span> = <span class="string">&#x27;(&amp;(objectCategory=user)(objectClass=user)(userPrincipalName=&#x27;</span>.<span class="variable">$email</span>.<span class="string">&#x27;))&#x27;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="title function_ invoke__">ldap_search</span>(<span class="variable">$ldap</span>, <span class="string">&#x27;DC=xxx,DC=com&#x27;</span>, <span class="variable">$filter</span>);</span><br><span class="line"><span class="variable">$user</span> = <span class="title function_ invoke__">ldap_get_entries</span>(<span class="variable">$ldap</span>, <span class="variable">$result</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">ldap_unbind</span>(<span class="variable">$ldap</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$user</span>);</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -215,21 +221,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#範例"><span class="toc-number">2.</span> <span class="toc-text">範例</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">範例</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&text=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&is_video=false&description=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 PHP 操作 LDAP 伺服器&body=Check out this article: https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/07/使用-PHP-操作-LDAP-伺服器/&name=使用 PHP 操作 LDAP 伺服器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&text=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&is_video=false&description=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 PHP 操作 LDAP 伺服器&body=Check out this article: https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&title=使用 PHP 操作 LDAP 伺服器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/07/%E4%BD%BF%E7%94%A8-PHP-%E6%93%8D%E4%BD%9C-LDAP-%E4%BC%BA%E6%9C%8D%E5%99%A8/&name=使用 PHP 操作 LDAP 伺服器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -247,7 +253,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -273,13 +279,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

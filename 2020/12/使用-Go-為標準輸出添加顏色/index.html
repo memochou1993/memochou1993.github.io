@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="做法新增一個 Color() 方法。 12345678910111213141516171819202122232425262728package mainimport (	&quot;fmt&quot;	&quot;log&quot;)var (	Red    = Color(&quot;\033[1;31m%s\033[0m&quot;)	Green  = Color(&quot;\033[1;32m%s\033[0m&quot;)	Yellow = Color(&quot;\03">
-<meta name="keywords" content="程式設計,Go">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法新增一個 Color() 方法。 12345678910111213141516171819202122232425262728package mainimport (	&quot;fmt&quot;	&quot;log&quot;)var (	Red    &#x3D; Color(&quot;\033[1;31m%s\033[0m&quot;)	Green  &#x3D; Color(&quot;\033[1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Go 為標準輸出添加顏色">
-<meta property="og:url" content="https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法新增一個 Color() 方法。 12345678910111213141516171819202122232425262728package mainimport (	&quot;fmt&quot;	&quot;log&quot;)var (	Red    = Color(&quot;\033[1;31m%s\033[0m&quot;)	Green  = Color(&quot;\033[1;32m%s\033[0m&quot;)	Yellow = Color(&quot;\03">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.967Z">
+<meta property="og:description" content="做法新增一個 Color() 方法。 12345678910111213141516171819202122232425262728package mainimport (	&quot;fmt&quot;	&quot;log&quot;)var (	Red    &#x3D; Color(&quot;\033[1;31m%s\033[0m&quot;)	Green  &#x3D; Color(&quot;\033[1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-10T05:38:02.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.689Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Go 為標準輸出添加顏色">
-<meta name="twitter:description" content="做法新增一個 Color() 方法。 12345678910111213141516171819202122232425262728package mainimport (	&quot;fmt&quot;	&quot;log&quot;)var (	Red    = Color(&quot;\033[1;31m%s\033[0m&quot;)	Green  = Color(&quot;\033[1;32m%s\033[0m&quot;)	Yellow = Color(&quot;\03">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/12/在-Shell-腳本中指定輸出文字的顏色/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/12/%E5%9C%A8-Shell-%E8%85%B3%E6%9C%AC%E4%B8%AD%E6%8C%87%E5%AE%9A%E8%BC%B8%E5%87%BA%E6%96%87%E5%AD%97%E7%9A%84%E9%A1%8F%E8%89%B2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/12/在-Go-專案執行測試前更換工作目錄/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/12/%E5%9C%A8-Go-%E5%B0%88%E6%A1%88%E5%9F%B7%E8%A1%8C%E6%B8%AC%E8%A9%A6%E5%89%8D%E6%9B%B4%E6%8F%9B%E5%B7%A5%E4%BD%9C%E7%9B%AE%E9%8C%84/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&text=使用 Go 為標準輸出添加顏色"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&is_video=false&description=使用 Go 為標準輸出添加顏色"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 為標準輸出添加顏色&body=Check out this article: https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&name=使用 Go 為標準輸出添加顏色&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&text=使用 Go 為標準輸出添加顏色"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&is_video=false&description=使用 Go 為標準輸出添加顏色"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 為標準輸出添加顏色&body=Check out this article: https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&name=使用 Go 為標準輸出添加顏色&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +164,7 @@
             
         
             
-                <a href="/categories/程式設計/Go/其他/">其他</a>
+                <a href="/categories/Programming/Go/Others/">Others</a>
             
         
     </div>
@@ -167,7 +173,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Go/">Go</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/Go/" rel="tag">Go</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -177,8 +183,7 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增一個 <code>Color()</code> 方法。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	Red    = Color(<span class="string">"\033[1;31m%s\033[0m"</span>)</span><br><span class="line">	Green  = Color(<span class="string">"\033[1;32m%s\033[0m"</span>)</span><br><span class="line">	Yellow = Color(<span class="string">"\033[1;33m%s\033[0m"</span>)</span><br><span class="line">	Blue   = Color(<span class="string">"\033[1;34m%s\033[0m"</span>)</span><br><span class="line">	Purple = Color(<span class="string">"\033[1;35m%s\033[0m"</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Color</span><span class="params">(color <span class="keyword">string</span>)</span> <span class="title">func</span><span class="params">(...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(args ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">		<span class="keyword">return</span> fmt.Sprintf(color, fmt.Sprint(args...))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	log.Println(Red(<span class="string">"Red!"</span>))</span><br><span class="line">	log.Println(Green(<span class="string">"Green!"</span>))</span><br><span class="line">	log.Println(Yellow(<span class="string">"Yellow!"</span>))</span><br><span class="line">	log.Println(Blue(<span class="string">"Blue!"</span>))</span><br><span class="line">	log.Println(Purple(<span class="string">"Purple!"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	Red    = Color(<span class="string">&quot;\033[1;31m%s\033[0m&quot;</span>)</span><br><span class="line">	Green  = Color(<span class="string">&quot;\033[1;32m%s\033[0m&quot;</span>)</span><br><span class="line">	Yellow = Color(<span class="string">&quot;\033[1;33m%s\033[0m&quot;</span>)</span><br><span class="line">	Blue   = Color(<span class="string">&quot;\033[1;34m%s\033[0m&quot;</span>)</span><br><span class="line">	Purple = Color(<span class="string">&quot;\033[1;35m%s\033[0m&quot;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Color</span><span class="params">(color <span class="type">string</span>)</span></span> <span class="function"><span class="keyword">func</span><span class="params">(...<span class="keyword">interface</span>&#123;&#125;)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(args ...<span class="keyword">interface</span>&#123;&#125;)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> fmt.Sprintf(color, fmt.Sprint(args...))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	log.Println(Red(<span class="string">&quot;Red!&quot;</span>))</span><br><span class="line">	log.Println(Green(<span class="string">&quot;Green!&quot;</span>))</span><br><span class="line">	log.Println(Yellow(<span class="string">&quot;Yellow!&quot;</span>))</span><br><span class="line">	log.Println(Blue(<span class="string">&quot;Blue!&quot;</span>))</span><br><span class="line">	log.Println(Purple(<span class="string">&quot;Purple!&quot;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -215,21 +220,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&text=使用 Go 為標準輸出添加顏色"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&is_video=false&description=使用 Go 為標準輸出添加顏色"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Go 為標準輸出添加顏色&body=Check out this article: https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/12/使用-Go-為標準輸出添加顏色/&name=使用 Go 為標準輸出添加顏色&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&text=使用 Go 為標準輸出添加顏色"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&is_video=false&description=使用 Go 為標準輸出添加顏色"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 為標準輸出添加顏色&body=Check out this article: https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&title=使用 Go 為標準輸出添加顏色"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/12/%E4%BD%BF%E7%94%A8-Go-%E7%82%BA%E6%A8%99%E6%BA%96%E8%BC%B8%E5%87%BA%E6%B7%BB%E5%8A%A0%E9%A1%8F%E8%89%B2/&name=使用 Go 為標準輸出添加顏色&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -247,7 +252,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -273,13 +278,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

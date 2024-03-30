@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言本文複習 Docker 相關概念與指令。 資料卷資料卷是一種可供一或多個容器使用的特殊目錄，它繞過 UFS（通用快閃記憶體儲存），提供很多有用的特性：  資料卷可以在容器之間共享和重用。 對資料卷的修改會立即生效。 對資料卷的更新，不會影響映像檔。 卷會一直存在，直到沒有容器使用。  建立資料卷使用 -v 參數建立一個資料卷並掛載到容器裡。 1docker run -ti --name tes">
-<meta name="keywords" content="環境部署,Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全">
-<meta property="og:url" content="https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文複習 Docker 相關概念與指令。 資料卷資料卷是一種可供一或多個容器使用的特殊目錄，它繞過 UFS（通用快閃記憶體儲存），提供很多有用的特性：  資料卷可以在容器之間共享和重用。 對資料卷的修改會立即生效。 對資料卷的更新，不會影響映像檔。 卷會一直存在，直到沒有容器使用。  建立資料卷使用 -v 參數建立一個資料卷並掛載到容器裡。 1docker run -ti --name tes">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.983Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-02T12:36:06.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.711Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全">
-<meta name="twitter:description" content="前言本文複習 Docker 相關概念與指令。 資料卷資料卷是一種可供一或多個容器使用的特殊目錄，它繞過 UFS（通用快閃記憶體儲存），提供很多有用的特性：  資料卷可以在容器之間共享和重用。 對資料卷的修改會立即生效。 對資料卷的更新，不會影響映像檔。 卷會一直存在，直到沒有容器使用。  建立資料卷使用 -v 參數建立一個資料卷並掛載到容器裡。 1docker run -ti --name tes">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/03/《Docker：從入門到實踐》學習筆記（一）：映像檔、容器、倉庫/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E5%80%89%E5%BA%AB/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/03/《Docker：從入門到實踐》學習筆記（三）：Dockerfile/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9ADockerfile/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&text=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&is_video=false&description=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&body=Check out this article: https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&name=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&text=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&is_video=false&description=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&body=Check out this article: https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&name=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料卷"><span class="toc-number">2.</span> <span class="toc-text">資料卷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立資料卷"><span class="toc-number">2.1.</span> <span class="toc-text">建立資料卷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立資料卷容器"><span class="toc-number">2.2.</span> <span class="toc-text">建立資料卷容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#備份"><span class="toc-number">2.3.</span> <span class="toc-text">備份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#復原"><span class="toc-number">2.4.</span> <span class="toc-text">復原</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#網路"><span class="toc-number">3.</span> <span class="toc-text">網路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#網路架構"><span class="toc-number">3.1.</span> <span class="toc-text">網路架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外部存取"><span class="toc-number">3.2.</span> <span class="toc-text">外部存取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#容器互連"><span class="toc-number">3.3.</span> <span class="toc-text">容器互連</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全"><span class="toc-number">4.</span> <span class="toc-text">安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#核心命名空間"><span class="toc-number">4.1.</span> <span class="toc-text">核心命名空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制組"><span class="toc-number">4.2.</span> <span class="toc-text">控制組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伺服端防護"><span class="toc-number">4.3.</span> <span class="toc-text">伺服端防護</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#核心能力機制"><span class="toc-number">4.4.</span> <span class="toc-text">核心能力機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他安全特性"><span class="toc-number">4.5.</span> <span class="toc-text">其他安全特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E5%8D%B7"><span class="toc-number">2.</span> <span class="toc-text">資料卷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%8D%B7"><span class="toc-number">2.1.</span> <span class="toc-text">建立資料卷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%8D%B7%E5%AE%B9%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">建立資料卷容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%99%E4%BB%BD"><span class="toc-number">2.3.</span> <span class="toc-text">備份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%A9%E5%8E%9F"><span class="toc-number">2.4.</span> <span class="toc-text">復原</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">網路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF%E6%9E%B6%E6%A7%8B"><span class="toc-number">3.1.</span> <span class="toc-text">網路架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E5%AD%98%E5%8F%96"><span class="toc-number">3.2.</span> <span class="toc-text">外部存取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BA%92%E9%80%A3"><span class="toc-number">3.3.</span> <span class="toc-text">容器互連</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8"><span class="toc-number">4.</span> <span class="toc-text">安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E5%90%8D%E7%A9%BA%E9%96%93"><span class="toc-number">4.1.</span> <span class="toc-text">核心命名空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E7%B5%84"><span class="toc-number">4.2.</span> <span class="toc-text">控制組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%BA%E6%9C%8D%E7%AB%AF%E9%98%B2%E8%AD%B7"><span class="toc-number">4.3.</span> <span class="toc-text">伺服端防護</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%83%BD%E5%8A%9B%E6%A9%9F%E5%88%B6"><span class="toc-number">4.4.</span> <span class="toc-text">核心能力機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%89%E5%85%A8%E7%89%B9%E6%80%A7"><span class="toc-number">4.5.</span> <span class="toc-text">其他安全特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +164,7 @@
             
         
             
-                <a href="/categories/環境部署/Docker/《Docker：從入門到實踐》學習筆記/">《Docker：從入門到實踐》學習筆記</a>
+                <a href="/categories/Deployment/Docker/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8BStudy-Notes/">《Docker：從入門到實踐》Study Notes</a>
             
         
     </div>
@@ -167,7 +173,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>
     </div>
 
 
@@ -202,7 +208,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --volumes-from dbdata --name test1 ubuntu</span><br><span class="line">docker run -d --volumes-from dbdata --name test2 ubuntu</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>docker rm -v</code> 命令來刪除關聯的容器。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -v dbdata test1 test2</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -v dbdata test1 test2</span><br></pre></td></tr></table></figure>
 
 <h3 id="備份"><a href="#備份" class="headerlink" title="備份"></a>備份</h3><p>首先，建立一個名為 <code>dbdata</code> 的資料卷容器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -t -d --name dbdata -v /dbdata ubuntu</span><br></pre></td></tr></table></figure>
@@ -221,13 +227,13 @@
 <p>當建立一個 Docker 容器的時候，同時會建立了一對 veth pair 界面（當資料包發送到一個界面時，另外一個界面也可以收到相同的資料包）。這對界面一端在容器內，即 <code>eth0</code>；另一端在本地並被掛載到 <code>docker0</code> 橋接器，名稱以 veth 開頭（例如 vethAQI2QT）。透過這種方式，主機可以跟容器通訊，容器之間也可以相互通訊。Docker 就建立了在主機和所有容器之間一個虛擬共享網路。</p>
 <h3 id="外部存取"><a href="#外部存取" class="headerlink" title="外部存取"></a>外部存取</h3><p>容器中可以執行一些網路應用，要讓外部也可以存取這些應用，可以透過 <code>-P</code> 或 <code>-p</code> 參數來指定連接埠映射。</p>
 <p>當使用 <code>-P</code> 參數時，Docker 會暴露所有容器開放的網路連接埠。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P --name nginx nginx</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                   NAMES</span><br><span class="line">733f68958e83   nginx     <span class="string">"/docker-entrypoint.…"</span>   3 seconds ago   Up 2 seconds   0.0.0.0:55001-&gt;80/tcp   nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P --name nginx nginx</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                   NAMES</span><br><span class="line">733f68958e83   nginx     <span class="string">&quot;/docker-entrypoint.…&quot;</span>   3 seconds ago   Up 2 seconds   0.0.0.0:55001-&gt;80/tcp   nginx</span><br></pre></td></tr></table></figure>
 
 <p>當使用 <code>-p</code> 參數時，可以將本地的 <code>80</code> 連接埠映射到容器的 <code>80</code> 連接埠。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx nginx</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        PORTS                NAMES</span><br><span class="line">d65ab2cd7336   nginx     <span class="string">"/docker-entrypoint.…"</span>   2 seconds ago   Up 1 second   0.0.0.0:80-&gt;80/tcp   nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx nginx</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        PORTS                NAMES</span><br><span class="line">d65ab2cd7336   nginx     <span class="string">&quot;/docker-entrypoint.…&quot;</span>   2 seconds ago   Up 1 second   0.0.0.0:80-&gt;80/tcp   nginx</span><br></pre></td></tr></table></figure>
 
 <p>或者，可以指定一個特定位址，比如 <code>127.0.0.1</code> 的 <code>80</code> 連接埠。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 127.0.0.1:80:80 --name nginx nginx</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                  NAMES</span><br><span class="line">117d76809326   nginx     <span class="string">"/docker-entrypoint.…"</span>   3 seconds ago   Up 2 seconds   127.0.0.1:80-&gt;80/tcp   nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 127.0.0.1:80:80 --name nginx nginx</span><br><span class="line">docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                  NAMES</span><br><span class="line">117d76809326   nginx     <span class="string">&quot;/docker-entrypoint.…&quot;</span>   3 seconds ago   Up 2 seconds   127.0.0.1:80-&gt;80/tcp   nginx</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>docker port</code> 指令查看連接埠。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker port nginx</span><br><span class="line">80/tcp -&gt; 0.0.0.0:80</span><br></pre></td></tr></table></figure>
@@ -239,15 +245,15 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name db mysql/mysql-server</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>--link</code> 參數，將它連接到資料庫容器。格式為 <code>name:alias</code>，其中 <code>name</code> 是要連接的容器名稱，<code>alias</code> 是這個連接的別名。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name ubuntu --link db:db ubuntu</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name ubuntu --<span class="built_in">link</span> db:db ubuntu</span><br></pre></td></tr></table></figure>
 
 <p>Docker 在兩個互聯的容器之間創建了一個安全隧道，而且不用映射它們的連接埠到宿主主機上。在啟動資料庫容器的時候並沒有使用 <code>-p</code> 和 <code>-P</code> 參數，從而避免了暴露資料庫連接埠到外部網路上。</p>
 <p>使用 <code>env</code> 指令來查看 <code>ubuntu</code> 容器的環境變數。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB_PORT_33060_TCP_ADDR=172.17.0.4</span><br><span class="line">DB_PORT_3306_TCP_PORT=3306</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB_PORT_33060_TCP_ADDR=172.17.0.4</span><br><span class="line">DB_PORT_3306_TCP_PORT=3306</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <p>其中 <code>DB_</code> 開頭的環境變數是供 <code>ubuntu</code> 容器連接 <code>db</code> 容器使用，前綴採用大寫的連接別名。</p>
 <p>除了環境變數，Docker 還新增 host 訊息到父容器的 <code>/etc/hosts</code> 的檔案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hosts</span><br><span class="line">127.0.0.1	localhost</span><br><span class="line">::1	localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0	ip6-localnet</span><br><span class="line">ff00::0	ip6-mcastprefix</span><br><span class="line">ff02::1	ip6-allnodes</span><br><span class="line">ff02::2	ip6-allrouters</span><br><span class="line">172.17.0.4	db 843b83837114</span><br><span class="line">172.17.0.6	ee6e5abc9f65</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/hosts</span><br><span class="line">127.0.0.1	localhost</span><br><span class="line">::1	localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0	ip6-localnet</span><br><span class="line">ff00::0	ip6-mcastprefix</span><br><span class="line">ff02::1	ip6-allnodes</span><br><span class="line">ff02::2	ip6-allrouters</span><br><span class="line">172.17.0.4	db 843b83837114</span><br><span class="line">172.17.0.6	ee6e5abc9f65</span><br></pre></td></tr></table></figure>
 
 <p>另外，可以在 <code>ubuntu</code> 容器中安裝 <code>ping</code> 指令來測試跟 <code>db</code> 容器的連通。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install -yqq inetutils-ping</span><br></pre></td></tr></table></figure>
@@ -310,7 +316,7 @@
 <p>使用者可以自定義存取控制機制來定制安全策略。</p>
 <p>跟其它新增到 Docker 容器的第三方工具一樣（比如網路拓撲和檔案系統共享），有很多類似的機制，在不改變 Docker 核心情況下就可以強化現有的容器。</p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://github.com/yeasy/docker_practice" target="_blank" rel="noopener">Docker：從入門到實踐</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/yeasy/docker_practice">Docker：從入門到實踐</a></li>
 </ul>
 
   </div>
@@ -348,21 +354,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#資料卷"><span class="toc-number">2.</span> <span class="toc-text">資料卷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立資料卷"><span class="toc-number">2.1.</span> <span class="toc-text">建立資料卷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立資料卷容器"><span class="toc-number">2.2.</span> <span class="toc-text">建立資料卷容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#備份"><span class="toc-number">2.3.</span> <span class="toc-text">備份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#復原"><span class="toc-number">2.4.</span> <span class="toc-text">復原</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#網路"><span class="toc-number">3.</span> <span class="toc-text">網路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#網路架構"><span class="toc-number">3.1.</span> <span class="toc-text">網路架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外部存取"><span class="toc-number">3.2.</span> <span class="toc-text">外部存取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#容器互連"><span class="toc-number">3.3.</span> <span class="toc-text">容器互連</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全"><span class="toc-number">4.</span> <span class="toc-text">安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#核心命名空間"><span class="toc-number">4.1.</span> <span class="toc-text">核心命名空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#控制組"><span class="toc-number">4.2.</span> <span class="toc-text">控制組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伺服端防護"><span class="toc-number">4.3.</span> <span class="toc-text">伺服端防護</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#核心能力機制"><span class="toc-number">4.4.</span> <span class="toc-text">核心能力機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他安全特性"><span class="toc-number">4.5.</span> <span class="toc-text">其他安全特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B3%87%E6%96%99%E5%8D%B7"><span class="toc-number">2.</span> <span class="toc-text">資料卷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%8D%B7"><span class="toc-number">2.1.</span> <span class="toc-text">建立資料卷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%8D%B7%E5%AE%B9%E5%99%A8"><span class="toc-number">2.2.</span> <span class="toc-text">建立資料卷容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%99%E4%BB%BD"><span class="toc-number">2.3.</span> <span class="toc-text">備份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%A9%E5%8E%9F"><span class="toc-number">2.4.</span> <span class="toc-text">復原</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">網路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B6%B2%E8%B7%AF%E6%9E%B6%E6%A7%8B"><span class="toc-number">3.1.</span> <span class="toc-text">網路架構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E5%AD%98%E5%8F%96"><span class="toc-number">3.2.</span> <span class="toc-text">外部存取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E4%BA%92%E9%80%A3"><span class="toc-number">3.3.</span> <span class="toc-text">容器互連</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8"><span class="toc-number">4.</span> <span class="toc-text">安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E5%90%8D%E7%A9%BA%E9%96%93"><span class="toc-number">4.1.</span> <span class="toc-text">核心命名空間</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E7%B5%84"><span class="toc-number">4.2.</span> <span class="toc-text">控制組</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%BA%E6%9C%8D%E7%AB%AF%E9%98%B2%E8%AD%B7"><span class="toc-number">4.3.</span> <span class="toc-text">伺服端防護</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%83%BD%E5%8A%9B%E6%A9%9F%E5%88%B6"><span class="toc-number">4.4.</span> <span class="toc-text">核心能力機制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%AE%89%E5%85%A8%E7%89%B9%E6%80%A7"><span class="toc-number">4.5.</span> <span class="toc-text">其他安全特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&text=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&is_video=false&description=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&body=Check out this article: https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/03/《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全/&name=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&text=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&is_video=false&description=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&body=Check out this article: https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&title=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%8D%B7%E3%80%81%E7%B6%B2%E8%B7%AF%E3%80%81%E5%AE%89%E5%85%A8/&name=《Docker：從入門到實踐》學習筆記（二）：資料卷、網路、安全&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -380,7 +386,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -406,13 +412,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

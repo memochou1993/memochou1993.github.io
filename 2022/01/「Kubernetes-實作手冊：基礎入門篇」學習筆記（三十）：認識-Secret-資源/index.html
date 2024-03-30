@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。 簡介Secret 是一種包含少量敏感訊息例如密碼、令牌或密鑰的物件。使用 Secret 可以不需要將機密資料寫入應用程式的程式碼。 由於創建 Secret 可以獨立於使用它們的 Pod，因此在創建、查看和編輯 Pod 的工作流程中暴露 Secret 的風險較小。Kubernetes 和在叢集中運行的應用程式，也可以對 Sec">
-<meta name="keywords" content="環境部署,Docker,Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源">
-<meta property="og:url" content="https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。 簡介Secret 是一種包含少量敏感訊息例如密碼、令牌或密鑰的物件。使用 Secret 可以不需要將機密資料寫入應用程式的程式碼。 由於創建 Secret 可以獨立於使用它們的 Pod，因此在創建、查看和編輯 Pod 的工作流程中暴露 Secret 的風險較小。Kubernetes 和在叢集中運行的應用程式，也可以對 Sec">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.979Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-05T07:42:19.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.706Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源">
-<meta name="twitter:description" content="前言本文為「Kubernetes 實作手冊：基礎入門篇」課程的學習筆記。 簡介Secret 是一種包含少量敏感訊息例如密碼、令牌或密鑰的物件。使用 Secret 可以不需要將機密資料寫入應用程式的程式碼。 由於創建 Secret 可以獨立於使用它們的 Pod，因此在創建、查看和編輯 Pod 的工作流程中暴露 Secret 的風險較小。Kubernetes 和在叢集中運行的應用程式，也可以對 Sec">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（廿九）：認識-ConfigMap-資源/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%BB%BF%E4%B9%9D%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-ConfigMap-%E8%B3%87%E6%BA%90/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（卅一）：認識-HostPath-儲存卷類型/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%8D%85%E4%B8%80%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-HostPath-%E5%84%B2%E5%AD%98%E5%8D%B7%E9%A1%9E%E5%9E%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&text=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&is_video=false&description=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&body=Check out this article: https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&name=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&text=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&is_video=false&description=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&body=Check out this article: https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&name=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volume"><span class="toc-number">3.1.</span> <span class="toc-text">Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Env"><span class="toc-number">3.2.</span> <span class="toc-text">Env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#補充"><span class="toc-number">3.3.</span> <span class="toc-text">補充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#編碼"><span class="toc-number">4.</span> <span class="toc-text">編碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volume"><span class="toc-number">3.1.</span> <span class="toc-text">Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Env"><span class="toc-number">3.2.</span> <span class="toc-text">Env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%9C%E5%85%85"><span class="toc-number">3.3.</span> <span class="toc-text">補充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%A8%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">編碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/環境部署/Kubernetes/「Kubernetes-實作手冊：基礎入門篇」學習筆記/">「Kubernetes 實作手冊：基礎入門篇」學習筆記</a>
+                <a href="/categories/Deployment/Kubernetes/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8DStudy-Notes/">「Kubernetes 實作手冊：基礎入門篇」Study Notes</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Kubernetes/">Kubernetes</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a>
     </div>
 
 
@@ -188,10 +195,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vagrant/kind</span><br><span class="line">vagrant up</span><br><span class="line">vagrant ssh</span><br></pre></td></tr></table></figure>
 
 <p>首先，查看範例資料夾中的 ConfigMap 配置檔。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat introduction/storage/secret/secret.yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> introduction/storage/secret/secret.yaml</span><br></pre></td></tr></table></figure>
 
 <p>配置檔如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">secret-test</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line"><span class="attr">  key:</span> <span class="string">eWVzCg==</span></span><br><span class="line">  <span class="string">version.date:</span> <span class="string">MjAyMAo=</span></span><br><span class="line"><span class="attr">stringData:</span></span><br><span class="line">  <span class="string">key.new:</span> <span class="string">"yes"</span></span><br><span class="line">  <span class="string">version.data.new:</span> <span class="string">"2020"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">secret-test</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">key:</span> <span class="string">eWVzCg==</span></span><br><span class="line">  <span class="attr">version.date:</span> <span class="string">MjAyMAo=</span></span><br><span class="line"><span class="attr">stringData:</span></span><br><span class="line">  <span class="attr">key.new:</span> <span class="string">&quot;yes&quot;</span></span><br><span class="line">  <span class="attr">version.data.new:</span> <span class="string">&quot;2020&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>使用配置檔創建 Secret 資源。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f introduction/storage/secret/secret.yaml</span><br></pre></td></tr></table></figure>
@@ -206,10 +213,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl view-secret secret-test -a</span><br></pre></td></tr></table></figure>
 
 <h3 id="Volume"><a href="#Volume" class="headerlink" title="Volume"></a>Volume</h3><p>查看範例資料夾中的 Deployment 配置檔，這是使用 Volume 的方式使用 Secret。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat introduction/storage/secret/pod-vol.yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> introduction/storage/secret/pod-vol.yaml</span><br></pre></td></tr></table></figure>
 
 <p>配置檔如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">secret-vol</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      app:</span> <span class="string">debug-vol</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">debug-vol</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">debug-server</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">hwchiu/netutils</span></span><br><span class="line"><span class="attr">        volumeMounts:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">secret-volume</span></span><br><span class="line"><span class="attr">          mountPath:</span> <span class="string">/tmp/config</span></span><br><span class="line"><span class="attr">      volumes:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">secret-volume</span></span><br><span class="line"><span class="attr">        secret:</span></span><br><span class="line"><span class="attr">          secretName:</span> <span class="string">secret-test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">secret-vol</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">debug-vol</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">debug-vol</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">debug-server</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">hwchiu/netutils</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">secret-volume</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/tmp/config</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">secret-volume</span></span><br><span class="line">        <span class="attr">secret:</span></span><br><span class="line">          <span class="attr">secretName:</span> <span class="string">secret-test</span></span><br></pre></td></tr></table></figure>
 
 <p>使用配置檔創建 Deployment 資源。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f introduction/storage/secret/pod-vol.yaml</span><br></pre></td></tr></table></figure>
@@ -218,16 +225,16 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">exec</span> -it secret-vol-57fbbbd9f8-dj7v6 -- bash</span><br></pre></td></tr></table></figure>
 
 <p>列出所有的 key 檔案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /tmp/config/</span><br><span class="line">key  key.new  version.data.new  version.date</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /tmp/config/</span><br><span class="line">key  key.new  version.data.new  version.date</span><br></pre></td></tr></table></figure>
 
 <p>印出其中一個檔案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /tmp/config/version.date</span><br><span class="line">202020202</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /tmp/config/version.date</span><br><span class="line">202020202</span><br></pre></td></tr></table></figure>
 
 <h3 id="Env"><a href="#Env" class="headerlink" title="Env"></a>Env</h3><p>查看範例資料夾中的 Deployment 配置檔，這是使用 Env 的方式使用 Secret。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat introduction/storage/secret/pod-env.yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> introduction/storage/secret/pod-env.yaml</span><br></pre></td></tr></table></figure>
 
 <p>配置檔如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">secret-env</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      app:</span> <span class="string">debug-env</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">debug-env</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">debug-server</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">hwchiu/netutils</span></span><br><span class="line"><span class="attr">        env:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">test_key</span></span><br><span class="line"><span class="attr">          valueFrom:</span></span><br><span class="line"><span class="attr">            secretKeyRef:</span></span><br><span class="line"><span class="attr">              name:</span> <span class="string">secret-test</span></span><br><span class="line"><span class="attr">              key:</span> <span class="string">key.new</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">version</span></span><br><span class="line"><span class="attr">          valueFrom:</span></span><br><span class="line"><span class="attr">            secretKeyRef:</span></span><br><span class="line"><span class="attr">              name:</span> <span class="string">secret-test</span></span><br><span class="line"><span class="attr">              key:</span> <span class="string">version.date</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">secret-env</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">debug-env</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">debug-env</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">debug-server</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">hwchiu/netutils</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">test_key</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">secretKeyRef:</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">secret-test</span></span><br><span class="line">              <span class="attr">key:</span> <span class="string">key.new</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">version</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">secretKeyRef:</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">secret-test</span></span><br><span class="line">              <span class="attr">key:</span> <span class="string">version.date</span></span><br></pre></td></tr></table></figure>
 
 <p>使用配置檔創建 Deployment 資源。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f introduction/storage/secret/pod-env.yaml</span><br></pre></td></tr></table></figure>
@@ -236,23 +243,23 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">exec</span> -it secret-env-75d8b6f85b-qgqwb -- bash</span><br></pre></td></tr></table></figure>
 
 <p>列出所有的環境變數。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">env</span></span><br></pre></td></tr></table></figure>
 
 <p>印出其中一個環境變數。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">env | grep -i version</span><br><span class="line">version=202020202</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">env</span> | grep -i version</span><br><span class="line">version=202020202</span><br></pre></td></tr></table></figure>
 
 <h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>使用 Volume 來存取 ConfigMap 會比使用 Env 好，因為使用 Env 的情況下，容器內的環境變數可以透過節點的 <code>/proc/$pid/environ</code> 被存取；而使用 Volume 在預設情況下只有擁有使用 Docker 權限的使用者可以存取，多了一層保護。</p>
 <h2 id="編碼"><a href="#編碼" class="headerlink" title="編碼"></a>編碼</h2><p>使用 <code>base64</code> 指令可以為文字進行 base64 格式的編碼。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"hello"</span> | base64</span><br><span class="line">aGVsbG8K</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello&quot;</span> | <span class="built_in">base64</span></span><br><span class="line">aGVsbG8K</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>echo</code> 指令使用 <code>-n</code> 參數，避免產生換行符號。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">"hello"</span> | base64</span><br><span class="line">aGVsbG8=</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;hello&quot;</span> | <span class="built_in">base64</span></span><br><span class="line">aGVsbG8=</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>base64</code> 指令使用 <code>-d</code> 參數，可以進行 base64 格式的解碼。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">"aGVsbG8="</span> | base64 -d</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;aGVsbG8=&quot;</span> | <span class="built_in">base64</span> -d</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://hiskio.com/courses/349/about" target="_blank" rel="noopener">Kubernetes 實作手冊：基礎入門篇</a></li>
+<li><a target="_blank" rel="noopener" href="https://hiskio.com/courses/349/about">Kubernetes 實作手冊：基礎入門篇</a></li>
 </ul>
 
   </div>
@@ -290,21 +297,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volume"><span class="toc-number">3.1.</span> <span class="toc-text">Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Env"><span class="toc-number">3.2.</span> <span class="toc-text">Env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#補充"><span class="toc-number">3.3.</span> <span class="toc-text">補充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#編碼"><span class="toc-number">4.</span> <span class="toc-text">編碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Volume"><span class="toc-number">3.1.</span> <span class="toc-text">Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Env"><span class="toc-number">3.2.</span> <span class="toc-text">Env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%9C%E5%85%85"><span class="toc-number">3.3.</span> <span class="toc-text">補充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%A8%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">編碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&text=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&is_video=false&description=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&body=Check out this article: https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/01/「Kubernetes-實作手冊：基礎入門篇」學習筆記（三十）：認識-Secret-資源/&name=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&text=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&is_video=false&description=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&body=Check out this article: https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&title=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Secret-%E8%B3%87%E6%BA%90/&name=「Kubernetes 實作手冊：基礎入門篇」學習筆記（三十）：認識 Secret 資源&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -322,7 +329,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -348,13 +355,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

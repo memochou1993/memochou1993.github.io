@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="環境 macOS Docker (with HyperKit)  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容">
-<meta name="keywords" content="環境部署,Docker,Kubernetes,minikube">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台">
-<meta property="og:url" content="https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 macOS Docker (with HyperKit)  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.959Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-10T09:36:24.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.677Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="minikube">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台">
-<meta name="twitter:description" content="環境 macOS Docker (with HyperKit)  名詞解釋Cluster叢集，是指由 Kubernetes 使用一系列的物理機、虛擬機和其他基礎資源來運行應用程式，或計算、存儲網路資源的集合。 Master主控，是 Cluster 的大腦，負責調度 Node，決定應用程式應該放在哪裡運行。Master 運行Linux 作業系統，可以是物理機或虛擬機。 Node節點，負責監控並匯報容">
     
     
         
@@ -44,14 +47,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +96,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/04/使用-Fetch-發送-HTTP-請求/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/04/%E4%BD%BF%E7%94%A8-Fetch-%E7%99%BC%E9%80%81-HTTP-%E8%AB%8B%E6%B1%82/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/04/使用-Kubernetes-和-Jenkins-為應用程式建立自動化部署（一）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/04/%E4%BD%BF%E7%94%A8-Kubernetes-%E5%92%8C-Jenkins-%E7%82%BA%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%EF%BC%88%E4%B8%80%EF%BC%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +112,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&text=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&is_video=false&description=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&body=Check out this article: https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&name=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&text=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&is_video=false&description=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&body=Check out this article: https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&name=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#名詞解釋"><span class="toc-number">2.</span> <span class="toc-text">名詞解釋</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cluster"><span class="toc-number">2.1.</span> <span class="toc-text">Cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master"><span class="toc-number">2.2.</span> <span class="toc-text">Master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node"><span class="toc-number">2.3.</span> <span class="toc-text">Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod"><span class="toc-number">2.4.</span> <span class="toc-text">Pod</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境設定"><span class="toc-number">3.</span> <span class="toc-text">環境設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署應用程式"><span class="toc-number">4.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理叢集"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#擴充應用"><span class="toc-number">6.</span> <span class="toc-text">擴充應用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基礎指令"><span class="toc-number">7.</span> <span class="toc-text">基礎指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B"><span class="toc-number">2.</span> <span class="toc-text">名詞解釋</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cluster"><span class="toc-number">2.1.</span> <span class="toc-text">Cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master"><span class="toc-number">2.2.</span> <span class="toc-text">Master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node"><span class="toc-number">2.3.</span> <span class="toc-text">Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod"><span class="toc-number">2.4.</span> <span class="toc-text">Pod</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="toc-number">3.</span> <span class="toc-text">環境設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%8F%A2%E9%9B%86"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%B4%E5%85%85%E6%87%89%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">擴充應用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%8C%87%E4%BB%A4"><span class="toc-number">7.</span> <span class="toc-text">基礎指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +166,7 @@
             
         
             
-                <a href="/categories/環境部署/Kubernetes/其他/">其他</a>
+                <a href="/categories/Deployment/Kubernetes/Others/">Others</a>
             
         
     </div>
@@ -167,7 +175,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Kubernetes/">Kubernetes</a>, <a class="tag-link" href="/tags/minikube/">minikube</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a>, <a class="tag-link-link" href="/tags/minikube/" rel="tag">minikube</a>
     </div>
 
 
@@ -282,8 +290,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube delete --all</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://kubernetes.io/zh/docs/home/" target="_blank" rel="noopener">Kubernetes Documentation</a></li>
-<li><a href="https://minikube.sigs.k8s.io/docs/" target="_blank" rel="noopener">minikube Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/home/">Kubernetes Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://minikube.sigs.k8s.io/docs/">minikube Documentation</a></li>
 </ul>
 
   </div>
@@ -321,21 +329,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#名詞解釋"><span class="toc-number">2.</span> <span class="toc-text">名詞解釋</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cluster"><span class="toc-number">2.1.</span> <span class="toc-text">Cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master"><span class="toc-number">2.2.</span> <span class="toc-text">Master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node"><span class="toc-number">2.3.</span> <span class="toc-text">Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod"><span class="toc-number">2.4.</span> <span class="toc-text">Pod</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境設定"><span class="toc-number">3.</span> <span class="toc-text">環境設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署應用程式"><span class="toc-number">4.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理叢集"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#擴充應用"><span class="toc-number">6.</span> <span class="toc-text">擴充應用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基礎指令"><span class="toc-number">7.</span> <span class="toc-text">基礎指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B"><span class="toc-number">2.</span> <span class="toc-text">名詞解釋</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cluster"><span class="toc-number">2.1.</span> <span class="toc-text">Cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master"><span class="toc-number">2.2.</span> <span class="toc-text">Master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node"><span class="toc-number">2.3.</span> <span class="toc-text">Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod"><span class="toc-number">2.4.</span> <span class="toc-text">Pod</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A"><span class="toc-number">3.</span> <span class="toc-text">環境設定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%8F%A2%E9%9B%86"><span class="toc-number">5.</span> <span class="toc-text">管理叢集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%B4%E5%85%85%E6%87%89%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">擴充應用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E6%8C%87%E4%BB%A4"><span class="toc-number">7.</span> <span class="toc-text">基礎指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&text=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&is_video=false&description=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&body=Check out this article: https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/在-macOS-上使用-minikube-搭建-Kubernetes-容器管理平台/&name=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&text=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&is_video=false&description=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&body=Check out this article: https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&title=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/%E5%9C%A8-macOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-minikube-%E6%90%AD%E5%BB%BA-Kubernetes-%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/&name=在 macOS 上使用 minikube 搭建 Kubernetes 容器管理平台&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -353,7 +361,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -379,13 +387,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

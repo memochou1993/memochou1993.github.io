@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 簡介超文本傳輸協定（HTTP）是一種用來傳輸超媒體文件（像是 HTML 文件）的應用層協定，被設計來讓瀏覽器和伺服器進行溝通，但也可做其他用途。HTTP 遵循標準 client-server 模式，由客戶端連線以發送請求，然後等待接收回應。HTTP 是一種無狀態協定，意思是伺服器不會保存任兩個請求間的任何資料（狀態）。儘管作為 TC">
-<meta name="keywords" content="TCP&#x2F;IP,HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="認識 HTTP 超文本傳輸協定（一）：概述">
-<meta property="og:url" content="https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 簡介超文本傳輸協定（HTTP）是一種用來傳輸超媒體文件（像是 HTML 文件）的應用層協定，被設計來讓瀏覽器和伺服器進行溝通，但也可做其他用途。HTTP 遵循標準 client-server 模式，由客戶端連線以發送請求，然後等待接收回應。HTTP 是一種無狀態協定，意思是伺服器不會保存任兩個請求間的任何資料（狀態）。儘管作為 TC">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.958Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-14T10:15:29.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.676Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="TCP&#x2F;IP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="認識 HTTP 超文本傳輸協定（一）：概述">
-<meta name="twitter:description" content="前言本文為〈HTTP - MDN Web docs〉的學習筆記。 簡介超文本傳輸協定（HTTP）是一種用來傳輸超媒體文件（像是 HTML 文件）的應用層協定，被設計來讓瀏覽器和伺服器進行溝通，但也可做其他用途。HTTP 遵循標準 client-server 模式，由客戶端連線以發送請求，然後等待接收回應。HTTP 是一種無狀態協定，意思是伺服器不會保存任兩個請求間的任何資料（狀態）。儘管作為 TC">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/03/使用-Go-實現「合併排序」/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/03/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E7%8F%BE%E3%80%8C%E5%90%88%E4%BD%B5%E6%8E%92%E5%BA%8F%E3%80%8D/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/03/認識-HTTP-超文本傳輸協定（二）：請求方法/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%AB%8B%E6%B1%82%E6%96%B9%E6%B3%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&text=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&is_video=false&description=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（一）：概述&body=Check out this article: https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&name=認識 HTTP 超文本傳輸協定（一）：概述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&text=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&is_video=false&description=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（一）：概述&body=Check out this article: https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&name=認識 HTTP 超文本傳輸協定（一）：概述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概觀"><span class="toc-number">3.</span> <span class="toc-text">概觀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基於-HTTP-的元件系統"><span class="toc-number">4.</span> <span class="toc-text">基於 HTTP 的元件系統</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客戶端"><span class="toc-number">4.1.</span> <span class="toc-text">客戶端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服務端"><span class="toc-number">4.2.</span> <span class="toc-text">服務端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代理"><span class="toc-number">4.3.</span> <span class="toc-text">代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-的基本性質"><span class="toc-number">5.</span> <span class="toc-text">HTTP 的基本性質</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-是簡單的"><span class="toc-number">5.1.</span> <span class="toc-text">HTTP 是簡單的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-是可擴展的"><span class="toc-number">5.2.</span> <span class="toc-text">HTTP 是可擴展的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-是無狀態、有會話的"><span class="toc-number">5.3.</span> <span class="toc-text">HTTP 是無狀態、有會話的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和連接"><span class="toc-number">5.4.</span> <span class="toc-text">HTTP 和連接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-控制項"><span class="toc-number">6.</span> <span class="toc-text">HTTP 控制項</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-流程"><span class="toc-number">7.</span> <span class="toc-text">HTTP 流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-報文"><span class="toc-number">8.</span> <span class="toc-text">HTTP 報文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#請求"><span class="toc-number">8.1.</span> <span class="toc-text">請求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#響應"><span class="toc-number">8.2.</span> <span class="toc-text">響應</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#總結"><span class="toc-number">9.</span> <span class="toc-text">總結</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%80"><span class="toc-number">3.</span> <span class="toc-text">概觀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%96%BC-HTTP-%E7%9A%84%E5%85%83%E4%BB%B6%E7%B3%BB%E7%B5%B1"><span class="toc-number">4.</span> <span class="toc-text">基於 HTTP 的元件系統</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B6%E7%AB%AF"><span class="toc-number">4.1.</span> <span class="toc-text">客戶端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8B%99%E7%AB%AF"><span class="toc-number">4.2.</span> <span class="toc-text">服務端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B3%AA"><span class="toc-number">5.</span> <span class="toc-text">HTTP 的基本性質</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E6%98%AF%E7%B0%A1%E5%96%AE%E7%9A%84"><span class="toc-number">5.1.</span> <span class="toc-text">HTTP 是簡單的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E6%98%AF%E5%8F%AF%E6%93%B4%E5%B1%95%E7%9A%84"><span class="toc-number">5.2.</span> <span class="toc-text">HTTP 是可擴展的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E6%98%AF%E7%84%A1%E7%8B%80%E6%85%8B%E3%80%81%E6%9C%89%E6%9C%83%E8%A9%B1%E7%9A%84"><span class="toc-number">5.3.</span> <span class="toc-text">HTTP 是無狀態、有會話的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E5%92%8C%E9%80%A3%E6%8E%A5"><span class="toc-number">5.4.</span> <span class="toc-text">HTTP 和連接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E6%8E%A7%E5%88%B6%E9%A0%85"><span class="toc-number">6.</span> <span class="toc-text">HTTP 控制項</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">HTTP 流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E5%A0%B1%E6%96%87"><span class="toc-number">8.</span> <span class="toc-text">HTTP 報文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AB%8B%E6%B1%82"><span class="toc-number">8.1.</span> <span class="toc-text">請求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%BF%E6%87%89"><span class="toc-number">8.2.</span> <span class="toc-text">響應</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">9.</span> <span class="toc-text">總結</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +162,7 @@
             
         
             
-                <a href="/categories/其他/TCP-IP/">TCP/IP</a>
+                <a href="/categories/Others/TCP-IP/">TCP/IP</a>
             
         
     </div>
@@ -165,7 +171,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/HTTP/">HTTP</a>, <a class="tag-link" href="/tags/TCP-IP/">TCP/IP</a>
+        <a class="tag-link-link" href="/tags/HTTP/" rel="tag">HTTP</a>, <a class="tag-link-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a>
     </div>
 
 
@@ -174,8 +180,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://s0developer0mozilla0org.icopy.site/zh-TW/docs/Web/HTTP" target="_blank" rel="noopener">HTTP - MDN Web docs</a>〉的學習筆記。</p>
-<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>超文本傳輸協定（HTTP）是一種用來傳輸超媒體文件（像是 HTML 文件）的應用層協定，被設計來讓瀏覽器和伺服器進行溝通，但也可做其他用途。HTTP 遵循標準 client-server 模式，由客戶端連線以發送請求，然後等待接收回應。HTTP 是一種無狀態協定，意思是伺服器不會保存任兩個請求間的任何資料（狀態）。儘管作為 TCP/IP 的應用層，HTTP 亦可應用於其他可靠的傳輸層（例如 UDP），只要不會無聲無息地遺失訊息即可。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a target="_blank" rel="noopener" href="https://s0developer0mozilla0org.icopy.site/zh-TW/docs/Web/HTTP">HTTP - MDN Web docs</a>〉的學習筆記。</p>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>超文本傳輸協定（HTTP）是一種用來傳輸超媒體文件（像是 HTML 文件）的應用層協定，被設計來讓瀏覽器和伺服器進行溝通，但也可做其他用途。HTTP 遵循標準 client-server 模式，由客戶端連線以發送請求，然後等待接收回應。HTTP 是一種無狀態協定，意思是伺服器不會保存任兩個請求間的任何資料（狀態）。儘管作為 TCP&#x2F;IP 的應用層，HTTP 亦可應用於其他可靠的傳輸層（例如 UDP），只要不會無聲無息地遺失訊息即可。</p>
 <h2 id="概觀"><a href="#概觀" class="headerlink" title="概觀"></a>概觀</h2><p>HTTP 是一種協議，它允許資源，諸如 HTML 文件的抓取。它是 Web 上任何資料交換的基礎，並且是 client-server 協議，這意味著請求是由收件人（通常是 Web 瀏覽器）發起的。完整的文件是從獲取的不同子文件中重建的，例如文本、佈局描述、圖像、影片、腳本等。</p>
 <p>客戶端和服務端通過交換各自的訊息（與資料流正好相反）進行交互。由像瀏覽器這樣的客戶端發出的訊息叫做 requests，被服務端響應的訊息叫做 responses。</p>
 <p>HTTP 被設計於 20 世紀 90 年代初期，是一種可擴展的協議。它是應用層的協議，通過 TCP，或者是 TLS——加密的 TCP 連接來發送，理論上任何可靠的傳輸協議都可以使用。因為其良好的擴展性，時至今日，它不僅被用來傳輸超文本文件，還用來傳輸圖片、影片或者向伺服器發送如 HTML 表單這樣的訊息。HTTP 還可以根據網頁需求，僅獲取部分 Web 文件內容更新網頁。</p>
@@ -186,7 +192,7 @@
 <p>要展現一個網頁，瀏覽器首先發送一個請求來獲取頁面的 HTML 文件，再解析文件中的資源訊息發送其他請求，獲取可執行腳本或 CSS 樣式來進行頁面佈局渲染，以及一些其它頁面資源（如圖片和影片等）。然後，瀏覽器將這些資源整合到一起，展現出一個完整的文件，也就是網頁。瀏覽器執行的腳本可以在之後的階段獲取更多資源，並相應地更新網頁。</p>
 <p>一個網頁就是一個超文本文件。也就是說，有一部分顯示的文本可能是連結，啟動它（通常是鼠標的點擊）就可以獲取一個新的網頁，使得用戶可以控制客戶端盡情瀏覽。瀏覽器來負責發送 HTTP 請求，並進一步解析 HTTP 返回的訊息，以向用戶提供明確的響應。</p>
 <h3 id="服務端"><a href="#服務端" class="headerlink" title="服務端"></a>服務端</h3><p>在上述通訊過程的另一端，是由 Web Server 來服務並提供客戶端所請求的文件。Server 只是虛擬意義上代表一個機器：它可以是負載平衡的一組伺服器組成的計算機叢集，也可以是一種複雜的軟體，通過向其他計算機（如快取、資料庫伺服器、電子商務伺服器等）發起請求來獲取部分或全部的資源。</p>
-<p>Server 不一定是一台機器，但一個機器上可以裝載眾多的伺服器。在 HTTP/1.1 和 Host 頭部中，它們甚至可以共享同一個 IP 位址。</p>
+<p>Server 不一定是一台機器，但一個機器上可以裝載眾多的伺服器。在 HTTP&#x2F;1.1 和 Host 頭部中，它們甚至可以共享同一個 IP 位址。</p>
 <h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>在瀏覽器和伺服器之間，有許多計算機和其他設備轉發了 HTTP 訊息。由於 Web 層次結構的原因，它們大多都出現在傳輸層、網路層和物理層上，對於 HTTP 應用層而言就是透明的，雖然它們可能會對應用層的性能有重要影響。還有一部分是表現在應用層上的，被稱為代理（Proxies）。代理既可以表現得透明，又可以不透明（「改變請求」會通過它們）。代理主要有以下幾種作用：</p>
 <ul>
 <li>快取（可以是公開的，也可以是私有的，像瀏覽器的快取）</li>
@@ -195,13 +201,13 @@
 <li>認證（對不同資源進​​行權限管理）</li>
 <li>日誌記錄（允許存儲歷史訊息）</li>
 </ul>
-<h2 id="HTTP-的基本性質"><a href="#HTTP-的基本性質" class="headerlink" title="HTTP 的基本性質"></a>HTTP 的基本性質</h2><h3 id="HTTP-是簡單的"><a href="#HTTP-是簡單的" class="headerlink" title="HTTP 是簡單的"></a>HTTP 是簡單的</h3><p>雖然下一代 HTTP/2 協議將 HTTP 訊息封裝到了幀（frames）中，HTTP 大體上還是被設計得簡單易讀。HTTP 報文能夠被人讀懂，還允許簡單測試，降低了門檻。</p>
-<h3 id="HTTP-是可擴展的"><a href="#HTTP-是可擴展的" class="headerlink" title="HTTP 是可擴展的"></a>HTTP 是可擴展的</h3><p>在 HTTP/1.0 中出現的 HTTP headers 讓協議擴展變得非常容易。只要服務端和客戶端就新 headers 達成語義一致，新功能就可以被輕鬆加入進來。</p>
+<h2 id="HTTP-的基本性質"><a href="#HTTP-的基本性質" class="headerlink" title="HTTP 的基本性質"></a>HTTP 的基本性質</h2><h3 id="HTTP-是簡單的"><a href="#HTTP-是簡單的" class="headerlink" title="HTTP 是簡單的"></a>HTTP 是簡單的</h3><p>雖然下一代 HTTP&#x2F;2 協議將 HTTP 訊息封裝到了幀（frames）中，HTTP 大體上還是被設計得簡單易讀。HTTP 報文能夠被人讀懂，還允許簡單測試，降低了門檻。</p>
+<h3 id="HTTP-是可擴展的"><a href="#HTTP-是可擴展的" class="headerlink" title="HTTP 是可擴展的"></a>HTTP 是可擴展的</h3><p>在 HTTP&#x2F;1.0 中出現的 HTTP headers 讓協議擴展變得非常容易。只要服務端和客戶端就新 headers 達成語義一致，新功能就可以被輕鬆加入進來。</p>
 <h3 id="HTTP-是無狀態、有會話的"><a href="#HTTP-是無狀態、有會話的" class="headerlink" title="HTTP 是無狀態、有會話的"></a>HTTP 是無狀態、有會話的</h3><p>HTTP 是無狀態的：在同一個連接中，兩個執行成功的請求之間是沒有關係的。這就帶來了一個問題，用戶沒有辦法在同一個網站中進行連續的交互，比如在一個電商網站裡，用戶把某個商品加入到購物車，切換一個頁面後再次添加了商品，這兩次添加商品的請求之間沒有關聯，瀏覽器無法知道用戶最終選擇了哪些商品。而使用 HTTP 的頭部擴展，HTTP Cookies 就可以解決這個問題。把 Cookies 添加到頭部中，創建一個會話讓每次請求都能共享相同的上下文訊息，達成相同的狀態。</p>
 <p>注意，HTTP 本質是無狀態的，但是使用 Cookies 可以創建有狀態的會話。</p>
 <h3 id="HTTP-和連接"><a href="#HTTP-和連接" class="headerlink" title="HTTP 和連接"></a>HTTP 和連接</h3><p>一個連接是由傳輸層來控制的，這從根本上不屬於 HTTP 的範疇。HTTP 並不需要其底層的傳輸層協議是連接導向的，只需要它是可靠的，或不丟失訊息的（至少返回錯誤）。在網際網路中，有兩個最常用的傳輸層協議：TCP 是可靠的，而 UDP 不是。因此，HTTP 依賴於連接導向的 TCP 進行訊息傳遞，但連接並不是必須的。</p>
-<p>在客戶端（通常指瀏覽器）與伺服器能夠交互（客戶端發起請求，伺服器返回響應）之前，必須在這兩者間建立一個 TCP 連接，打開一個 TCP 連接需要多次往返交換訊息（因此耗時）。HTTP/1.0 默認為每一對 HTTP 請求／響應都打開一個單獨的 TCP 連接。當需要連續發起多個請求時，這種模式比多個請求共享同一個 TCP 連接更低效。</p>
-<p>為了減輕這些缺陷，HTTP/1.1 引入了流水線（被證明難以實現）和持久連接的概念：底層的 TCP 連接可以通過 Connection 頭部來被部分控制。HTTP/2 則發展得更遠，通過在一個連接複用訊息的方式來讓這個連接始終保持為「暖連接」。</p>
+<p>在客戶端（通常指瀏覽器）與伺服器能夠交互（客戶端發起請求，伺服器返回響應）之前，必須在這兩者間建立一個 TCP 連接，打開一個 TCP 連接需要多次往返交換訊息（因此耗時）。HTTP&#x2F;1.0 默認為每一對 HTTP 請求／響應都打開一個單獨的 TCP 連接。當需要連續發起多個請求時，這種模式比多個請求共享同一個 TCP 連接更低效。</p>
+<p>為了減輕這些缺陷，HTTP&#x2F;1.1 引入了流水線（被證明難以實現）和持久連接的概念：底層的 TCP 連接可以通過 Connection 頭部來被部分控制。HTTP&#x2F;2 則發展得更遠，通過在一個連接複用訊息的方式來讓這個連接始終保持為「暖連接」。</p>
 <p>設計一種更好的傳輸協議的進程一直在進行，Google 就研發了一種以 UDP 為基礎，能提供更可靠、更高效的傳輸協議 QUIC。</p>
 <h2 id="HTTP-控制項"><a href="#HTTP-控制項" class="headerlink" title="HTTP 控制項"></a>HTTP 控制項</h2><p>多年以來，HTTP 良好的擴展性使得越來越多的 Web 功能歸其控制。快取和認證很早就可以由 HTTP 來控制了。另一方面，對同源同域的限製到 2010 年才有所改變。</p>
 <p>以下是可以被 HTTP 控制的常見特性：</p>
@@ -221,36 +227,36 @@
 <ol>
 <li><p>打開一個 TCP 連接：TCP 連接被用來發送一條或多條請求，以及接受響應訊息。客戶端可能打開一條新的連接，或重用一個已經存在的連接，或者也可能開幾個新的 TCP 連接連向服務端。</p>
 </li>
-<li><p>發送一個 HTTP 報文：HTTP 報文（在 HTTP/2 之前）是語義可讀的。在 HTTP/2 中，這些簡單的訊息被封裝在了幀裡頭，這使得報文不能被直接讀取，但是原理仍是相同的。</p>
+<li><p>發送一個 HTTP 報文：HTTP 報文（在 HTTP&#x2F;2 之前）是語義可讀的。在 HTTP&#x2F;2 中，這些簡單的訊息被封裝在了幀裡頭，這使得報文不能被直接讀取，但是原理仍是相同的。</p>
 </li>
 </ol>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: developer.mozilla.org</span><br><span class="line"><span class="attribute">Accept-Language</span>: fr</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>developer.mozilla.org</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>fr</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>讀取服務端返回的報文訊息：</li>
 </ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span>: Sat, 09 Oct 2010 14:28:02 GMT</span><br><span class="line"><span class="attribute">Server</span>: Apache</span><br><span class="line"><span class="attribute">Last-Modified</span>: Tue, 01 Dec 2009 20:18:22 GMT</span><br><span class="line"><span class="attribute">ETag</span>: "51142bc1-7449-479b075b2891b"</span><br><span class="line"><span class="attribute">Accept-Ranges</span>: bytes</span><br><span class="line"><span class="attribute">Content-Length</span>: 29769</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html... (here comes the 29769 bytes of the requested web page)</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Sat, 09 Oct 2010 14:28:02 GMT</span><br><span class="line"><span class="attribute">Server</span><span class="punctuation">: </span>Apache</span><br><span class="line"><span class="attribute">Last-Modified</span><span class="punctuation">: </span>Tue, 01 Dec 2009 20:18:22 GMT</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>&quot;51142bc1-7449-479b075b2891b&quot;</span><br><span class="line"><span class="attribute">Accept-Ranges</span><span class="punctuation">: </span>bytes</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>29769</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>text/html</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>... (<span class="keyword">here</span> <span class="keyword">comes</span> <span class="keyword">the</span> 29769 <span class="keyword">bytes</span> <span class="keyword">of</span> <span class="keyword">the</span> <span class="keyword">requested</span> <span class="keyword">web</span> <span class="keyword">page</span>)</span></span></span><br></pre></td></tr></table></figure>
 
 <ol start="4">
 <li>關閉連接或者為後續請求重用連接。</li>
 </ol>
-<p>當 HTTP 流水線啟動時，後續請求都可以不用等待第一個請求的成功響應就被發送。然而 HTTP 流水線已被證明很難在現有的網路中實現，因為現有網路中有很多老舊的軟體與現代版本的軟體共存。因此，HTTP 流水線已被在有多請求下表現得更穩健的 HTTP/2 的幀所取代。</p>
-<h2 id="HTTP-報文"><a href="#HTTP-報文" class="headerlink" title="HTTP 報文"></a>HTTP 報文</h2><p>HTTP/1.1 以及更早的 HTTP 協議報文都是語義可讀的。在 HTTP/2 中，這些報文被嵌入到了一個新的二進制結構——幀。幀允許實現很多優化，比如報文頭部的壓縮和復用。即使只有原始 HTTP 報文的一部分以 HTTP/2 發送出來，每條報文的語義依舊不變，客戶端會重組原始 HTTP/1.1 請求。因此用 HTTP/1.1 格式來理解 HTTP/2 報文仍舊有效。</p>
+<p>當 HTTP 流水線啟動時，後續請求都可以不用等待第一個請求的成功響應就被發送。然而 HTTP 流水線已被證明很難在現有的網路中實現，因為現有網路中有很多老舊的軟體與現代版本的軟體共存。因此，HTTP 流水線已被在有多請求下表現得更穩健的 HTTP&#x2F;2 的幀所取代。</p>
+<h2 id="HTTP-報文"><a href="#HTTP-報文" class="headerlink" title="HTTP 報文"></a>HTTP 報文</h2><p>HTTP&#x2F;1.1 以及更早的 HTTP 協議報文都是語義可讀的。在 HTTP&#x2F;2 中，這些報文被嵌入到了一個新的二進制結構——幀。幀允許實現很多優化，比如報文頭部的壓縮和復用。即使只有原始 HTTP 報文的一部分以 HTTP&#x2F;2 發送出來，每條報文的語義依舊不變，客戶端會重組原始 HTTP&#x2F;1.1 請求。因此用 HTTP&#x2F;1.1 格式來理解 HTTP&#x2F;2 報文仍舊有效。</p>
 <p>有兩種 HTTP 報文的類型，分別是請求與響應，每種都有其特定的格式。</p>
 <h3 id="請求"><a href="#請求" class="headerlink" title="請求"></a>請求</h3><p>HTTP 請求的一個例子：</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: developer.mozilla.org</span><br><span class="line"><span class="attribute">Accept-Language</span>: fr</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>developer.mozilla.org</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>fr</span><br></pre></td></tr></table></figure>
 
 <p>請求由以下元素組成：</p>
 <ul>
 <li><p>一個 HTTP 的 method，經常是由一個動詞像 GET、POST、OPTIONS、HEAD 等定義客戶端的動作行為。通常客戶端的操作都是獲取資源（GET 方法）或者發送 HTML 表單值（POST 方法），雖然在一些情況下也會有其他操作。</p>
 </li>
-<li><p>要獲取的資源的路徑，通常是上下文中就很明顯的元素資源的 URL，它沒有 protocol（如 http:// ）、domain（如 developer.mozilla.org），或是 TCP 的埠號（HTTP 一般在 80 端口）。</p>
+<li><p>要獲取的資源的路徑，通常是上下文中就很明顯的元素資源的 URL，它沒有 protocol（如 http:&#x2F;&#x2F; ）、domain（如 developer.mozilla.org），或是 TCP 的埠號（HTTP 一般在 80 端口）。</p>
 </li>
 <li><p>HTTP 協議版本號，為服務端表達其他訊息的可選頭部。對於一些像 POST 這樣的方法，報文的 body 就包含了發送的資源，這與響應報文的 body 類似。</p>
 </li>
 </ul>
 <h3 id="響應"><a href="#響應" class="headerlink" title="響應"></a>響應</h3><p>HTTP 響應的一個例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span>: Sat, 09 Oct 2010 14:28:02 GMT</span><br><span class="line"><span class="attribute">Server</span>: Apache</span><br><span class="line"><span class="attribute">Last-Modified</span>: Tue, 01 Dec 2009 20:18:22 GMT</span><br><span class="line"><span class="attribute">ETag</span>: "51142bc1-7449-479b075b2891b"</span><br><span class="line"><span class="attribute">Accept-Ranges</span>: bytes</span><br><span class="line"><span class="attribute">Content-Length</span>: 29769</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html... (here comes the 29769 bytes of the requested web page)</span><br></pre></td></tr></table></figure>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Sat, 09 Oct 2010 14:28:02 GMT</span><br><span class="line"><span class="attribute">Server</span><span class="punctuation">: </span>Apache</span><br><span class="line"><span class="attribute">Last-Modified</span><span class="punctuation">: </span>Tue, 01 Dec 2009 20:18:22 GMT</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>&quot;51142bc1-7449-479b075b2891b&quot;</span><br><span class="line"><span class="attribute">Accept-Ranges</span><span class="punctuation">: </span>bytes</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>29769</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>text/html</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>... (<span class="keyword">here</span> <span class="keyword">comes</span> <span class="keyword">the</span> 29769 <span class="keyword">bytes</span> <span class="keyword">of</span> <span class="keyword">the</span> <span class="keyword">requested</span> <span class="keyword">web</span> <span class="keyword">page</span>)</span></span></span><br></pre></td></tr></table></figure>
 
 <p>響應報文包含了下面的元素：</p>
 <ul>
@@ -261,7 +267,7 @@
 <li>可選項，比起請求報文，響應報文中更常見的是獲取的資源 body。</li>
 </ul>
 <h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>HTTP 是一種簡單可擴展的協議，其 client-server 的結構以及輕鬆擴展頭部訊息的能力使得 HTTP 可以和 Web 共同發展。</p>
-<p>即使 HTTP/2 為了提高性能將 HTTP 報文嵌入到幀中這一舉措增加了複雜度，但是從 Web 應用的角度來看，報文的基本結構沒有變化，從 HTTP/1.0 發布起就是這樣的結構。會話依舊簡單，通過一個簡單的 HTTP message monitor 就可以查看和糾錯。</p>
+<p>即使 HTTP&#x2F;2 為了提高性能將 HTTP 報文嵌入到幀中這一舉措增加了複雜度，但是從 Web 應用的角度來看，報文的基本結構沒有變化，從 HTTP&#x2F;1.0 發布起就是這樣的結構。會話依舊簡單，通過一個簡單的 HTTP message monitor 就可以查看和糾錯。</p>
 
   </div>
 </article>
@@ -298,21 +304,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概觀"><span class="toc-number">3.</span> <span class="toc-text">概觀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基於-HTTP-的元件系統"><span class="toc-number">4.</span> <span class="toc-text">基於 HTTP 的元件系統</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客戶端"><span class="toc-number">4.1.</span> <span class="toc-text">客戶端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服務端"><span class="toc-number">4.2.</span> <span class="toc-text">服務端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代理"><span class="toc-number">4.3.</span> <span class="toc-text">代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-的基本性質"><span class="toc-number">5.</span> <span class="toc-text">HTTP 的基本性質</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-是簡單的"><span class="toc-number">5.1.</span> <span class="toc-text">HTTP 是簡單的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-是可擴展的"><span class="toc-number">5.2.</span> <span class="toc-text">HTTP 是可擴展的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-是無狀態、有會話的"><span class="toc-number">5.3.</span> <span class="toc-text">HTTP 是無狀態、有會話的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和連接"><span class="toc-number">5.4.</span> <span class="toc-text">HTTP 和連接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-控制項"><span class="toc-number">6.</span> <span class="toc-text">HTTP 控制項</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-流程"><span class="toc-number">7.</span> <span class="toc-text">HTTP 流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-報文"><span class="toc-number">8.</span> <span class="toc-text">HTTP 報文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#請求"><span class="toc-number">8.1.</span> <span class="toc-text">請求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#響應"><span class="toc-number">8.2.</span> <span class="toc-text">響應</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#總結"><span class="toc-number">9.</span> <span class="toc-text">總結</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%80"><span class="toc-number">3.</span> <span class="toc-text">概觀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%96%BC-HTTP-%E7%9A%84%E5%85%83%E4%BB%B6%E7%B3%BB%E7%B5%B1"><span class="toc-number">4.</span> <span class="toc-text">基於 HTTP 的元件系統</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B6%E7%AB%AF"><span class="toc-number">4.1.</span> <span class="toc-text">客戶端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8B%99%E7%AB%AF"><span class="toc-number">4.2.</span> <span class="toc-text">服務端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B3%AA"><span class="toc-number">5.</span> <span class="toc-text">HTTP 的基本性質</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E6%98%AF%E7%B0%A1%E5%96%AE%E7%9A%84"><span class="toc-number">5.1.</span> <span class="toc-text">HTTP 是簡單的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E6%98%AF%E5%8F%AF%E6%93%B4%E5%B1%95%E7%9A%84"><span class="toc-number">5.2.</span> <span class="toc-text">HTTP 是可擴展的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E6%98%AF%E7%84%A1%E7%8B%80%E6%85%8B%E3%80%81%E6%9C%89%E6%9C%83%E8%A9%B1%E7%9A%84"><span class="toc-number">5.3.</span> <span class="toc-text">HTTP 是無狀態、有會話的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E5%92%8C%E9%80%A3%E6%8E%A5"><span class="toc-number">5.4.</span> <span class="toc-text">HTTP 和連接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E6%8E%A7%E5%88%B6%E9%A0%85"><span class="toc-number">6.</span> <span class="toc-text">HTTP 控制項</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">HTTP 流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E5%A0%B1%E6%96%87"><span class="toc-number">8.</span> <span class="toc-text">HTTP 報文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AB%8B%E6%B1%82"><span class="toc-number">8.1.</span> <span class="toc-text">請求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%BF%E6%87%89"><span class="toc-number">8.2.</span> <span class="toc-text">響應</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B8%BD%E7%B5%90"><span class="toc-number">9.</span> <span class="toc-text">總結</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&text=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&is_video=false&description=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（一）：概述&body=Check out this article: https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/認識-HTTP-超文本傳輸協定（一）：概述/&name=認識 HTTP 超文本傳輸協定（一）：概述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&text=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&is_video=false&description=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 HTTP 超文本傳輸協定（一）：概述&body=Check out this article: https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&title=認識 HTTP 超文本傳輸協定（一）：概述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/03/%E8%AA%8D%E8%AD%98-HTTP-%E8%B6%85%E6%96%87%E6%9C%AC%E5%82%B3%E8%BC%B8%E5%8D%94%E5%AE%9A%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%A6%82%E8%BF%B0/&name=認識 HTTP 超文本傳輸協定（一）：概述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -330,7 +336,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -356,13 +362,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識 C 語言 C 語言是一種「通用目的」（General-purpose）程式語言、結構化程式語言，以及程序式程式語言。 C 語言最早的標準是 K&amp;amp;R C，1989 年 ANSI 制定標準 C 語言後，稱為 ANSI-C，1999 年參考 C++ 語法作了少許更新，稱為 C99。 C 語言是由 Dennis Ritchie 在 1972 年於">
-<meta name="keywords" content="程式設計,C">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識 C 語言 C 語言是一種「通用目的」（General-purpose）程式語言、結構化程式語言，以及程序式程式語言。 C 語言最早的標準是 K&amp;R C，1989 年 ANSI 制定標準 C 語言後，稱為 ANSI-C，1999 年參考 C++ 語法作了少許更新，稱為 C99。 C 語言是由 Dennis Ritchie 在 1972 年於">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《學會 C 語言》學習筆記（三）：認識 C 語言">
-<meta property="og:url" content="https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識 C 語言 C 語言是一種「通用目的」（General-purpose）程式語言、結構化程式語言，以及程序式程式語言。 C 語言最早的標準是 K&amp;amp;R C，1989 年 ANSI 制定標準 C 語言後，稱為 ANSI-C，1999 年參考 C++ 語法作了少許更新，稱為 C99。 C 語言是由 Dennis Ritchie 在 1972 年於">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.934Z">
+<meta property="og:description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識 C 語言 C 語言是一種「通用目的」（General-purpose）程式語言、結構化程式語言，以及程序式程式語言。 C 語言最早的標準是 K&amp;R C，1989 年 ANSI 制定標準 C 語言後，稱為 ANSI-C，1999 年參考 C++ 語法作了少許更新，稱為 C99。 C 語言是由 Dennis Ritchie 在 1972 年於">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-07T07:21:30.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.644Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《學會 C 語言》學習筆記（三）：認識 C 語言">
-<meta name="twitter:description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識 C 語言 C 語言是一種「通用目的」（General-purpose）程式語言、結構化程式語言，以及程序式程式語言。 C 語言最早的標準是 K&amp;amp;R C，1989 年 ANSI 制定標準 C 語言後，稱為 ANSI-C，1999 年參考 C++ 語法作了少許更新，稱為 C99。 C 語言是由 Dennis Ritchie 在 1972 年於">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/06/《現代-PHP》學習筆記（十六）：資料庫/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/%E3%80%8A%E7%8F%BE%E4%BB%A3-PHP%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E8%B3%87%E6%96%99%E5%BA%AB/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（十七）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/%E3%80%8CJavaScript-30%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&text=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&is_video=false&description=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（三）：認識 C 語言&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&name=《學會 C 語言》學習筆記（三）：認識 C 語言&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&text=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&is_video=false&description=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（三）：認識 C 語言&body=Check out this article: https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&name=《學會 C 語言》學習筆記（三）：認識 C 語言&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#認識-C-語言"><span class="toc-number">2.</span> <span class="toc-text">認識 C 語言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整合開發環境"><span class="toc-number">3.</span> <span class="toc-text">整合開發環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式設計的步驟"><span class="toc-number">4.</span> <span class="toc-text">程式設計的步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-程式的基本結構"><span class="toc-number">5.</span> <span class="toc-text">C 程式的基本結構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#含括標頭檔"><span class="toc-number">5.1.</span> <span class="toc-text">含括標頭檔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主程式"><span class="toc-number">5.2.</span> <span class="toc-text">主程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#標準函數庫的函數"><span class="toc-number">6.</span> <span class="toc-text">標準函數庫的函數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-語言的寫作風格"><span class="toc-number">7.</span> <span class="toc-text">C 語言的寫作風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#程式敘述"><span class="toc-number">7.1.</span> <span class="toc-text">程式敘述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#結束符號"><span class="toc-number">7.2.</span> <span class="toc-text">結束符號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式區塊"><span class="toc-number">7.3.</span> <span class="toc-text">程式區塊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式註解"><span class="toc-number">7.4.</span> <span class="toc-text">程式註解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#過長程式碼"><span class="toc-number">7.5.</span> <span class="toc-text">過長程式碼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式碼縮排"><span class="toc-number">7.6.</span> <span class="toc-text">程式碼縮排</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">認識 C 語言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E5%90%88%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">整合開發環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E7%9A%84%E6%AD%A5%E9%A9%9F"><span class="toc-number">4.</span> <span class="toc-text">程式設計的步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%A8%8B%E5%BC%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B5%90%E6%A7%8B"><span class="toc-number">5.</span> <span class="toc-text">C 程式的基本結構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AB%E6%8B%AC%E6%A8%99%E9%A0%AD%E6%AA%94"><span class="toc-number">5.1.</span> <span class="toc-text">含括標頭檔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E7%A8%8B%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">主程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%99%E6%BA%96%E5%87%BD%E6%95%B8%E5%BA%AB%E7%9A%84%E5%87%BD%E6%95%B8"><span class="toc-number">6.</span> <span class="toc-text">標準函數庫的函數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E8%AA%9E%E8%A8%80%E7%9A%84%E5%AF%AB%E4%BD%9C%E9%A2%A8%E6%A0%BC"><span class="toc-number">7.</span> <span class="toc-text">C 語言的寫作風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E6%95%98%E8%BF%B0"><span class="toc-number">7.1.</span> <span class="toc-text">程式敘述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%90%E6%9D%9F%E7%AC%A6%E8%99%9F"><span class="toc-number">7.2.</span> <span class="toc-text">結束符號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E5%8D%80%E5%A1%8A"><span class="toc-number">7.3.</span> <span class="toc-text">程式區塊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E8%A8%BB%E8%A7%A3"><span class="toc-number">7.4.</span> <span class="toc-text">程式註解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%8E%E9%95%B7%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.5.</span> <span class="toc-text">過長程式碼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%B8%AE%E6%8E%92"><span class="toc-number">7.6.</span> <span class="toc-text">程式碼縮排</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +164,7 @@
             
         
             
-                <a href="/categories/程式設計/C/《學會-C-語言》學習筆記/">《學會 C 語言》學習筆記</a>
+                <a href="/categories/Programming/C/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8BStudy-Notes/">《學會 C 語言》Study Notes</a>
             
         
     </div>
@@ -167,7 +173,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/C/">C</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/C/" rel="tag">C</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -201,17 +207,17 @@
 <li>驗證（Verification）：確保程式執行的結果符合預期的結果，包括：證明、測試和除錯。</li>
 </ol>
 <h2 id="C-程式的基本結構"><a href="#C-程式的基本結構" class="headerlink" title="C 程式的基本結構"></a>C 程式的基本結構</h2><p>C 程式的基本結構如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">含括標頭檔</span><br><span class="line"></span><br><span class="line">全域變數宣告</span><br><span class="line"></span><br><span class="line">函數的原型宣告</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    程式敘述 <span class="number">1</span> ~ N;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">傳回型態 函數名稱 <span class="number">1</span>(參數列) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">傳回型態 函數名稱 N(參數列) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">含括標頭檔</span><br><span class="line"></span><br><span class="line">全域變數宣告</span><br><span class="line"></span><br><span class="line">函數的原型宣告</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    程式敘述 <span class="number">1</span> ~ N;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">傳回型態 函數名稱 <span class="number">1</span>(參數列) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">傳回型態 函數名稱 N(參數列) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>main()</code> 函數是必備的元素。</li>
 </ul>
 <h3 id="含括標頭檔"><a href="#含括標頭檔" class="headerlink" title="含括標頭檔"></a>含括標頭檔</h3><p>C 語言本身只提供簡單的語法，其功能主要是由 C 語言標準函數庫提供，標頭檔是函數庫的函數原型宣告。</p>
 <p>如果在 C 程式有使用到函數庫的函數，就需要含括指定標頭檔，其副檔名為「<code>.h</code>」。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br></pre></td></tr></table></figure>
 
 <h3 id="主程式"><a href="#主程式" class="headerlink" title="主程式"></a>主程式</h3><p>主程式 <code>main()</code> 函數是 C 程式的主程式，即 C 程式執行時的進入點。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第一個 C 程式\n"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;第一個 C 程式\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>傳回的資料型態是 <code>int</code>。</li>
@@ -219,17 +225,17 @@
 </ul>
 <h2 id="標準函數庫的函數"><a href="#標準函數庫的函數" class="headerlink" title="標準函數庫的函數"></a>標準函數庫的函數</h2><p>C 語言的標準函數庫是 C 語言編譯器的內建模組，例如：數學函數、字串處理、輸出／輸入以及檔案處理等。</p>
 <p>在 C 程式可以直接使用標準函數庫的函數來完成所需工作，像是使用 <code>printf()</code> 函數，將文字內容輸出到螢幕上顯示。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"第一個 C 程式\n"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;第一個 C 程式\n&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <h2 id="C-語言的寫作風格"><a href="#C-語言的寫作風格" class="headerlink" title="C 語言的寫作風格"></a>C 語言的寫作風格</h2><p>C 語言的寫作風格是撰寫 C 語言程式碼的規則。</p>
 <h3 id="程式敘述"><a href="#程式敘述" class="headerlink" title="程式敘述"></a>程式敘述</h3><p>C 程式是由程式敘述（Statements）組成，一行程式敘述包含多個運算式、運算子或關鍵字。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line">a = b * c;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"第一個 C 程式\n"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> b = <span class="number">10</span>;</span><br><span class="line">a = b * c;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;第一個 C 程式\n&quot;</span>);</span><br></pre></td></tr></table></figure>
 
 <h3 id="結束符號"><a href="#結束符號" class="headerlink" title="結束符號"></a>結束符號</h3><p>C 語言的「<code>;</code>」符號表示程式敘述的結束，每一個程式敘述後一定有「<code>;</code>」符號。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> b = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> b = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="程式區塊"><a href="#程式區塊" class="headerlink" title="程式區塊"></a>程式區塊</h3><p>程式區塊（Blocks）是由多個程式敘述組成，使用大括號「<code>{</code>」和「<code>}</code>」包圍。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"第一個 C 程式\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="程式區塊"><a href="#程式區塊" class="headerlink" title="程式區塊"></a>程式區塊</h3><p>程式區塊（Blocks）是由多個程式敘述組成，使用大括號「<code>&#123;</code>」和「<code>&#125;</code>」包圍。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;第一個 C 程式\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="程式註解"><a href="#程式註解" class="headerlink" title="程式註解"></a>程式註解</h3><p>程式註解（Comments）是程式中十分重要的部分，可以提供程式內容的進一步說明，並在維護上提供更多資訊。</p>
 <p>程式註解使用「<code>/*</code>」和「<code>*/</code>」包圍起來。</p>
@@ -248,7 +254,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sum = grades[<span class="number">0</span>] + grades[<span class="number">1</span>] + \</span><br><span class="line">      grades[<span class="number">2</span>] + grades[<span class="number">3</span>] + \</span><br><span class="line">      grades[<span class="number">4</span>];</span><br></pre></td></tr></table></figure>
 
 <h3 id="程式碼縮排"><a href="#程式碼縮排" class="headerlink" title="程式碼縮排"></a>程式碼縮排</h3><p>加上適當的縮排，可以讓程式碼閱讀起來更容易，並且反應出程式碼的邏輯和迴圈架構。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, i);</span><br><span class="line">    total = total + i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, i);</span><br><span class="line">    total = total + i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li>陳會安（2016）。學會 C 語言。台北市：旗標。</li>
@@ -289,21 +295,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#認識-C-語言"><span class="toc-number">2.</span> <span class="toc-text">認識 C 語言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整合開發環境"><span class="toc-number">3.</span> <span class="toc-text">整合開發環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式設計的步驟"><span class="toc-number">4.</span> <span class="toc-text">程式設計的步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-程式的基本結構"><span class="toc-number">5.</span> <span class="toc-text">C 程式的基本結構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#含括標頭檔"><span class="toc-number">5.1.</span> <span class="toc-text">含括標頭檔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主程式"><span class="toc-number">5.2.</span> <span class="toc-text">主程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#標準函數庫的函數"><span class="toc-number">6.</span> <span class="toc-text">標準函數庫的函數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-語言的寫作風格"><span class="toc-number">7.</span> <span class="toc-text">C 語言的寫作風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#程式敘述"><span class="toc-number">7.1.</span> <span class="toc-text">程式敘述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#結束符號"><span class="toc-number">7.2.</span> <span class="toc-text">結束符號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式區塊"><span class="toc-number">7.3.</span> <span class="toc-text">程式區塊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式註解"><span class="toc-number">7.4.</span> <span class="toc-text">程式註解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#過長程式碼"><span class="toc-number">7.5.</span> <span class="toc-text">過長程式碼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程式碼縮排"><span class="toc-number">7.6.</span> <span class="toc-text">程式碼縮排</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">認識 C 語言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E5%90%88%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">整合開發環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E7%9A%84%E6%AD%A5%E9%A9%9F"><span class="toc-number">4.</span> <span class="toc-text">程式設計的步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%A8%8B%E5%BC%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B5%90%E6%A7%8B"><span class="toc-number">5.</span> <span class="toc-text">C 程式的基本結構</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AB%E6%8B%AC%E6%A8%99%E9%A0%AD%E6%AA%94"><span class="toc-number">5.1.</span> <span class="toc-text">含括標頭檔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E7%A8%8B%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">主程式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%99%E6%BA%96%E5%87%BD%E6%95%B8%E5%BA%AB%E7%9A%84%E5%87%BD%E6%95%B8"><span class="toc-number">6.</span> <span class="toc-text">標準函數庫的函數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E8%AA%9E%E8%A8%80%E7%9A%84%E5%AF%AB%E4%BD%9C%E9%A2%A8%E6%A0%BC"><span class="toc-number">7.</span> <span class="toc-text">C 語言的寫作風格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E6%95%98%E8%BF%B0"><span class="toc-number">7.1.</span> <span class="toc-text">程式敘述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%90%E6%9D%9F%E7%AC%A6%E8%99%9F"><span class="toc-number">7.2.</span> <span class="toc-text">結束符號</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E5%8D%80%E5%A1%8A"><span class="toc-number">7.3.</span> <span class="toc-text">程式區塊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E8%A8%BB%E8%A7%A3"><span class="toc-number">7.4.</span> <span class="toc-text">程式註解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%8E%E9%95%B7%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.5.</span> <span class="toc-text">過長程式碼</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%B8%AE%E6%8E%92"><span class="toc-number">7.6.</span> <span class="toc-text">程式碼縮排</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&text=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&is_video=false&description=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（三）：認識 C 語言&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（三）：認識-C-語言/&name=《學會 C 語言》學習筆記（三）：認識 C 語言&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&text=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&is_video=false&description=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（三）：認識 C 語言&body=Check out this article: https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&title=《學會 C 語言》學習筆記（三）：認識 C 語言"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-C-%E8%AA%9E%E8%A8%80/&name=《學會 C 語言》學習筆記（三）：認識 C 語言&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -321,7 +327,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -347,13 +353,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

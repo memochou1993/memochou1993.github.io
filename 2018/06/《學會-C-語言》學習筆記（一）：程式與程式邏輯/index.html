@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識程式 程式（Programs）或稱為電腦程式（Computer Programs）可以描述電腦如何完成指定工作。 程式是使用指定程式語言（Program Language）所撰寫的特殊符號，再進一步編寫成程式碼，程式碼可以告訴電腦解決指定問題的步驟。 電腦程式的內容主要分為兩大部分：資料（Data）與處理資料的操作（Operations）。 為了讓">
-<meta name="keywords" content="程式設計,C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《學會 C 語言》學習筆記（一）：程式與程式邏輯">
-<meta property="og:url" content="https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識程式 程式（Programs）或稱為電腦程式（Computer Programs）可以描述電腦如何完成指定工作。 程式是使用指定程式語言（Program Language）所撰寫的特殊符號，再進一步編寫成程式碼，程式碼可以告訴電腦解決指定問題的步驟。 電腦程式的內容主要分為兩大部分：資料（Data）與處理資料的操作（Operations）。 為了讓">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-06T15:34:46.335Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-05T14:17:36.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.643Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《學會 C 語言》學習筆記（一）：程式與程式邏輯">
-<meta name="twitter:description" content="前言本文為《學會 C 語言》一書的學習筆記。 認識程式 程式（Programs）或稱為電腦程式（Computer Programs）可以描述電腦如何完成指定工作。 程式是使用指定程式語言（Program Language）所撰寫的特殊符號，再進一步編寫成程式碼，程式碼可以告訴電腦解決指定問題的步驟。 電腦程式的內容主要分為兩大部分：資料（Data）與處理資料的操作（Operations）。 為了讓">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/06/《現代-PHP》學習筆記（十四）：密碼/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/%E3%80%8A%E7%8F%BE%E4%BB%A3-PHP%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%AF%86%E7%A2%BC/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（十六）/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/%E3%80%8CJavaScript-30%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&text=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&is_video=false&description=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（一）：程式與程式邏輯&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&name=《學會 C 語言》學習筆記（一）：程式與程式邏輯&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&text=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&is_video=false&description=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（一）：程式與程式邏輯&body=Check out this article: https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&name=《學會 C 語言》學習筆記（一）：程式與程式邏輯&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#認識程式"><span class="toc-number">2.</span> <span class="toc-text">認識程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式是如何執行"><span class="toc-number">3.</span> <span class="toc-text">程式是如何執行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式邏輯的基礎"><span class="toc-number">4.</span> <span class="toc-text">程式邏輯的基礎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中央處理器"><span class="toc-number">5.</span> <span class="toc-text">中央處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#記憶體"><span class="toc-number">6.</span> <span class="toc-text">記憶體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入／輸出裝置"><span class="toc-number">7.</span> <span class="toc-text">輸入／輸出裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#次儲存裝置"><span class="toc-number">8.</span> <span class="toc-text">次儲存裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">認識程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E6%98%AF%E5%A6%82%E4%BD%95%E5%9F%B7%E8%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">程式是如何執行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF%E7%9A%84%E5%9F%BA%E7%A4%8E"><span class="toc-number">4.</span> <span class="toc-text">程式邏輯的基礎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E5%A4%AE%E8%99%95%E7%90%86%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">中央處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%98%E6%86%B6%E9%AB%94"><span class="toc-number">6.</span> <span class="toc-text">記憶體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BC%B8%E5%85%A5%EF%BC%8F%E8%BC%B8%E5%87%BA%E8%A3%9D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">輸入／輸出裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A1%E5%84%B2%E5%AD%98%E8%A3%9D%E7%BD%AE"><span class="toc-number">8.</span> <span class="toc-text">次儲存裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +164,7 @@
             
         
             
-                <a href="/categories/程式設計/C/《學會-C-語言》學習筆記/">《學會 C 語言》學習筆記</a>
+                <a href="/categories/Programming/C/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8BStudy-Notes/">《學會 C 語言》Study Notes</a>
             
         
     </div>
@@ -167,7 +173,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/C/">C</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/C/" rel="tag">C</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -236,7 +242,7 @@
 <p>每一個 <code>0</code> 或 <code>1</code> 是一個「位元」（<code>Bit</code>），八個位元稱為「位元組」（<code>Byte</code>）。</p>
 </blockquote>
 <p>每次 CPU 從記憶體讀取的資料量，視 CPU 與記憶體間的匯流排而定，所謂 32 位元或 64 位元的 CPU，就是指每次可以讀取 4 個位元組或 8 個位元組資料來進行運算。CPU 每次可讀取的資料越多，效率也就越高。</p>
-<h2 id="輸入／輸出裝置"><a href="#輸入／輸出裝置" class="headerlink" title="輸入／輸出裝置"></a>輸入／輸出裝置</h2><p>電腦的輸入／輸出裝置（Input/Output Devices）是程式的窗口，讓使用者輸入資料和顯示程式的執行結果。</p>
+<h2 id="輸入／輸出裝置"><a href="#輸入／輸出裝置" class="headerlink" title="輸入／輸出裝置"></a>輸入／輸出裝置</h2><p>電腦的輸入／輸出裝置（Input&#x2F;Output Devices）是程式的窗口，讓使用者輸入資料和顯示程式的執行結果。</p>
 <p>對於電腦來說，當鍵盤被按下大寫字母 <code>A</code> 時，傳入的是一個位元組的數字（<code>01000001</code>）。個人電腦主要是使用 <code>ASCII</code>（American Standard Code for Information Interchange）碼作為電腦編碼系統。</p>
 <p>中文字比較多，需要使用兩個位元組的數值來代表常用的中文字，繁體中文的內碼是 <code>Big5</code>，簡體中文有 <code>GB</code> 和 <code>HZ</code>。</p>
 <p>目前 Windows 作業系統支援「統一字碼」（Unicode），是由 Unicode Consortium 組織所制定的一個包括全世界文字的內碼集，即 <code>ISO 10646</code> 內碼集。常用的兩種編碼方式有：<code>UTF-8</code> 為 <code>8</code> 位元編碼；<code>UTF-16</code> 為 <code>16</code> 位元編碼。</p>
@@ -281,21 +287,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#認識程式"><span class="toc-number">2.</span> <span class="toc-text">認識程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式是如何執行"><span class="toc-number">3.</span> <span class="toc-text">程式是如何執行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式邏輯的基礎"><span class="toc-number">4.</span> <span class="toc-text">程式邏輯的基礎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中央處理器"><span class="toc-number">5.</span> <span class="toc-text">中央處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#記憶體"><span class="toc-number">6.</span> <span class="toc-text">記憶體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#輸入／輸出裝置"><span class="toc-number">7.</span> <span class="toc-text">輸入／輸出裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#次儲存裝置"><span class="toc-number">8.</span> <span class="toc-text">次儲存裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">認識程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E6%98%AF%E5%A6%82%E4%BD%95%E5%9F%B7%E8%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">程式是如何執行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF%E7%9A%84%E5%9F%BA%E7%A4%8E"><span class="toc-number">4.</span> <span class="toc-text">程式邏輯的基礎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E5%A4%AE%E8%99%95%E7%90%86%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">中央處理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%98%E6%86%B6%E9%AB%94"><span class="toc-number">6.</span> <span class="toc-text">記憶體</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BC%B8%E5%85%A5%EF%BC%8F%E8%BC%B8%E5%87%BA%E8%A3%9D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">輸入／輸出裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A1%E5%84%B2%E5%AD%98%E8%A3%9D%E7%BD%AE"><span class="toc-number">8.</span> <span class="toc-text">次儲存裝置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&text=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&is_video=false&description=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（一）：程式與程式邏輯&body=Check out this article: https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/《學會-C-語言》學習筆記（一）：程式與程式邏輯/&name=《學會 C 語言》學習筆記（一）：程式與程式邏輯&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&text=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&is_video=false&description=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《學會 C 語言》學習筆記（一）：程式與程式邏輯&body=Check out this article: https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&title=《學會 C 語言》學習筆記（一）：程式與程式邏輯"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/%E3%80%8A%E5%AD%B8%E6%9C%83-C-%E8%AA%9E%E8%A8%80%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BC%8F%E8%88%87%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF/&name=《學會 C 語言》學習筆記（一）：程式與程式邏輯&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -313,7 +319,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -339,13 +345,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

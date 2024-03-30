@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 做法使用 Proxyman 新增一條 Proxy 規則：  Matching Rule: https://api.testnet.solana.com Map To Host: https://rpc-mainnet-fork.epochs.studio  下載 solana-labs/governance-ui 專案。 12git c">
-<meta name="keywords" content="JavaScript,區塊鏈,Smart Contract,Solana,Rust,NFT,DAO">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 做法使用 Proxyman 新增一條 Proxy 規則：  Matching Rule: https:&#x2F;&#x2F;api.testnet.solana.com Map To Host: https:&#x2F;&#x2F;rpc-mainnet-fork.epochs.studio  下載 solana-labs&#x2F;governance-ui 專案。 12git c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Solana Governance UI 建立 DAO 介面">
-<meta property="og:url" content="https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 做法使用 Proxyman 新增一條 Proxy 規則：  Matching Rule: https://api.testnet.solana.com Map To Host: https://rpc-mainnet-fork.epochs.studio  下載 solana-labs/governance-ui 專案。 12git c">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.989Z">
+<meta property="og:description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 做法使用 Proxyman 新增一條 Proxy 規則：  Matching Rule: https:&#x2F;&#x2F;api.testnet.solana.com Map To Host: https:&#x2F;&#x2F;rpc-mainnet-fork.epochs.studio  下載 solana-labs&#x2F;governance-ui 專案。 12git c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-28T12:05:15.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.725Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Solana">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Smart Contract">
+<meta property="article:tag" content="NFT">
+<meta property="article:tag" content="DAO">
+<meta property="article:tag" content="Blockchain">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Solana Governance UI 建立 DAO 介面">
-<meta name="twitter:description" content="前言本文為「Solana 開發者的入門指南」影片的學習筆記。 做法使用 Proxyman 新增一條 Proxy 規則：  Matching Rule: https://api.testnet.solana.com Map To Host: https://rpc-mainnet-fork.epochs.studio  下載 solana-labs/governance-ui 專案。 12git c">
     
     
         
@@ -44,14 +50,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +99,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/04/使用-Metaplex-標準在-Solana-區塊鏈上建立-NFT-非同質化代幣/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/04/%E4%BD%BF%E7%94%A8-Metaplex-%E6%A8%99%E6%BA%96%E5%9C%A8-Solana-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%B8%8A%E5%BB%BA%E7%AB%8B-NFT-%E9%9D%9E%E5%90%8C%E8%B3%AA%E5%8C%96%E4%BB%A3%E5%B9%A3/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/04/在-React-專案使用-Styled-Components-樣式化元件/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +115,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&text=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&is_video=false&description=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Solana Governance UI 建立 DAO 介面&body=Check out this article: https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&name=使用 Solana Governance UI 建立 DAO 介面&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&text=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&is_video=false&description=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solana Governance UI 建立 DAO 介面&body=Check out this article: https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&name=使用 Solana Governance UI 建立 DAO 介面&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +167,7 @@
             
         
             
-                <a href="/categories/區塊鏈/Solana/">Solana</a>
+                <a href="/categories/Blockchain/Solana/">Solana</a>
             
         
     </div>
@@ -165,7 +176,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/DAO/">DAO</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/NFT/">NFT</a>, <a class="tag-link" href="/tags/Rust/">Rust</a>, <a class="tag-link" href="/tags/Smart-Contract/">Smart Contract</a>, <a class="tag-link" href="/tags/Solana/">Solana</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+        <a class="tag-link-link" href="/tags/Blockchain/" rel="tag">Blockchain</a>, <a class="tag-link-link" href="/tags/DAO/" rel="tag">DAO</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/NFT/" rel="tag">NFT</a>, <a class="tag-link-link" href="/tags/Rust/" rel="tag">Rust</a>, <a class="tag-link-link" href="/tags/Smart-Contract/" rel="tag">Smart Contract</a>, <a class="tag-link-link" href="/tags/Solana/" rel="tag">Solana</a>
     </div>
 
 
@@ -177,8 +188,8 @@
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「Solana 開發者的入門指南」影片的學習筆記。</p>
 <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>使用 Proxyman 新增一條 Proxy 規則：</p>
 <ul>
-<li>Matching Rule: <a href="https://api.testnet.solana.com" target="_blank" rel="noopener">https://api.testnet.solana.com</a></li>
-<li>Map To Host: <a href="https://rpc-mainnet-fork.epochs.studio" target="_blank" rel="noopener">https://rpc-mainnet-fork.epochs.studio</a></li>
+<li>Matching Rule: <a target="_blank" rel="noopener" href="https://api.testnet.solana.com/">https://api.testnet.solana.com</a></li>
+<li>Map To Host: <a target="_blank" rel="noopener" href="https://rpc-mainnet-fork.epochs.studio/">https://rpc-mainnet-fork.epochs.studio</a></li>
 </ul>
 <p>下載 <code>solana-labs/governance-ui</code> 專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:solana-labs/governance-ui.git</span><br><span class="line"><span class="built_in">cd</span> governance-ui</span><br></pre></td></tr></table></figure>
@@ -187,13 +198,13 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn</span><br></pre></td></tr></table></figure>
 
 <p>更新 <code>utils/connection.ts</code> 檔。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; Commitment, Connection &#125; <span class="keyword">from</span> <span class="string">'@solana/web3.js'</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ENDPOINTS: EndpointInfo[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">'mainnet'</span>,</span><br><span class="line">    url: process.env.MAINNET_RPC || <span class="string">'https://rpc-mainnet-fork.epochs.studio/'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getConnectionContext</span>(<span class="params">cluster: string</span>): <span class="title">ConnectionContext</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ENDPOINT = ENDPOINTS.find(<span class="function">(<span class="params">e</span>) =&gt;</span> e.name === cluster) || ENDPOINTS[<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">const</span> commitment: Commitment = <span class="string">'processed'</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    cluster: ENDPOINT!.name <span class="keyword">as</span> EndpointTypes,</span><br><span class="line">    current: <span class="keyword">new</span> Connection(<span class="string">'https://rpc-mainnet-fork.epochs.studio'</span>, &#123;</span><br><span class="line">      commitment,</span><br><span class="line">      wsEndpoint: <span class="string">'wss://rpc-mainnet-fork.epochs.studio/ws'</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">    endpoint: ENDPOINT!.url,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Commitment</span>, <span class="title class_">Connection</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@solana/web3.js&#x27;</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">ENDPOINTS</span>: <span class="title class_">EndpointInfo</span>[] = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;mainnet&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: process.<span class="property">env</span>.<span class="property">MAINNET_RPC</span> || <span class="string">&#x27;https://rpc-mainnet-fork.epochs.studio/&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getConnectionContext</span>(<span class="params">cluster: string</span>): <span class="title class_">ConnectionContext</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="variable constant_">ENDPOINT</span> = <span class="variable constant_">ENDPOINTS</span>.<span class="title function_">find</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> e.<span class="property">name</span> === cluster) || <span class="variable constant_">ENDPOINTS</span>[<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">commitment</span>: <span class="title class_">Commitment</span> = <span class="string">&#x27;processed&#x27;</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">cluster</span>: <span class="variable constant_">ENDPOINT</span>!.<span class="property">name</span> <span class="keyword">as</span> <span class="title class_">EndpointTypes</span>,</span><br><span class="line">    <span class="attr">current</span>: <span class="keyword">new</span> <span class="title class_">Connection</span>(<span class="string">&#x27;https://rpc-mainnet-fork.epochs.studio&#x27;</span>, &#123;</span><br><span class="line">      commitment,</span><br><span class="line">      <span class="attr">wsEndpoint</span>: <span class="string">&#x27;wss://rpc-mainnet-fork.epochs.studio/ws&#x27;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="attr">endpoint</span>: <span class="variable constant_">ENDPOINT</span>!.<span class="property">url</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>啟動服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn dev</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://book.solmeet.dev/notes/complete-guide-to-create-nft-dao" target="_blank" rel="noopener">A Complete Guide to Create a NFT DAO on Solana</a></li>
+<li><a target="_blank" rel="noopener" href="https://book.solmeet.dev/notes/complete-guide-to-create-nft-dao">A Complete Guide to Create a NFT DAO on Solana</a></li>
 </ul>
 
   </div>
@@ -231,21 +242,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&text=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&is_video=false&description=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Solana Governance UI 建立 DAO 介面&body=Check out this article: https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/&name=使用 Solana Governance UI 建立 DAO 介面&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&text=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&is_video=false&description=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solana Governance UI 建立 DAO 介面&body=Check out this article: https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&title=使用 Solana Governance UI 建立 DAO 介面"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/&name=使用 Solana Governance UI 建立 DAO 介面&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -263,7 +274,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -289,13 +300,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言本文為〈Python 類別與例外〉一文的學習筆記。 特殊函式Python 會讓運算子與特殊函式自動對應，例如判斷兩物件是否相等的運算子「==」會自動與類別內特殊函式「__eq__」對應。 123456789101112131415161718192021&amp;gt;&amp;gt;&amp;gt; class Animal(object):        def __init__(self, name):">
-<meta name="keywords" content="程式設計,Python,物件導向">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文為〈Python 類別與例外〉一文的學習筆記。 特殊函式Python 會讓運算子與特殊函式自動對應，例如判斷兩物件是否相等的運算子「&#x3D;&#x3D;」會自動與類別內特殊函式「__eq__」對應。 123456789101112131415161718192021&gt;&gt;&gt; class Animal(object):        def __init__(self, name):">
 <meta property="og:type" content="article">
 <meta property="og:title" content="認識 Python 物件導向（二）">
-<meta property="og:url" content="https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為〈Python 類別與例外〉一文的學習筆記。 特殊函式Python 會讓運算子與特殊函式自動對應，例如判斷兩物件是否相等的運算子「==」會自動與類別內特殊函式「__eq__」對應。 123456789101112131415161718192021&amp;gt;&amp;gt;&amp;gt; class Animal(object):        def __init__(self, name):">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.938Z">
+<meta property="og:description" content="前言本文為〈Python 類別與例外〉一文的學習筆記。 特殊函式Python 會讓運算子與特殊函式自動對應，例如判斷兩物件是否相等的運算子「&#x3D;&#x3D;」會自動與類別內特殊函式「__eq__」對應。 123456789101112131415161718192021&gt;&gt;&gt; class Animal(object):        def __init__(self, name):">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-06-27T01:55:04.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.649Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="OOP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="認識 Python 物件導向（二）">
-<meta name="twitter:description" content="前言本文為〈Python 類別與例外〉一文的學習筆記。 特殊函式Python 會讓運算子與特殊函式自動對應，例如判斷兩物件是否相等的運算子「==」會自動與類別內特殊函式「__eq__」對應。 123456789101112131415161718192021&amp;gt;&amp;gt;&amp;gt; class Animal(object):        def __init__(self, name):">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/06/「JavaScript-30」學習筆記（廿八）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/%E3%80%8CJavaScript-30%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%BB%BF%E5%85%AB%EF%BC%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2018/06/使用-Python-學習資料結構（一）：字串/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/06/%E4%BD%BF%E7%94%A8-Python-%E5%AD%B8%E7%BF%92%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%AD%97%E4%B8%B2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&text=認識 Python 物件導向（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&is_video=false&description=認識 Python 物件導向（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 Python 物件導向（二）&body=Check out this article: https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&name=認識 Python 物件導向（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&text=認識 Python 物件導向（二）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&is_video=false&description=認識 Python 物件導向（二）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 Python 物件導向（二）&body=Check out this article: https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&name=認識 Python 物件導向（二）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特殊函式"><span class="toc-number">2.</span> <span class="toc-text">特殊函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#類別方法"><span class="toc-number">3.</span> <span class="toc-text">類別方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#靜態方法"><span class="toc-number">4.</span> <span class="toc-text">靜態方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例外"><span class="toc-number">5.</span> <span class="toc-text">例外</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%87%BD%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">特殊函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%9E%E5%88%A5%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">類別方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">靜態方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E5%A4%96"><span class="toc-number">5.</span> <span class="toc-text">例外</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/Python/物件導向/">物件導向</a>
+                <a href="/categories/Programming/Python/OOP/">OOP</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Python/">Python</a>, <a class="tag-link" href="/tags/物件導向/">物件導向</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/OOP/" rel="tag">OOP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
     </div>
 
 
@@ -176,9 +183,9 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a href="https://sites.google.com/site/zsgititit/home/python-cheng-shi-she-ji/python-lei-bie" target="_blank" rel="noopener">Python 類別與例外</a>〉一文的學習筆記。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為〈<a target="_blank" rel="noopener" href="https://sites.google.com/site/zsgititit/home/python-cheng-shi-she-ji/python-lei-bie">Python 類別與例外</a>〉一文的學習筆記。</p>
 <h2 id="特殊函式"><a href="#特殊函式" class="headerlink" title="特殊函式"></a>特殊函式</h2><p>Python 會讓運算子與特殊函式自動對應，例如判斷兩物件是否相等的運算子「<code>==</code>」會自動與類別內特殊函式「<code>__eq__</code>」對應。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(object)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">            self.__name = name</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">sound</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">show_name</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> self.__name</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__eq__</span><span class="params">(self, other)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> self.__name == other.show_name()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">Dog</span><span class="params">(Animal)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></span><br><span class="line">            super().__init__(<span class="string">'小狗'</span> + name)</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">sound</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">'汪汪叫'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d1 = Dog(<span class="string">'小黑'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d2 = Dog(<span class="string">'小黑'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(d1 == d2)</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d3 = Dog(<span class="string">'小白'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(d1 == d3)</span><br><span class="line"><span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">Animal</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">            self.__name = name</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">sound</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">show_name</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">return</span> self.__name</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">            <span class="keyword">return</span> self.__name == other.show_name()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">Dog</span>(<span class="title class_ inherited__">Animal</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">            <span class="built_in">super</span>().__init__(<span class="string">&#x27;小狗&#x27;</span> + name)</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">sound</span>(<span class="params">self</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;汪汪叫&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d1 = Dog(<span class="string">&#x27;小黑&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d2 = Dog(<span class="string">&#x27;小黑&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(d1 == d2)</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d3 = Dog(<span class="string">&#x27;小白&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(d1 == d3)</span><br><span class="line"><span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
 <p>其他特殊函式與運算子的對應如下：</p>
 <table>
@@ -190,11 +197,11 @@
 </thead>
 <tbody><tr>
 <td><code>__eq__</code>(self, other)</td>
-<td>self == other</td>
+<td>self &#x3D;&#x3D; other</td>
 </tr>
 <tr>
 <td><code>__ne__</code>(self, other)</td>
-<td>self != other</td>
+<td>self !&#x3D; other</td>
 </tr>
 <tr>
 <td><code>__gt__</code>(self, other)</td>
@@ -202,7 +209,7 @@
 </tr>
 <tr>
 <td><code>__ge__</code>(self, other)</td>
-<td>self &gt;= other</td>
+<td>self &gt;&#x3D; other</td>
 </tr>
 <tr>
 <td><code>__lt__</code>(self, other)</td>
@@ -210,7 +217,7 @@
 </tr>
 <tr>
 <td><code>__le__</code>(self, other)</td>
-<td>self &lt;= other</td>
+<td>self &lt;&#x3D; other</td>
 </tr>
 <tr>
 <td><code>__add__</code>(self, other)</td>
@@ -226,24 +233,23 @@
 </tr>
 <tr>
 <td><code>__truediv__</code>(self, other)</td>
-<td>self / other</td>
+<td>self &#x2F; other</td>
 </tr>
 </tbody></table>
 <h2 id="類別方法"><a href="#類別方法" class="headerlink" title="類別方法"></a>類別方法</h2><p>類別方法（Class method）作用對象為類別，會影響整個類別，也會影響類別所產生的物件。類別方法的第一個參數通常取名為 <code>cls</code>，需在類別中函式的前一行使用裝飾器「<code>@classmethod</code>」。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(object)</span>:</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">            Animal.count += <span class="number">1</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">kill</span><span class="params">(self)</span>:</span></span><br><span class="line">            Animal.count -= <span class="number">1</span></span><br><span class="line"><span class="meta">        @classmethod</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">show_count</span><span class="params">(cls)</span>:</span></span><br><span class="line">            print(<span class="string">'現在有'</span>, cls.count, <span class="string">'隻動物'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = Animal() <span class="comment"># count + 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">1</span> 隻動物</span><br><span class="line">    b = Animal() <span class="comment"># count + 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">2</span> 隻動物</span><br><span class="line">    c = Animal() <span class="comment"># count + 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">3</span> 隻動物</span><br><span class="line">    a.kill() <span class="comment"># count - 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">2</span> 隻動物</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">Animal</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">            Animal.count += <span class="number">1</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">kill</span>(<span class="params">self</span>):</span><br><span class="line">            Animal.count -= <span class="number">1</span></span><br><span class="line"><span class="meta">        @classmethod</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">show_count</span>(<span class="params">cls</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;現在有&#x27;</span>, cls.count, <span class="string">&#x27;隻動物&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = Animal() <span class="comment"># count + 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">1</span> 隻動物</span><br><span class="line">    b = Animal() <span class="comment"># count + 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">2</span> 隻動物</span><br><span class="line">    c = Animal() <span class="comment"># count + 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">3</span> 隻動物</span><br><span class="line">    a.kill() <span class="comment"># count - 1</span></span><br><span class="line">    Animal.show_count() <span class="comment"># 直接調用方法</span></span><br><span class="line">現在有 <span class="number">2</span> 隻動物</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>@classmethod</code> 裝飾器，使得調用方法不需要先實例化。</li>
 </ul>
 <h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法（Static method）讓類別不需要建立物件，就可以直接使用該類別的靜態方法，需在類別中函式的前一行使用裝飾器「<code>@staticmethod</code>」。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">Say</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="meta">        @staticmethod</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">            print(<span class="string">'Hello'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Say.hello()</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">Say</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"><span class="meta">        @staticmethod</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Hello&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Say.hello()</span><br></pre></td></tr></table></figure>
 
 <h2 id="例外"><a href="#例外" class="headerlink" title="例外"></a>例外</h2><p>在執行程式的過程中產生錯誤，程式會中斷執行，發出例外訊息。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">try</span>:</span><br><span class="line">        pwd = input(<span class="string">'請輸入密碼'</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'發生錯誤'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">try</span>:</span><br><span class="line">        pwd = <span class="built_in">input</span>(<span class="string">&#x27;請輸入密碼&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;發生錯誤&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>自訂例外。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">PwdException</span><span class="params">(Exception)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,pwd,len)</span>:</span></span><br><span class="line">            super().__init__(self)</span><br><span class="line">            self.pwd = pwd</span><br><span class="line">            self.len = len</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        pwd = input(<span class="string">'請輸入密碼，長度至少8個字元'</span>)</span><br><span class="line">        <span class="keyword">if</span> len(pwd) &lt; <span class="number">8</span>:</span><br><span class="line">            <span class="keyword">raise</span> PwdException(pwd,len(pwd))</span><br><span class="line">    <span class="keyword">except</span> PwdException <span class="keyword">as</span> pex:</span><br><span class="line">        print(<span class="string">'密碼長度不足'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'輸入密碼為'</span>, pwd)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">class</span> <span class="title class_">PwdException</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,pwd,<span class="built_in">len</span></span>):</span><br><span class="line">            <span class="built_in">super</span>().__init__(self)</span><br><span class="line">            self.pwd = pwd</span><br><span class="line">            self.<span class="built_in">len</span> = <span class="built_in">len</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        pwd = <span class="built_in">input</span>(<span class="string">&#x27;請輸入密碼，長度至少8個字元&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(pwd) &lt; <span class="number">8</span>:</span><br><span class="line">            <span class="keyword">raise</span> PwdException(pwd,<span class="built_in">len</span>(pwd))</span><br><span class="line">    <span class="keyword">except</span> PwdException <span class="keyword">as</span> pex:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;密碼長度不足&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;輸入密碼為&#x27;</span>, pwd)</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -280,21 +286,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特殊函式"><span class="toc-number">2.</span> <span class="toc-text">特殊函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#類別方法"><span class="toc-number">3.</span> <span class="toc-text">類別方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#靜態方法"><span class="toc-number">4.</span> <span class="toc-text">靜態方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例外"><span class="toc-number">5.</span> <span class="toc-text">例外</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%87%BD%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">特殊函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%9E%E5%88%A5%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">類別方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">靜態方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E5%A4%96"><span class="toc-number">5.</span> <span class="toc-text">例外</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&text=認識 Python 物件導向（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&is_video=false&description=認識 Python 物件導向（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 Python 物件導向（二）&body=Check out this article: https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&title=認識 Python 物件導向（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/認識-Python-物件導向（二）/&name=認識 Python 物件導向（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&text=認識 Python 物件導向（二）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&is_video=false&description=認識 Python 物件導向（二）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 Python 物件導向（二）&body=Check out this article: https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&title=認識 Python 物件導向（二）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/06/%E8%AA%8D%E8%AD%98-Python-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/&name=認識 Python 物件導向（二）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -312,7 +318,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -338,13 +344,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

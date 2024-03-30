@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="環境 macOS  概念Docker 映像檔（Image）類似於虛擬機器映像檔，可以將它視為一個專屬於 Docker 引擎的唯讀模板，包含了檔案系統。映像檔是建立 Docker 容器的基礎，透過版本管理和可堆疊的檔案系統，Docker 提供一套簡單的機制來建立和更新現有的映像檔，使用者可以透過簡單的命令直接使用。 安裝 從官方網站下載 Docker 並安裝應用程式。 安裝後，到 Docker Cl">
-<meta name="keywords" content="環境部署,Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Docker：入門與實戰》學習筆記（一）：映像檔">
-<meta property="og:url" content="https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 macOS  概念Docker 映像檔（Image）類似於虛擬機器映像檔，可以將它視為一個專屬於 Docker 引擎的唯讀模板，包含了檔案系統。映像檔是建立 Docker 容器的基礎，透過版本管理和可堆疊的檔案系統，Docker 提供一套簡單的機制來建立和更新現有的映像檔，使用者可以透過簡單的命令直接使用。 安裝 從官方網站下載 Docker 並安裝應用程式。 安裝後，到 Docker Cl">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.940Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-11-07T07:50:48.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.652Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Docker：入門與實戰》學習筆記（一）：映像檔">
-<meta name="twitter:description" content="環境 macOS  概念Docker 映像檔（Image）類似於虛擬機器映像檔，可以將它視為一個專屬於 Docker 引擎的唯讀模板，包含了檔案系統。映像檔是建立 Docker 容器的基礎，透過版本管理和可堆疊的檔案系統，Docker 提供一套簡單的機制來建立和更新現有的映像檔，使用者可以透過簡單的命令直接使用。 安裝 從官方網站下載 Docker 並安裝應用程式。 安裝後，到 Docker Cl">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2018/11/在-Nuxt-2-0-使用-ESLint-分析工具並套用-Airbnb-程式碼風格/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/11/%E5%9C%A8-Nuxt-2-0-%E4%BD%BF%E7%94%A8-ESLint-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E4%B8%A6%E5%A5%97%E7%94%A8-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2018/11/《Docker：入門與實戰》學習筆記（二）：容器/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%AE%B9%E5%99%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&text=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&is_video=false&description=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《Docker：入門與實戰》學習筆記（一）：映像檔&body=Check out this article: https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&name=《Docker：入門與實戰》學習筆記（一）：映像檔&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&text=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&is_video=false&description=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Docker：入門與實戰》學習筆記（一）：映像檔&body=Check out this article: https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&name=《Docker：入門與實戰》學習筆記（一）：映像檔&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">3.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看版本"><span class="toc-number">4.</span> <span class="toc-text">查看版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用終端機登入"><span class="toc-number">5.</span> <span class="toc-text">使用終端機登入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取得映像檔"><span class="toc-number">6.</span> <span class="toc-text">取得映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看映像檔資訊"><span class="toc-number">7.</span> <span class="toc-text">查看映像檔資訊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加映像檔標籤。"><span class="toc-number">8.</span> <span class="toc-text">添加映像檔標籤。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜尋映像檔"><span class="toc-number">9.</span> <span class="toc-text">搜尋映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刪除映像檔"><span class="toc-number">10.</span> <span class="toc-text">刪除映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-ID-刪除"><span class="toc-number">10.1.</span> <span class="toc-text">使用 ID 刪除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用標籤刪除"><span class="toc-number">10.2.</span> <span class="toc-text">使用標籤刪除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立映像檔"><span class="toc-number">11.</span> <span class="toc-text">建立映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基於現有映像檔產生的容器來建立"><span class="toc-number">11.1.</span> <span class="toc-text">基於現有映像檔產生的容器來建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#於-Linux-容器（LXC）範例匯入"><span class="toc-number">11.2.</span> <span class="toc-text">於 Linux 容器（LXC）範例匯入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#儲存映像檔"><span class="toc-number">12.</span> <span class="toc-text">儲存映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#載入映像檔"><span class="toc-number">13.</span> <span class="toc-text">載入映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上傳映像檔"><span class="toc-number">14.</span> <span class="toc-text">上傳映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">15.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D"><span class="toc-number">3.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC"><span class="toc-number">4.</span> <span class="toc-text">查看版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%B5%82%E7%AB%AF%E6%A9%9F%E7%99%BB%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text">使用終端機登入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%96%E5%BE%97%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">6.</span> <span class="toc-text">取得映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%98%A0%E5%83%8F%E6%AA%94%E8%B3%87%E8%A8%8A"><span class="toc-number">7.</span> <span class="toc-text">查看映像檔資訊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%98%A0%E5%83%8F%E6%AA%94%E6%A8%99%E7%B1%A4%E3%80%82"><span class="toc-number">8.</span> <span class="toc-text">添加映像檔標籤。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%9C%E5%B0%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">9.</span> <span class="toc-text">搜尋映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%AA%E9%99%A4%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">10.</span> <span class="toc-text">刪除映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-ID-%E5%88%AA%E9%99%A4"><span class="toc-number">10.1.</span> <span class="toc-text">使用 ID 刪除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%99%E7%B1%A4%E5%88%AA%E9%99%A4"><span class="toc-number">10.2.</span> <span class="toc-text">使用標籤刪除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">11.</span> <span class="toc-text">建立映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%96%BC%E7%8F%BE%E6%9C%89%E6%98%A0%E5%83%8F%E6%AA%94%E7%94%A2%E7%94%9F%E7%9A%84%E5%AE%B9%E5%99%A8%E4%BE%86%E5%BB%BA%E7%AB%8B"><span class="toc-number">11.1.</span> <span class="toc-text">基於現有映像檔產生的容器來建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%BC-Linux-%E5%AE%B9%E5%99%A8%EF%BC%88LXC%EF%BC%89%E7%AF%84%E4%BE%8B%E5%8C%AF%E5%85%A5"><span class="toc-number">11.2.</span> <span class="toc-text">於 Linux 容器（LXC）範例匯入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%84%B2%E5%AD%98%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">12.</span> <span class="toc-text">儲存映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BC%89%E5%85%A5%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">13.</span> <span class="toc-text">載入映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E5%82%B3%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">14.</span> <span class="toc-text">上傳映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">15.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +164,7 @@
             
         
             
-                <a href="/categories/環境部署/Docker/《Docker：入門與實戰》學習筆記/">《Docker：入門與實戰》學習筆記</a>
+                <a href="/categories/Deployment/Docker/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8BStudy-Notes/">《Docker：入門與實戰》Study Notes</a>
             
         
     </div>
@@ -167,7 +173,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>
     </div>
 
 
@@ -181,8 +187,8 @@
 </ul>
 <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>Docker 映像檔（Image）類似於虛擬機器映像檔，可以將它視為一個專屬於 Docker 引擎的唯讀模板，包含了檔案系統。映像檔是建立 Docker 容器的基礎，透過版本管理和可堆疊的檔案系統，Docker 提供一套簡單的機制來建立和更新現有的映像檔，使用者可以透過簡單的命令直接使用。</p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><ol>
-<li>從<a href="https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac" target="_blank" rel="noopener">官方網站</a>下載 Docker 並安裝應用程式。</li>
-<li>安裝後，到 <a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Cloud</a> 註冊帳號。</li>
+<li>從<a target="_blank" rel="noopener" href="https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac">官方網站</a>下載 Docker 並安裝應用程式。</li>
+<li>安裝後，到 <a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Cloud</a> 註冊帳號。</li>
 <li>啟動 Docker 並從應用程式登入。</li>
 </ol>
 <h2 id="查看版本"><a href="#查看版本" class="headerlink" title="查看版本"></a>查看版本</h2><p>使用 <code>docker --version</code> 指令，查看 Docker 版本。</p>
@@ -207,7 +213,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect ea4c82dcd15a</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>-f</code> 參數取得映像檔資訊的特定內容。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect -f &#123;&#123;<span class="string">".Metadata"</span>&#125;&#125; ubuntu:latest</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect -f &#123;&#123;<span class="string">&quot;.Metadata&quot;</span>&#125;&#125; ubuntu:latest</span><br></pre></td></tr></table></figure>
 
 <h2 id="添加映像檔標籤。"><a href="#添加映像檔標籤。" class="headerlink" title="添加映像檔標籤。"></a>添加映像檔標籤。</h2><p>使用 <code>docker tag</code> 指令，為映像檔添加標籤。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag ubuntu:latest ubuntu:<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
@@ -241,7 +247,7 @@
 <li>記住容器的 ID 為 <code>f69408067fed</code>。</li>
 </ul>
 <p>使用 <code>docker commit</code> 指令，建立一個新的映像檔，指定容器，並為倉庫命名。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">"Added a new file"</span> -a <span class="string">"William Chou"</span> f69408067fed <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m <span class="string">&quot;Added a new file&quot;</span> -a <span class="string">&quot;William Chou&quot;</span> f69408067fed <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>參數 <code>-m</code>, <code>--message=&quot;&quot;</code> 加入 commit 資訊。</li>
@@ -264,7 +270,7 @@
 <li>參數 <code>-i</code> 表示從壓縮檔讀取。</li>
 </ul>
 <h2 id="上傳映像檔"><a href="#上傳映像檔" class="headerlink" title="上傳映像檔"></a>上傳映像檔</h2><p>使用 <code>docker push</code> 指令，將映像檔上傳到倉庫（預設為 Docker Hub 倉庫）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag ubuntu:latest user/<span class="built_in">test</span>:latest</span><br><span class="line">docker push user/<span class="built_in">test</span>:latest</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag ubuntu:latest user/test:latest</span><br><span class="line">docker push user/test:latest</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>user</code> 為自己的使用者名稱。</li>
@@ -308,21 +314,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">3.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看版本"><span class="toc-number">4.</span> <span class="toc-text">查看版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用終端機登入"><span class="toc-number">5.</span> <span class="toc-text">使用終端機登入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取得映像檔"><span class="toc-number">6.</span> <span class="toc-text">取得映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看映像檔資訊"><span class="toc-number">7.</span> <span class="toc-text">查看映像檔資訊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加映像檔標籤。"><span class="toc-number">8.</span> <span class="toc-text">添加映像檔標籤。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜尋映像檔"><span class="toc-number">9.</span> <span class="toc-text">搜尋映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#刪除映像檔"><span class="toc-number">10.</span> <span class="toc-text">刪除映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-ID-刪除"><span class="toc-number">10.1.</span> <span class="toc-text">使用 ID 刪除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用標籤刪除"><span class="toc-number">10.2.</span> <span class="toc-text">使用標籤刪除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立映像檔"><span class="toc-number">11.</span> <span class="toc-text">建立映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基於現有映像檔產生的容器來建立"><span class="toc-number">11.1.</span> <span class="toc-text">基於現有映像檔產生的容器來建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#於-Linux-容器（LXC）範例匯入"><span class="toc-number">11.2.</span> <span class="toc-text">於 Linux 容器（LXC）範例匯入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#儲存映像檔"><span class="toc-number">12.</span> <span class="toc-text">儲存映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#載入映像檔"><span class="toc-number">13.</span> <span class="toc-text">載入映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上傳映像檔"><span class="toc-number">14.</span> <span class="toc-text">上傳映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">15.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D"><span class="toc-number">3.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC"><span class="toc-number">4.</span> <span class="toc-text">查看版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%B5%82%E7%AB%AF%E6%A9%9F%E7%99%BB%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text">使用終端機登入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%96%E5%BE%97%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">6.</span> <span class="toc-text">取得映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%98%A0%E5%83%8F%E6%AA%94%E8%B3%87%E8%A8%8A"><span class="toc-number">7.</span> <span class="toc-text">查看映像檔資訊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%98%A0%E5%83%8F%E6%AA%94%E6%A8%99%E7%B1%A4%E3%80%82"><span class="toc-number">8.</span> <span class="toc-text">添加映像檔標籤。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%9C%E5%B0%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">9.</span> <span class="toc-text">搜尋映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%AA%E9%99%A4%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">10.</span> <span class="toc-text">刪除映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-ID-%E5%88%AA%E9%99%A4"><span class="toc-number">10.1.</span> <span class="toc-text">使用 ID 刪除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%99%E7%B1%A4%E5%88%AA%E9%99%A4"><span class="toc-number">10.2.</span> <span class="toc-text">使用標籤刪除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">11.</span> <span class="toc-text">建立映像檔</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%96%BC%E7%8F%BE%E6%9C%89%E6%98%A0%E5%83%8F%E6%AA%94%E7%94%A2%E7%94%9F%E7%9A%84%E5%AE%B9%E5%99%A8%E4%BE%86%E5%BB%BA%E7%AB%8B"><span class="toc-number">11.1.</span> <span class="toc-text">基於現有映像檔產生的容器來建立</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%BC-Linux-%E5%AE%B9%E5%99%A8%EF%BC%88LXC%EF%BC%89%E7%AF%84%E4%BE%8B%E5%8C%AF%E5%85%A5"><span class="toc-number">11.2.</span> <span class="toc-text">於 Linux 容器（LXC）範例匯入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%84%B2%E5%AD%98%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">12.</span> <span class="toc-text">儲存映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BC%89%E5%85%A5%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">13.</span> <span class="toc-text">載入映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E5%82%B3%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">14.</span> <span class="toc-text">上傳映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">15.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&text=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&is_video=false&description=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=《Docker：入門與實戰》學習筆記（一）：映像檔&body=Check out this article: https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/《Docker：入門與實戰》學習筆記（一）：映像檔/&name=《Docker：入門與實戰》學習筆記（一）：映像檔&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&text=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&is_video=false&description=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Docker：入門與實戰》學習筆記（一）：映像檔&body=Check out this article: https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&title=《Docker：入門與實戰》學習筆記（一）：映像檔"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2018/11/%E3%80%8ADocker%EF%BC%9A%E5%85%A5%E9%96%80%E8%88%87%E5%AF%A6%E6%88%B0%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94/&name=《Docker：入門與實戰》學習筆記（一）：映像檔&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -340,7 +346,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -366,13 +372,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

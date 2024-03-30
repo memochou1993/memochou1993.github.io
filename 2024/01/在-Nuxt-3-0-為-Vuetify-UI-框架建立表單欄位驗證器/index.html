@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="建立專案建立專案。 12npx nuxi@latest init nuxt-vuetify-validatorcd nuxt-vuetify-validator  安裝 Vuetify 框架。 1npm i -D vuetify vite-plugin-vuetify sass  建立 plugins&#x2F;vuetify.js 檔。 1234567891011121314import &amp;#123; c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器">
+<meta property="og:url" content="https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12npx nuxi@latest init nuxt-vuetify-validatorcd nuxt-vuetify-validator  安裝 Vuetify 框架。 1npm i -D vuetify vite-plugin-vuetify sass  建立 plugins&#x2F;vuetify.js 檔。 1234567891011121314import &amp;#123; c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-01-15T15:10:26.000Z">
+<meta property="article:modified_time" content="2024-01-24T09:29:19.843Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Nuxt">
+<meta property="article:tag" content="Vuetify">
+<meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/12/%E4%BD%BF%E7%94%A8-Crawlee-%E7%88%AC%E5%8F%96%E6%96%B0%E8%81%9E%E7%B6%B2%E7%AB%99/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/01/%E5%9C%A8-Nuxt-3-0-%E5%B0%81%E8%A3%9D%E8%88%87%E7%AE%A1%E7%90%86-API-%E8%AA%BF%E7%94%A8%E5%87%BD%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&text=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&is_video=false&description=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器&body=Check out this article: https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&name=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A"><span class="toc-number">3.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-01-15T15:10:26.000Z" itemprop="datePublished">2024-01-15</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Nuxt/">Nuxt</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Nuxt/" rel="tag">Nuxt</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Vue/" rel="tag">Vue</a>, <a class="tag-link-link" href="/tags/Vuetify/" rel="tag">Vuetify</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npx nuxi@latest init nuxt-vuetify-validator</span><br><span class="line"><span class="built_in">cd</span> nuxt-vuetify-validator</span><br></pre></td></tr></table></figure>
+
+<p>安裝 Vuetify 框架。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D vuetify vite-plugin-vuetify sass</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>plugins/vuetify.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createVuetify &#125; <span class="keyword">from</span> <span class="string">&#x27;vuetify&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vuetify/styles&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> components <span class="keyword">from</span> <span class="string">&#x27;vuetify/components&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> directives <span class="keyword">from</span> <span class="string">&#x27;vuetify/directives&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@mdi/font/css/materialdesignicons.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtPlugin</span>(<span class="function">(<span class="params">nuxtApp</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> vuetify = <span class="title function_">createVuetify</span>(&#123;</span><br><span class="line">    <span class="attr">ssr</span>: <span class="literal">true</span>,</span><br><span class="line">    components,</span><br><span class="line">    directives,</span><br><span class="line">  &#125;);</span><br><span class="line">  nuxtApp.<span class="property">vueApp</span>.<span class="title function_">use</span>(vuetify);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>nuxt.config.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// https://nuxt.com/docs/api/configuration/nuxt-config</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="attr">devtools</span>: &#123;</span><br><span class="line">    <span class="attr">enabled</span>: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">transpile</span>: [<span class="string">&#x27;vuetify&#x27;</span>],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立 <code>validator</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> validator</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>validator/rules/index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">isEmpty</span> = (<span class="params">v</span>) =&gt; v === <span class="string">&#x27;&#x27;</span> || v === <span class="literal">null</span> || v === <span class="literal">undefined</span> || (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(v) &amp;&amp; !v.<span class="property">length</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">required</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> !<span class="title function_">isEmpty</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">email</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="regexp">/.+@.+\..+/</span>.<span class="title function_">test</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">alphaDash</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="regexp">/^[a-zA-Z0-9-_]+$/</span>.<span class="title function_">test</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">alphaDashDot</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="regexp">/^[a-zA-Z0-9-_.]+$/</span>.<span class="title function_">test</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">lowercaseNumUnderscore</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="regexp">/^[a-z0-9_]+$/</span>.<span class="title function_">test</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">uppercaseNumUnderscore</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="regexp">/^[A-Z0-9_]+$/</span>.<span class="title function_">test</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">min</span> = (<span class="params">minValue</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="built_in">parseFloat</span>(v) &gt;= minValue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">max</span> = (<span class="params">maxValue</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="built_in">parseFloat</span>(v) &lt;= maxValue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">minLength</span> = (<span class="params">length</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || v.<span class="property">length</span> &gt;= length;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">maxLength</span> = (<span class="params">length</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || v.<span class="property">length</span> &lt;= length;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">minFileSize</span> = (<span class="params">minValue</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || v.<span class="title function_">every</span>(<span class="function">(<span class="params">file</span>) =&gt;</span> file.<span class="property">size</span> &gt;= minValue * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">maxFileSize</span> = (<span class="params">maxValue</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || v.<span class="title function_">every</span>(<span class="function">(<span class="params">file</span>) =&gt;</span> file.<span class="property">size</span> &lt;= maxValue * <span class="number">1024</span> * <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">url</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || <span class="regexp">/^(http|https):\/\/.+$/</span>.<span class="title function_">test</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">unique</span> = (<span class="params">items, ignored</span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> <span class="title function_">isEmpty</span>(v) || (v === ignored) || !items.<span class="title function_">includes</span>(v);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">json</span> = (<span class="params"></span>) =&gt; <span class="function">(<span class="params">v</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isEmpty</span>(v)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="title class_">JSON</span>.<span class="title function_">parse</span>(v);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  required,</span><br><span class="line">  email,</span><br><span class="line">  alphaDash,</span><br><span class="line">  alphaDashDot,</span><br><span class="line">  lowercaseNumUnderscore,</span><br><span class="line">  uppercaseNumUnderscore,</span><br><span class="line">  min,</span><br><span class="line">  max,</span><br><span class="line">  minLength,</span><br><span class="line">  maxLength,</span><br><span class="line">  minFileSize,</span><br><span class="line">  maxFileSize,</span><br><span class="line">  url,</span><br><span class="line">  unique,</span><br><span class="line">  json,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>validator/field-validator.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rules <span class="keyword">from</span> <span class="string">&#x27;./rules&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FieldValidator</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name, messages</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name.<span class="title function_">toLowerCase</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">messages</span> = messages;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">rules</span> = [];</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">isPassed</span> = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getRule</span>(<span class="params">name, ...args</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">v</span>) =&gt;</span> rules[name](...args)(v) || <span class="variable language_">this</span>.<span class="property">messages</span>[name](<span class="variable language_">this</span>.<span class="property">name</span>, ...args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getRules</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">isPassed</span> ? [] : <span class="variable language_">this</span>.<span class="property">rules</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">pushRule</span>(<span class="params">name, ...args</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> rule = <span class="variable language_">this</span>.<span class="title function_">getRule</span>(name, ...args);</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">rules</span>.<span class="title function_">push</span>(rule);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">when</span>(<span class="params">condition</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!condition) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">isPassed</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">required</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;required&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">email</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;email&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">alphaDash</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;alphaDash&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">alphaDashDot</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;alphaDashDot&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">lowercaseNumUnderscore</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;lowercaseNumUnderscore&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">uppercaseNumUnderscore</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;uppercaseNumUnderscore&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">min</span>(<span class="params">minValue</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;min&#x27;</span>, minValue);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">max</span>(<span class="params">maxValue</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;max&#x27;</span>, maxValue);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">minLength</span>(<span class="params">length</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;minLength&#x27;</span>, length);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">maxLength</span>(<span class="params">length</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;maxLength&#x27;</span>, length);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">minFileSize</span>(<span class="params">length</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;minFileSize&#x27;</span>, length);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">maxFileSize</span>(<span class="params">length</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;maxFileSize&#x27;</span>, length);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">url</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">unique</span>(<span class="params">items, ignored</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;unique&#x27;</span>, items, ignored);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">json</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">pushRule</span>(<span class="string">&#x27;json&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">FieldValidator</span>;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>validator/locales/en.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">required</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field is required.`</span>,</span><br><span class="line">  <span class="attr">email</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must be a valid email address.`</span>,</span><br><span class="line">  <span class="attr">alphaDash</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must only contain letters, digits and underscores.`</span>,</span><br><span class="line">  <span class="attr">alphaDashDot</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must only contain letters, digits, underscores and dots.`</span>,</span><br><span class="line">  <span class="attr">lowercaseNumUnderscore</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must only contain lowercase letters, digits and underscores.`</span>,</span><br><span class="line">  <span class="attr">uppercaseNumUnderscore</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must only contain uppercase letters, digits and underscores.`</span>,</span><br><span class="line">  <span class="attr">min</span>: <span class="function">(<span class="params">field, value</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must be at least <span class="subst">$&#123;value&#125;</span>.`</span>,</span><br><span class="line">  <span class="attr">max</span>: <span class="function">(<span class="params">field, value</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must not be greater than <span class="subst">$&#123;value&#125;</span>.`</span>,</span><br><span class="line">  <span class="attr">minLength</span>: <span class="function">(<span class="params">field, length</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must be at least <span class="subst">$&#123;length&#125;</span> characters.`</span>,</span><br><span class="line">  <span class="attr">maxLength</span>: <span class="function">(<span class="params">field, length</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must not be greater than <span class="subst">$&#123;length&#125;</span> characters.`</span>,</span><br><span class="line">  <span class="attr">minFileSize</span>: <span class="function">(<span class="params">field, value</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must be at least <span class="subst">$&#123;value&#125;</span> megabytes.`</span>,</span><br><span class="line">  <span class="attr">maxFileSize</span>: <span class="function">(<span class="params">field, value</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must not be greater than <span class="subst">$&#123;value&#125;</span> megabytes.`</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must be a valid URL.`</span>,</span><br><span class="line">  <span class="attr">unique</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> has already been taken.`</span>,</span><br><span class="line">  <span class="attr">json</span>: <span class="function">(<span class="params">field</span>) =&gt;</span> <span class="string">`The <span class="subst">$&#123;field&#125;</span> field must be a valid JSON string.`</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>validator/locales/index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> en <span class="keyword">from</span> <span class="string">&#x27;./en&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  en,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>validator/validator.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">FieldValidator</span> <span class="keyword">from</span> <span class="string">&#x27;./field-validator&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> locales <span class="keyword">from</span> <span class="string">&#x27;./locales&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Validator</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">locale</span> = <span class="string">&#x27;en&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">messages</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> locales[<span class="variable language_">this</span>.<span class="property">locale</span>];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">setLocale</span>(<span class="params">locale</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">locale</span> = locale;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">createField</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">FieldValidator</span>(name, <span class="variable language_">this</span>.<span class="property">messages</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> validator = <span class="keyword">new</span> <span class="title class_">Validator</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> validator;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>validator/validator.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> validator <span class="keyword">from</span> <span class="string">&#x27;./validator&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> validator;</span><br></pre></td></tr></table></figure>
+
+<h2 id="註冊"><a href="#註冊" class="headerlink" title="註冊"></a>註冊</h2><p>在 <code>plugins</code> 資料夾，建立 <code>validator.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> validator <span class="keyword">from</span> <span class="string">&#x27;~/validator&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtPlugin</span>(<span class="function">(<span class="params">nuxtApp</span>) =&gt;</span> &#123;</span><br><span class="line">  nuxtApp.<span class="title function_">provide</span>(<span class="string">&#x27;validator&#x27;</span>, validator);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>修改 <code>app.vue</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">v-form</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">v-text-field</span></span></span><br><span class="line"><span class="tag">        <span class="attr">:rules</span>=<span class="string">&quot;(</span></span></span><br><span class="line"><span class="string"><span class="tag">          $validator</span></span></span><br><span class="line"><span class="string"><span class="tag">            .createField(&#x27;email&#x27;)</span></span></span><br><span class="line"><span class="string"><span class="tag">            .required()</span></span></span><br><span class="line"><span class="string"><span class="tag">            .email()</span></span></span><br><span class="line"><span class="string"><span class="tag">            .getRules()</span></span></span><br><span class="line"><span class="string"><span class="tag">        )&quot;</span></span></span><br><span class="line"><span class="tag">      /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">v-form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/nuxt-vuetify-validator">nuxt-vuetify-validator</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A"><span class="toc-number">3.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&text=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&is_video=false&description=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器&body=Check out this article: https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&title=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/01/%E5%9C%A8-Nuxt-3-0-%E7%82%BA-Vuetify-UI-%E6%A1%86%E6%9E%B6%E5%BB%BA%E7%AB%8B%E8%A1%A8%E5%96%AE%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89%E5%99%A8/&name=在 Nuxt 3.0 為 Vuetify UI 框架建立表單欄位驗證器&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

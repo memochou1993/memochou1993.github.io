@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法在當前專案，檢查 .gitmodules 檔，每個子模組的 url 必須以 .git 結尾。 123[submodule &quot;sub-project&quot;]  path &#x3D; sub-project  url &#x3D; git@gitlab.com:secret-group&#x2F;sub-project.git  修改 .gitlab-ci.yml 檔，添加 GIT_SUBMODULE_STR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 GitLab CI&#x2F;CD 使用 Git Submodules 子模組">
+<meta property="og:url" content="https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="做法在當前專案，檢查 .gitmodules 檔，每個子模組的 url 必須以 .git 結尾。 123[submodule &quot;sub-project&quot;]  path &#x3D; sub-project  url &#x3D; git@gitlab.com:secret-group&#x2F;sub-project.git  修改 .gitlab-ci.yml 檔，添加 GIT_SUBMODULE_STR">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-12T18:17:49.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.751Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="GitLab">
+<meta property="article:tag" content="Deployment">
+<meta property="article:tag" content="Version Control">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 GitLab CI/CD 使用 Git Submodules 子模組</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-SSH-keys-%E5%85%8B%E9%9A%86%E5%84%B2%E5%AD%98%E5%BA%AB/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2023/07/%E4%BD%BF%E7%94%A8-Flask-%E5%BB%BA%E7%AB%8B-Line-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&text=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&is_video=false&description=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 GitLab CI/CD 使用 Git Submodules 子模組&body=Check out this article: https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&name=在 GitLab CI/CD 使用 Git Submodules 子模組&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 GitLab CI/CD 使用 Git Submodules 子模組
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-07-12T18:17:49.000Z" itemprop="datePublished">2023-07-13</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Deployment/CI-CD/GitLab/">GitLab</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/CI-CD/" rel="tag">CI/CD</a>, <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Git/" rel="tag">Git</a>, <a class="tag-link-link" href="/tags/GitLab/" rel="tag">GitLab</a>, <a class="tag-link-link" href="/tags/Version-Control/" rel="tag">Version Control</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>在當前專案，檢查 <code>.gitmodules</code> 檔，每個子模組的 <code>url</code> 必須以 <code>.git</code> 結尾。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[submodule &quot;sub-project&quot;]</span><br><span class="line">  path = sub-project</span><br><span class="line">  url = git@gitlab.com:secret-group/sub-project.git</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.gitlab-ci.yml</code> 檔，添加 <code>GIT_SUBMODULE_STRATEGY</code> 環境變數。GitLab 會使用 <code>CI_JOB_TOKEN</code> 去克隆每個子模組。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">build:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">variables:</span></span><br><span class="line">    <span class="attr">GIT_SUBMODULE_STRATEGY:</span> <span class="string">recursive</span></span><br><span class="line">    <span class="attr">GIT_SUBMODULE_FORCE_HTTPS:</span> <span class="string">&quot;true&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>再進到子模組的 GitLab 專案，在 CI&#x2F;CD 的 Token Access 設定中，添加可存取的儲存庫，例如：<code>group/project</code>。</p>
+<p>最後，將程式碼推送到儲存庫。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/git_submodules.html">Using Git submodules with GitLab CI&#x2F;CD</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&text=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&is_video=false&description=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 GitLab CI/CD 使用 Git Submodules 子模組&body=Check out this article: https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&title=在 GitLab CI/CD 使用 Git Submodules 子模組"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-Git-Submodules-%E5%AD%90%E6%A8%A1%E7%B5%84/&name=在 GitLab CI/CD 使用 Git Submodules 子模組&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

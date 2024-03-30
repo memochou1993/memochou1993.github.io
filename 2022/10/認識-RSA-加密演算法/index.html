@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="簡介1976 年以前，所有的加密方法都是同一種模式，即對稱加密演算法：  甲方選擇某一種加密規則，對訊息進行加密。 乙方使用同一種規則，對訊息進行解密。  1976 年，兩位美國密碼學家 Whitfield Diffie 和 Martin Hellman 提出了新的構思，可以在不直接傳遞密鑰的情況下，完成解密。這種新的加密模式即非對稱加密演算法：  乙方生成一把公鑰和一把私鑰。公鑰是公開的，任何人">
-<meta name="keywords" content="JavaScript,密碼學,RSA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="認識 RSA 加密演算法">
-<meta property="og:url" content="https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="簡介1976 年以前，所有的加密方法都是同一種模式，即對稱加密演算法：  甲方選擇某一種加密規則，對訊息進行加密。 乙方使用同一種規則，對訊息進行解密。  1976 年，兩位美國密碼學家 Whitfield Diffie 和 Martin Hellman 提出了新的構思，可以在不直接傳遞密鑰的情況下，完成解密。這種新的加密模式即非對稱加密演算法：  乙方生成一把公鑰和一把私鑰。公鑰是公開的，任何人">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.996Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-06T15:34:56.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.736Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="RSA">
+<meta property="article:tag" content="Cryptography">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="認識 RSA 加密演算法">
-<meta name="twitter:description" content="簡介1976 年以前，所有的加密方法都是同一種模式，即對稱加密演算法：  甲方選擇某一種加密規則，對訊息進行加密。 乙方使用同一種規則，對訊息進行解密。  1976 年，兩位美國密碼學家 Whitfield Diffie 和 Martin Hellman 提出了新的構思，可以在不直接傳遞密鑰的情況下，完成解密。這種新的加密模式即非對稱加密演算法：  乙方生成一把公鑰和一把私鑰。公鑰是公開的，任何人">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/10/將-Hexo-部落格更新至-6-3-版本/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/10/%E5%B0%87-Hexo-%E9%83%A8%E8%90%BD%E6%A0%BC%E6%9B%B4%E6%96%B0%E8%87%B3-6-3-%E7%89%88%E6%9C%AC/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/10/使用-Google-Sheets-API-存取-Google-試算表/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/10/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&text=認識 RSA 加密演算法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&is_video=false&description=認識 RSA 加密演算法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 RSA 加密演算法&body=Check out this article: https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&name=認識 RSA 加密演算法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&text=認識 RSA 加密演算法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&is_video=false&description=認識 RSA 加密演算法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 RSA 加密演算法&body=Check out this article: https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&name=認識 RSA 加密演算法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#數學概念"><span class="toc-number">2.</span> <span class="toc-text">數學概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#互質關係"><span class="toc-number">2.1.</span> <span class="toc-text">互質關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#歐拉函數"><span class="toc-number">2.2.</span> <span class="toc-text">歐拉函數</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密與解密"><span class="toc-number">3.1.</span> <span class="toc-text">加密與解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可靠性"><span class="toc-number">4.</span> <span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B8%E5%AD%B8%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">數學概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%B3%AA%E9%97%9C%E4%BF%82"><span class="toc-number">2.1.</span> <span class="toc-text">互質關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%90%E6%8B%89%E5%87%BD%E6%95%B8"><span class="toc-number">2.2.</span> <span class="toc-text">歐拉函數</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E8%88%87%E8%A7%A3%E5%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">加密與解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +163,7 @@
             
         
             
-                <a href="/categories/其他/密碼學/">密碼學</a>
+                <a href="/categories/Others/Cryptography/">Cryptography</a>
             
         
     </div>
@@ -165,7 +172,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/RSA/">RSA</a>, <a class="tag-link" href="/tags/密碼學/">密碼學</a>
+        <a class="tag-link-link" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/RSA/" rel="tag">RSA</a>
     </div>
 
 
@@ -191,28 +198,28 @@
 <h3 id="歐拉函數"><a href="#歐拉函數" class="headerlink" title="歐拉函數"></a>歐拉函數</h3><p>對正整數 n，歐拉函數是小於等於 n 的正整數中與 n 互質的數的數目，以 φ(n) 表示。</p>
 <p>比如，在 1 到 8 之中，有多少個數與 8 構成互質關係？在 1 到 8 之中，與 8 形成互質關係的是 1、3、5、7，所以 φ(8) 等於 4。</p>
 <p>其中有一種情況，如果 n 可以被分解成兩個互質的整數之積，則積的歐拉函數等於各個因子的歐拉函數之積。</p>
-<p>比如，φ(56) = φ(8×7) = φ(8)×φ(7) = 4×6 = 24。</p>
+<p>比如，φ(56) &#x3D; φ(8×7) &#x3D; φ(8)×φ(7) &#x3D; 4×6 &#x3D; 24。</p>
 <h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>假設 Alice 要與 Bob 進行加密通訊，Alice 該如何生成公鑰和私鑰？</p>
 <p>第一步，隨機選擇兩個不相等的質數 p 和 q。Alice 選擇 61 和 53。這兩個質數越大，就越難破解。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="number">61</span>n;</span><br><span class="line"><span class="keyword">const</span> q = <span class="number">53</span>n;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="number">61n</span>;</span><br><span class="line"><span class="keyword">const</span> q = <span class="number">53n</span>;</span><br></pre></td></tr></table></figure>
 
 <p>第二步，計算 p 和 q 的乘積 n。n 的長度就是密鑰長度。3233 寫成二進制是 110010100001，一共有 12 位，所以這個密鑰就是 12 位。實際應用中，RSA 密鑰一般是 1024 位，重要場合則為 2048 位。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> n = p * q; <span class="comment">// 3233n</span></span><br></pre></td></tr></table></figure>
 
 <p>第三步，計算 n 的歐拉函數 φ(n)。Alice 算出 φ(3233) 等於 60 乘以 52，即 3120。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> r = (p - <span class="number">1</span>n) * (q - <span class="number">1</span>n); <span class="comment">// 3120n</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> r = (p - <span class="number">1n</span>) * (q - <span class="number">1n</span>); <span class="comment">// 3120n</span></span><br></pre></td></tr></table></figure>
 
 <p>第四步，隨機選擇一個整數 e，條件是 1 &lt; e &lt; φ(n)，且 e 與 φ(n) 互質。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gcd = <span class="function">(<span class="params">a, b</span>) =&gt;</span> b ? gcd(b, a % b) : a; <span class="comment">// 取最大公因數</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> e = <span class="number">1</span>n;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>n; i &lt; r; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (gcd(i, r) === <span class="number">1</span>n) &#123;</span><br><span class="line">    e = i; <span class="comment">// 7n</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">gcd</span> = (<span class="params">a, b</span>) =&gt; b ? <span class="title function_">gcd</span>(b, a % b) : a; <span class="comment">// 取最大公因數</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> e = <span class="number">1n</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2n</span>; i &lt; r; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">gcd</span>(i, r) === <span class="number">1n</span>) &#123;</span><br><span class="line">    e = i; <span class="comment">// 7n</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>第五步，計算 e 對於 φ(n) 的模反元素 d。所謂「模反元素」就是指有一個整數 d，可以使得 e×d 被 φ(n) 除的餘數為 1。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> d;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = e + <span class="number">1</span>n; i &lt; r; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> ((i * e) % r === <span class="number">1</span>n) &#123;</span><br><span class="line">    d = i; <span class="comment">// 1783n</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> d;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = e + <span class="number">1n</span>; i &lt; r; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> ((i * e) % r === <span class="number">1n</span>) &#123;</span><br><span class="line">    d = i; <span class="comment">// 1783n</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>第六步，將 n 和 e 封裝成公鑰，然後將 n 和 d 封裝成私鑰。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pubKeyN = n;</span><br><span class="line"><span class="keyword">const</span> pubKeyE = e;</span><br><span class="line"><span class="keyword">const</span> priKeyN = n;</span><br><span class="line"><span class="keyword">const</span> priKeyD = d;</span><br></pre></td></tr></table></figure>
 
 <h3 id="加密與解密"><a href="#加密與解密" class="headerlink" title="加密與解密"></a>加密與解密</h3><p>假設 Bob 要向 Alice 發送加密訊息 <code>m</code>，他要用 Alice 的公鑰 <code>(n, e)</code> 對其進行加密。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="number">100</span>n;</span><br><span class="line"><span class="keyword">const</span> encrypted = m ** pubKeyE % pubKeyN; <span class="comment">// 2872n</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="number">100n</span>;</span><br><span class="line"><span class="keyword">const</span> encrypted = m ** pubKeyE % pubKeyN; <span class="comment">// 2872n</span></span><br></pre></td></tr></table></figure>
 
 <p>Alice 拿到 Bob 發來的 <code>2872n</code> 以後，就用自己的私鑰 <code>(n, d)</code> 對其進行解密。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> decrypted = encrypted ** priKeyD % n; <span class="comment">// 100n</span></span><br></pre></td></tr></table></figure>
@@ -220,18 +227,18 @@
 <p>因此，Alice 知道了 Bob 加密前的原文就是 <code>100n</code>。</p>
 <h2 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h2><p>大整數的因數分解，是一件非常困難的事情。目前，除了暴力破解，還沒有發現別的有效方法。</p>
 <p>舉例來說，我們可以對 3233 進行因數分解（61×53），但是沒辦法對以下整數進行因數分解：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">12301866845301177551304949</span><br><span class="line">58384962720772853569595334</span><br><span class="line">79219732245215172640050726</span><br><span class="line">36575187452021997864693899</span><br><span class="line">56474942774063845925192557</span><br><span class="line">32630345373154826850791702</span><br><span class="line">61221429134616704292143116</span><br><span class="line">02221240479274737794080665</span><br><span class="line">351419597459856902143413</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">12301866845301177551304949</span><br><span class="line">58384962720772853569595334</span><br><span class="line">79219732245215172640050726</span><br><span class="line">36575187452021997864693899</span><br><span class="line">56474942774063845925192557</span><br><span class="line">32630345373154826850791702</span><br><span class="line">61221429134616704292143116</span><br><span class="line">02221240479274737794080665</span><br><span class="line">351419597459856902143413</span><br></pre></td></tr></table></figure>
 
 <p>它等於以下兩個質數的乘積：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">33478071698956898786044169</span><br><span class="line">84821269081770479498371376</span><br><span class="line">85689124313889828837938780</span><br><span class="line">02287614711652531743087737</span><br><span class="line">814467999489</span><br><span class="line">×</span><br><span class="line">36746043666799590428244633</span><br><span class="line">79962795263227915816434308</span><br><span class="line">76426760322838157396665112</span><br><span class="line">79233373417143396810270092</span><br><span class="line">798736308917</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">33478071698956898786044169</span><br><span class="line">84821269081770479498371376</span><br><span class="line">85689124313889828837938780</span><br><span class="line">02287614711652531743087737</span><br><span class="line">814467999489</span><br><span class="line">×</span><br><span class="line">36746043666799590428244633</span><br><span class="line">79962795263227915816434308</span><br><span class="line">76426760322838157396665112</span><br><span class="line">79233373417143396810270092</span><br><span class="line">798736308917</span><br></pre></td></tr></table></figure>
 
 <p>這大概是人類已經分解的最大整數。比它更大的因數分解，還沒有被報導過，因此目前被破解的最長 RSA 密鑰就是 768 位。</p>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
-<li><a href="https://gist.github.com/memochou1993/34ff2cfa8c8dc15fc88c3db75495a913" target="_blank" rel="noopener">rsa.go</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/memochou1993/34ff2cfa8c8dc15fc88c3db75495a913">rsa.go</a></li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html" target="_blank" rel="noopener">RSA 算法原理（一）</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html" target="_blank" rel="noopener">RSA 算法原理（二）</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">RSA 算法原理（一）</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html">RSA 算法原理（二）</a></li>
 </ul>
 
   </div>
@@ -269,21 +276,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#簡介"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#數學概念"><span class="toc-number">2.</span> <span class="toc-text">數學概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#互質關係"><span class="toc-number">2.1.</span> <span class="toc-text">互質關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#歐拉函數"><span class="toc-number">2.2.</span> <span class="toc-text">歐拉函數</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密與解密"><span class="toc-number">3.1.</span> <span class="toc-text">加密與解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可靠性"><span class="toc-number">4.</span> <span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B8%E5%AD%B8%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">數學概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%B3%AA%E9%97%9C%E4%BF%82"><span class="toc-number">2.1.</span> <span class="toc-text">互質關係</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%90%E6%8B%89%E5%87%BD%E6%95%B8"><span class="toc-number">2.2.</span> <span class="toc-text">歐拉函數</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E8%88%87%E8%A7%A3%E5%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">加密與解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&text=認識 RSA 加密演算法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&is_video=false&description=認識 RSA 加密演算法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=認識 RSA 加密演算法&body=Check out this article: https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&title=認識 RSA 加密演算法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/認識-RSA-加密演算法/&name=認識 RSA 加密演算法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&text=認識 RSA 加密演算法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&is_video=false&description=認識 RSA 加密演算法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 RSA 加密演算法&body=Check out this article: https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&title=認識 RSA 加密演算法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/10/%E8%AA%8D%E8%AD%98-RSA-%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/&name=認識 RSA 加密演算法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -301,7 +308,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -327,13 +334,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

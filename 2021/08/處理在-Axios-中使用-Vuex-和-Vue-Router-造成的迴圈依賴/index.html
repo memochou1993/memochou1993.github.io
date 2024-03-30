@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="做法有時會在 Axios 的攔截器使用到 Vuex 或 Vue Router，這時如果出現迴圈依賴（circular dependency）的錯誤訊息，需要將攔截器封裝成方法並匯出，並以參數的方式將 Vuex 和 Vue Router 傳入，而不是直接引入。 1234567891011export const setInterceptors = (store, router) =&amp;gt; &amp;#12">
-<meta name="keywords" content="程式設計,JavaScript,Vue">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法有時會在 Axios 的攔截器使用到 Vuex 或 Vue Router，這時如果出現迴圈依賴（circular dependency）的錯誤訊息，需要將攔截器封裝成方法並匯出，並以參數的方式將 Vuex 和 Vue Router 傳入，而不是直接引入。 1234567891011export const setInterceptors &#x3D; (store, router) &#x3D;&gt; &amp;#12">
 <meta property="og:type" content="article">
 <meta property="og:title" content="處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴">
-<meta property="og:url" content="https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法有時會在 Axios 的攔截器使用到 Vuex 或 Vue Router，這時如果出現迴圈依賴（circular dependency）的錯誤訊息，需要將攔截器封裝成方法並匯出，並以參數的方式將 Vuex 和 Vue Router 傳入，而不是直接引入。 1234567891011export const setInterceptors = (store, router) =&amp;gt; &amp;#12">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.972Z">
+<meta property="og:description" content="做法有時會在 Axios 的攔截器使用到 Vuex 或 Vue Router，這時如果出現迴圈依賴（circular dependency）的錯誤訊息，需要將攔截器封裝成方法並匯出，並以參數的方式將 Vuex 和 Vue Router 傳入，而不是直接引入。 1234567891011export const setInterceptors &#x3D; (store, router) &#x3D;&gt; &amp;#12">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-21T18:24:46.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.695Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴">
-<meta name="twitter:description" content="做法有時會在 Axios 的攔截器使用到 Vuex 或 Vue Router，這時如果出現迴圈依賴（circular dependency）的錯誤訊息，需要將攔截器封裝成方法並匯出，並以參數的方式將 Vuex 和 Vue Router 傳入，而不是直接引入。 1234567891011export const setInterceptors = (store, router) =&amp;gt; &amp;#12">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2021/08/在-Vue-3-0-使用-Axios-攔截器/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/08/%E5%9C%A8-Vue-3-0-%E4%BD%BF%E7%94%A8-Axios-%E6%94%94%E6%88%AA%E5%99%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2021/08/使用-Go-讀取命令列介面參數/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/08/%E4%BD%BF%E7%94%A8-Go-%E8%AE%80%E5%8F%96%E5%91%BD%E4%BB%A4%E5%88%97%E4%BB%8B%E9%9D%A2%E5%8F%83%E6%95%B8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&text=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&is_video=false&description=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&body=Check out this article: https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&name=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&text=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&is_video=false&description=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&body=Check out this article: https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&name=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/JavaScript/Vue/">Vue</a>
+                <a href="/categories/Programming/JavaScript/Vue/">Vue</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/Vue/">Vue</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Vue/" rel="tag">Vue</a>
     </div>
 
 
@@ -177,13 +184,13 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>有時會在 Axios 的攔截器使用到 Vuex 或 Vue Router，這時如果出現迴圈依賴（circular dependency）的錯誤訊息，需要將攔截器封裝成方法並匯出，並以參數的方式將 Vuex 和 Vue Router 傳入，而不是直接引入。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> setInterceptors = <span class="function">(<span class="params">store, router</span>) =&gt;</span> &#123;</span><br><span class="line">  client.interceptors.request.use(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// use store</span></span><br><span class="line">  &#125;);</span><br><span class="line">  client.interceptors.response.use(</span><br><span class="line">    (res) =&gt; res,</span><br><span class="line">    <span class="keyword">async</span> (e) =&gt; &#123;</span><br><span class="line">      <span class="comment">// use router</span></span><br><span class="line">    &#125;,</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">setInterceptors</span> = (<span class="params">store, router</span>) =&gt; &#123;</span><br><span class="line">  client.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// use store</span></span><br><span class="line">  &#125;);</span><br><span class="line">  client.<span class="property">interceptors</span>.<span class="property">response</span>.<span class="title function_">use</span>(</span><br><span class="line">    <span class="function">(<span class="params">res</span>) =&gt;</span> res,</span><br><span class="line">    <span class="keyword">async</span> (e) =&gt; &#123;</span><br><span class="line">      <span class="comment">// use router</span></span><br><span class="line">    &#125;,</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>main.js</code> 引入方法，並將 Vuex 和 Vue Router 引入，並傳進方法中。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  setInterceptors,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">'@/plugins/axios'</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./store'</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span>;</span><br><span class="line"></span><br><span class="line">setInterceptors(store, router);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  setInterceptors,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@/plugins/axios&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setInterceptors</span>(store, router);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://qiita.com/yo_instead_what/items/df886c6baed88252654c" target="_blank" rel="noopener">Vuejs | Circular Dependency | Vuex + API + Axios</a></li>
+<li><a target="_blank" rel="noopener" href="https://qiita.com/yo_instead_what/items/df886c6baed88252654c">Vuejs | Circular Dependency | Vuex + API + Axios</a></li>
 </ul>
 
   </div>
@@ -221,21 +228,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&text=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&is_video=false&description=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&body=Check out this article: https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/處理在-Axios-中使用-Vuex-和-Vue-Router-造成的迴圈依賴/&name=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&text=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&is_video=false&description=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&body=Check out this article: https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&title=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/08/%E8%99%95%E7%90%86%E5%9C%A8-Axios-%E4%B8%AD%E4%BD%BF%E7%94%A8-Vuex-%E5%92%8C-Vue-Router-%E9%80%A0%E6%88%90%E7%9A%84%E8%BF%B4%E5%9C%88%E4%BE%9D%E8%B3%B4/&name=處理在 Axios 中使用 Vuex 和 Vue Router 造成的迴圈依賴&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -253,7 +260,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -279,13 +286,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

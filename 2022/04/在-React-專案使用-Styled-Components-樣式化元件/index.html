@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="使用建立一個帶有樣式的元件。 1234567891011121314151617181920212223242526272829303132333435const Button = styled.a`  /* This renders the buttons above... Edit me! */  display: inline-block;  border-radius: 3px;  pad">
-<meta name="keywords" content="程式設計,JavaScript,React">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="使用建立一個帶有樣式的元件。 1234567891011121314151617181920212223242526272829303132333435const Button &#x3D; styled.a&#96;  &#x2F;* This renders the buttons above... Edit me! *&#x2F;  display: inline-block;  border-radius: 3px;  pad">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 React 專案使用 Styled Components 樣式化元件">
-<meta property="og:url" content="https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="使用建立一個帶有樣式的元件。 1234567891011121314151617181920212223242526272829303132333435const Button = styled.a`  /* This renders the buttons above... Edit me! */  display: inline-block;  border-radius: 3px;  pad">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.989Z">
+<meta property="og:description" content="使用建立一個帶有樣式的元件。 1234567891011121314151617181920212223242526272829303132333435const Button &#x3D; styled.a&#96;  &#x2F;* This renders the buttons above... Edit me! *&#x2F;  display: inline-block;  border-radius: 3px;  pad">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-28T18:32:34.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.725Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 React 專案使用 Styled Components 樣式化元件">
-<meta name="twitter:description" content="使用建立一個帶有樣式的元件。 1234567891011121314151617181920212223242526272829303132333435const Button = styled.a`  /* This renders the buttons above... Edit me! */  display: inline-block;  border-radius: 3px;  pad">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/04/使用-Solana-Governance-UI-建立-DAO-介面/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/04/%E4%BD%BF%E7%94%A8-Solana-Governance-UI-%E5%BB%BA%E7%AB%8B-DAO-%E4%BB%8B%E9%9D%A2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/04/在-Ubuntu-上建立-LikeCoin-驗證者節點/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/04/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-LikeCoin-%E9%A9%97%E8%AD%89%E8%80%85%E7%AF%80%E9%BB%9E/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&text=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&is_video=false&description=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Styled Components 樣式化元件&body=Check out this article: https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&name=在 React 專案使用 Styled Components 樣式化元件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&text=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&is_video=false&description=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Styled Components 樣式化元件&body=Check out this article: https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&name=在 React 專案使用 Styled Components 樣式化元件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/JavaScript/React/">React</a>
+                <a href="/categories/Programming/JavaScript/React/">React</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/React/">React</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/React/" rel="tag">React</a>
     </div>
 
 
@@ -177,16 +184,16 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>建立一個帶有樣式的元件。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Button = styled.a<span class="string">`</span></span><br><span class="line"><span class="string">  /* This renders the buttons above... Edit me! */</span></span><br><span class="line"><span class="string">  display: inline-block;</span></span><br><span class="line"><span class="string">  border-radius: 3px;</span></span><br><span class="line"><span class="string">  padding: 0.5rem 0;</span></span><br><span class="line"><span class="string">  margin: 0.5rem 1rem;</span></span><br><span class="line"><span class="string">  width: 11rem;</span></span><br><span class="line"><span class="string">  background: transparent;</span></span><br><span class="line"><span class="string">  color: white;</span></span><br><span class="line"><span class="string">  border: 2px solid white;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  /* The GitHub button is a primary button</span></span><br><span class="line"><span class="string">   * edit this to target it specifically! */</span></span><br><span class="line"><span class="string">  <span class="subst">$&#123;props =&gt; props.primary &amp;&amp; css<span class="string">`</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="string">    background: white;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="string">    color: black;</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="string">  `</span>&#125;</span></span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;Button</span><br><span class="line">      href=<span class="string">"https://github.com/styled-components/styled-components"</span></span><br><span class="line">      target=<span class="string">"_blank"</span></span><br><span class="line">      rel=<span class="string">"noopener"</span></span><br><span class="line">      primary</span><br><span class="line">    &gt;</span><br><span class="line">      GitHub</span><br><span class="line">    &lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    &lt;Button as=&#123;Link&#125; href="/</span>docs<span class="string">"&gt;</span></span><br><span class="line"><span class="string">      Documentation</span></span><br><span class="line"><span class="string">    &lt;/Button&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Button</span> = styled.<span class="property">a</span><span class="string">`</span></span><br><span class="line"><span class="string">  /* This renders the buttons above... Edit me! */</span></span><br><span class="line"><span class="string">  display: inline-block;</span></span><br><span class="line"><span class="string">  border-radius: 3px;</span></span><br><span class="line"><span class="string">  padding: 0.5rem 0;</span></span><br><span class="line"><span class="string">  margin: 0.5rem 1rem;</span></span><br><span class="line"><span class="string">  width: 11rem;</span></span><br><span class="line"><span class="string">  background: transparent;</span></span><br><span class="line"><span class="string">  color: white;</span></span><br><span class="line"><span class="string">  border: 2px solid white;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  /* The GitHub button is a primary button</span></span><br><span class="line"><span class="string">   * edit this to target it specifically! */</span></span><br><span class="line"><span class="string">  <span class="subst">$&#123;props =&gt; props.primary &amp;&amp; css`<span class="language-css"></span></span></span></span><br><span class="line"><span class="language-css"><span class="subst"><span class="string">    <span class="attribute">background</span>: white;</span></span></span></span><br><span class="line"><span class="language-css"><span class="subst"><span class="string">    <span class="attribute">color</span>: black;</span></span></span></span><br><span class="line"><span class="language-css"><span class="subst"><span class="string">  `</span>&#125;</span></span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">render</span>(</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">href</span>=<span class="string">&quot;https://github.com/styled-components/styled-components&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">rel</span>=<span class="string">&quot;noopener&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">primary</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      GitHub</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Button</span> <span class="attr">as</span>=<span class="string">&#123;Link&#125;</span> <span class="attr">href</span>=<span class="string">&quot;/docs&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      Documentation</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <p>建立一個複寫樣式的元件。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Button = styled.button<span class="string">`</span></span><br><span class="line"><span class="string">  color: palevioletred;</span></span><br><span class="line"><span class="string">  font-size: 1em;</span></span><br><span class="line"><span class="string">  margin: 1em;</span></span><br><span class="line"><span class="string">  padding: 0.25em 1em;</span></span><br><span class="line"><span class="string">  border: 2px solid palevioletred;</span></span><br><span class="line"><span class="string">  border-radius: 3px;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TomatoButton = styled(Button)<span class="string">`</span></span><br><span class="line"><span class="string">  color: tomato;</span></span><br><span class="line"><span class="string">  border-color: tomato;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;Button&gt;Normal Button&lt;<span class="regexp">/Button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;TomatoButton&gt;Tomato Button&lt;/</span>TomatoButton&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Button</span> = styled.<span class="property">button</span><span class="string">`</span></span><br><span class="line"><span class="string">  color: palevioletred;</span></span><br><span class="line"><span class="string">  font-size: 1em;</span></span><br><span class="line"><span class="string">  margin: 1em;</span></span><br><span class="line"><span class="string">  padding: 0.25em 1em;</span></span><br><span class="line"><span class="string">  border: 2px solid palevioletred;</span></span><br><span class="line"><span class="string">  border-radius: 3px;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">TomatoButton</span> = <span class="title function_">styled</span>(<span class="title class_">Button</span>)<span class="string">`</span></span><br><span class="line"><span class="string">  color: tomato;</span></span><br><span class="line"><span class="string">  border-color: tomato;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">render</span>(</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Button</span>&gt;</span>Normal Button<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">TomatoButton</span>&gt;</span>Tomato Button<span class="tag">&lt;/<span class="name">TomatoButton</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>樣式化一個既有的元件。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Link = <span class="function">(<span class="params">&#123; className, children &#125;</span>) =&gt;</span> (</span><br><span class="line">  &lt;a className=&#123;className&#125;&gt;</span><br><span class="line">    &#123;children&#125;</span><br><span class="line">  &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const StyledLink = styled(Link)`</span></span><br><span class="line"><span class="regexp">  color: palevioletred;</span></span><br><span class="line"><span class="regexp">  font-weight: bold;</span></span><br><span class="line"><span class="regexp">`;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">render(</span></span><br><span class="line"><span class="regexp">  &lt;div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;Link&gt;Unstyled, boring Link&lt;/</span>Link&gt;</span><br><span class="line">    &lt;br /&gt;</span><br><span class="line">    &lt;StyledLink&gt;Styled, exciting Link&lt;<span class="regexp">/StyledLink&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Link</span> = (<span class="params">&#123; className, children &#125;</span>) =&gt; (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">className</span>=<span class="string">&#123;className&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">StyledLink</span> = <span class="title function_">styled</span>(<span class="title class_">Link</span>)<span class="string">`</span></span><br><span class="line"><span class="string">  color: palevioletred;</span></span><br><span class="line"><span class="string">  font-weight: bold;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">render</span>(</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Link</span>&gt;</span>Unstyled, boring Link<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">StyledLink</span>&gt;</span>Styled, exciting Link<span class="tag">&lt;/<span class="name">StyledLink</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://styled-components.com/" target="_blank" rel="noopener">styled-components</a></li>
+<li><a target="_blank" rel="noopener" href="https://styled-components.com/">styled-components</a></li>
 </ul>
 
   </div>
@@ -224,21 +231,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&text=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&is_video=false&description=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Styled Components 樣式化元件&body=Check out this article: https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/在-React-專案使用-Styled-Components-樣式化元件/&name=在 React 專案使用 Styled Components 樣式化元件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&text=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&is_video=false&description=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Styled Components 樣式化元件&body=Check out this article: https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&title=在 React 專案使用 Styled Components 樣式化元件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/04/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Styled-Components-%E6%A8%A3%E5%BC%8F%E5%8C%96%E5%85%83%E4%BB%B6/&name=在 React 專案使用 Styled Components 樣式化元件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -256,7 +263,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -282,13 +289,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文要安裝的 Flowbite 是基於 Tailwind CSS UI 框架的元件庫。另外還有 Flowbite React 元件庫可以使用，但是元件較少。 建立專案建立專案，同時安裝 Tailwind CSS 套件。 123456789npx create-next-app@latest✔ What is your project named? … example✔ Would you li">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫">
+<meta property="og:url" content="https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文要安裝的 Flowbite 是基於 Tailwind CSS UI 框架的元件庫。另外還有 Flowbite React 元件庫可以使用，但是元件較少。 建立專案建立專案，同時安裝 Tailwind CSS 套件。 123456789npx create-next-app@latest✔ What is your project named? … example✔ Would you li">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-27T15:15:22.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.754Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="UI Framework">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Tailwind CSS">
+<meta property="article:tag" content="Next">
+<meta property="article:tag" content="Flowbite">
+<meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/07/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2023/08/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Java-11-0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&text=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&is_video=false&description=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫&body=Check out this article: https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&name=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-07-27T15:15:22.000Z" itemprop="datePublished">2023-07-27</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/React/">React</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Flowbite/" rel="tag">Flowbite</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Next/" rel="tag">Next</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/React/" rel="tag">React</a>, <a class="tag-link-link" href="/tags/Tailwind-CSS/" rel="tag">Tailwind CSS</a>, <a class="tag-link-link" href="/tags/UI-Framework/" rel="tag">UI Framework</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文要安裝的 <a target="_blank" rel="noopener" href="https://flowbite.com/">Flowbite</a> 是基於 Tailwind CSS UI 框架的元件庫。另外還有 <a target="_blank" rel="noopener" href="https://www.flowbite-react.com/">Flowbite React</a> 元件庫可以使用，但是元件較少。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案，同時安裝 Tailwind CSS 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npx create-next-app@latest</span><br><span class="line"></span><br><span class="line">✔ What is your project named? … example</span><br><span class="line">✔ Would you like to use TypeScript? … No</span><br><span class="line">✔ Would you like to use ESLint? … Yes</span><br><span class="line">✔ Would you like to use Tailwind CSS? … Yes</span><br><span class="line">✔ Would you like to use `src/` directory? … No</span><br><span class="line">✔ Would you like to use App Router? (recommended) … Yes</span><br><span class="line">✔ Would you like to customize the default import <span class="built_in">alias</span>? … No</span><br></pre></td></tr></table></figure>
+
+<p>安裝 Flowbite 元件庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install flowbite</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>tailwind.config.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@type</span> &#123;<span class="type">import(&#x27;tailwindcss&#x27;).Config</span>&#125; */</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="string">&#x27;node_modules/flowbite-react/**/*.&#123;js,jsx,ts,tsx&#125;&#x27;</span>, <span class="comment">// 添加此行</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;flowbite/plugin&#x27;</span>), <span class="comment">// 添加此行</span></span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>app/layout.js</code> 檔，引入 Flowbite 的互動腳本。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./globals.css&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Inter</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;next/font/google&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Script</span> <span class="keyword">from</span> <span class="string">&#x27;next/script&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inter = <span class="title class_">Inter</span>(&#123; <span class="attr">subsets</span>: [<span class="string">&#x27;latin&#x27;</span>] &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> metadata = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Create Next App&#x27;</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&#x27;Generated by create next app&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">RootLayout</span>(<span class="params">&#123; children &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">body</span> <span class="attr">className</span>=<span class="string">&#123;inter.className&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js&quot;</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml">    <span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>在根目錄新增 <code>components</code> 資料夾，建立一個 <code>header.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Header</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;bg-white border-gray-200 dark:bg-gray-900&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://flowbite.com/&quot;</span> <span class="attr">class</span>=<span class="string">&quot;flex items-center&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://flowbite.com/docs/images/logo.svg&quot;</span> <span class="attr">class</span>=<span class="string">&quot;h-8 mr-3&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Flowbite Logo&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;self-center text-2xl font-semibold whitespace-nowrap dark:text-white&quot;</span>&gt;</span>Flowbite<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">data-collapse-toggle</span>=<span class="string">&quot;navbar-default&quot;</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">class</span>=<span class="string">&quot;inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600&quot;</span> <span class="attr">aria-controls</span>=<span class="string">&quot;navbar-default&quot;</span> <span class="attr">aria-expanded</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;sr-only&quot;</span>&gt;</span>Open main menu<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">svg</span> <span class="attr">class</span>=<span class="string">&quot;w-5 h-5&quot;</span> <span class="attr">aria-hidden</span>=<span class="string">&quot;true&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;none&quot;</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 17 14&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">path</span> <span class="attr">stroke</span>=<span class="string">&quot;currentColor&quot;</span> <span class="attr">stroke-linecap</span>=<span class="string">&quot;round&quot;</span> <span class="attr">stroke-linejoin</span>=<span class="string">&quot;round&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span> <span class="attr">d</span>=<span class="string">&quot;M1 1h15M1 7h15M1 13h15&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;hidden w-full md:block md:w-auto&quot;</span> <span class="attr">id</span>=<span class="string">&quot;navbar-default&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500&quot;</span> <span class="attr">aria-current</span>=<span class="string">&quot;page&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent&quot;</span>&gt;</span>About<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent&quot;</span>&gt;</span>Services<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent&quot;</span>&gt;</span>Pricing<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">class</span>=<span class="string">&quot;block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent&quot;</span>&gt;</span>Contact<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>app/layout.js</code> 檔，在裡面使用 <code>Header</code> 元件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Header</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/header&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./globals.css&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Inter</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;next/font/google&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inter = <span class="title class_">Inter</span>(&#123; <span class="attr">subsets</span>: [<span class="string">&#x27;latin&#x27;</span>] &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> metadata = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Create Next App&#x27;</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&#x27;Generated by create next app&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">RootLayout</span>(<span class="params">&#123; children &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">body</span> <span class="attr">className</span>=<span class="string">&#123;inter.className&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Header</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js&quot;</span> <span class="attr">async</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-handlebars"><span class="language-xml">    <span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://flowbite.com/">Flowbite</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&text=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&is_video=false&description=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫&body=Check out this article: https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&title=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/07/%E5%9C%A8-Next-13-0-%E4%BD%BF%E7%94%A8-Tailwind-CSS-UI-%E6%A1%86%E6%9E%B6%E5%92%8C-Flowbite-%E5%85%83%E4%BB%B6%E5%BA%AB/&name=在 Next 13.0 使用 Tailwind CSS UI 框架和 Flowbite 元件庫&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

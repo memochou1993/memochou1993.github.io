@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="做法建立專案。 12mkdir eth-erc-1155cd eth-erc-1155  初始化 Truffle 專案。 1truffle init  修改 truffle-config.js 檔。 1234567891011121314module.exports = &amp;#123;  networks: &amp;#123;    development: &amp;#123;     host: &apos;127.0">
-<meta name="keywords" content="JavaScript,Node,區塊鏈,Ethereum,Solidity,Smart Contract,DApp,NFT,Truffle,Ethers,ERC-1155">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法建立專案。 12mkdir eth-erc-1155cd eth-erc-1155  初始化 Truffle 專案。 1truffle init  修改 truffle-config.js 檔。 1234567891011121314module.exports &#x3D; &amp;#123;  networks: &amp;#123;    development: &amp;#123;     host: &amp;#x27;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約">
-<meta property="og:url" content="https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法建立專案。 12mkdir eth-erc-1155cd eth-erc-1155  初始化 Truffle 專案。 1truffle init  修改 truffle-config.js 檔。 1234567891011121314module.exports = &amp;#123;  networks: &amp;#123;    development: &amp;#123;     host: &apos;127.0">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.994Z">
+<meta property="og:description" content="做法建立專案。 12mkdir eth-erc-1155cd eth-erc-1155  初始化 Truffle 專案。 1truffle init  修改 truffle-config.js 檔。 1234567891011121314module.exports &#x3D; &amp;#123;  networks: &amp;#123;    development: &amp;#123;     host: &amp;#x27;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-30T12:25:22.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.732Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Ethereum">
+<meta property="article:tag" content="Ethers">
+<meta property="article:tag" content="Smart Contract">
+<meta property="article:tag" content="DApp">
+<meta property="article:tag" content="NFT">
+<meta property="article:tag" content="Solidity">
+<meta property="article:tag" content="Truffle">
+<meta property="article:tag" content="ERC-1155">
+<meta property="article:tag" content="Blockchain">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約">
-<meta name="twitter:description" content="做法建立專案。 12mkdir eth-erc-1155cd eth-erc-1155  初始化 Truffle 專案。 1truffle init  修改 truffle-config.js 檔。 1234567891011121314module.exports = &amp;#123;  networks: &amp;#123;    development: &amp;#123;     host: &apos;127.0">
     
     
         
@@ -44,14 +54,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +103,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/08/使用-nft-art-generator-產生-NFT-組合圖片/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/08/%E4%BD%BF%E7%94%A8-nft-art-generator-%E5%A5%97%E4%BB%B6%E7%94%A2%E7%94%9F-NFT-%E7%B5%84%E5%90%88%E5%9C%96%E7%89%87/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/09/使用-JavaScript-透過-Moralis-API-存取-NFT-智能合約資料/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/09/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Moralis-API-%E5%AD%98%E5%8F%96-NFT-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%E8%B3%87%E6%96%99/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +119,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&text=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&is_video=false&description=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&body=Check out this article: https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&name=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&text=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&is_video=false&description=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&body=Check out this article: https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&name=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +171,7 @@
             
         
             
-                <a href="/categories/區塊鏈/Ethereum/">Ethereum</a>
+                <a href="/categories/Blockchain/Ethereum/">Ethereum</a>
             
         
     </div>
@@ -165,7 +180,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/DApp/">DApp</a>, <a class="tag-link" href="/tags/ERC-1155/">ERC-1155</a>, <a class="tag-link" href="/tags/Ethereum/">Ethereum</a>, <a class="tag-link" href="/tags/Ethers/">Ethers</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/NFT/">NFT</a>, <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/Smart-Contract/">Smart Contract</a>, <a class="tag-link" href="/tags/Solidity/">Solidity</a>, <a class="tag-link" href="/tags/Truffle/">Truffle</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+        <a class="tag-link-link" href="/tags/Blockchain/" rel="tag">Blockchain</a>, <a class="tag-link-link" href="/tags/DApp/" rel="tag">DApp</a>, <a class="tag-link-link" href="/tags/ERC-1155/" rel="tag">ERC-1155</a>, <a class="tag-link-link" href="/tags/Ethereum/" rel="tag">Ethereum</a>, <a class="tag-link-link" href="/tags/Ethers/" rel="tag">Ethers</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/NFT/" rel="tag">NFT</a>, <a class="tag-link-link" href="/tags/Node/" rel="tag">Node</a>, <a class="tag-link-link" href="/tags/Smart-Contract/" rel="tag">Smart Contract</a>, <a class="tag-link-link" href="/tags/Solidity/" rel="tag">Solidity</a>, <a class="tag-link-link" href="/tags/Truffle/" rel="tag">Truffle</a>
     </div>
 
 
@@ -175,26 +190,25 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立專案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir eth-erc-1155</span><br><span class="line"><span class="built_in">cd</span> eth-erc-1155</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> eth-erc-1155</span><br><span class="line"><span class="built_in">cd</span> eth-erc-1155</span><br></pre></td></tr></table></figure>
 
 <p>初始化 Truffle 專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle init</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>truffle-config.js</code> 檔。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  networks: &#123;</span><br><span class="line">    development: &#123;</span><br><span class="line">     host: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">     port: <span class="number">7545</span>,</span><br><span class="line">     network_id: <span class="string">'*'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  compilers: &#123;</span><br><span class="line">    solc: &#123;</span><br><span class="line">      version: <span class="string">'0.8.13'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">networks</span>: &#123;</span><br><span class="line">    <span class="attr">development</span>: &#123;</span><br><span class="line">     <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>,</span><br><span class="line">     <span class="attr">port</span>: <span class="number">7545</span>,</span><br><span class="line">     <span class="attr">network_id</span>: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">compilers</span>: &#123;</span><br><span class="line">    <span class="attr">solc</span>: &#123;</span><br><span class="line">      <span class="attr">version</span>: <span class="string">&#x27;0.8.13&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>.gitignore</code> 檔。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/node_modules</span><br><span class="line">/build</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/node_modules</span><br><span class="line">/build</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>ERC1155NFT.sol</code> 檔。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.13;</span><br><span class="line"></span><br><span class="line">import &quot;@openzeppelin/contracts/access/Ownable.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin/contracts/utils/Strings.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract ERC1155NFT is ERC1155URIStorage, Ownable &#123;</span><br><span class="line">    mapping(address =&gt; uint8) balances;</span><br><span class="line"></span><br><span class="line">    uint256 tokenCount = 0;</span><br><span class="line"></span><br><span class="line">    constructor() ERC1155(&quot;&quot;) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    function mintNFT(string memory _tokenURI)</span><br><span class="line">        public</span><br><span class="line">        returns (uint256)</span><br><span class="line">    &#123;</span><br><span class="line">        require(balances[msg.sender] &lt; 100);</span><br><span class="line">        balances[msg.sender]++;</span><br><span class="line">        tokenCount++;</span><br><span class="line">        _mint(msg.sender, tokenCount, 10, &quot;&quot;);</span><br><span class="line">        _setURI(tokenCount, string(abi.encodePacked(_tokenURI, Strings.toString(tokenCount))));</span><br><span class="line">        return tokenCount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.13;</span><br><span class="line"></span><br><span class="line">import &quot;@openzeppelin/contracts/access/Ownable.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin/contracts/token/ERC1155/extensions/ERC1155URIStorage.sol&quot;;</span><br><span class="line">import &quot;@openzeppelin/contracts/utils/Strings.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract ERC1155NFT is ERC1155URIStorage, Ownable &#123;</span><br><span class="line">    mapping(address =&gt; uint8) balances;</span><br><span class="line"></span><br><span class="line">    uint256 tokenCount = 0;</span><br><span class="line"></span><br><span class="line">    constructor() ERC1155(&quot;&quot;) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    function mintNFT(string memory _tokenURI)</span><br><span class="line">        public</span><br><span class="line">        returns (uint256)</span><br><span class="line">    &#123;</span><br><span class="line">        require(balances[msg.sender] &lt; 100);</span><br><span class="line">        balances[msg.sender]++;</span><br><span class="line">        tokenCount++;</span><br><span class="line">        _mint(msg.sender, tokenCount, 10, &quot;&quot;);</span><br><span class="line">        _setURI(tokenCount, string(abi.encodePacked(_tokenURI, Strings.toString(tokenCount))));</span><br><span class="line">        return tokenCount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>migrations/2_deploy_contracts.js</code> 檔。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ERC1155NFT = artifacts.require(<span class="string">"ERC1155NFT"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">deployer</span>) =&gt;</span> &#123;</span><br><span class="line">  deployer.deploy(ERC1155NFT);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">ERC1155NFT</span> = artifacts.<span class="built_in">require</span>(<span class="string">&quot;ERC1155NFT&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="function">(<span class="params">deployer</span>) =&gt;</span> &#123;</span><br><span class="line">  deployer.<span class="title function_">deploy</span>(<span class="title class_">ERC1155NFT</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>執行部署。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truffle migrate</span><br></pre></td></tr></table></figure>
-
 
   </div>
 </article>
@@ -231,21 +245,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&text=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&is_video=false&description=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&body=Check out this article: https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/使用-Solidity-和-Truffle-在-Ethereum-區塊鏈開發-ERC-1155-智能合約/&name=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&text=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&is_video=false&description=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&body=Check out this article: https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&title=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Truffle-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC-ERC-1155-%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84/&name=使用 Solidity 和 Truffle 在 Ethereum 區塊鏈開發 ERC-1155 智能合約&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -263,7 +277,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -289,13 +303,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

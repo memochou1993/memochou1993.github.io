@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="使用方法安裝 docker-sync 鏡像同步工具。 1sh sync.sh install  啟動服務。 1sh sync.sh up &amp;lt;SERVICES&amp;gt;  關閉服務。 1sh sync.sh down  以 laradock 的身份進入虛擬機。 1sh sync.sh bash">
-<meta name="keywords" content="環境部署,Docker,Laradock">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="使用方法安裝 docker-sync 鏡像同步工具。 1sh sync.sh install  啟動服務。 1sh sync.sh up &lt;SERVICES&gt;  關閉服務。 1sh sync.sh down  以 laradock 的身份進入虛擬機。 1sh sync.sh bash">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 macOS 上使用 Laradock 自動化腳本">
-<meta property="og:url" content="https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="使用方法安裝 docker-sync 鏡像同步工具。 1sh sync.sh install  啟動服務。 1sh sync.sh up &amp;lt;SERVICES&amp;gt;  關閉服務。 1sh sync.sh down  以 laradock 的身份進入虛擬機。 1sh sync.sh bash">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.951Z">
+<meta property="og:description" content="使用方法安裝 docker-sync 鏡像同步工具。 1sh sync.sh install  啟動服務。 1sh sync.sh up &lt;SERVICES&gt;  關閉服務。 1sh sync.sh down  以 laradock 的身份進入虛擬機。 1sh sync.sh bash">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-19T12:06:25.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.668Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Laradock">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 macOS 上使用 Laradock 自動化腳本">
-<meta name="twitter:description" content="使用方法安裝 docker-sync 鏡像同步工具。 1sh sync.sh install  啟動服務。 1sh sync.sh up &amp;lt;SERVICES&amp;gt;  關閉服務。 1sh sync.sh down  以 laradock 的身份進入虛擬機。 1sh sync.sh bash">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/08/設定-Visual-Studio-Code-編輯器/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/%E8%A8%AD%E5%AE%9A-Visual-Studio-Code-%E7%B7%A8%E8%BC%AF%E5%99%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/08/在-Laradock-使用埠號建立多站點/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/08/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8%E5%9F%A0%E8%99%9F%E5%BB%BA%E7%AB%8B%E5%A4%9A%E7%AB%99%E9%BB%9E/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&text=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&is_video=false&description=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 Laradock 自動化腳本&body=Check out this article: https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&name=在 macOS 上使用 Laradock 自動化腳本&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&text=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&is_video=false&description=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 Laradock 自動化腳本&body=Check out this article: https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&name=在 macOS 上使用 Laradock 自動化腳本&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用方法"><span class="toc-number">1.</span> <span class="toc-text">使用方法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">使用方法</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +163,7 @@
             
         
             
-                <a href="/categories/環境部署/Laradock/">Laradock</a>
+                <a href="/categories/Deployment/Laradock/">Laradock</a>
             
         
     </div>
@@ -165,7 +172,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Laradock/">Laradock</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/Laradock/" rel="tag">Laradock</a>
     </div>
 
 
@@ -185,7 +192,6 @@
 
 <p>以 <code>laradock</code> 的身份進入虛擬機。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh sync.sh bash</span><br></pre></td></tr></table></figure>
-
 
   </div>
 </article>
@@ -222,21 +228,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用方法"><span class="toc-number">1.</span> <span class="toc-text">使用方法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">使用方法</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&text=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&is_video=false&description=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 Laradock 自動化腳本&body=Check out this article: https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/08/在-MacOS-上使用-Laradock-自動化腳本/&name=在 macOS 上使用 Laradock 自動化腳本&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&text=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&is_video=false&description=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上使用 Laradock 自動化腳本&body=Check out this article: https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&title=在 macOS 上使用 Laradock 自動化腳本"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/08/%E5%9C%A8-MacOS-%E4%B8%8A%E4%BD%BF%E7%94%A8-Laradock-%E8%87%AA%E5%8B%95%E5%8C%96%E8%85%B3%E6%9C%AC/&name=在 macOS 上使用 Laradock 自動化腳本&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -254,7 +260,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -280,13 +286,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

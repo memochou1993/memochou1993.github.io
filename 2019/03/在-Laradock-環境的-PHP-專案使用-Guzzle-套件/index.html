@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="安裝套件1composer require guzzlehttp/guzzle  使用1234567891011use GuzzleHttp\Client;$client = new Client([    &apos;base_uri&apos; =&amp;gt; &apos;http://laravel.test&apos;,]);$response = $client-&amp;gt;post(&apos;/oauth/token&apos;, [    &apos;for">
-<meta name="keywords" content="Laravel,環境部署,Laradock,Guzzle,Nginx">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="安裝套件1composer require guzzlehttp&#x2F;guzzle  使用1234567891011use GuzzleHttp\Client;$client &#x3D; new Client([    &amp;#x27;base_uri&amp;#x27; &#x3D;&gt; &amp;#x27;http:&#x2F;&#x2F;laravel.test&amp;#x27;,]);$response &#x3D; $client-&gt;post(&amp;#x27">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laradock 環境的 PHP 專案使用 Guzzle 套件">
-<meta property="og:url" content="https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="安裝套件1composer require guzzlehttp/guzzle  使用1234567891011use GuzzleHttp\Client;$client = new Client([    &apos;base_uri&apos; =&amp;gt; &apos;http://laravel.test&apos;,]);$response = $client-&amp;gt;post(&apos;/oauth/token&apos;, [    &apos;for">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2023-01-18T11:08:48.536Z">
+<meta property="og:description" content="安裝套件1composer require guzzlehttp&#x2F;guzzle  使用1234567891011use GuzzleHttp\Client;$client &#x3D; new Client([    &amp;#x27;base_uri&amp;#x27; &#x3D;&gt; &amp;#x27;http:&#x2F;&#x2F;laravel.test&amp;#x27;,]);$response &#x3D; $client-&gt;post(&amp;#x27">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-12T15:01:28.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.664Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Laradock">
+<meta property="article:tag" content="Guzzle">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laradock 環境的 PHP 專案使用 Guzzle 套件">
-<meta name="twitter:description" content="安裝套件1composer require guzzlehttp/guzzle  使用1234567891011use GuzzleHttp\Client;$client = new Client([    &apos;base_uri&apos; =&amp;gt; &apos;http://laravel.test&apos;,]);$response = $client-&amp;gt;post(&apos;/oauth/token&apos;, [    &apos;for">
     
     
         
@@ -44,14 +48,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/03/在-Laravel-5-8-使用-Rule-自訂驗證規則/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/03/%E5%9C%A8-Laravel-5-8-%E4%BD%BF%E7%94%A8-Rule-%E8%87%AA%E8%A8%82%E9%A9%97%E8%AD%89%E8%A6%8F%E5%89%87/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/03/在-Laravel-5-8-使用帳號或信箱進行-Auth-認證/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/03/%E5%9C%A8-Laravel-5-8-%E4%BD%BF%E7%94%A8%E5%B8%B3%E8%99%9F%E6%88%96%E4%BF%A1%E7%AE%B1%E9%80%B2%E8%A1%8C-Auth-%E8%AA%8D%E8%AD%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +113,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&text=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&is_video=false&description=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&body=Check out this article: https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&name=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&text=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&is_video=false&description=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&body=Check out this article: https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&name=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">1.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#連線錯誤"><span class="toc-number">3.</span> <span class="toc-text">連線錯誤</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E5%A5%97%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%A3%E7%B7%9A%E9%8C%AF%E8%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">連線錯誤</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +165,7 @@
             
         
             
-                <a href="/categories/環境部署/Laradock/">Laradock</a>
+                <a href="/categories/Deployment/Laradock/">Laradock</a>
             
         
     </div>
@@ -165,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Guzzle/">Guzzle</a>, <a class="tag-link" href="/tags/Laradock/">Laradock</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/Nginx/">Nginx</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Guzzle/" rel="tag">Guzzle</a>, <a class="tag-link-link" href="/tags/Laradock/" rel="tag">Laradock</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/Nginx/" rel="tag">Nginx</a>
     </div>
 
 
@@ -176,14 +185,13 @@
   <div class="content" itemprop="articleBody">
     <h2 id="安裝套件"><a href="#安裝套件" class="headerlink" title="安裝套件"></a>安裝套件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require guzzlehttp/guzzle</span><br></pre></td></tr></table></figure>
 
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">GuzzleHttp</span>\<span class="title">Client</span>;</span><br><span class="line"></span><br><span class="line">$client = <span class="keyword">new</span> Client([</span><br><span class="line">    <span class="string">'base_uri'</span> =&gt; <span class="string">'http://laravel.test'</span>,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">$response = $client-&gt;post(<span class="string">'/oauth/token'</span>, [</span><br><span class="line">    <span class="string">'form_params'</span> =&gt; <span class="keyword">$this</span>-&gt;request-&gt;all(),</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> $response-&gt;getBody();</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">GuzzleHttp</span>\<span class="title">Client</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$client</span> = <span class="keyword">new</span> <span class="title class_">Client</span>([</span><br><span class="line">    <span class="string">&#x27;base_uri&#x27;</span> =&gt; <span class="string">&#x27;http://laravel.test&#x27;</span>,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="variable">$response</span> = <span class="variable">$client</span>-&gt;<span class="title function_ invoke__">post</span>(<span class="string">&#x27;/oauth/token&#x27;</span>, [</span><br><span class="line">    <span class="string">&#x27;form_params&#x27;</span> =&gt; <span class="variable">$this</span>-&gt;request-&gt;<span class="title function_ invoke__">all</span>(),</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="variable">$response</span>-&gt;<span class="title function_ invoke__">getBody</span>();</span><br></pre></td></tr></table></figure>
 
 <h2 id="連線錯誤"><a href="#連線錯誤" class="headerlink" title="連線錯誤"></a>連線錯誤</h2><p>在 Laradock 中，專案之間使用 Guzzle 發出 HTTP 請求時，會出現以下錯誤：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cURL error 7: Failed to connect to laravel.test port 80: Connection refused</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cURL error 7: Failed to connect to laravel.test port 80: Connection refused</span><br></pre></td></tr></table></figure>
 
 <p>此時，需要修改 <code>Laradock</code> 資料夾的 <code>docker-compose.yml</code> 檔，在 <code>nginx</code> 的 <code>networks</code> 參數下設置別名，當 Nginx 容器啟動時，配置會自動生效：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### NGINX Server #########################################</span></span><br><span class="line"><span class="attr">    nginx:</span></span><br><span class="line"><span class="attr">      build:</span></span><br><span class="line"><span class="attr">        context:</span> <span class="string">./nginx</span></span><br><span class="line"><span class="attr">        args:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">PHP_UPSTREAM_CONTAINER=$&#123;NGINX_PHP_UPSTREAM_CONTAINER&#125;</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">PHP_UPSTREAM_PORT=$&#123;NGINX_PHP_UPSTREAM_PORT&#125;</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">CHANGE_SOURCE=$&#123;CHANGE_SOURCE&#125;</span></span><br><span class="line"><span class="attr">      volumes:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">$&#123;APP_CODE_PATH_HOST&#125;:$&#123;APP_CODE_PATH_CONTAINER&#125;$&#123;APP_CODE_CONTAINER_FLAG&#125;</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">$&#123;NGINX_HOST_LOG_PATH&#125;:/var/log/nginx</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">$&#123;NGINX_SITES_PATH&#125;:/etc/nginx/sites-available</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">$&#123;NGINX_SSL_PATH&#125;:/etc/nginx/ssl</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">"$&#123;NGINX_HOST_HTTP_PORT&#125;:80"</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">"$&#123;NGINX_HOST_HTTPS_PORT&#125;:443"</span></span><br><span class="line"><span class="attr">      depends_on:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">php-fpm</span></span><br><span class="line"><span class="attr">      networks:</span></span><br><span class="line"><span class="attr">        frontend:</span></span><br><span class="line"><span class="attr">          aliases:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">laravel.test</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          aliases:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">laravel.test</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### NGINX Server #########################################</span></span><br><span class="line">    <span class="attr">nginx:</span></span><br><span class="line">      <span class="attr">build:</span></span><br><span class="line">        <span class="attr">context:</span> <span class="string">./nginx</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">PHP_UPSTREAM_CONTAINER=$&#123;NGINX_PHP_UPSTREAM_CONTAINER&#125;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">PHP_UPSTREAM_PORT=$&#123;NGINX_PHP_UPSTREAM_PORT&#125;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">CHANGE_SOURCE=$&#123;CHANGE_SOURCE&#125;</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">$&#123;APP_CODE_PATH_HOST&#125;:$&#123;APP_CODE_PATH_CONTAINER&#125;$&#123;APP_CODE_CONTAINER_FLAG&#125;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">$&#123;NGINX_HOST_LOG_PATH&#125;:/var/log/nginx</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">$&#123;NGINX_SITES_PATH&#125;:/etc/nginx/sites-available</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">$&#123;NGINX_SSL_PATH&#125;:/etc/nginx/ssl</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">&quot;$&#123;NGINX_HOST_HTTP_PORT&#125;:80&quot;</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">&quot;$&#123;NGINX_HOST_HTTPS_PORT&#125;:443&quot;</span></span><br><span class="line">      <span class="attr">depends_on:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">php-fpm</span></span><br><span class="line">      <span class="attr">networks:</span></span><br><span class="line">        <span class="attr">frontend:</span></span><br><span class="line">          <span class="attr">aliases:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">laravel.test</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">aliases:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">laravel.test</span></span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -220,21 +228,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝套件"><span class="toc-number">1.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#連線錯誤"><span class="toc-number">3.</span> <span class="toc-text">連線錯誤</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E5%A5%97%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">安裝套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%A3%E7%B7%9A%E9%8C%AF%E8%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">連線錯誤</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&text=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&is_video=false&description=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&body=Check out this article: https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/03/在-Laradock-環境的-PHP-專案使用-Guzzle-套件/&name=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&text=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&is_video=false&description=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&body=Check out this article: https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&title=在 Laradock 環境的 PHP 專案使用 Guzzle 套件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/03/%E5%9C%A8-Laradock-%E7%92%B0%E5%A2%83%E7%9A%84-PHP-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Guzzle-%E5%A5%97%E4%BB%B6/&name=在 Laradock 環境的 PHP 專案使用 Guzzle 套件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -252,7 +260,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -278,13 +286,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

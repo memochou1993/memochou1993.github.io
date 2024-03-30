@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言由於使用 Linode 虛擬專用伺服器，因此需要把在 GoDaddy 購買的網域交由給 Linode 託管。 註冊到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。 轉移網域首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。    網域名稱伺服器">
-<meta name="keywords" content="環境部署,Linode,GoDaddy,VPS,DNS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="將 GoDaddy 的網域轉移至 Linode 託管">
-<meta property="og:url" content="https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言由於使用 Linode 虛擬專用伺服器，因此需要把在 GoDaddy 購買的網域交由給 Linode 託管。 註冊到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。 轉移網域首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。    網域名稱伺服器">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-06T15:34:46.356Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-05-07T15:20:15.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.666Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="Linode">
+<meta property="article:tag" content="GoDaddy">
+<meta property="article:tag" content="DNS">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="將 GoDaddy 的網域轉移至 Linode 託管">
-<meta name="twitter:description" content="前言由於使用 Linode 虛擬專用伺服器，因此需要把在 GoDaddy 購買的網域交由給 Linode 託管。 註冊到 Linode 官方網站註冊，並選擇 5 塊美金的方案。資料中心選擇東京，作業系統則選擇 Ubuntu 18.04 LTS。 轉移網域首先將 GoDaddy 的網域轉移給 Linode 託管，在 GoDaddy 的 DNS 管理使用自訂的網域名稱伺服器。    網域名稱伺服器">
     
     
         
@@ -44,14 +48,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/05/在-Laravel-5-8-使用帳號或信箱進行-Passport-認證/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/05/%E5%9C%A8-Laravel-5-8-%E4%BD%BF%E7%94%A8%E5%B8%B3%E8%99%9F%E6%88%96%E4%BF%A1%E7%AE%B1%E9%80%B2%E8%A1%8C-Passport-%E8%AA%8D%E8%AD%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/05/使用-ssh-copy-id-命令同步金鑰執行-SSH-連線/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/05/%E4%BD%BF%E7%94%A8-ssh-copy-id-%E5%91%BD%E4%BB%A4%E5%90%8C%E6%AD%A5%E9%87%91%E9%91%B0%E5%9F%B7%E8%A1%8C-SSH-%E9%80%A3%E7%B7%9A/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +113,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&text=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&is_video=false&description=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=將 GoDaddy 的網域轉移至 Linode 託管&body=Check out this article: https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&name=將 GoDaddy 的網域轉移至 Linode 託管&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&text=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&is_video=false&description=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=將 GoDaddy 的網域轉移至 Linode 託管&body=Check out this article: https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&name=將 GoDaddy 的網域轉移至 Linode 託管&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊"><span class="toc-number">2.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#轉移網域"><span class="toc-number">3.</span> <span class="toc-text">轉移網域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-DNS"><span class="toc-number">4.</span> <span class="toc-text">設定 DNS</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A"><span class="toc-number">2.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%89%E7%A7%BB%E7%B6%B2%E5%9F%9F"><span class="toc-number">3.</span> <span class="toc-text">轉移網域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-DNS"><span class="toc-number">4.</span> <span class="toc-text">設定 DNS</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +165,7 @@
             
         
             
-                <a href="/categories/雲端運算服務/Linode/">Linode</a>
+                <a href="/categories/Cloud-Computing-Service/Linode/">Linode</a>
             
         
     </div>
@@ -165,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/DNS/">DNS</a>, <a class="tag-link" href="/tags/GoDaddy/">GoDaddy</a>, <a class="tag-link" href="/tags/Linode/">Linode</a>, <a class="tag-link" href="/tags/VPS/">VPS</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/DNS/" rel="tag">DNS</a>, <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/GoDaddy/" rel="tag">GoDaddy</a>, <a class="tag-link-link" href="/tags/Linode/" rel="tag">Linode</a>, <a class="tag-link-link" href="/tags/VPS/" rel="tag">VPS</a>
     </div>
 
 
@@ -200,7 +209,7 @@
 </tr>
 </tbody></table>
 <h2 id="設定-DNS"><a href="#設定-DNS" class="headerlink" title="設定 DNS"></a>設定 DNS</h2><p>在 Linode 的 Domains 頁面新增一個 Domain。</p>
-<p>編輯 Domain，新增 A/AAAA 記錄，並指向主機的 IP 位置。</p>
+<p>編輯 Domain，新增 A&#x2F;AAAA 紀錄，並指向主機的 IP 位置。</p>
 <table>
 <thead>
 <tr>
@@ -217,7 +226,7 @@
 <td>xxx.xxx.xxx.xxx</td>
 </tr>
 </tbody></table>
-<p>新增 CNAME 記錄，設定別名。</p>
+<p>新增 CNAME 紀錄，設定別名。</p>
 <table>
 <thead>
 <tr>
@@ -227,7 +236,7 @@
 </thead>
 <tbody><tr>
 <td>laravel</td>
-<td><a href="http://www.domain.com" target="_blank" rel="noopener">www.domain.com</a></td>
+<td><a target="_blank" rel="noopener" href="http://www.domain.com/">www.domain.com</a></td>
 </tr>
 </tbody></table>
 <p>約等待 15 分鐘即可生效。</p>
@@ -267,21 +276,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊"><span class="toc-number">2.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#轉移網域"><span class="toc-number">3.</span> <span class="toc-text">轉移網域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-DNS"><span class="toc-number">4.</span> <span class="toc-text">設定 DNS</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A"><span class="toc-number">2.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%89%E7%A7%BB%E7%B6%B2%E5%9F%9F"><span class="toc-number">3.</span> <span class="toc-text">轉移網域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-DNS"><span class="toc-number">4.</span> <span class="toc-text">設定 DNS</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&text=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&is_video=false&description=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=將 GoDaddy 的網域轉移至 Linode 託管&body=Check out this article: https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/05/將-GoDaddy-的網域轉移至-Linode-託管/&name=將 GoDaddy 的網域轉移至 Linode 託管&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&text=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&is_video=false&description=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=將 GoDaddy 的網域轉移至 Linode 託管&body=Check out this article: https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&title=將 GoDaddy 的網域轉移至 Linode 託管"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/05/%E5%B0%87-GoDaddy-%E7%9A%84%E7%B6%B2%E5%9F%9F%E8%BD%89%E7%A7%BB%E8%87%B3-Linode-%E8%A8%97%E7%AE%A1/&name=將 GoDaddy 的網域轉移至 Linode 託管&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -299,7 +308,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -325,13 +334,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

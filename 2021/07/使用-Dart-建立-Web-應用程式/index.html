@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart。 12brew tap dart-lang/dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$">
-<meta name="keywords" content="程式設計,Dart">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="安裝使用 brew 新增 dart-lang&#x2F;dart 儲存庫，並安裝 dart。 12brew tap dart-lang&#x2F;dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH&#x3D;&quot;$PAT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Dart 建立 Web 應用程式">
-<meta property="og:url" content="https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart。 12brew tap dart-lang/dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.970Z">
+<meta property="og:description" content="安裝使用 brew 新增 dart-lang&#x2F;dart 儲存庫，並安裝 dart。 12brew tap dart-lang&#x2F;dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH&#x3D;&quot;$PAT">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-08T11:58:23.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.693Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Dart">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Dart 建立 Web 應用程式">
-<meta name="twitter:description" content="安裝使用 brew 新增 dart-lang/dart 儲存庫，並安裝 dart。 12brew tap dart-lang/dartbrew install dart  查看版本。 1dart --version  取得 CLI 工具。 1dart pub global activate webdev  將 Dart 套件的執行檔路徑加到環境變數。 1export PATH=&quot;$PATH&quot;:&quot;$">
     
     
         
@@ -44,14 +45,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +94,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2021/05/在-Go-專案使用-Session-認證/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/05/%E5%9C%A8-Go-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Session-%E8%AA%8D%E8%AD%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2021/07/使用-Flutter-建立-Web-應用程式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/07/%E4%BD%BF%E7%94%A8-Flutter-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +110,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&text=使用 Dart 建立 Web 應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&is_video=false&description=使用 Dart 建立 Web 應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Dart 建立 Web 應用程式&body=Check out this article: https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&name=使用 Dart 建立 Web 應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&text=使用 Dart 建立 Web 應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&is_video=false&description=使用 Dart 建立 Web 應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Dart 建立 Web 應用程式&body=Check out this article: https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&name=使用 Dart 建立 Web 應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">1.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D"><span class="toc-number">1.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E7%B6%B2%E9%A0%81"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +164,7 @@
             
         
             
-                <a href="/categories/程式設計/Dart/其他/">其他</a>
+                <a href="/categories/Programming/Dart/Others/">Others</a>
             
         
     </div>
@@ -167,7 +173,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Dart/">Dart</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/Dart/" rel="tag">Dart</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -186,7 +192,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dart pub global activate webdev</span><br></pre></td></tr></table></figure>
 
 <p>將 Dart 套件的執行檔路徑加到環境變數。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>"</span>:<span class="string">"<span class="variable">$HOME</span>/.pub-cache/bin"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="variable">$PATH</span>&quot;</span>:<span class="string">&quot;<span class="variable">$HOME</span>/.pub-cache/bin&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dart create -t web-simple dart-web-example</span><br></pre></td></tr></table></figure>
@@ -195,14 +201,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> dart-web-example</span><br><span class="line">webdev serve</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>main.dart</code> 檔。</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'dart:html'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">var</span> output = <span class="built_in">document</span>.<span class="built_in">querySelector</span>(<span class="string">'#output'</span>);</span><br><span class="line">  output?.children.addAll(thingsTodo().map(newLI));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LIElement newLI(<span class="built_in">String</span> itemText) =&gt; LIElement()..text = itemText;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Iterable</span>&lt;<span class="built_in">String</span>&gt; thingsTodo() <span class="keyword">sync</span>* &#123;</span><br><span class="line">  <span class="keyword">var</span> actions = [<span class="string">'Walk'</span>, <span class="string">'Wash'</span>, <span class="string">'Feed'</span>];</span><br><span class="line">  <span class="keyword">var</span> pets = [<span class="string">'cats'</span>, <span class="string">'dogs'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> action <span class="keyword">in</span> actions) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">      <span class="keyword">if</span> (pet == <span class="string">'cats'</span> &amp;&amp; action != <span class="string">'Feed'</span>) <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">yield</span> <span class="string">'$action the $pet'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:html&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> main() &#123;</span><br><span class="line">  <span class="keyword">var</span> output = <span class="built_in">document</span>.<span class="built_in">querySelector</span>(<span class="string">&#x27;#output&#x27;</span>);</span><br><span class="line">  output?.children.addAll(thingsTodo().map(newLI));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LIElement newLI(<span class="built_in">String</span> itemText) =&gt; LIElement()..text = itemText;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Iterable</span>&lt;<span class="built_in">String</span>&gt; thingsTodo() <span class="keyword">sync</span>* &#123;</span><br><span class="line">  <span class="keyword">var</span> actions = [<span class="string">&#x27;Walk&#x27;</span>, <span class="string">&#x27;Wash&#x27;</span>, <span class="string">&#x27;Feed&#x27;</span>];</span><br><span class="line">  <span class="keyword">var</span> pets = [<span class="string">&#x27;cats&#x27;</span>, <span class="string">&#x27;dogs&#x27;</span>];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> action <span class="keyword">in</span> actions) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> pet <span class="keyword">in</span> pets) &#123;</span><br><span class="line">      <span class="keyword">if</span> (pet == <span class="string">&#x27;cats&#x27;</span> &amp;&amp; action != <span class="string">&#x27;Feed&#x27;</span>) <span class="keyword">continue</span>;</span><br><span class="line">      <span class="keyword">yield</span> <span class="string">&#x27;<span class="subst">$action</span> the <span class="subst">$pet</span>&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往 <a href="http://127.0.0.1:8080" target="_blank" rel="noopener">http://127.0.0.1:8080</a> 瀏覽。</p>
+<h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往 <a target="_blank" rel="noopener" href="http://127.0.0.1:8080/">http://127.0.0.1:8080</a> 瀏覽。</p>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
-<li><a href="https://github.com/memochou1993/dart-web-example" target="_blank" rel="noopener">dart-web-example</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/dart-web-example">dart-web-example</a></li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://dart.dev/web" target="_blank" rel="noopener">Dart - Web platform</a></li>
+<li><a target="_blank" rel="noopener" href="https://dart.dev/web">Dart - Web platform</a></li>
 </ul>
 
   </div>
@@ -240,21 +246,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝"><span class="toc-number">1.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D"><span class="toc-number">1.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E7%B6%B2%E9%A0%81"><span class="toc-number">3.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&text=使用 Dart 建立 Web 應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&is_video=false&description=使用 Dart 建立 Web 應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Dart 建立 Web 應用程式&body=Check out this article: https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/07/使用-Dart-建立-Web-應用程式/&name=使用 Dart 建立 Web 應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&text=使用 Dart 建立 Web 應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&is_video=false&description=使用 Dart 建立 Web 應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Dart 建立 Web 應用程式&body=Check out this article: https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Dart 建立 Web 應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/07/%E4%BD%BF%E7%94%A8-Dart-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&name=使用 Dart 建立 Web 應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -272,7 +278,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -298,13 +304,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

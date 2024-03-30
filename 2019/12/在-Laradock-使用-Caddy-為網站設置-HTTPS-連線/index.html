@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言Caddy 是一個開源並使用 Golang 編寫的 Web 伺服器。其特性是默認啟用 HTTPS，是第一個無需額外配置即可提供 HTTPS 的 Web 伺服器。 做法進到 ~/Laradock/caddy/caddy 資料夾。 1cd ~/Laradock/caddy/caddy  修改 Caddyfile 檔，將 0.0.0.0:80 改為指定網址： 12# 0.0.0.0:80https:">
-<meta name="keywords" content="環境部署,Laradock,SSL,HTTPS,Caddy">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言Caddy 是一個開源並使用 Golang 編寫的 Web 伺服器。其特性是默認啟用 HTTPS，是第一個無需額外配置即可提供 HTTPS 的 Web 伺服器。 做法進到 ~&#x2F;Laradock&#x2F;caddy&#x2F;caddy 資料夾。 1cd ~&#x2F;Laradock&#x2F;caddy&#x2F;caddy  修改 Caddyfile 檔，將 0.0.0.0:80 改為指定網址： 12# 0.0.0.0:80https:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laradock 使用 Caddy 為網站設置 HTTPS 連線">
-<meta property="og:url" content="https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言Caddy 是一個開源並使用 Golang 編寫的 Web 伺服器。其特性是默認啟用 HTTPS，是第一個無需額外配置即可提供 HTTPS 的 Web 伺服器。 做法進到 ~/Laradock/caddy/caddy 資料夾。 1cd ~/Laradock/caddy/caddy  修改 Caddyfile 檔，將 0.0.0.0:80 改為指定網址： 12# 0.0.0.0:80https:">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.955Z">
+<meta property="og:description" content="前言Caddy 是一個開源並使用 Golang 編寫的 Web 伺服器。其特性是默認啟用 HTTPS，是第一個無需額外配置即可提供 HTTPS 的 Web 伺服器。 做法進到 ~&#x2F;Laradock&#x2F;caddy&#x2F;caddy 資料夾。 1cd ~&#x2F;Laradock&#x2F;caddy&#x2F;caddy  修改 Caddyfile 檔，將 0.0.0.0:80 改為指定網址： 12# 0.0.0.0:80https:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-27T02:56:24.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.672Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Laradock">
+<meta property="article:tag" content="SSL">
+<meta property="article:tag" content="HTTPS">
+<meta property="article:tag" content="Caddy">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laradock 使用 Caddy 為網站設置 HTTPS 連線">
-<meta name="twitter:description" content="前言Caddy 是一個開源並使用 Golang 編寫的 Web 伺服器。其特性是默認啟用 HTTPS，是第一個無需額外配置即可提供 HTTPS 的 Web 伺服器。 做法進到 ~/Laradock/caddy/caddy 資料夾。 1cd ~/Laradock/caddy/caddy  修改 Caddyfile 檔，將 0.0.0.0:80 改為指定網址： 12# 0.0.0.0:80https:">
     
     
         
@@ -44,14 +48,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/12/在-Vue-2-5-使用-Axios-處理檔案下載/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/12/%E5%9C%A8-Vue-2-5-%E4%BD%BF%E7%94%A8-Axios-%E8%99%95%E7%90%86%E6%AA%94%E6%A1%88%E4%B8%8B%E8%BC%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/12/使用-Go-實作「1A2B-猜數字遊戲」應用程式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/12/%E4%BD%BF%E7%94%A8-Go-%E5%AF%A6%E4%BD%9C%E3%80%8C1A2B-%E7%8C%9C%E6%95%B8%E5%AD%97%E9%81%8A%E6%88%B2%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +113,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&text=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&is_video=false&description=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&body=Check out this article: https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&name=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&text=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&is_video=false&description=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&body=Check out this article: https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&name=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +165,7 @@
             
         
             
-                <a href="/categories/環境部署/Laradock/">Laradock</a>
+                <a href="/categories/Deployment/Laradock/">Laradock</a>
             
         
     </div>
@@ -165,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Caddy/">Caddy</a>, <a class="tag-link" href="/tags/HTTPS/">HTTPS</a>, <a class="tag-link" href="/tags/Laradock/">Laradock</a>, <a class="tag-link" href="/tags/SSL/">SSL</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Caddy/" rel="tag">Caddy</a>, <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/HTTPS/" rel="tag">HTTPS</a>, <a class="tag-link-link" href="/tags/Laradock/" rel="tag">Laradock</a>, <a class="tag-link-link" href="/tags/SSL/" rel="tag">SSL</a>
     </div>
 
 
@@ -179,7 +188,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock/caddy/caddy</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>Caddyfile</code> 檔，將 <code>0.0.0.0:80</code> 改為指定網址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 0.0.0.0:80</span><br><span class="line">https://yourdomain.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 0.0.0.0:80</span><br><span class="line">https://yourdomain.com</span><br></pre></td></tr></table></figure>
 
 <p>將 <code>tls</code> 開啟，修改為自己的電子郵件地址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#tls self-signed</span></span><br><span class="line">tls youremail@gmai.com</span><br></pre></td></tr></table></figure>
@@ -193,10 +202,10 @@
 <p>最後再將 Caddy 和其他容器一起啟動即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d caddy mysql phpmyadmin</span><br></pre></td></tr></table></figure>
 
-<p>訪問網站：<a href="https://yourdomain.com" target="_blank" rel="noopener">https://yourdomain.com</a></p>
+<p>訪問網站：<a target="_blank" rel="noopener" href="https://yourdomain.com/">https://yourdomain.com</a></p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://laradock.io/guides/#run-site-on-ssl-with-let-s-encrypt-certificate" target="_blank" rel="noopener">Laradock Guides</a></li>
-<li><a href="https://caddyserver.com/" target="_blank" rel="noopener">Caddy</a></li>
+<li><a target="_blank" rel="noopener" href="https://laradock.io/guides/#run-site-on-ssl-with-let-s-encrypt-certificate">Laradock Guides</a></li>
+<li><a target="_blank" rel="noopener" href="https://caddyserver.com/">Caddy</a></li>
 </ul>
 
   </div>
@@ -234,21 +243,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&text=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&is_video=false&description=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&body=Check out this article: https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/12/在-Laradock-使用-Caddy-為網站設置-HTTPS-連線/&name=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&text=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&is_video=false&description=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&body=Check out this article: https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&title=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/12/%E5%9C%A8-Laradock-%E4%BD%BF%E7%94%A8-Caddy-%E7%82%BA%E7%B6%B2%E7%AB%99%E8%A8%AD%E7%BD%AE-HTTPS-%E9%80%A3%E7%B7%9A/&name=在 Laradock 使用 Caddy 為網站設置 HTTPS 連線&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -266,7 +275,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -292,13 +301,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

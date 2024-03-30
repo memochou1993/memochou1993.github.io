@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="環境 Ubuntu 18.04.1 LTS  安裝 Docker更新 apt 套件工具。 1sudo apt-get update  安裝以下套件讓 apt 可以透過 HTTPS 使用倉庫。 123456sudo apt-get install \    apt-transport-https \    ca-certificates \    curl \    gnupg-agent \">
-<meta name="keywords" content="Laravel,環境部署,Linux,Ubuntu,Docker,Laradock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Ubuntu 上建立 Laradock 環境">
-<meta property="og:url" content="https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="環境 Ubuntu 18.04.1 LTS  安裝 Docker更新 apt 套件工具。 1sudo apt-get update  安裝以下套件讓 apt 可以透過 HTTPS 使用倉庫。 123456sudo apt-get install \    apt-transport-https \    ca-certificates \    curl \    gnupg-agent \">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.946Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-02-03T11:13:17.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.660Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Laradock">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Ubuntu 上建立 Laradock 環境">
-<meta name="twitter:description" content="環境 Ubuntu 18.04.1 LTS  安裝 Docker更新 apt 套件工具。 1sudo apt-get update  安裝以下套件讓 apt 可以透過 HTTPS 使用倉庫。 123456sudo apt-get install \    apt-transport-https \    ca-certificates \    curl \    gnupg-agent \">
     
     
         
@@ -44,14 +49,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +98,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/02/使用-Shell-腳本執行-SSH-連線/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/%E4%BD%BF%E7%94%A8-Shell-%E8%85%B3%E6%9C%AC%E5%9F%B7%E8%A1%8C-SSH-%E9%80%A3%E7%B7%9A/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/02/使用-Deployer-為-Laravel-專案建立自動化部署/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/%E4%BD%BF%E7%94%A8-Deployer-%E7%82%BA-Laravel-%E5%B0%88%E6%A1%88%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +114,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&text=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&is_video=false&description=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Ubuntu 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&name=在 Ubuntu 上建立 Laradock 環境&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&text=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&is_video=false&description=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Ubuntu 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&name=在 Ubuntu 上建立 Laradock 環境&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker"><span class="toc-number">2.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker-Compose"><span class="toc-number">3.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-PHP"><span class="toc-number">4.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相關套件"><span class="toc-number">5.</span> <span class="toc-text">安裝相關套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laradock"><span class="toc-number">6.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Composer"><span class="toc-number">7.</span> <span class="toc-text">安裝 Composer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laravel-安裝器"><span class="toc-number">8.</span> <span class="toc-text">安裝 Laravel 安裝器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">9.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-Nginx"><span class="toc-number">10.</span> <span class="toc-text">設定 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-MySQL"><span class="toc-number">11.</span> <span class="toc-text">設定 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">12.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定相關權限"><span class="toc-number">13.</span> <span class="toc-text">設定相關權限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正式環境"><span class="toc-number">14.</span> <span class="toc-text">正式環境</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker"><span class="toc-number">2.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker-Compose"><span class="toc-number">3.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-PHP"><span class="toc-number">4.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E7%9B%B8%E9%97%9C%E5%A5%97%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">安裝相關套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Laradock"><span class="toc-number">6.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Composer"><span class="toc-number">7.</span> <span class="toc-text">安裝 Composer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Laravel-%E5%AE%89%E8%A3%9D%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text">安裝 Laravel 安裝器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">9.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-Nginx"><span class="toc-number">10.</span> <span class="toc-text">設定 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-MySQL"><span class="toc-number">11.</span> <span class="toc-text">設定 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E7%B6%B2%E9%A0%81"><span class="toc-number">12.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E7%9B%B8%E9%97%9C%E6%AC%8A%E9%99%90"><span class="toc-number">13.</span> <span class="toc-text">設定相關權限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E7%92%B0%E5%A2%83"><span class="toc-number">14.</span> <span class="toc-text">正式環境</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +166,7 @@
             
         
             
-                <a href="/categories/環境部署/Laradock/">Laradock</a>
+                <a href="/categories/Deployment/Laradock/">Laradock</a>
             
         
     </div>
@@ -165,7 +175,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Laradock/">Laradock</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/Ubuntu/">Ubuntu</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/Laradock/" rel="tag">Laradock</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a>
     </div>
 
 
@@ -190,7 +200,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">pub   rsa4096 2017-02-22 [SCEA]</span><br><span class="line">      9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88</span><br><span class="line">uid           [ unknown] Docker Release (CE deb) &lt;docker@docker.com&gt;</span><br><span class="line">sub   rsa4096 2017-02-22 [S]</span><br></pre></td></tr></table></figure>
 
 <p>添加 <code>stable</code> 倉庫。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository \</span><br><span class="line">   <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="variable">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>安裝 Docker CE</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
@@ -205,10 +215,10 @@
 <li>需要重新登入。</li>
 </ul>
 <h2 id="安裝-Docker-Compose"><a href="#安裝-Docker-Compose" class="headerlink" title="安裝 Docker Compose"></a>安裝 Docker Compose</h2><p>下載執行檔。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L <span class="string">"https://github.com/docker/compose/releases/download/1.25.5/docker-compose-<span class="variable">$(uname -s)</span>-<span class="variable">$(uname -m)</span>"</span> -o /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L <span class="string">&quot;https://github.com/docker/compose/releases/download/1.25.5/docker-compose-<span class="subst">$(uname -s)</span>-<span class="subst">$(uname -m)</span>&quot;</span> -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
 
 <p>設定權限。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/<span class="built_in">local</span>/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>參數 <code>+x</code> 代表給予所有人執行的權限。</li>
@@ -232,19 +242,19 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/Laradock/laradock.git Laradock</span><br></pre></td></tr></table></figure>
 
 <p>複製範本 <code>env-example</code> 檔作為設定檔。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock &amp;&amp; cp env-example .env</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock &amp;&amp; <span class="built_in">cp</span> env-example .<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>.env</code> 檔的 <code>APP_CODE_PATH_HOST</code> 參數到指定的映射路徑：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APP_CODE_PATH_HOST=~/Projects</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APP_CODE_PATH_HOST=~/Projects</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>docker-compose</code> 啟動 Laradock。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock &amp;&amp; docker-compose up -d nginx mysql phpmyadmin</span><br></pre></td></tr></table></figure>
 
 <h2 id="安裝-Composer"><a href="#安裝-Composer" class="headerlink" title="安裝 Composer"></a>安裝 Composer</h2><p>下載 Composer 並安裝。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">curl -sS https://getcomposer.org/installer -o composer-setup.php</span><br><span class="line">HASH=48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5</span><br><span class="line">php -r <span class="string">"if (hash_file('SHA384', 'composer-setup.php') === '<span class="variable">$HASH</span>') &#123; echo 'Installer verified'; &#125; else &#123; echo 'Installer corrupt'; unlink('composer-setup.php'); &#125; echo PHP_EOL;"</span></span><br><span class="line">Installer verified</span><br><span class="line">sudo php composer-setup.php --install-dir=/usr/<span class="built_in">local</span>/bin --filename=composer</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">curl -sS https://getcomposer.org/installer -o composer-setup.php</span><br><span class="line">HASH=48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5</span><br><span class="line">php -r <span class="string">&quot;if (hash_file(&#x27;SHA384&#x27;, &#x27;composer-setup.php&#x27;) === &#x27;<span class="variable">$HASH</span>&#x27;) &#123; echo &#x27;Installer verified&#x27;; &#125; else &#123; echo &#x27;Installer corrupt&#x27;; unlink(&#x27;composer-setup.php&#x27;); &#125; echo PHP_EOL;&quot;</span></span><br><span class="line">Installer verified</span><br><span class="line">sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>正確 <code>HASH</code> 值，見 <a href="https://composer.github.io/pubkeys.html" target="_blank" rel="noopener">https://composer.github.io/pubkeys.html</a></li>
+<li>正確 <code>HASH</code> 值，見 <a target="_blank" rel="noopener" href="https://composer.github.io/pubkeys.html">https://composer.github.io/pubkeys.html</a></li>
 </ul>
 <p>查看 Composer 版本。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer --version</span><br></pre></td></tr></table></figure>
@@ -256,22 +266,22 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel --version</span><br></pre></td></tr></table></figure>
 
 <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案根目錄。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/Projects</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/Projects</span><br></pre></td></tr></table></figure>
 
 <p>建立 Laravel 專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Projects &amp;&amp; laravel new laravel</span><br></pre></td></tr></table></figure>
 
 <h2 id="設定-Nginx"><a href="#設定-Nginx" class="headerlink" title="設定 Nginx"></a>設定 Nginx</h2><p>複製範本 <code>laravel.conf.example</code> 檔作為設定檔。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock/nginx/sites &amp;&amp; cp laravel.conf.example laravel.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock/nginx/sites &amp;&amp; <span class="built_in">cp</span> laravel.conf.example laravel.conf</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>laravel.conf</code> 檔的 <code>server_name</code> 和 <code>root</code> 參數：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server_name *.amazonaws.com;</span><br><span class="line">root /var/www/laravel/public;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server_name *.amazonaws.com;</span><br><span class="line">root /var/www/laravel/public;</span><br></pre></td></tr></table></figure>
 
 <p>重啟 Nginx 服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Laradock &amp;&amp; docker-compose restart nginx</span><br></pre></td></tr></table></figure>
 
 <h2 id="設定-MySQL"><a href="#設定-MySQL" class="headerlink" title="設定 MySQL"></a>設定 MySQL</h2><p>修改 <code>mysql\my.cnf</code> 檔：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default_authentication_plugin=mysql_native_password</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default_authentication_plugin=mysql_native_password</span><br></pre></td></tr></table></figure>
 
 <p>重新建立 MySQL 容器：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose build --no-cache mysql</span><br></pre></td></tr></table></figure>
@@ -280,36 +290,35 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="built_in">exec</span> mysql bash</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>root</code> 使用者進入資料庫。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mysql -uroot -proot</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mysql <span class="operator">-</span>uroot <span class="operator">-</span>proot</span><br></pre></td></tr></table></figure>
 
 <p>查看所有使用者。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="keyword">user</span>,authentication_string,plugin,host <span class="keyword">FROM</span> mysql.user;</span><br></pre></td></tr></table></figure>
 
 <p>刪除預設使用者。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER <span class="string">'default'</span>@<span class="string">'%'</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER <span class="string">&#x27;default&#x27;</span>@<span class="string">&#x27;%&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p>新增使用者，並設定權限。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE USER 'ubuntu'@'%' IDENTIFIED WITH mysql_native_password BY 'password';</span><br><span class="line">&gt; GRANT ALL PRIVILEGES ON *.* TO 'ubuntu'@'%';</span><br><span class="line">&gt; FLUSH PRIVILEGES;</span><br><span class="line">&gt; quit;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;ubuntu&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">WITH</span> mysql_native_password <span class="keyword">BY</span> <span class="string">&#x27;password&#x27;</span>;</span><br><span class="line"><span class="operator">&gt;</span> <span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;ubuntu&#x27;</span>@<span class="string">&#x27;%&#x27;</span>;</span><br><span class="line"><span class="operator">&gt;</span> FLUSH PRIVILEGES;</span><br><span class="line"><span class="operator">&gt;</span> quit;</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>ubuntu</code> 使用者進入資料庫。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u ubuntu -p</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>homestead</code> 資料庫。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; CREATE DATABASE `homestead`;</span><br><span class="line">&gt; quit;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">CREATE</span> DATABASE `homestead`;</span><br><span class="line"><span class="operator">&gt;</span> quit;</span><br></pre></td></tr></table></figure>
 
-<h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往 <a href="https://xxx.compute.amazonaws.com" target="_blank" rel="noopener">https://xxx.compute.amazonaws.com</a> 瀏覽。</p>
+<h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往 <a target="_blank" rel="noopener" href="https://xxx.compute.amazonaws.com/">https://xxx.compute.amazonaws.com</a> 瀏覽。</p>
 <h2 id="設定相關權限"><a href="#設定相關權限" class="headerlink" title="設定相關權限"></a>設定相關權限</h2><p>進到 workspace 容器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="built_in">exec</span> workspace bash</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>storage</code> 資料夾的權限。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R laradock:www-data storage</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chown</span> -R laradock:www-data storage</span><br></pre></td></tr></table></figure>
 
 <h2 id="正式環境"><a href="#正式環境" class="headerlink" title="正式環境"></a>正式環境</h2><p>複製範本 <code>docker-compose.yml</code> 檔作為設定檔，刪減內容並移除資料庫的 <code>port</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp docker-compose.yml production-docker-compose.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> docker-compose.yml production-docker-compose.yml</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>docker-compose</code> 啟動 Laradock。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f production-docker-compose.yml up -d nginx mysql phpmyadmin</span><br></pre></td></tr></table></figure>
-
 
   </div>
 </article>
@@ -346,21 +355,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker"><span class="toc-number">2.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Docker-Compose"><span class="toc-number">3.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-PHP"><span class="toc-number">4.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝相關套件"><span class="toc-number">5.</span> <span class="toc-text">安裝相關套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laradock"><span class="toc-number">6.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Composer"><span class="toc-number">7.</span> <span class="toc-text">安裝 Composer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安裝-Laravel-安裝器"><span class="toc-number">8.</span> <span class="toc-text">安裝 Laravel 安裝器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">9.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-Nginx"><span class="toc-number">10.</span> <span class="toc-text">設定 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定-MySQL"><span class="toc-number">11.</span> <span class="toc-text">設定 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#瀏覽網頁"><span class="toc-number">12.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#設定相關權限"><span class="toc-number">13.</span> <span class="toc-text">設定相關權限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正式環境"><span class="toc-number">14.</span> <span class="toc-text">正式環境</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker"><span class="toc-number">2.</span> <span class="toc-text">安裝 Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Docker-Compose"><span class="toc-number">3.</span> <span class="toc-text">安裝 Docker Compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-PHP"><span class="toc-number">4.</span> <span class="toc-text">安裝 PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E7%9B%B8%E9%97%9C%E5%A5%97%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">安裝相關套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Laradock"><span class="toc-number">6.</span> <span class="toc-text">安裝 Laradock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Composer"><span class="toc-number">7.</span> <span class="toc-text">安裝 Composer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Laravel-%E5%AE%89%E8%A3%9D%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text">安裝 Laravel 安裝器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">9.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-Nginx"><span class="toc-number">10.</span> <span class="toc-text">設定 Nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-MySQL"><span class="toc-number">11.</span> <span class="toc-text">設定 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E7%B6%B2%E9%A0%81"><span class="toc-number">12.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E7%9B%B8%E9%97%9C%E6%AC%8A%E9%99%90"><span class="toc-number">13.</span> <span class="toc-text">設定相關權限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E7%92%B0%E5%A2%83"><span class="toc-number">14.</span> <span class="toc-text">正式環境</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&text=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&is_video=false&description=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Ubuntu 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Ubuntu-上建立-Laradock-環境/&name=在 Ubuntu 上建立 Laradock 環境&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&text=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&is_video=false&description=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Ubuntu 上建立 Laradock 環境&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&title=在 Ubuntu 上建立 Laradock 環境"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%BB%BA%E7%AB%8B-Laradock-%E7%92%B0%E5%A2%83/&name=在 Ubuntu 上建立 Laradock 環境&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -378,7 +387,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -404,13 +413,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

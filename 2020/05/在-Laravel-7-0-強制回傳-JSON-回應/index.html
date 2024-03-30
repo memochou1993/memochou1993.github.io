@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言在認證失敗的情況下，Laravel 預設會導向 Login 頁面，前端需要特別指示頭欄位 Accept 為 application/json 才能接收 JSON 格式的訊息。因此以下藉由註冊一個中介層，讓 Laravel 強制回傳 JSON 格式的回應。 做法新增一個 ResponseJson 中介層。 1php artisan make:middleware ResponseJson  修改">
-<meta name="keywords" content="程式設計,PHP,Laravel">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言在認證失敗的情況下，Laravel 預設會導向 Login 頁面，前端需要特別指示頭欄位 Accept 為 application&#x2F;json 才能接收 JSON 格式的訊息。因此以下藉由註冊一個中介層，讓 Laravel 強制回傳 JSON 格式的回應。 做法新增一個 ResponseJson 中介層。 1php artisan make:middleware ResponseJson  修改">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laravel 7.0 強制回傳 JSON 回應">
-<meta property="og:url" content="https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言在認證失敗的情況下，Laravel 預設會導向 Login 頁面，前端需要特別指示頭欄位 Accept 為 application/json 才能接收 JSON 格式的訊息。因此以下藉由註冊一個中介層，讓 Laravel 強制回傳 JSON 格式的回應。 做法新增一個 ResponseJson 中介層。 1php artisan make:middleware ResponseJson  修改">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.961Z">
+<meta property="og:description" content="前言在認證失敗的情況下，Laravel 預設會導向 Login 頁面，前端需要特別指示頭欄位 Accept 為 application&#x2F;json 才能接收 JSON 格式的訊息。因此以下藉由註冊一個中介層，讓 Laravel 強制回傳 JSON 格式的回應。 做法新增一個 ResponseJson 中介層。 1php artisan make:middleware ResponseJson  修改">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-02T10:49:49.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.679Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laravel 7.0 強制回傳 JSON 回應">
-<meta name="twitter:description" content="前言在認證失敗的情況下，Laravel 預設會導向 Login 頁面，前端需要特別指示頭欄位 Accept 為 application/json 才能接收 JSON 格式的訊息。因此以下藉由註冊一個中介層，讓 Laravel 強制回傳 JSON 格式的回應。 做法新增一個 ResponseJson 中介層。 1php artisan make:middleware ResponseJson  修改">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/05/在-Laravel-7-0-實現-Repository-模式/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/05/%E5%9C%A8-Laravel-7-0-%E5%AF%A6%E7%8F%BE-Repository-%E6%A8%A1%E5%BC%8F/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/05/在-Laravel-7-0-使用-Eloquent-Events-事件/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/05/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-Eloquent-Events-%E4%BA%8B%E4%BB%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&text=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&is_video=false&description=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 強制回傳 JSON 回應&body=Check out this article: https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&name=在 Laravel 7.0 強制回傳 JSON 回應&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&text=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&is_video=false&description=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 強制回傳 JSON 回應&body=Check out this article: https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&name=在 Laravel 7.0 強制回傳 JSON 回應&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/Laravel/">Laravel</a>
+                <a href="/categories/Programming/PHP/Laravel/">Laravel</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -181,19 +188,19 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:middleware ResponseJson</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>ResponseJson.php</code> 檔：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Middleware</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Closure</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResponseJson</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Handle an incoming request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Illuminate\Http\Request  $request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Closure  $next</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span><span class="params">($request, Closure $next)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $request-&gt;headers-&gt;set(<span class="string">'Accept'</span>, <span class="string">'application/json'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $next($request);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>\<span class="title class_">Http</span>\<span class="title class_">Middleware</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Closure</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResponseJson</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Handle an incoming request.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Illuminate\Http\Request  $request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span>  \Closure  $next</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params"><span class="variable">$request</span>, <span class="built_in">Closure</span> <span class="variable">$next</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$request</span>-&gt;headers-&gt;<span class="title function_ invoke__">set</span>(<span class="string">&#x27;Accept&#x27;</span>, <span class="string">&#x27;application/json&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$next</span>(<span class="variable">$request</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>將中介層註冊到 <code>Kernel.php</code> 檔的 <code>api</code> 群組：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> $middlewareGroups = [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="string">'api'</span> =&gt; [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        \App\Http\Middleware\ResponseJson::class,</span><br><span class="line">    ],</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="variable">$middlewareGroups</span> = [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;api&#x27;</span> =&gt; [</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="title class_">\App\Http\Middleware\ResponseJson</span>::<span class="variable language_">class</span>,</span><br><span class="line">    ],</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <p>新增一個 <code>$middlewarePriority</code> 屬性，讓 <code>ResponseJson</code> 中介層優先被通過：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The priority-sorted list of middleware.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This forces non-global middleware to always be in the given order.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@var</span> array</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> $middlewarePriority = [</span><br><span class="line">    \App\Http\Middleware\ResponseJson::class,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The priority-sorted list of middleware.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This forces non-global middleware to always be in the given order.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@var</span> array</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="variable">$middlewarePriority</span> = [</span><br><span class="line">    <span class="title class_">\App\Http\Middleware\ResponseJson</span>::<span class="variable language_">class</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>列表中必須註冊完整的類別名稱。</li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://laravel.com/docs/master/middleware" target="_blank" rel="noopener">Laravel Middleware</a></li>
+<li><a target="_blank" rel="noopener" href="https://laravel.com/docs/master/middleware">Laravel Middleware</a></li>
 </ul>
 
   </div>
@@ -231,21 +238,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&text=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&is_video=false&description=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 強制回傳 JSON 回應&body=Check out this article: https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/05/在-Laravel-7-0-強制回傳-JSON-回應/&name=在 Laravel 7.0 強制回傳 JSON 回應&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&text=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&is_video=false&description=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 7.0 強制回傳 JSON 回應&body=Check out this article: https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&title=在 Laravel 7.0 強制回傳 JSON 回應"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/05/%E5%9C%A8-Laravel-7-0-%E5%BC%B7%E5%88%B6%E5%9B%9E%E5%82%B3-JSON-%E5%9B%9E%E6%87%89/&name=在 Laravel 7.0 強制回傳 JSON 回應&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -263,7 +270,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -289,13 +296,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app/User.php 檔。 12345678910111213141516171819/** * Get the route key for the model. * * @return string */public function">
-<meta name="keywords" content="程式設計,PHP,Laravel,Eloquent,ORM">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app&#x2F;User.php 檔。 12345678910111213141516171819&#x2F;** * Get the route key for the model. * * @return string *&#x2F;public function">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Laravel 5.8 為關聯模型建立 Seeder 資料填充">
-<meta property="og:url" content="https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app/User.php 檔。 12345678910111213141516171819/** * Get the route key for the model. * * @return string */public function">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.948Z">
+<meta property="og:description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app&#x2F;User.php 檔。 12345678910111213141516171819&#x2F;** * Get the route key for the model. * * @return string *&#x2F;public function">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-02-28T09:46:51.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.663Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Eloquent">
+<meta property="article:tag" content="ORM">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 Laravel 5.8 為關聯模型建立 Seeder 資料填充">
-<meta name="twitter:description" content="前言假設一個使用者（User）擁有多個專案，一個專案（Project）擁有多個使用者，以及一個專案擁有有多個設定檔（Environment）。 建立模型修改 app/User.php 檔。 12345678910111213141516171819/** * Get the route key for the model. * * @return string */public function">
     
     
         
@@ -44,14 +48,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/02/在-Laravel-5-7-使用-API-Resources-資源/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-API-Resources-%E8%B3%87%E6%BA%90/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/03/在-Laravel-5-8-使用-Trait-特徵機制/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/03/%E5%9C%A8-Laravel-5-8-%E4%BD%BF%E7%94%A8-Trait-%E7%89%B9%E5%BE%B5%E6%A9%9F%E5%88%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +113,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&text=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&is_video=false&description=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&name=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&text=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&is_video=false&description=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&name=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立模型"><span class="toc-number">2.</span> <span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立資料填充"><span class="toc-number">3.</span> <span class="toc-text">建立資料填充</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85"><span class="toc-number">3.</span> <span class="toc-text">建立資料填充</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +167,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/Laravel/">Laravel</a>
+                <a href="/categories/Programming/PHP/Laravel/">Laravel</a>
             
         
     </div>
@@ -167,7 +176,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Eloquent/">Eloquent</a>, <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/ORM/">ORM</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/Eloquent/" rel="tag">Eloquent</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/ORM/" rel="tag">ORM</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
     </div>
 
 
@@ -178,26 +187,25 @@
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>假設一個使用者（<code>User</code>）擁有多個專案，一個專案（<code>Project</code>）擁有多個使用者，以及一個專案擁有有多個設定檔（<code>Environment</code>）。</p>
 <h2 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h2><p>修改 <code>app/User.php</code> 檔。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the route key for the model.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRouteKeyName</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'username'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the projects that belong to the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsToMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">projects</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(Project::class, <span class="string">'user_project'</span>)-&gt;withTimestamps();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the route key for the model.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRouteKeyName</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;username&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the projects that belong to the user.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsToMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">projects</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">belongsToMany</span>(<span class="title class_">Project</span>::<span class="variable language_">class</span>, <span class="string">&#x27;user_project&#x27;</span>)-&gt;<span class="title function_ invoke__">withTimestamps</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>app/Project.php</code> 檔。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the users that belong to the project.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsToMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">users</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsToMany(User::class, <span class="string">'user_project'</span>)-&gt;withTimestamps();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the environments for the project.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\HasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">environments</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;hasMany(Environment::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the users that belong to the project.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsToMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">users</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">belongsToMany</span>(<span class="title class_">User</span>::<span class="variable language_">class</span>, <span class="string">&#x27;user_project&#x27;</span>)-&gt;<span class="title function_ invoke__">withTimestamps</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the environments for the project.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\HasMany</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">environments</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">hasMany</span>(<span class="title class_">Environment</span>::<span class="variable language_">class</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>app/Environment.php</code> 檔。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the project that the environments belongs to.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsTo</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">project</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;belongsTo(Project::class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get the project that the environments belongs to.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> \Illuminate\Database\Eloquent\Relations\BelongsTo</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">project</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">belongsTo</span>(<span class="title class_">Project</span>::<span class="variable language_">class</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="建立資料填充"><a href="#建立資料填充" class="headerlink" title="建立資料填充"></a>建立資料填充</h2><p>建立 <code>ProjectsTableSeeder.php</code> 檔。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed ProjectsTableSeeder</span><br></pre></td></tr></table></figure>
 
 <p>為第一個使用者建立 10 筆私人專案，並為每筆專案建立 5 筆設定檔。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">factory(Project::class, <span class="number">10</span>)-&gt;create([</span><br><span class="line">    <span class="string">'private'</span> =&gt; <span class="keyword">true</span>,</span><br><span class="line">])-&gt;each(</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="params">(Project $project)</span> </span>&#123;</span><br><span class="line">        $project-&gt;users()-&gt;attach(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        $project-&gt;environments()-&gt;saveMany(</span><br><span class="line">            factory(Environment::class, <span class="number">5</span>)-&gt;make()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">factory</span>(<span class="title class_">Project</span>::<span class="variable language_">class</span>, <span class="number">10</span>)-&gt;<span class="title function_ invoke__">create</span>([</span><br><span class="line">    <span class="string">&#x27;private&#x27;</span> =&gt; <span class="literal">true</span>,</span><br><span class="line">])-&gt;<span class="title function_ invoke__">each</span>(</span><br><span class="line">    function (Project <span class="variable">$project</span>) &#123;</span><br><span class="line">        <span class="variable">$project</span>-&gt;<span class="title function_ invoke__">users</span>()-&gt;<span class="title function_ invoke__">attach</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="variable">$project</span>-&gt;<span class="title function_ invoke__">environments</span>()-&gt;<span class="title function_ invoke__">saveMany</span>(</span><br><span class="line">            <span class="title function_ invoke__">factory</span>(<span class="title class_">Environment</span>::<span class="variable language_">class</span>, <span class="number">5</span>)-&gt;<span class="title function_ invoke__">make</span>()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>建立 <code>UserProjectTableSeeder.php</code> 檔。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:seed UserProjectTableSeeder</span><br></pre></td></tr></table></figure>
 
 <p>為所有使用者與 10 筆專案建立隨機的多對多關聯。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all public projects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$projects = Project::all();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create many-to-many relationships between users and public projects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">User::all()-&gt;each(<span class="function"><span class="keyword">function</span> <span class="params">($user)</span> <span class="title">use</span> <span class="params">($projects)</span> </span>&#123;</span><br><span class="line">    $user-&gt;projects()-&gt;attach(</span><br><span class="line">        $projects-&gt;random(rand(<span class="number">1</span>, <span class="number">10</span>))-&gt;pluck(<span class="string">'id'</span>)-&gt;all()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get all public projects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable">$projects</span> = <span class="title class_">Project</span>::<span class="title function_ invoke__">all</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create many-to-many relationships between users and public projects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title class_">User</span>::<span class="title function_ invoke__">all</span>()-&gt;<span class="title function_ invoke__">each</span>(function (<span class="variable">$user</span>) <span class="keyword">use</span> ($<span class="title">projects</span>) &#123;</span><br><span class="line">    $<span class="title">user</span>-&gt;<span class="title">projects</span>()-&gt;<span class="title">attach</span>(</span><br><span class="line">        $<span class="title">projects</span>-&gt;<span class="title">random</span>(<span class="title">rand</span>(1, 10))-&gt;<span class="title">pluck</span>(&#x27;<span class="title">id</span>&#x27;)-&gt;<span class="title">all</span>()</span><br><span class="line">    );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -234,21 +242,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立模型"><span class="toc-number">2.</span> <span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立資料填充"><span class="toc-number">3.</span> <span class="toc-text">建立資料填充</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">建立模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85"><span class="toc-number">3.</span> <span class="toc-text">建立資料填充</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&text=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&is_video=false&description=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/在-Laravel-5-8-為-Eloquent-關聯建立資料填充/&name=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&text=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&is_video=false&description=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&title=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-8-%E7%82%BA-Eloquent-%E9%97%9C%E8%81%AF%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%96%99%E5%A1%AB%E5%85%85/&name=在 Laravel 5.8 為關聯模型建立 Seeder 資料填充&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -266,7 +274,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -292,13 +300,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

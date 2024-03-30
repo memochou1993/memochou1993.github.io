@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言以下使用 Swiper 套件實作一個幻燈片，可以使用按鈕或是滑動的方式切換圖片。 建立專案建立專案。 1npx create-react-app swiper-react-example  安裝套件。 1npm i swiper  實作修改 App.js 檔。 12345678910111213141516171819202122232425262728293031import &amp;#123;">
-<meta name="keywords" content="程式設計,JavaScript,React">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 React 專案使用 Swiper 建立幻燈片">
-<meta property="og:url" content="https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言以下使用 Swiper 套件實作一個幻燈片，可以使用按鈕或是滑動的方式切換圖片。 建立專案建立專案。 1npx create-react-app swiper-react-example  安裝套件。 1npm i swiper  實作修改 App.js 檔。 12345678910111213141516171819202122232425262728293031import &amp;#123;">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2023-01-18T11:08:48.540Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-01-09T18:35:00.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.744Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 React 專案使用 Swiper 建立幻燈片">
-<meta name="twitter:description" content="前言以下使用 Swiper 套件實作一個幻燈片，可以使用按鈕或是滑動的方式切換圖片。 建立專案建立專案。 1npx create-react-app swiper-react-example  安裝套件。 1npm i swiper  實作修改 App.js 檔。 12345678910111213141516171819202122232425262728293031import &amp;#123;">
     
     
         
@@ -44,14 +46,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +95,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2023/01/使用-Node-串接-OpenAI-API-實作-Line-Bot-聊天機器人/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2023/01/%E4%BD%BF%E7%94%A8-Node-%E9%80%8F%E9%81%8E-OpenAI-API-%E5%AF%A6%E4%BD%9C-LINE-Bot-%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2023/01/使用-Laravel-Breeze-搭建認證系統/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2023/01/%E4%BD%BF%E7%94%A8-Laravel-Breeze-%E6%90%AD%E5%BB%BA%E8%AA%8D%E8%AD%89%E7%B3%BB%E7%B5%B1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +111,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&text=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&is_video=false&description=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Swiper 建立幻燈片&body=Check out this article: https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&name=在 React 專案使用 Swiper 建立幻燈片&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&text=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&is_video=false&description=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Swiper 建立幻燈片&body=Check out this article: https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&name=在 React 專案使用 Swiper 建立幻燈片&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +165,7 @@
             
         
             
-                <a href="/categories/程式設計/JavaScript/React/">React</a>
+                <a href="/categories/Programming/JavaScript/React/">React</a>
             
         
     </div>
@@ -167,7 +174,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/React/">React</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/React/" rel="tag">React</a>
     </div>
 
 
@@ -184,13 +191,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i swiper</span><br></pre></td></tr></table></figure>
 
 <h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>修改 <code>App.js</code> 檔。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Swiper, SwiperSlide &#125; <span class="keyword">from</span> <span class="string">'swiper/react'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'swiper/css'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> IMAGE_BASE_URL = <span class="string">'https://raw.githubusercontent.com/memochou1993/nft-leopard-cat-images/main/output'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> swiperRef = useRef();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; swiperRef.current?.slidePrev()&#125;&gt;Prev&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;button onClick=&#123;() =&gt; swiperRef.current?.slideNext()&#125;&gt;Next&lt;/</span>button&gt;</span><br><span class="line">      &lt;Swiper</span><br><span class="line">        onBeforeInit=&#123;(swiper) =&gt; &#123;</span><br><span class="line">          swiperRef.current = swiper;</span><br><span class="line">        &#125;&#125;</span><br><span class="line">        onSwiper=&#123;(swiper) =&gt; <span class="built_in">console</span>.log(swiper)&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        &#123;</span><br><span class="line">          [...Array(<span class="number">10</span>).keys()].map(<span class="function">(<span class="params">n</span>) =&gt;</span> (</span><br><span class="line">            &lt;SwiperSlide key=&#123;n&#125;&gt;</span><br><span class="line">              &lt;img src=&#123;<span class="string">`<span class="subst">$&#123;IMAGE_BASE_URL&#125;</span>/<span class="subst">$&#123;n&#125;</span>.png`</span>&#125; alt=&#123;n&#125; /&gt;</span><br><span class="line">            &lt;<span class="regexp">/SwiperSlide&gt;</span></span><br><span class="line"><span class="regexp">          ))</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>Swiper&gt;</span><br><span class="line">    &lt;<span class="regexp">/&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default App;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Swiper</span>, <span class="title class_">SwiperSlide</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;swiper/react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;swiper/css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">IMAGE_BASE_URL</span> = <span class="string">&#x27;https://raw.githubusercontent.com/memochou1993/nft-leopard-cat-images/main/output&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> swiperRef = <span class="title function_">useRef</span>();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> swiperRef.current?.slidePrev()&#125;&gt;Prev<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> swiperRef.current?.slideNext()&#125;&gt;Next<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Swiper</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onBeforeInit</span>=<span class="string">&#123;(swiper)</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">          swiperRef.current = swiper;</span></span><br><span class="line"><span class="language-xml">        &#125;&#125;</span></span><br><span class="line"><span class="language-xml">        onSwiper=&#123;(swiper) =&gt; console.log(swiper)&#125;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        &#123;</span></span><br><span class="line"><span class="language-xml">          [...Array(10).keys()].map((n) =&gt; (</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">SwiperSlide</span> <span class="attr">key</span>=<span class="string">&#123;n&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">IMAGE_BASE_URL</span>&#125;/$&#123;<span class="attr">n</span>&#125;<span class="attr">.png</span>`&#125; <span class="attr">alt</span>=<span class="string">&#123;n&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">SwiperSlide</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          ))</span></span><br><span class="line"><span class="language-xml">        &#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Swiper</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">App</span>;</span><br></pre></td></tr></table></figure>
 
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
-<li><a href="https://github.com/memochou1993/swiper-react-example" target="_blank" rel="noopener">swiper-react-example</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/swiper-react-example">swiper-react-example</a></li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://swiperjs.com/react" target="_blank" rel="noopener">Swiper React Components</a></li>
+<li><a target="_blank" rel="noopener" href="https://swiperjs.com/react">Swiper React Components</a></li>
 </ul>
 
   </div>
@@ -228,21 +235,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立專案"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&text=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&is_video=false&description=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Swiper 建立幻燈片&body=Check out this article: https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/01/在-React-專案使用-Swiper-建立幻燈片/&name=在 React 專案使用 Swiper 建立幻燈片&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&text=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&is_video=false&description=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 React 專案使用 Swiper 建立幻燈片&body=Check out this article: https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&title=在 React 專案使用 Swiper 建立幻燈片"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2023/01/%E5%9C%A8-React-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Swiper-%E5%BB%BA%E7%AB%8B%E5%B9%BB%E7%87%88%E7%89%87/&name=在 React 專案使用 Swiper 建立幻燈片&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -260,7 +267,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -286,13 +293,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

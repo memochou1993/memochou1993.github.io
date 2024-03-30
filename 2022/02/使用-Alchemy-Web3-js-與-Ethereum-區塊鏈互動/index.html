@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 前置作業註冊首先到 Alchemy 註冊，並選擇 Ethereum 生態系。 創建應用程式完成表單以創建應用程式，例如：  團隊名稱：Memo’s Team 應用程式名稱：Memo’s App 網路：選擇 Rinkeby 網路（為 OpenSea">
-<meta name="keywords" content="JavaScript,Node,區塊鏈,Ethereum,Alchemy,Web3,MetaMask">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動">
-<meta property="og:url" content="https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 前置作業註冊首先到 Alchemy 註冊，並選擇 Ethereum 生態系。 創建應用程式完成表單以創建應用程式，例如：  團隊名稱：Memo’s Team 應用程式名稱：Memo’s App 網路：選擇 Rinkeby 網路（為 OpenSea">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2023-01-18T11:08:48.537Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-22T16:37:10.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.709Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Ethereum">
+<meta property="article:tag" content="Web3">
+<meta property="article:tag" content="MetaMask">
+<meta property="article:tag" content="Alchemy">
+<meta property="article:tag" content="Blockchain">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動">
-<meta name="twitter:description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 前置作業註冊首先到 Alchemy 註冊，並選擇 Ethereum 生態系。 創建應用程式完成表單以創建應用程式，例如：  團隊名稱：Memo’s Team 應用程式名稱：Memo’s App 網路：選擇 Rinkeby 網路（為 OpenSea">
     
     
         
@@ -44,14 +50,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +99,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2022/02/使用-Go-建立-TCP-伺服器/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/02/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-TCP-%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2022/02/使用-Alchemy-Web3-js-發送-Ethereum-區塊鏈交易/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E7%99%BC%E9%80%81-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%A4%E6%98%93/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +115,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&text=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&is_video=false&description=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&body=Check out this article: https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&name=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&text=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&is_video=false&description=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&body=Check out this article: https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&name=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#註冊"><span class="toc-number">2.1.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#創建應用程式"><span class="toc-number">2.2.</span> <span class="toc-text">創建應用程式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#發送請求"><span class="toc-number">2.3.</span> <span class="toc-text">發送請求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A"><span class="toc-number">2.1.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%B5%E5%BB%BA%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">創建應用程式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BC%E9%80%81%E8%AB%8B%E6%B1%82"><span class="toc-number">2.3.</span> <span class="toc-text">發送請求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,7 +167,7 @@
             
         
             
-                <a href="/categories/區塊鏈/Ethereum/">Ethereum</a>
+                <a href="/categories/Blockchain/Ethereum/">Ethereum</a>
             
         
     </div>
@@ -165,7 +176,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Alchemy/">Alchemy</a>, <a class="tag-link" href="/tags/Ethereum/">Ethereum</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/MetaMask/">MetaMask</a>, <a class="tag-link" href="/tags/Node/">Node</a>, <a class="tag-link" href="/tags/Web3/">Web3</a>, <a class="tag-link" href="/tags/區塊鏈/">區塊鏈</a>
+        <a class="tag-link-link" href="/tags/Alchemy/" rel="tag">Alchemy</a>, <a class="tag-link-link" href="/tags/Blockchain/" rel="tag">Blockchain</a>, <a class="tag-link-link" href="/tags/Ethereum/" rel="tag">Ethereum</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/MetaMask/" rel="tag">MetaMask</a>, <a class="tag-link-link" href="/tags/Node/" rel="tag">Node</a>, <a class="tag-link-link" href="/tags/Web3/" rel="tag">Web3</a>
     </div>
 
 
@@ -174,8 +185,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文參考 Alchemy 的<a href="https://docs.alchemy.com/alchemy/" target="_blank" rel="noopener">範例</a>進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。</p>
-<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><h3 id="註冊"><a href="#註冊" class="headerlink" title="註冊"></a>註冊</h3><p>首先到 <a href="https://dashboard.alchemyapi.io/signup/" target="_blank" rel="noopener">Alchemy</a> 註冊，並選擇 Ethereum 生態系。</p>
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文參考 Alchemy 的<a target="_blank" rel="noopener" href="https://docs.alchemy.com/alchemy/">範例</a>進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><h3 id="註冊"><a href="#註冊" class="headerlink" title="註冊"></a>註冊</h3><p>首先到 <a target="_blank" rel="noopener" href="https://dashboard.alchemyapi.io/signup/">Alchemy</a> 註冊，並選擇 Ethereum 生態系。</p>
 <h3 id="創建應用程式"><a href="#創建應用程式" class="headerlink" title="創建應用程式"></a>創建應用程式</h3><p>完成表單以創建應用程式，例如：</p>
 <ul>
 <li>團隊名稱：Memo’s Team</li>
@@ -184,17 +195,17 @@
 </ul>
 <p>點選「VIEW KEY」按鈕，並將 API Key 複製起來。</p>
 <h3 id="發送請求"><a href="#發送請求" class="headerlink" title="發送請求"></a>發送請求</h3><p>可以使用 JSON-RPC 和 curl 透過 Alchemy 與以太坊區塊鏈互動，以下範例用於查詢當前燃氣價格：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl https://eth-mainnet.alchemyapi.io/v2/your-api-key \</span><br><span class="line">-X POST \</span><br><span class="line">-H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">-d <span class="string">'&#123;"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":73&#125;'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl https://eth-mainnet.alchemyapi.io/v2/your-api-key \</span><br><span class="line">-X POST \</span><br><span class="line">-H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">-d <span class="string">&#x27;&#123;&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;eth_gasPrice&quot;,&quot;params&quot;:[],&quot;id&quot;:73&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>將 API 端點中的 <code>your-api-key</code> 改為應用程式的 API Key。</li>
 <li><code>id</code> 是請求 ID，會在響應時返回，用來追蹤響應屬於哪一個請求。</li>
 </ul>
 <p>結果如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"jsonrpc"</span>:<span class="string">"2.0"</span>,<span class="string">"id"</span>:73,<span class="string">"result"</span>:<span class="string">"0x1840d93ad1"</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;jsonrpc&quot;</span>:<span class="string">&quot;2.0&quot;</span>,<span class="string">&quot;id&quot;</span>:73,<span class="string">&quot;result&quot;</span>:<span class="string">&quot;0x1840d93ad1&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立專案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir web3-example</span><br><span class="line"><span class="built_in">cd</span> web3-example</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> web3-example</span><br><span class="line"><span class="built_in">cd</span> web3-example</span><br></pre></td></tr></table></figure>
 
 <p>安裝 <code>@alch/alchemy-web3</code> 套件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @alch/alchemy-web3</span><br></pre></td></tr></table></figure>
@@ -203,22 +214,22 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install dotenv --save</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>.env</code> 檔。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">API_URL=https://eth-mainnet.alchemyapi.io/v2/your-private-key</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">API_URL=https://eth-mainnet.alchemyapi.io/v2/your-private-key</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>index.js</code> 檔。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'dotenv'</span>).config();</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; API_URL &#125; = process.env;</span><br><span class="line">  <span class="keyword">const</span> &#123; createAlchemyWeb3 &#125; = <span class="built_in">require</span>(<span class="string">'@alch/alchemy-web3'</span>);</span><br><span class="line">  <span class="keyword">const</span> web3 = createAlchemyWeb3(API_URL);</span><br><span class="line">  <span class="keyword">const</span> blockNumber = <span class="keyword">await</span> web3.eth.getBlockNumber();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'The latest block number is '</span> + blockNumber);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">main();</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;dotenv&#x27;</span>).<span class="title function_">config</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="variable constant_">API_URL</span> &#125; = process.<span class="property">env</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123; createAlchemyWeb3 &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@alch/alchemy-web3&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> web3 = <span class="title function_">createAlchemyWeb3</span>(<span class="variable constant_">API_URL</span>);</span><br><span class="line">  <span class="keyword">const</span> blockNumber = <span class="keyword">await</span> web3.<span class="property">eth</span>.<span class="title function_">getBlockNumber</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;The latest block number is &#x27;</span> + blockNumber);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">main</span>();</span><br></pre></td></tr></table></figure>
 
 <p>執行腳本。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.<span class="property">js</span></span><br></pre></td></tr></table></figure>
 
 <p>結果如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The latest block number is 14257180</span><br></pre></td></tr></table></figure>
 
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
-<li><a href="https://github.com/memochou1993/web3-example" target="_blank" rel="noopener">web3-example</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/web3-example">web3-example</a></li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://docs.alchemy.com/alchemy/tutorials/simple-web3-script" target="_blank" rel="noopener">Alchemy - Simple Web3 Script</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.alchemy.com/alchemy/tutorials/simple-web3-script">Alchemy - Simple Web3 Script</a></li>
 </ul>
 
   </div>
@@ -256,21 +267,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置作業"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#註冊"><span class="toc-number">2.1.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#創建應用程式"><span class="toc-number">2.2.</span> <span class="toc-text">創建應用程式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#發送請求"><span class="toc-number">2.3.</span> <span class="toc-text">發送請求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#實作"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A"><span class="toc-number">2.1.</span> <span class="toc-text">註冊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%B5%E5%BB%BA%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">創建應用程式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BC%E9%80%81%E8%AB%8B%E6%B1%82"><span class="toc-number">2.3.</span> <span class="toc-text">發送請求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&text=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&is_video=false&description=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&body=Check out this article: https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/使用-Alchemy-Web3-js-與-Ethereum-區塊鏈互動/&name=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&text=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&is_video=false&description=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&body=Check out this article: https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&title=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Alchemy-Web3-js-%E8%88%87-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E4%BA%92%E5%8B%95/&name=使用 Alchemy Web3.js 與 Ethereum 區塊鏈互動&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -288,7 +299,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -314,13 +325,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

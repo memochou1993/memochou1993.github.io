@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="步驟更新 PECL 倉庫。 1pecl channel-update pecl.php.net  安裝 PHP 的 Swoole 擴充套件。 1pecl install swoole  修改 php.ini 檔，並刪除第一行 extension=&amp;quot;swoole.so&amp;quot;。 1vi /usr/local/etc/php/7.2/php.ini  新增 swoole.ini 檔。 1">
-<meta name="keywords" content="程式設計,PHP,Laravel,macOS,Swoole">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="步驟更新 PECL 倉庫。 1pecl channel-update pecl.php.net  安裝 PHP 的 Swoole 擴充套件。 1pecl install swoole  修改 php.ini 檔，並刪除第一行 extension&#x3D;&quot;swoole.so&quot;。 1vi &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;7.2&#x2F;php.ini  新增 swoole.ini 檔。 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 macOS 上安裝 PHP 的 Swoole 擴充套件">
-<meta property="og:url" content="https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="步驟更新 PECL 倉庫。 1pecl channel-update pecl.php.net  安裝 PHP 的 Swoole 擴充套件。 1pecl install swoole  修改 php.ini 檔，並刪除第一行 extension=&amp;quot;swoole.so&amp;quot;。 1vi /usr/local/etc/php/7.2/php.ini  新增 swoole.ini 檔。 1">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.944Z">
+<meta property="og:description" content="步驟更新 PECL 倉庫。 1pecl channel-update pecl.php.net  安裝 PHP 的 Swoole 擴充套件。 1pecl install swoole  修改 php.ini 檔，並刪除第一行 extension&#x3D;&quot;swoole.so&quot;。 1vi &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;7.2&#x2F;php.ini  新增 swoole.ini 檔。 1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-24T03:45:02.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.658Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="Swoole">
+<meta property="article:tag" content="Programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在 macOS 上安裝 PHP 的 Swoole 擴充套件">
-<meta name="twitter:description" content="步驟更新 PECL 倉庫。 1pecl channel-update pecl.php.net  安裝 PHP 的 Swoole 擴充套件。 1pecl install swoole  修改 php.ini 檔，並刪除第一行 extension=&amp;quot;swoole.so&amp;quot;。 1vi /usr/local/etc/php/7.2/php.ini  新增 swoole.ini 檔。 1">
     
     
         
@@ -44,14 +48,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/01/在-macOS-上安裝-Nginx-網頁伺服器/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Nginx-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2019/01/在-Hexo-部落格使用-npm-腳本執行發布與推送/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2019/01/%E5%9C%A8-Hexo-%E9%83%A8%E8%90%BD%E6%A0%BC%E4%BD%BF%E7%94%A8-npm-%E8%85%B3%E6%9C%AC%E5%9F%B7%E8%A1%8C%E7%99%BC%E5%B8%83%E8%88%87%E6%8E%A8%E9%80%81/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +113,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&text=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&is_video=false&description=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 PHP 的 Swoole 擴充套件&body=Check out this article: https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&name=在 macOS 上安裝 PHP 的 Swoole 擴充套件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&text=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&is_video=false&description=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 PHP 的 Swoole 擴充套件&body=Check out this article: https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&name=在 macOS 上安裝 PHP 的 Swoole 擴充套件&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#步驟"><span class="toc-number">1.</span> <span class="toc-text">步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#錯誤處理"><span class="toc-number">2.</span> <span class="toc-text">錯誤處理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-ssl-h"><span class="toc-number">2.1.</span> <span class="toc-text">openssl/ssl.h</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-library"><span class="toc-number">2.2.</span> <span class="toc-text">openssl library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extension"><span class="toc-number">2.3.</span> <span class="toc-text">extension</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-number">1.</span> <span class="toc-text">步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%8C%AF%E8%AA%A4%E8%99%95%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">錯誤處理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-x2F-ssl-h"><span class="toc-number">2.1.</span> <span class="toc-text">openssl&#x2F;ssl.h</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-library"><span class="toc-number">2.2.</span> <span class="toc-text">openssl library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extension"><span class="toc-number">2.3.</span> <span class="toc-text">extension</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +167,7 @@
             
         
             
-                <a href="/categories/程式設計/PHP/擴充套件/">擴充套件</a>
+                <a href="/categories/Programming/PHP/Extension/">Extension</a>
             
         
     </div>
@@ -167,7 +176,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Laravel/">Laravel</a>, <a class="tag-link" href="/tags/PHP/">PHP</a>, <a class="tag-link" href="/tags/Swoole/">Swoole</a>, <a class="tag-link" href="/tags/macOS/">macOS</a>, <a class="tag-link" href="/tags/程式設計/">程式設計</a>
+        <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Swoole/" rel="tag">Swoole</a>, <a class="tag-link-link" href="/tags/macOS/" rel="tag">macOS</a>
     </div>
 
 
@@ -183,25 +192,25 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pecl install swoole</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>php.ini</code> 檔，並刪除第一行 <code>extension=&quot;swoole.so&quot;</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/<span class="built_in">local</span>/etc/php/7.2/php.ini</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/local/etc/php/7.2/php.ini</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>swoole.ini</code> 檔。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/<span class="built_in">local</span>/etc/php/7.2/conf.d/swoole.ini</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/local/etc/php/7.2/conf.d/swoole.ini</span><br></pre></td></tr></table></figure>
 
 <p>加入以下內容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[swoole]</span><br><span class="line">extension=&quot;/usr/local/lib/php/pecl/20170718/swoole.so&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[swoole]</span></span><br><span class="line"><span class="attr">extension</span>=<span class="string">&quot;/usr/local/lib/php/pecl/20170718/swoole.so&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>使用指令查看擴充套件是否安裝成功，或在 PHP 腳本中使用 <code>phpinfo()</code> 查看。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -m |grep swoole</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -m | grep swoole</span><br></pre></td></tr></table></figure>
 
 <p>查看擴充套件的安裝位置。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -i|grep extension_dir</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -i | grep extension_dir</span><br></pre></td></tr></table></figure>
 
 <p>查看詳細資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant@homestead:~$ php --ri swoole</span><br></pre></td></tr></table></figure>
 
-<h2 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h2><h3 id="openssl-ssl-h"><a href="#openssl-ssl-h" class="headerlink" title="openssl/ssl.h"></a>openssl/ssl.h</h3><p>出現 <code>openssl/ssl.h</code> 找不到的警告：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal error: &apos;openssl/ssl.h&apos; file not found</span><br></pre></td></tr></table></figure>
+<h2 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h2><h3 id="openssl-x2F-ssl-h"><a href="#openssl-x2F-ssl-h" class="headerlink" title="openssl&#x2F;ssl.h"></a>openssl&#x2F;ssl.h</h3><p>出現 <code>openssl/ssl.h</code> 找不到的警告：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal error: &#x27;openssl/ssl.h&#x27; file not found</span><br></pre></td></tr></table></figure>
 
 <p>確認 <code>openssl</code> 是否有安裝：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search openssl</span><br></pre></td></tr></table></figure>
@@ -210,29 +219,28 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install openssl</span><br><span class="line">Warning: openssl 1.0.2q is already installed and up-to-date</span><br></pre></td></tr></table></figure>
 
 <p>在標頭檔目錄建立 <code>openssl</code> 資料夾的軟連結：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/<span class="built_in">local</span>/Cellar/openssl/1.0.2q/include/openssl /usr/<span class="built_in">local</span>/include/</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /usr/local/Cellar/openssl/1.0.2q/include/openssl /usr/local/include/</span><br></pre></td></tr></table></figure>
 
 <h3 id="openssl-library"><a href="#openssl-library" class="headerlink" title="openssl library"></a>openssl library</h3><p>出現 <code>openssl library</code> 找不到的警告。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: &quot;Enable openssl support, require openssl library.&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: &quot;Enable openssl support, require openssl library.&quot;</span><br></pre></td></tr></table></figure>
 
 <p>查看 <code>openssl</code> 詳細資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew info openssl</span><br></pre></td></tr></table></figure>
 
 <p>設置環境變量。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">For compilers to find openssl you may need to set:</span><br><span class="line">  export LDFLAGS=&quot;-L/usr/local/opt/openssl/lib&quot;</span><br><span class="line">  export CPPFLAGS=&quot;-I/usr/local/opt/openssl/include&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">For compilers to find openssl you may need to set:</span><br><span class="line">  export LDFLAGS=&quot;-L/usr/local/opt/openssl/lib&quot;</span><br><span class="line">  export CPPFLAGS=&quot;-I/usr/local/opt/openssl/include&quot;</span><br></pre></td></tr></table></figure>
 
 <p>若仍然出現警告，則重新安裝 <code>openssl</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew reinstall openssl</span><br></pre></td></tr></table></figure>
 
 <h3 id="extension"><a href="#extension" class="headerlink" title="extension"></a>extension</h3><p>出現 <code>extension</code> 錯誤的警告：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swoole.so doesn&apos;t appear to be a valid Zend extension</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swoole.so doesn&#x27;t appear to be a valid Zend extension</span><br></pre></td></tr></table></figure>
 
 <p>使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extension=swoole.so</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extension=swoole.so</span><br></pre></td></tr></table></figure>
 
 <p>不使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zend_extension=swoole.so</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zend_extension=swoole.so</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
@@ -269,21 +277,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#步驟"><span class="toc-number">1.</span> <span class="toc-text">步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#錯誤處理"><span class="toc-number">2.</span> <span class="toc-text">錯誤處理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-ssl-h"><span class="toc-number">2.1.</span> <span class="toc-text">openssl/ssl.h</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-library"><span class="toc-number">2.2.</span> <span class="toc-text">openssl library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extension"><span class="toc-number">2.3.</span> <span class="toc-text">extension</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-number">1.</span> <span class="toc-text">步驟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%8C%AF%E8%AA%A4%E8%99%95%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">錯誤處理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-x2F-ssl-h"><span class="toc-number">2.1.</span> <span class="toc-text">openssl&#x2F;ssl.h</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#openssl-library"><span class="toc-number">2.2.</span> <span class="toc-text">openssl library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extension"><span class="toc-number">2.3.</span> <span class="toc-text">extension</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&text=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&is_video=false&description=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 PHP 的 Swoole 擴充套件&body=Check out this article: https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/01/在-macOS-上安裝-PHP-的-Swoole-擴充套件/&name=在 macOS 上安裝 PHP 的 Swoole 擴充套件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&text=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&is_video=false&description=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 PHP 的 Swoole 擴充套件&body=Check out this article: https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&title=在 macOS 上安裝 PHP 的 Swoole 擴充套件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-PHP-%E7%9A%84-Swoole-%E6%93%B4%E5%85%85%E5%A5%97%E4%BB%B6/&name=在 macOS 上安裝 PHP 的 Swoole 擴充套件&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -301,7 +309,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -327,13 +335,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

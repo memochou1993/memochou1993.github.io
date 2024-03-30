@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="做法使用以下語法，讓 ALB 將 HTTP 的流量導至 HTTPS： 1alb.ingress.kubernetes.io/actions.$&amp;#123;action-name&amp;#125;  修改 ingress.yaml 檔： 12345678910111213141516171819202122apiVersion: extensions/v1beta1kind: Ingressmetadat">
-<meta name="keywords" content="環境部署,HTTPS,Kubernetes,Ingress">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="做法使用以下語法，讓 ALB 將 HTTP 的流量導至 HTTPS： 1alb.ingress.kubernetes.io&#x2F;actions.$&amp;#123;action-name&amp;#125;  修改 ingress.yaml 檔： 12345678910111213141516171819202122apiVersion: extensions&#x2F;v1beta1kind: Ingressmetadat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS">
-<meta property="og:url" content="https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法使用以下語法，讓 ALB 將 HTTP 的流量導至 HTTPS： 1alb.ingress.kubernetes.io/actions.$&amp;#123;action-name&amp;#125;  修改 ingress.yaml 檔： 12345678910111213141516171819202122apiVersion: extensions/v1beta1kind: Ingressmetadat">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.970Z">
+<meta property="og:description" content="做法使用以下語法，讓 ALB 將 HTTP 的流量導至 HTTPS： 1alb.ingress.kubernetes.io&#x2F;actions.$&amp;#123;action-name&amp;#125;  修改 ingress.yaml 檔： 12345678910111213141516171819202122apiVersion: extensions&#x2F;v1beta1kind: Ingressmetadat">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-04T15:16:22.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.692Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="HTTPS">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="Ingress">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS">
-<meta name="twitter:description" content="做法使用以下語法，讓 ALB 將 HTTP 的流量導至 HTTPS： 1alb.ingress.kubernetes.io/actions.$&amp;#123;action-name&amp;#125;  修改 ingress.yaml 檔： 12345678910111213141516171819202122apiVersion: extensions/v1beta1kind: Ingressmetadat">
     
     
         
@@ -44,14 +47,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +96,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2021/05/使用-AWS-Vault-管理-AWS-登入資料設定檔/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/05/%E4%BD%BF%E7%94%A8-AWS-Vault-%E7%AE%A1%E7%90%86-AWS-%E7%99%BB%E5%85%A5%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E6%AA%94/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2021/05/在-TypeScript-專案使用-ESLint-分析工具並套用-Airbnb-程式碼風格/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2021/05/%E5%9C%A8-TypeScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-ESLint-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E4%B8%A6%E5%A5%97%E7%94%A8-Airbnb-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E9%A2%A8%E6%A0%BC/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +112,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&text=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&is_video=false&description=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&body=Check out this article: https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&name=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&text=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&is_video=false&description=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&body=Check out this article: https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&name=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +166,7 @@
             
         
             
-                <a href="/categories/環境部署/Kubernetes/其他/">其他</a>
+                <a href="/categories/Deployment/Kubernetes/Others/">Others</a>
             
         
     </div>
@@ -167,7 +175,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/HTTPS/">HTTPS</a>, <a class="tag-link" href="/tags/Ingress/">Ingress</a>, <a class="tag-link" href="/tags/Kubernetes/">Kubernetes</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/HTTPS/" rel="tag">HTTPS</a>, <a class="tag-link-link" href="/tags/Ingress/" rel="tag">Ingress</a>, <a class="tag-link-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a>
     </div>
 
 
@@ -180,10 +188,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alb.ingress.kubernetes.io/actions.<span class="variable">$&#123;action-name&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>ingress.yaml</code> 檔：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">ingress</span></span><br><span class="line"><span class="attr">  annotations:</span></span><br><span class="line">    <span class="string">kubernetes.io/ingress.class:</span> <span class="string">alb</span></span><br><span class="line">    <span class="string">alb.ingress.kubernetes.io/certificate-arn:</span> <span class="attr">arn:aws:acm:us-west-2:xxxx:certificate/xxxxxx</span></span><br><span class="line">    <span class="string">alb.ingress.kubernetes.io/listen-ports:</span> <span class="string">'[&#123;"HTTP": 80&#125;, &#123;"HTTPS":443&#125;]'</span></span><br><span class="line">    <span class="string">alb.ingress.kubernetes.io/actions.ssl-redirect:</span> <span class="string">'&#123;"Type": "redirect", "RedirectConfig": &#123; "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"&#125;&#125;'</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">    - http:</span></span><br><span class="line"><span class="attr">        paths:</span></span><br><span class="line"><span class="attr">         - path:</span> <span class="string">/*</span></span><br><span class="line"><span class="attr">           backend:</span></span><br><span class="line"><span class="attr">             serviceName:</span> <span class="string">ssl-redirect</span></span><br><span class="line"><span class="attr">             servicePort:</span> <span class="string">use-annotation</span></span><br><span class="line"><span class="attr">         - path:</span> <span class="string">/*</span></span><br><span class="line"><span class="attr">           backend:</span></span><br><span class="line"><span class="attr">             serviceName:</span> <span class="string">my-service</span></span><br><span class="line"><span class="attr">             servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ingress</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubernetes.io/ingress.class:</span> <span class="string">alb</span></span><br><span class="line">    <span class="attr">alb.ingress.kubernetes.io/certificate-arn:</span> <span class="string">arn:aws:acm:us-west-2:xxxx:certificate/xxxxxx</span></span><br><span class="line">    <span class="attr">alb.ingress.kubernetes.io/listen-ports:</span> <span class="string">&#x27;[&#123;&quot;HTTP&quot;: 80&#125;, &#123;&quot;HTTPS&quot;:443&#125;]&#x27;</span></span><br><span class="line">    <span class="attr">alb.ingress.kubernetes.io/actions.ssl-redirect:</span> <span class="string">&#x27;&#123;&quot;Type&quot;: &quot;redirect&quot;, &quot;RedirectConfig&quot;: &#123; &quot;Protocol&quot;: &quot;HTTPS&quot;, &quot;Port&quot;: &quot;443&quot;, &quot;StatusCode&quot;: &quot;HTTP_301&quot;&#125;&#125;&#x27;</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">http:</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">         <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/*</span></span><br><span class="line">           <span class="attr">backend:</span></span><br><span class="line">             <span class="attr">serviceName:</span> <span class="string">ssl-redirect</span></span><br><span class="line">             <span class="attr">servicePort:</span> <span class="string">use-annotation</span></span><br><span class="line">         <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/*</span></span><br><span class="line">           <span class="attr">backend:</span></span><br><span class="line">             <span class="attr">serviceName:</span> <span class="string">my-service</span></span><br><span class="line">             <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>註解 <code>alb.ingress.kubernetes.io/listen-ports</code> 必須至少包含 <code>[{&quot;HTTP&quot;: 80}, {&quot;HTTPS&quot;:443}]</code> 兩個埠號。</li>
+<li>註解 <code>alb.ingress.kubernetes.io/listen-ports</code> 必須至少包含 <code>[&#123;&quot;HTTP&quot;: 80&#125;, &#123;&quot;HTTPS&quot;:443&#125;]</code> 兩個埠號。</li>
 <li>註解 <code>alb.ingress.kubernetes.io/certificate-arn</code> 必須設置憑證。</li>
 <li>動作 <code>ssl-redirect</code> 必須在規則的第一個，讓 ALB 優先解析。</li>
 </ul>
@@ -194,7 +202,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe ingress my-service</span><br></pre></td></tr></table></figure>
 
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/tasks/ssl_redirect/" target="_blank" rel="noopener">Redirect Traffic from HTTP to HTTPS</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.1/guide/tasks/ssl_redirect/">Redirect Traffic from HTTP to HTTPS</a></li>
 </ul>
 
   </div>
@@ -232,21 +240,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#做法"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&text=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&is_video=false&description=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&body=Check out this article: https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/05/配置-Ingress-Manifest-將-HTTP-的流量導至-HTTPS/&name=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&text=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&is_video=false&description=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&body=Check out this article: https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&title=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/05/%E9%85%8D%E7%BD%AE-Ingress-Manifest-%E5%B0%87-HTTP-%E7%9A%84%E6%B5%81%E9%87%8F%E5%B0%8E%E8%87%B3-HTTPS/&name=配置 Ingress Manifest 將 HTTP 的流量導至 HTTPS&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -264,7 +272,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -290,13 +298,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

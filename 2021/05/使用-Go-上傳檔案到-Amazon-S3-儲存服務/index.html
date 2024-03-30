@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前置作業先到 AWS IAM 建立一個使用者，打開「Security credentials」頁籤，並選擇「Create access key」按鈕，最後將生成的「Access key ID」和「Secret access key」儲存起來。 實作建立專案。 12mkdir go-s3-examplecd go-s3-example  初始化 Go Modules。 1go mod init gi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Go 上傳檔案到 Amazon S3 儲存服務">
+<meta property="og:url" content="https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業先到 AWS IAM 建立一個使用者，打開「Security credentials」頁籤，並選擇「Create access key」按鈕，最後將生成的「Access key ID」和「Secret access key」儲存起來。 實作建立專案。 12mkdir go-s3-examplecd go-s3-example  初始化 Go Modules。 1go mod init gi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-20T14:24:08.000Z">
+<meta property="article:modified_time" content="2024-01-24T10:27:33.509Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="S3">
+<meta property="article:tag" content="Storage Service">
+<meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Go 上傳檔案到 Amazon S3 儲存服務</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/05/%E4%BD%BF%E7%94%A8-TypeScript-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%AF%86%E7%A2%BC%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E5%A5%97%E4%BB%B6/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2021/05/%E5%9C%A8-Vue-2-5-%E4%BD%BF%E7%94%A8-reCAPTCHA-v3-%E6%9C%8D%E5%8B%99/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&text=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&is_video=false&description=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 上傳檔案到 Amazon S3 儲存服務&body=Check out this article: https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&name=使用 Go 上傳檔案到 Amazon S3 儲存服務&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E7%B6%B2%E9%A0%81"><span class="toc-number">4.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Go 上傳檔案到 Amazon S3 儲存服務
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-05-20T14:24:08.000Z" itemprop="datePublished">2021-05-20</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/Go/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AWS/" rel="tag">AWS</a>, <a class="tag-link-link" href="/tags/Go/" rel="tag">Go</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/S3/" rel="tag">S3</a>, <a class="tag-link-link" href="/tags/Storage-Service/" rel="tag">Storage Service</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>先到 <a target="_blank" rel="noopener" href="https://console.aws.amazon.com/iam/home">AWS IAM</a> 建立一個使用者，打開「Security credentials」頁籤，並選擇「Create access key」按鈕，最後將生成的「Access key ID」和「Secret access key」儲存起來。</p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> go-s3-example</span><br><span class="line"><span class="built_in">cd</span> go-s3-example</span><br></pre></td></tr></table></figure>
+
+<p>初始化 Go Modules。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init github.com/memochou1993/go-s3-example</span><br></pre></td></tr></table></figure>
+
+<p>下載 <code>aws-sdk-go</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/aws/aws-sdk-go/aws</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>main.go</code> 檔，填入必要變數。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	AccessKeyID     = <span class="string">&quot;&quot;</span></span><br><span class="line">	SecretAccessKey = <span class="string">&quot;&quot;</span></span><br><span class="line">	Region          = <span class="string">&quot;&quot;</span></span><br><span class="line">	Bucket          = <span class="string">&quot;&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 連線</span></span><br><span class="line">	sess := ConnectAws()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 表單</span></span><br><span class="line">	http.Handle(<span class="string">&quot;/&quot;</span>, http.FileServer(http.Dir(<span class="string">&quot;./public&quot;</span>)))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 上傳單一檔案</span></span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/upload-file&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		r.ParseMultipartForm(<span class="number">32</span> &lt;&lt; <span class="number">20</span>) <span class="comment">// 限制檔案上傳大小</span></span><br><span class="line">		<span class="keyword">for</span> _, fileHeaders := <span class="keyword">range</span> r.MultipartForm.File &#123;</span><br><span class="line">			<span class="keyword">for</span> _, header := <span class="keyword">range</span> fileHeaders &#123;</span><br><span class="line">				Upload(sess, Bucket, header)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 上傳多個檔案</span></span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/upload-files&quot;</span>, <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">		r.ParseMultipartForm(<span class="number">32</span> &lt;&lt; <span class="number">20</span>) <span class="comment">// 限制檔案上傳大小</span></span><br><span class="line">		<span class="keyword">for</span> _, fileHeaders := <span class="keyword">range</span> r.MultipartForm.File &#123;</span><br><span class="line">			UploadMultiple(sess, Bucket, fileHeaders)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>ConnectAws</code> 方法，用來取得一個 Session：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ConnectAws</span><span class="params">()</span></span> *session.Session &#123;</span><br><span class="line">	sess, err := session.NewSession(&amp;aws.Config&#123;</span><br><span class="line">		Region: aws.String(Region),</span><br><span class="line">		Credentials: credentials.NewStaticCredentials(</span><br><span class="line">			AccessKeyID,</span><br><span class="line">			SecretAccessKey,</span><br><span class="line">			<span class="string">&quot;&quot;</span>, <span class="comment">// 如果沒有使用 AWS STS 的話，填入空字串即可</span></span><br><span class="line">		),</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sess</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>Upload</code> 方法，用來上傳單一檔案：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Upload</span><span class="params">(sess *session.Session, bucket <span class="type">string</span>, header *multipart.FileHeader)</span></span> <span class="type">error</span> &#123;</span><br><span class="line">	svc := s3manager.NewUploader(sess)</span><br><span class="line">	src, err := header.Open()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> _, err := svc.Upload(&amp;s3manager.UploadInput&#123;</span><br><span class="line">		Bucket: aws.String(bucket),</span><br><span class="line">		ACL:    aws.String(<span class="string">&quot;public-read&quot;</span>),</span><br><span class="line">		Key:    aws.String(header.Filename),</span><br><span class="line">		Body:   src,</span><br><span class="line">	&#125;); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>UploadMultiple</code> 方法，用來上傳多個檔案：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">UploadMultiple</span><span class="params">(sess *session.Session, bucket <span class="type">string</span>, fileHeaders []*multipart.FileHeader)</span></span> <span class="type">error</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> objects []s3manager.BatchUploadObject</span><br><span class="line">	<span class="keyword">for</span> _, header := <span class="keyword">range</span> fileHeaders &#123;</span><br><span class="line">		src, err := header.Open()</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> err</span><br><span class="line">		&#125;</span><br><span class="line">		objects = <span class="built_in">append</span>(objects, s3manager.BatchUploadObject&#123;</span><br><span class="line">			Object: &amp;s3manager.UploadInput&#123;</span><br><span class="line">				Bucket: aws.String(bucket),</span><br><span class="line">				ACL:    aws.String(<span class="string">&quot;public-read&quot;</span>),</span><br><span class="line">				Key:    aws.String(header.Filename),</span><br><span class="line">				Body:   src,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	svc := s3manager.NewUploader(sess)</span><br><span class="line">	iter := &amp;s3manager.UploadObjectsIterator&#123;Objects: objects&#125;</span><br><span class="line">	<span class="keyword">return</span> svc.UploadWithIterator(aws.BackgroundContext(), iter)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>public</code> 資料夾新增 <code>index.html</code> 檔，當作表單：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 上傳單一檔案 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload-file&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;files[]&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 上傳多個檔案 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">action</span>=<span class="string">&quot;/upload-files&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;files[]&quot;</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>執行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run main.go</span><br></pre></td></tr></table></figure>
+
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><p>使用 Axios 上傳檔案，範例如下。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;file&quot;</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;upload()&quot;</span>&gt;</span>Upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> <span class="title function_">upload</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> file = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;file&#x27;</span>).<span class="property">files</span>[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>();</span></span><br><span class="line"><span class="language-javascript">      formData.<span class="title function_">append</span>(<span class="string">&#x27;files[]&#x27;</span>, file);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">axios</span>(<span class="string">&#x27;https://localhost:8080/upload-file&#x27;</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">headers</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;multipart/form-data&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">data</span>: formData,</span></span><br><span class="line"><span class="language-javascript">      &#125;);</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> img = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;img&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      img.<span class="title function_">setAttribute</span>(<span class="string">&#x27;src&#x27;</span>, <span class="string">`<span class="subst">$&#123;res.data.data.avatar&#125;</span>?t=<span class="subst">$&#123;+<span class="keyword">new</span> <span class="built_in">Date</span>()&#125;</span>`</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>).<span class="title function_">appendChild</span>(img);</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="瀏覽網頁"><a href="#瀏覽網頁" class="headerlink" title="瀏覽網頁"></a>瀏覽網頁</h2><p>前往 <a target="_blank" rel="noopener" href="http://127.0.0.1:8080/">http://127.0.0.1:8080</a> 瀏覽。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-go/api/service/s3/">AWS SDK for Go API Reference</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS Account and Access Keys</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">前端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%80%8F%E8%A6%BD%E7%B6%B2%E9%A0%81"><span class="toc-number">4.</span> <span class="toc-text">瀏覽網頁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&text=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&is_video=false&description=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Go 上傳檔案到 Amazon S3 儲存服務&body=Check out this article: https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&title=使用 Go 上傳檔案到 Amazon S3 儲存服務"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/05/%E4%BD%BF%E7%94%A8-Go-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Amazon-S3-%E5%84%B2%E5%AD%98%E6%9C%8D%E5%8B%99/&name=使用 Go 上傳檔案到 Amazon S3 儲存服務&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang=en>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta name="author" content="Memo Chou">
     <meta name="description" content="Memo's Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="環境 Ubuntu 18.04 LTS  註冊應用程式首先到 GitHub 的 Developer settings 頁面建立一個 OAuth 應用程式，輸入以下設定：  Application name: Drone CI Homepage URL: https://drone.domain.com Authorization callback URL: https://drone.domain">
-<meta name="keywords" content="環境部署,GitHub,Docker,CI&#x2F;CD,Drone">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="環境 Ubuntu 18.04 LTS  註冊應用程式首先到 GitHub 的 Developer settings 頁面建立一個 OAuth 應用程式，輸入以下設定：  Application name: Drone CI Homepage URL: https:&#x2F;&#x2F;drone.domain.com Authorization callback URL: https:&#x2F;&#x2F;drone.domain">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Docker 搭建 Drone 自動化部署平台">
-<meta property="og:url" content="https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/index.html">
+<meta property="og:url" content="https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="環境 Ubuntu 18.04 LTS  註冊應用程式首先到 GitHub 的 Developer settings 頁面建立一個 OAuth 應用程式，輸入以下設定：  Application name: Drone CI Homepage URL: https://drone.domain.com Authorization callback URL: https://drone.domain">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-10-16T17:28:09.960Z">
+<meta property="og:description" content="環境 Ubuntu 18.04 LTS  註冊應用程式首先到 GitHub 的 Developer settings 頁面建立一個 OAuth 應用程式，輸入以下設定：  Application name: Drone CI Homepage URL: https:&#x2F;&#x2F;drone.domain.com Authorization callback URL: https:&#x2F;&#x2F;drone.domain">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-13T13:15:41.000Z">
+<meta property="article:modified_time" content="2023-11-30T03:05:47.677Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="Drone">
+<meta property="article:tag" content="Deployment">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Docker 搭建 Drone 自動化部署平台">
-<meta name="twitter:description" content="環境 Ubuntu 18.04 LTS  註冊應用程式首先到 GitHub 的 Developer settings 頁面建立一個 OAuth 應用程式，輸入以下設定：  Application name: Drone CI Homepage URL: https://drone.domain.com Authorization callback URL: https://drone.domain">
     
     
         
@@ -44,14 +48,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
     
     <!-- rss -->
     
     
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -88,10 +97,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2020/04/使用-Kubernetes-和-Jenkins-為應用程式建立自動化部署（二）/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/04/%E4%BD%BF%E7%94%A8-Kubernetes-%E5%92%8C-Jenkins-%E7%82%BA%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%EF%BC%88%E4%BA%8C%EF%BC%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/2020/04/在-Laravel-7-0-使用-View-Composer-視圖合成器/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/2020/04/%E5%9C%A8-Laravel-7-0-%E4%BD%BF%E7%94%A8-View-Composer-%E8%A6%96%E5%9C%96%E5%90%88%E6%88%90%E5%99%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -104,21 +113,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&text=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&is_video=false&description=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Docker 搭建 Drone 自動化部署平台&body=Check out this article: https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&name=使用 Docker 搭建 Drone 自動化部署平台&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&text=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&is_video=false&description=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Docker 搭建 Drone 自動化部署平台&body=Check out this article: https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&name=使用 Docker 搭建 Drone 自動化部署平台&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊應用程式"><span class="toc-number">2.</span> <span class="toc-text">註冊應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署應用程式"><span class="toc-number">3.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境變數"><span class="toc-number">4.</span> <span class="toc-text">環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">註冊應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="toc-number">4.</span> <span class="toc-text">環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -158,7 +167,7 @@
             
         
             
-                <a href="/categories/環境部署/Docker/其他/">其他</a>
+                <a href="/categories/Deployment/Docker/Others/">Others</a>
             
         
     </div>
@@ -167,7 +176,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/CI-CD/">CI/CD</a>, <a class="tag-link" href="/tags/Docker/">Docker</a>, <a class="tag-link" href="/tags/Drone/">Drone</a>, <a class="tag-link" href="/tags/GitHub/">GitHub</a>, <a class="tag-link" href="/tags/環境部署/">環境部署</a>
+        <a class="tag-link-link" href="/tags/CI-CD/" rel="tag">CI/CD</a>, <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/Drone/" rel="tag">Drone</a>, <a class="tag-link-link" href="/tags/GitHub/" rel="tag">GitHub</a>
     </div>
 
 
@@ -179,41 +188,41 @@
     <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
 <li>Ubuntu 18.04 LTS</li>
 </ul>
-<h2 id="註冊應用程式"><a href="#註冊應用程式" class="headerlink" title="註冊應用程式"></a>註冊應用程式</h2><p>首先到 GitHub 的 <a href="https://github.com/settings/developers" target="_blank" rel="noopener">Developer settings</a> 頁面建立一個 OAuth 應用程式，輸入以下設定：</p>
+<h2 id="註冊應用程式"><a href="#註冊應用程式" class="headerlink" title="註冊應用程式"></a>註冊應用程式</h2><p>首先到 GitHub 的 <a target="_blank" rel="noopener" href="https://github.com/settings/developers">Developer settings</a> 頁面建立一個 OAuth 應用程式，輸入以下設定：</p>
 <ul>
 <li>Application name: Drone CI</li>
-<li>Homepage URL: <a href="https://drone.domain.com" target="_blank" rel="noopener">https://drone.domain.com</a></li>
-<li>Authorization callback URL: <a href="https://drone.domain.com/login" target="_blank" rel="noopener">https://drone.domain.com/login</a></li>
+<li>Homepage URL: <a target="_blank" rel="noopener" href="https://drone.domain.com/">https://drone.domain.com</a></li>
+<li>Authorization callback URL: <a target="_blank" rel="noopener" href="https://drone.domain.com/login">https://drone.domain.com/login</a></li>
 </ul>
 <p>儲存後，獲得一組 Client ID 和 Client Secret。</p>
 <h2 id="部署應用程式"><a href="#部署應用程式" class="headerlink" title="部署應用程式"></a>部署應用程式</h2><p>打開終端機，建立一個 Drone 的 server 和 agent 共享的 secret。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -hex 16</span><br></pre></td></tr></table></figure>
 
 <p>在伺服器上建立一個 Drone 的工作目錄。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir drone</span><br><span class="line"><span class="built_in">cd</span> drone</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> drone</span><br><span class="line"><span class="built_in">cd</span> drone</span><br></pre></td></tr></table></figure>
 
 <p>建立 <code>docker-compose.yml</code> 檔：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.5"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  drone-server:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">drone/drone:1</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">8000</span><span class="string">:80</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./data:/data</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_SERVER_HOST=$&#123;DRONE_SERVER_HOST&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_SERVER_PROTO=$&#123;DRONE_SERVER_PROTO&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_GITHUB_CLIENT_ID=$&#123;DRONE_GITHUB_CLIENT_ID&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_GITHUB_CLIENT_SECRET=$&#123;DRONE_GITHUB_CLIENT_SECRET&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_RPC_SECRET=$&#123;DRONE_RPC_SECRET&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_LOGS_COLOR=true</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_LOGS_PRETTY=true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  drone-agent:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">drone/drone-runner-docker:1</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">drone-server</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_RPC_HOST=$&#123;DRONE_RPC_HOST&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_RPC_PROTO=$&#123;DRONE_RPC_PROTO&#125;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DRONE_RPC_SECRET=$&#123;DRONE_RPC_SECRET&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">drone-server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">drone/drone:1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8000</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_SERVER_HOST=$&#123;DRONE_SERVER_HOST&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_SERVER_PROTO=$&#123;DRONE_SERVER_PROTO&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_GITHUB_CLIENT_ID=$&#123;DRONE_GITHUB_CLIENT_ID&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_GITHUB_CLIENT_SECRET=$&#123;DRONE_GITHUB_CLIENT_SECRET&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_RPC_SECRET=$&#123;DRONE_RPC_SECRET&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_LOGS_COLOR=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_LOGS_PRETTY=true</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">drone-agent:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">drone/drone-runner-docker:1</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">drone-server</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_RPC_HOST=$&#123;DRONE_RPC_HOST&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_RPC_PROTO=$&#123;DRONE_RPC_PROTO&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DRONE_RPC_SECRET=$&#123;DRONE_RPC_SECRET&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>建立 <code>.env</code> 檔：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DRONE_SERVER_HOST=drone.domain.com</span><br><span class="line">DRONE_SERVER_PROTO=https</span><br><span class="line">DRONE_GITHUB_CLIENT_ID=xxxxx</span><br><span class="line">DRONE_GITHUB_CLIENT_SECRET=xxxxx</span><br><span class="line">DRONE_RPC_HOST=drone-server</span><br><span class="line">DRONE_RPC_PROTO=http</span><br><span class="line">DRONE_RPC_SECRET=xxxxx</span><br></pre></td></tr></table></figure>
 
 <p>建立 <code>.gitignore</code> 檔：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data</span><br><span class="line">.<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
 
 <p>啟動 Drone 服務：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
 
-<p>前往 <a href="https://drone.domain.com/" target="_blank" rel="noopener">https://drone.domain.com/</a> 瀏覽。</p>
+<p>前往 <a target="_blank" rel="noopener" href="https://drone.domain.com/">https://drone.domain.com/</a> 瀏覽。</p>
 <h2 id="環境變數"><a href="#環境變數" class="headerlink" title="環境變數"></a>環境變數</h2><ul>
-<li>Server 的環境變數參考 <a href="https://docs.drone.io/server/reference/" target="_blank" rel="noopener">Reference</a> 頁面。</li>
-<li>Docker Runner 的環境變數參考 <a href="https://docs.drone.io/server/reference/" target="_blank" rel="noopener">Reference</a> 頁面。</li>
+<li>Server 的環境變數參考 <a target="_blank" rel="noopener" href="https://docs.drone.io/server/reference/">Reference</a> 頁面。</li>
+<li>Docker Runner 的環境變數參考 <a target="_blank" rel="noopener" href="https://docs.drone.io/server/reference/">Reference</a> 頁面。</li>
 </ul>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
-<li><a href="https://github.com/memochou1993/drone-example" target="_blank" rel="noopener">drone-example</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/drone-example">drone-example</a></li>
 </ul>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://docs.drone.io/server/provider/github/" target="_blank" rel="noopener">Drone Documentation - GitHub</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.drone.io/server/provider/github/">Drone Documentation - GitHub</a></li>
 </ul>
 
   </div>
@@ -251,21 +260,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#環境"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#註冊應用程式"><span class="toc-number">2.</span> <span class="toc-text">註冊應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署應用程式"><span class="toc-number">3.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#環境變數"><span class="toc-number">4.</span> <span class="toc-text">環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程式碼"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#參考資料"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%BB%E5%86%8A%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">註冊應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">部署應用程式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="toc-number">4.</span> <span class="toc-text">環境變數</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&text=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&is_video=false&description=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=使用 Docker 搭建 Drone 自動化部署平台&body=Check out this article: https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/使用-Docker-搭建-Drone-自動化部署平台/&name=使用 Docker 搭建 Drone 自動化部署平台&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&text=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&is_video=false&description=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Docker 搭建 Drone 自動化部署平台&body=Check out this article: https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&title=使用 Docker 搭建 Drone 自動化部署平台"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2020/04/%E4%BD%BF%E7%94%A8-Docker-%E6%90%AD%E5%BB%BA-Drone-%E8%87%AA%E5%8B%95%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0/&name=使用 Docker 搭建 Drone 自動化部署平台&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -283,7 +292,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2023 Memo Chou
+    Copyright &copy; 2024 Memo Chou
   </div>
   <div class="footer-right">
     <nav>
@@ -309,13 +318,23 @@
 </body>
 </html>
 <!-- styles -->
+
 <link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
 <link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
+
 <!-- jquery -->
+
 <script src="/lib/jquery/jquery.min.js"></script>
+
+
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->
