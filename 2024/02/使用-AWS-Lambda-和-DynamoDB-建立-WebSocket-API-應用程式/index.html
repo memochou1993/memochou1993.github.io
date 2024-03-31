@@ -16,15 +16,15 @@
 <meta property="og:description" content="建立函式和資料表首先，下載 CloudFormation template 範例檔案。 到 CloudFormation 建立堆疊：  選擇 With new resources 選項 上傳樣板 Stack name: websocket-api-chat-app-tutorial  此堆疊會建立 Lambda 函式和 DynamoDB 資料表。 建立 API到 API Gateway 建立一個">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-13T13:33:58.000Z">
-<meta property="article:modified_time" content="2024-02-13T13:59:34.526Z">
+<meta property="article:modified_time" content="2024-03-31T09:15:17.597Z">
 <meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Deployment">
 <meta property="article:tag" content="AWS">
 <meta property="article:tag" content="WebSocket">
 <meta property="article:tag" content="DynamoDB">
-<meta property="article:tag" content="Deployment">
 <meta property="article:tag" content="Lambda">
-<meta property="article:tag" content="API Gateway">
 <meta property="article:tag" content="Serverless">
+<meta property="article:tag" content="API Gateway">
 <meta name="twitter:card" content="summary">
     
     
@@ -205,7 +205,10 @@
 </ul>
 <p>為每個路由建立 integration 並配對 Lambda 函式。</p>
 <p>點選 <code>Create and deploy</code> 按鈕。</p>
-<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>開啟終端機，建立連線。</p>
+<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>安裝 <code>wscat</code> 指令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g wscat</span><br></pre></td></tr></table></figure>
+
+<p>開啟終端機，建立連線。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wscat -c wss://xxx.execute-api.ap-northeast-1.amazonaws.com/production</span><br></pre></td></tr></table></figure>
 
 <p>開啟另一個終端機，建立連線。</p>
