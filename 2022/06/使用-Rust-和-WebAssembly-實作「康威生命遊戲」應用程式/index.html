@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言本文為「Rust and WebAssembly」教學指南的學習筆記。 介紹康威生命遊戲（Conway’s Game of Life），又稱康威生命棋，是英國數學家康威在 1970 年發明的細胞自動機。  規則一：任何活細胞周圍有低於兩個活細胞時，將因人口稀少而死亡。 規則二：任何活細胞周圍有兩至三個活細胞時，將存活至下個世代。 規則二：任何活細胞周圍有高於三個活細胞時，將因人口過剩而死亡。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-04T12:49:01.000Z">
-<meta property="article:modified_time" content="2023-11-30T03:05:47.726Z">
+<meta property="article:modified_time" content="2024-04-02T11:37:58.237Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="JavaScript">
@@ -270,7 +270,7 @@
 <p>啟動服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run start</span><br></pre></td></tr></table></figure>
 
-<p>前往 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a> 瀏覽。</p>
+<p>前往 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 瀏覽。</p>
 <h2 id="重構"><a href="#重構" class="headerlink" title="重構"></a>重構</h2><p>修改後端的 <code>src/lib.rs</code> 檔，建立以下公開方法。</p>
 <figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Universe</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">width</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">u32</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.width</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">height</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">u32</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.height</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">cells</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> *<span class="keyword">const</span> Cell &#123;</span><br><span class="line">        <span class="keyword">self</span>.cells.<span class="title function_ invoke__">as_ptr</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -286,7 +286,7 @@
 <p>重新啟動服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run start</span><br></pre></td></tr></table></figure>
 
-<p>前往 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a> 瀏覽。</p>
+<p>前往 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 瀏覽。</p>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/wasm-game-of-life">wasm-game-of-life</a></li>
 </ul>
