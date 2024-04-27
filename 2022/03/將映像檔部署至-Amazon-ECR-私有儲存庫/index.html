@@ -16,7 +16,7 @@
 <meta property="og:description" content="前置作業進到 Amazon ECR 創建一個儲存庫，以下使用 example 儲存庫為例。 做法使用 aws-vault 執行命令，登入指定叢集，以 playground 叢集為例。 1aws-vault exec --backend&#x3D;file playground -- aws sso login  使用 aws-vault 執行命令，並使用 aws ecr 命令，將 Docker 登入至指定的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-18T07:42:05.000Z">
-<meta property="article:modified_time" content="2024-01-24T10:20:23.064Z">
+<meta property="article:modified_time" content="2024-04-27T16:27:21.213Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
 <meta property="article:tag" content="AWS">
@@ -186,7 +186,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws-vault <span class="built_in">exec</span> --backend=file playground -- aws sso login</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>aws-vault</code> 執行命令，並使用 <code>aws ecr</code> 命令，將 Docker 登入至指定的私有儲存庫。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws-vault <span class="built_in">exec</span> playground -- aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin xxxxxxxxxxxx.dkr.ecr.ap-northeast-1.amazonaws.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws-vault <span class="built_in">exec</span> your-profile -- aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin xxxxxxxxxxxx.dkr.ecr.ap-northeast-1.amazonaws.com</span><br></pre></td></tr></table></figure>
 
 <p>為專案建立 <code>example</code> 映像檔。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t example .</span><br></pre></td></tr></table></figure>
