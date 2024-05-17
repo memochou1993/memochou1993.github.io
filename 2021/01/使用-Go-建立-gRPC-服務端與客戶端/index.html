@@ -8,12 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言gRPC 是 Google 發起的一個高效能的、開源的遠端程序呼叫（Remote Procedure Call）框架。此框架基於 HTTP&#x2F;2 協定傳輸，使用 Protocol Buffers 作為介面描述語言。 一個簡單的 Protocol Buffers 語法如下： 12345message Person &amp;#123;  required string name &#x3D; 1;  re">
+    <meta name="description" content="前言gRPC 是 Google 發起的一個高效能的、開源的遠端程序呼叫（Remote Procedure Call）框架。此框架基於 HTTP&#x2F;2 協定傳輸，使用 Protocol Buffers 作為介面描述語言。 一個簡單的 Protocol Buffers 語法如下： 12345message Person &#123;  required string name &#x3D; 1;  re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Go 建立 gRPC 服務端與客戶端">
 <meta property="og:url" content="https://blog.epoch.tw/2021/01/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-gRPC-%E6%9C%8D%E5%8B%99%E7%AB%AF%E8%88%87%E5%AE%A2%E6%88%B6%E7%AB%AF/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言gRPC 是 Google 發起的一個高效能的、開源的遠端程序呼叫（Remote Procedure Call）框架。此框架基於 HTTP&#x2F;2 協定傳輸，使用 Protocol Buffers 作為介面描述語言。 一個簡單的 Protocol Buffers 語法如下： 12345message Person &amp;#123;  required string name &#x3D; 1;  re">
+<meta property="og:description" content="前言gRPC 是 Google 發起的一個高效能的、開源的遠端程序呼叫（Remote Procedure Call）框架。此框架基於 HTTP&#x2F;2 協定傳輸，使用 Protocol Buffers 作為介面描述語言。 一個簡單的 Protocol Buffers 語法如下： 12345message Person &#123;  required string name &#x3D; 1;  re">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-01-07T16:03:52.000Z">
 <meta property="article:modified_time" content="2023-11-30T03:05:47.690Z">
@@ -59,7 +59,7 @@
     <!-- rss -->
     
     
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -186,7 +186,7 @@
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>gRPC 是 Google 發起的一個高效能的、開源的遠端程序呼叫（Remote Procedure Call）框架。此框架基於 HTTP&#x2F;2 協定傳輸，使用 Protocol Buffers 作為介面描述語言。</p>
 <p>一個簡單的 Protocol Buffers 語法如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message Person &#123;</span><br><span class="line">  required string name = 1;</span><br><span class="line">  required int32 id = 2;</span><br><span class="line">  optional string email = 3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight proto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message </span><span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="keyword">required</span> <span class="type">string</span> name = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">required</span> <span class="type">int32</span> id = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">optional</span> <span class="type">string</span> email = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>建立專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> grpc-go-example</span><br><span class="line"><span class="built_in">cd</span> grpc-go-example</span><br><span class="line">go mod init</span><br></pre></td></tr></table></figure>
@@ -198,7 +198,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/golang/protobuf/protoc-gen-go</span><br></pre></td></tr></table></figure>
 
 <h3 id="定義服務"><a href="#定義服務" class="headerlink" title="定義服務"></a>定義服務</h3><p>新增 <code>hello.proto</code> 檔：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">option go_package = &quot;.;hello&quot;;</span><br><span class="line"></span><br><span class="line">service HelloService &#123;</span><br><span class="line">  rpc SayHello (HelloRequest) returns (HelloResponse);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message HelloRequest &#123;</span><br><span class="line">  string greeting = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message HelloResponse &#123;</span><br><span class="line">  string reply = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight proto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">option</span> go_package = <span class="string">&quot;.;hello&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">service </span><span class="title class_">HelloService</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">rpc</span> SayHello (HelloRequest) <span class="keyword">returns</span> (HelloResponse)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">HelloRequest</span> &#123;</span><br><span class="line">  <span class="type">string</span> greeting = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">HelloResponse</span> &#123;</span><br><span class="line">  <span class="type">string</span> reply = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>使用以下指令，生成 <code>hello.pb.go</code> 檔：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --go_out=plugins=grpc:. hello.proto</span><br></pre></td></tr></table></figure>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Topics Functional Programming in JavaScript Building a Modern JavaScript Library with Vite Unit Testing with Jest and Vitest  Resources 📖 Check out the handbook 📜 Check out the slide 💪 Work in grou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library">
+<meta property="og:url" content="https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="Topics Functional Programming in JavaScript Building a Modern JavaScript Library with Vite Unit Testing with Jest and Vitest  Resources 📖 Check out the handbook 📜 Check out the slide 💪 Work in grou">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-19T15:19:12.000Z">
+<meta property="article:modified_time" content="2024-05-17T13:57:22.340Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Testing">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="Vite">
+<meta property="article:tag" content="Functional Programming">
+<meta property="article:tag" content="TDD">
+<meta property="article:tag" content="Workshop">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/09/Functional-Programming-in-JavaScript-I-Practicing-JavaScript-ES6-Array-Methods-with-Unit-Testing/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/09/Functional-Programming-in-JavaScript-III-Implementing-Higher-Order-Functions-with-TDD/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&text=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&is_video=false&description=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library&body=Check out this article: https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&name=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Topics"><span class="toc-number">1.</span> <span class="toc-text">Topics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resources"><span class="toc-number">2.</span> <span class="toc-text">Resources</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Workshop"><span class="toc-number">3.</span> <span class="toc-text">Workshop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Initialize-a-project-with-Vite"><span class="toc-number">3.1.</span> <span class="toc-text">Initialize a project with Vite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Initialize-a-Git-repository"><span class="toc-number">3.2.</span> <span class="toc-text">Initialize a Git repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tidy-up-the-project"><span class="toc-number">3.3.</span> <span class="toc-text">Tidy up the project</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Build-with-library-mode"><span class="toc-number">3.4.</span> <span class="toc-text">Build with library mode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Try-with-UMD-module"><span class="toc-number">3.4.1.</span> <span class="toc-text">Try with UMD module</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Try-with-ES-module"><span class="toc-number">3.4.2.</span> <span class="toc-text">Try with ES module</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tidy-up"><span class="toc-number">3.4.3.</span> <span class="toc-text">Tidy up</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Initialize-ESLint-and-EditorConfig"><span class="toc-number">3.5.</span> <span class="toc-text">Initialize ESLint and EditorConfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-a-%E2%80%9Cmap%E2%80%9D-function"><span class="toc-number">3.6.</span> <span class="toc-text">Implement a “map” function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unit-test-with-Vitest"><span class="toc-number">3.7.</span> <span class="toc-text">Unit test with Vitest</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-Code"><span class="toc-number">4.</span> <span class="toc-text">Source Code</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-09-19T15:19:12.000Z" itemprop="datePublished">2022-09-19</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Functional-Programming/" rel="tag">Functional Programming</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/TDD/" rel="tag">TDD</a>, <a class="tag-link-link" href="/tags/Testing/" rel="tag">Testing</a>, <a class="tag-link-link" href="/tags/TypeScript/" rel="tag">TypeScript</a>, <a class="tag-link-link" href="/tags/Vite/" rel="tag">Vite</a>, <a class="tag-link-link" href="/tags/Workshop/" rel="tag">Workshop</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Topics"><a href="#Topics" class="headerlink" title="Topics"></a>Topics</h2><ul>
+<li>Functional Programming in JavaScript</li>
+<li>Building a Modern JavaScript Library with Vite</li>
+<li>Unit Testing with Jest and Vitest</li>
+</ul>
+<h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2><ul>
+<li>📖 Check out the <a target="_blank" rel="noopener" href="https://memochou1993.github.io/functional-programming-workshop/">handbook</a></li>
+<li>📜 Check out the <a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/14Navycm3I2oFvE0DdUNzVtvLhRRs1BM_V2xTy_azRt0/edit?usp=sharing">slide</a></li>
+<li>💪 Work in groups</li>
+<li>🔨 Collaborate with <a target="_blank" rel="noopener" href="https://code.visualstudio.com/learn/collaboration/live-share">Live Share</a></li>
+</ul>
+<h2 id="Workshop"><a href="#Workshop" class="headerlink" title="Workshop"></a>Workshop</h2><h3 id="Initialize-a-project-with-Vite"><a href="#Initialize-a-project-with-Vite" class="headerlink" title="Initialize a project with Vite"></a>Initialize a project with Vite</h3><p>Create a new project. <a target="_blank" rel="noopener" href="https://vitejs.dev/guide/#scaffolding-your-first-vite-project">[?]</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm create vite@latest</span><br><span class="line">✔ Project name: … collection-js</span><br><span class="line">✔ Select a framework: › vanilla</span><br><span class="line">✔ Select a variant: › vanilla-ts</span><br></pre></td></tr></table></figure>
+
+<p>Install dependencies.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> collection-js</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>Open VS Code editor. <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line">[?]</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code .</span><br></pre></td></tr></table></figure>
+
+<h3 id="Initialize-a-Git-repository"><a href="#Initialize-a-Git-repository" class="headerlink" title="Initialize a Git repository"></a>Initialize a Git repository</h3><p>Write an initial commit message.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Create a repository from <a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>.</p>
+<p>Push commits to remote.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:&lt;username&gt;/collection-js.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h3 id="Tidy-up-the-project"><a href="#Tidy-up-the-project" class="headerlink" title="Tidy up the project"></a>Tidy up the project</h3><p>Remove sample files.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> src/*</span><br></pre></td></tr></table></figure>
+
+<p>Write a new commit message.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Remove sample files&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Build-with-library-mode"><a href="#Build-with-library-mode" class="headerlink" title="Build with library mode"></a>Build with library mode</h3><p>Create a <code>vite.config.js</code> file. <a target="_blank" rel="noopener" href="https://vitejs.dev/guide/build.html#library-mode">[?]</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; resolve &#125; <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">lib</span>: &#123;</span><br><span class="line">      <span class="attr">entry</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;src/index.ts&#x27;</span>),</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;CollectionJS&#x27;</span>,</span><br><span class="line">      <span class="attr">fileName</span>: <span class="function">(<span class="params">format</span>) =&gt;</span> <span class="string">`collection-js.<span class="subst">$&#123;format&#125;</span>.js`</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">rollupOptions</span>: &#123;</span><br><span class="line">      <span class="attr">external</span>: [],</span><br><span class="line">      <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="attr">globals</span>: &#123;</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Install dependencies.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @types/node --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>Create a <code>index.ts</code> file in <code>src</code> folder as an entry point.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">hello</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  hello,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Update <code>package.json</code> file.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;module&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;files&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;dist&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/collection-js.umd.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/collection-js.es.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exports&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;.&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;import&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/collection-js.es.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./dist/collection-js.umd.js&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Run <code>build</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<h4 id="Try-with-UMD-module"><a href="#Try-with-UMD-module" class="headerlink" title="Try with UMD module"></a>Try with UMD module</h4><p>Update <code>index.html</code> file.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/dist/collection-js.umd.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">window</span>.<span class="property">CollectionJS</span>.<span class="title function_">hello</span>();</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Start a server.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<h4 id="Try-with-ES-module"><a href="#Try-with-ES-module" class="headerlink" title="Try with ES module"></a>Try with ES module</h4><p>Update <code>index.html</code> file.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">import</span> &#123; hello &#125; <span class="keyword">from</span> <span class="string">&#x27;/dist/collection-js.es.js&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">hello</span>();</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Start a server.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<h4 id="Tidy-up"><a href="#Tidy-up" class="headerlink" title="Tidy up"></a>Tidy up</h4><p>Fix <code>index.html</code> file.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Write a new commit message.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add build config&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Initialize-ESLint-and-EditorConfig"><a href="#Initialize-ESLint-and-EditorConfig" class="headerlink" title="Initialize ESLint and EditorConfig"></a>Initialize ESLint and EditorConfig</h3><p>Create a <code>.editorconfig</code> file. <a target="_blank" rel="noopener" href="https://editorconfig.org/">[?]</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root = true</span><br><span class="line"></span><br><span class="line">[*]</span><br><span class="line">indent_size = 2</span><br></pre></td></tr></table></figure>
+
+<p>Initialize ESLint and install dependencies. <a target="_blank" rel="noopener" href="https://eslint.org/docs/latest/user-guide/getting-started">[?]</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm init @eslint/config</span><br><span class="line">✔ How would you like to use ESLint? · syntax</span><br><span class="line">✔ What <span class="built_in">type</span> of modules does your project use? · esm</span><br><span class="line">✔ Which framework does your project use? · none</span><br><span class="line">✔ Does your project use TypeScript? · No / Yes</span><br><span class="line">✔ Where does your code run? · browser, node</span><br><span class="line">✔ What format <span class="keyword">do</span> you want your config file to be <span class="keyword">in</span>? · JavaScript</span><br><span class="line">✔ Would you like to install them now? · No / Yes</span><br><span class="line">✔ Which package manager <span class="keyword">do</span> you want to use? · npm</span><br></pre></td></tr></table></figure>
+
+<p>Install Airbnb ESLint config and install dependencies. <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/eslint-config-airbnb">[?]</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint-config-airbnb-typescript \</span><br><span class="line">    eslint-plugin-import \</span><br><span class="line">    --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>Update <code>.eslintrc.cjs</code> file. <a target="_blank" rel="noopener" href="https://eslint.org/docs/latest/user-guide/configuring/configuration-files#how-do-overrides-work">[?]</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">env</span>: &#123;</span><br><span class="line">    <span class="attr">browser</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">es2021</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">node</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">overrides</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">files</span>: [</span><br><span class="line">        <span class="string">&#x27;src/**/*.ts&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;src/**/*.tsx&#x27;</span>,</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">extends</span>: [</span><br><span class="line">        <span class="string">&#x27;airbnb-typescript/base&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;plugin:import/recommended&#x27;</span>,</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">parserOptions</span>: &#123;</span><br><span class="line">        <span class="attr">project</span>: [</span><br><span class="line">          <span class="string">&#x27;./tsconfig.json&#x27;</span>,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">parser</span>: <span class="string">&#x27;@typescript-eslint/parser&#x27;</span>,</span><br><span class="line">  <span class="attr">parserOptions</span>: &#123;</span><br><span class="line">    <span class="attr">ecmaVersion</span>: <span class="string">&#x27;latest&#x27;</span>,</span><br><span class="line">    <span class="attr">sourceType</span>: <span class="string">&#x27;module&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="string">&#x27;@typescript-eslint&#x27;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">rules</span>: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Update <code>package.json</code> file, add a <code>lint</code> command to scripts field.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint src&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Run <code>lint</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run lint</span><br></pre></td></tr></table></figure>
+
+<p>Write a new commit message.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add eslint config&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Implement-a-“map”-function"><a href="#Implement-a-“map”-function" class="headerlink" title="Implement a “map” function"></a>Implement a “map” function</h3><p>Create a <code>modules</code> folder in <code>src</code> folder.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> src/modules</span><br></pre></td></tr></table></figure>
+
+<p>Create a <code>map.ts</code> file in <code>modules</code> folder, and implement a <code>map</code> function.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">map</span> = (<span class="params">items: <span class="built_in">Array</span>&lt;any&gt;, callable: <span class="built_in">Function</span></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; items.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    res[i] = <span class="title function_">callable</span>(items[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> map;</span><br></pre></td></tr></table></figure>
+
+<p>Create an <code>index.ts</code> file in <code>modules</code> folder, then import and export the module.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">&#x27;./map&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  map,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Unit-test-with-Vitest"><a href="#Unit-test-with-Vitest" class="headerlink" title="Unit test with Vitest"></a>Unit test with Vitest</h3><p>Install dependencies. [<a target="_blank" rel="noopener" href="https://vitest.dev/guide/">?</a>]</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vitest @vitest/coverage-c8 --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>Update <code>package.json</code> file, add <code>test</code> and <code>coverage</code> commands to scripts field.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vitest&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;coverage&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vitest run --coverage&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Create a <code>map.test.ts</code> file in <code>modules</code> folder, and create a test case for the <code>map</code> function.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; test, expect &#125; <span class="keyword">from</span> <span class="string">&#x27;vitest&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; map &#125; <span class="keyword">from</span> <span class="string">&#x27;./index&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;map should work&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> actual = <span class="title function_">map</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], <span class="function">(<span class="params">v: <span class="built_in">number</span></span>) =&gt;</span> v * <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">const</span> expected = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">  <span class="title function_">expect</span>(actual).<span class="title function_">toStrictEqual</span>(expected);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Run <code>test</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">npm run <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line">&gt; collection-ts@0.0.0 <span class="built_in">test</span></span><br><span class="line">&gt; vitest</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> DEV  v0.22.1 /Users/memochou/Projects/collection-js</span><br><span class="line"></span><br><span class="line"> ✓ src/modules/map.test.ts (1)</span><br><span class="line"> ✓ src/index.test.ts (11)</span><br><span class="line"></span><br><span class="line">Test Files  2 passed (2)</span><br><span class="line">     Tests  12 passed (12)</span><br><span class="line">  Start at  23:01:17</span><br><span class="line">  Duration  950ms (transform 541ms, setup 0ms, collect 140ms, tests 18ms)</span><br></pre></td></tr></table></figure>
+
+<p>Run <code>coverage</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">npm run coverage</span><br><span class="line"></span><br><span class="line">&gt; collection-ts@0.0.0 coverage</span><br><span class="line">&gt; vitest run --coverage</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> RUN  v0.22.1 /Users/memochou/Projects/collection-js</span><br><span class="line">      Coverage enabled with c8</span><br><span class="line"></span><br><span class="line"> ✓ src/modules/map.test.ts (1)</span><br><span class="line"></span><br><span class="line">Test Files  1 passed (1)</span><br><span class="line">     Tests  1 passed (1)</span><br><span class="line">  Start at  23:03:08</span><br><span class="line">  Duration  1.35s (transform 447ms, setup 0ms, collect 50ms, tests 3ms)</span><br><span class="line"></span><br><span class="line"> % Coverage report from c8</span><br><span class="line">----------|---------|----------|---------|---------|-------------------</span><br><span class="line">File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line <span class="comment">#s </span></span><br><span class="line">----------|---------|----------|---------|---------|-------------------</span><br><span class="line">All files |     100 |      100 |     100 |     100 |                   </span><br><span class="line"> index.ts |     100 |      100 |     100 |     100 |                   </span><br><span class="line"> map.ts   |     100 |      100 |     100 |     100 |                   </span><br><span class="line">----------|---------|----------|---------|---------|-------------------</span><br></pre></td></tr></table></figure>
+
+<p>Update <code>.gitignore</code> file.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ...</span><br><span class="line">coverage</span><br></pre></td></tr></table></figure>
+
+<p>Write a new commit message.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Implement map function&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Source-Code"><a href="#Source-Code" class="headerlink" title="Source Code"></a>Source Code</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/functional-programming-workshop">functional-programming-workshop</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/js-array-methods">js-array-methods</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/collection-js">collection-js</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Topics"><span class="toc-number">1.</span> <span class="toc-text">Topics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resources"><span class="toc-number">2.</span> <span class="toc-text">Resources</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Workshop"><span class="toc-number">3.</span> <span class="toc-text">Workshop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Initialize-a-project-with-Vite"><span class="toc-number">3.1.</span> <span class="toc-text">Initialize a project with Vite</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Initialize-a-Git-repository"><span class="toc-number">3.2.</span> <span class="toc-text">Initialize a Git repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tidy-up-the-project"><span class="toc-number">3.3.</span> <span class="toc-text">Tidy up the project</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Build-with-library-mode"><span class="toc-number">3.4.</span> <span class="toc-text">Build with library mode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Try-with-UMD-module"><span class="toc-number">3.4.1.</span> <span class="toc-text">Try with UMD module</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Try-with-ES-module"><span class="toc-number">3.4.2.</span> <span class="toc-text">Try with ES module</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tidy-up"><span class="toc-number">3.4.3.</span> <span class="toc-text">Tidy up</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Initialize-ESLint-and-EditorConfig"><span class="toc-number">3.5.</span> <span class="toc-text">Initialize ESLint and EditorConfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-a-%E2%80%9Cmap%E2%80%9D-function"><span class="toc-number">3.6.</span> <span class="toc-text">Implement a “map” function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unit-test-with-Vitest"><span class="toc-number">3.7.</span> <span class="toc-text">Unit test with Vitest</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Source-Code"><span class="toc-number">4.</span> <span class="toc-text">Source Code</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&text=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&is_video=false&description=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library&body=Check out this article: https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&title=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/09/Functional-Programming-in-JavaScript-II-Scaffolding-a-Modern-JavaScript-Library/&name=Functional Programming in JavaScript (II): Scaffolding a Modern JavaScript Library&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
