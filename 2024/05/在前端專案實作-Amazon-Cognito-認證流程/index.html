@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前置作業先在 AWS Cognito 上設置好一個使用者池。 需要設置：  允許的回呼 URL：http:&#x2F;&#x2F;localhost:5173&#x2F;auth&#x2F;callback 允許的登出 URL：http:&#x2F;&#x2F;localhost:5173&#x2F;sign-in  需要取得：  Cognito Domain Client ID  建立專案建立專案。 12345npm create vite✔ Project na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在前端專案實作 Amazon Cognito 認證流程">
+<meta property="og:url" content="https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業先在 AWS Cognito 上設置好一個使用者池。 需要設置：  允許的回呼 URL：http:&#x2F;&#x2F;localhost:5173&#x2F;auth&#x2F;callback 允許的登出 URL：http:&#x2F;&#x2F;localhost:5173&#x2F;sign-in  需要取得：  Cognito Domain Client ID  建立專案建立專案。 12345npm create vite✔ Project na">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-05-21T09:20:31.000Z">
+<meta property="article:modified_time" content="2024-05-20T14:41:43.817Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Deployment">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="OAuth">
+<meta property="article:tag" content="Cognito">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在前端專案實作 Amazon Cognito 認證流程</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Articles</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/05/%E4%BD%BF%E7%94%A8-CDK-%E5%9C%A8-Amazon-Cognito-%E6%9C%8D%E5%8B%99%E5%BB%BA%E7%AB%8B%E8%B3%87%E6%BA%90/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&text=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&is_video=false&description=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在前端專案實作 Amazon Cognito 認證流程&body=Check out this article: https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&name=在前端專案實作 Amazon Cognito 認證流程&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B7%A5%E5%85%B7%E5%87%BD%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">建立工具函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">實作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在前端專案實作 Amazon Cognito 認證流程
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-05-21T09:20:31.000Z" itemprop="datePublished">2024-05-21</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/Cloud-Computing-Service/AWS/">AWS</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AWS/" rel="tag">AWS</a>, <a class="tag-link-link" href="/tags/Cognito/" rel="tag">Cognito</a>, <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/OAuth/" rel="tag">OAuth</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>先在 AWS Cognito 上設置好一個使用者池。</p>
+<p>需要設置：</p>
+<ul>
+<li>允許的回呼 URL：<a target="_blank" rel="noopener" href="http://localhost:5173/auth/callback">http://localhost:5173/auth/callback</a></li>
+<li>允許的登出 URL：<a target="_blank" rel="noopener" href="http://localhost:5173/sign-in">http://localhost:5173/sign-in</a></li>
+</ul>
+<p>需要取得：</p>
+<ul>
+<li>Cognito Domain</li>
+<li>Client ID</li>
+</ul>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm create vite</span><br><span class="line"></span><br><span class="line">✔ Project name: … aws-cognito-auth-example</span><br><span class="line">✔ Select a framework: › Vanilla</span><br><span class="line">✔ Select a variant: › JavaScript</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立工具函式"><a href="#建立工具函式" class="headerlink" title="建立工具函式"></a>建立工具函式</h2><p>建立 <code>utils/generateNonce.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> toSha256 <span class="keyword">from</span> <span class="string">&#x27;./toSha256&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">generateNonce</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> hash = <span class="keyword">await</span> <span class="title function_">toSha256</span>(crypto.<span class="title function_">getRandomValues</span>(<span class="keyword">new</span> <span class="title class_">Uint32Array</span>(<span class="number">4</span>)).<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">const</span> hashArray = <span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="keyword">new</span> <span class="title class_">Uint8Array</span>(hash));</span><br><span class="line">  <span class="keyword">return</span> hashArray.<span class="title function_">map</span>(<span class="function"><span class="params">b</span> =&gt;</span> b.<span class="title function_">toString</span>(<span class="number">16</span>).<span class="title function_">padStart</span>(<span class="number">2</span>, <span class="string">&#x27;0&#x27;</span>)).<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> generateNonce;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>utils/toSha256.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">toSha256</span> = <span class="keyword">async</span> (<span class="params">str</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> crypto.<span class="property">subtle</span>.<span class="title function_">digest</span>(<span class="string">&#x27;SHA-256&#x27;</span>, <span class="keyword">new</span> <span class="title class_">TextEncoder</span>().<span class="title function_">encode</span>(str));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> toSha256;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>utils/toBase64Url.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">toBase64Url</span> = (<span class="params">string</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">btoa</span>(<span class="title class_">String</span>.<span class="property">fromCharCode</span>.<span class="title function_">apply</span>(<span class="literal">null</span>, <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(string)))</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\+/g</span>, <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\//g</span>, <span class="string">&#x27;_&#x27;</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/=+$/</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> toBase64Url;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>utils/cognito.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">redirectToSignIn</span> = (<span class="params">&#123;</span></span><br><span class="line"><span class="params">  awsCognitoApiUrl,</span></span><br><span class="line"><span class="params">  clientId: client_id,</span></span><br><span class="line"><span class="params">  state,</span></span><br><span class="line"><span class="params">  codeChallenge: code_challenge,</span></span><br><span class="line"><span class="params">&#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> params = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(&#123;</span><br><span class="line">    <span class="attr">response_type</span>: <span class="string">&#x27;code&#x27;</span>,</span><br><span class="line">    client_id,</span><br><span class="line">    <span class="attr">redirect_uri</span>: <span class="string">`<span class="subst">$&#123;<span class="variable language_">window</span>.location.origin&#125;</span>/auth/callback`</span>,</span><br><span class="line">    state,</span><br><span class="line">    <span class="attr">code_challenge_method</span>: <span class="string">&#x27;S256&#x27;</span>,</span><br><span class="line">    code_challenge,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">`<span class="subst">$&#123;awsCognitoApiUrl&#125;</span>/login?<span class="subst">$&#123;params.toString()&#125;</span>`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">redirectToSignOut</span> = (<span class="params">&#123;</span></span><br><span class="line"><span class="params">  awsCognitoApiUrl,</span></span><br><span class="line"><span class="params">  clientId: client_id,</span></span><br><span class="line"><span class="params">&#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> params = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(&#123;</span><br><span class="line">    client_id,</span><br><span class="line">    <span class="attr">logout_uri</span>: <span class="string">`<span class="subst">$&#123;<span class="variable language_">window</span>.location.origin&#125;</span>/sign-in`</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">`<span class="subst">$&#123;awsCognitoApiUrl&#125;</span>/logout?<span class="subst">$&#123;params.toString()&#125;</span>`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">createToken</span> = (<span class="params">&#123;</span></span><br><span class="line"><span class="params">  awsCognitoApiUrl,</span></span><br><span class="line"><span class="params">  clientId: client_id,</span></span><br><span class="line"><span class="params">  redirectUri: redirect_uri,</span></span><br><span class="line"><span class="params">  code,</span></span><br><span class="line"><span class="params">  codeVerifier: code_verifier,</span></span><br><span class="line"><span class="params">&#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fetch</span>(<span class="string">`<span class="subst">$&#123;awsCognitoApiUrl&#125;</span>/oauth2/token`</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">body</span>: <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(&#123;</span><br><span class="line">      <span class="attr">grant_type</span>: <span class="string">&#x27;authorization_code&#x27;</span>,</span><br><span class="line">      client_id,</span><br><span class="line">      redirect_uri,</span><br><span class="line">      code,</span><br><span class="line">      code_verifier,</span><br><span class="line">    &#125;).<span class="title function_">toString</span>(),</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  redirectToSignIn,</span><br><span class="line">  redirectToSignOut,</span><br><span class="line">  createToken,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>utils/index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cognito <span class="keyword">from</span> <span class="string">&#x27;./cognito&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> generateNonce <span class="keyword">from</span> <span class="string">&#x27;./generateNonce&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> toBase64Url <span class="keyword">from</span> <span class="string">&#x27;./toBase64Url&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> toSha256 <span class="keyword">from</span> <span class="string">&#x27;./toSha256&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; cognito, generateNonce, toBase64Url, toSha256 &#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作流程"><a href="#實作流程" class="headerlink" title="實作流程"></a>實作流程</h2><p>修改 <code>main.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入必要的 CSS 和工具函式</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./style.css&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; cognito, generateNonce, toBase64Url, toSha256 &#125; <span class="keyword">from</span> <span class="string">&#x27;./utils&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// AWS Cognito API 的 URL 和客戶端 ID</span></span><br><span class="line"><span class="keyword">const</span> awsCognitoApiUrl = <span class="string">&#x27;your-cognito-api-url&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> awsCognitoClientId = <span class="string">&#x27;your-cognito-client-id&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設置網頁上的按鈕元素</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#app&#x27;</span>).<span class="property">innerHTML</span> = <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;button type=&quot;button&quot; id=&quot;sign-in&quot;&gt;Sign In&lt;/button&gt;</span></span><br><span class="line"><span class="string">  &lt;button type=&quot;button&quot; id=&quot;sign-out&quot;&gt;Sign Out&lt;/button&gt;</span></span><br><span class="line"><span class="string">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理登入邏輯的函式</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">handleSignIn</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> nonce = <span class="keyword">await</span> <span class="title function_">generateNonce</span>(); <span class="comment">// 生成 nonce</span></span><br><span class="line">  <span class="keyword">const</span> codeVerifier = <span class="keyword">await</span> <span class="title function_">generateNonce</span>(); <span class="comment">// 生成 code verifier</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 將 nonce 和 code verifier 存儲在 sessionStorage 中</span></span><br><span class="line">  <span class="variable language_">sessionStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;state&#x27;</span>, nonce);</span><br><span class="line">  <span class="variable language_">sessionStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;code_verifier&#x27;</span>, codeVerifier);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 重定向到 Cognito 登入頁面</span></span><br><span class="line">  cognito.<span class="title function_">redirectToSignIn</span>(&#123;</span><br><span class="line">    awsCognitoApiUrl,</span><br><span class="line">    <span class="attr">clientId</span>: awsCognitoClientId,</span><br><span class="line">    <span class="attr">state</span>: nonce,</span><br><span class="line">    <span class="attr">codeChallenge</span>: <span class="title function_">toBase64Url</span>(<span class="keyword">await</span> <span class="title function_">toSha256</span>(codeVerifier)), <span class="comment">// 生成 code challenge</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理登出邏輯的函式</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">handleSignOut</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  cognito.<span class="title function_">redirectToSignOut</span>(&#123;</span><br><span class="line">    awsCognitoApiUrl,</span><br><span class="line">    <span class="attr">clientId</span>: awsCognitoClientId,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理 Cognito 回調邏輯的函式</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">handleCallback</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> searchParams = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>);</span><br><span class="line">  <span class="keyword">const</span> state = searchParams.<span class="title function_">get</span>(<span class="string">&#x27;state&#x27;</span>); <span class="comment">// 從 URL 參數中獲取 state</span></span><br><span class="line">  <span class="keyword">const</span> code = searchParams.<span class="title function_">get</span>(<span class="string">&#x27;code&#x27;</span>); <span class="comment">// 從 URL 參數中獲取授權碼 code</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> localState = <span class="variable language_">sessionStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;state&#x27;</span>); <span class="comment">// 從 sessionStorage 中獲取之前保存的 state</span></span><br><span class="line">  <span class="keyword">const</span> localCodeVerifier = <span class="variable language_">sessionStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;code_verifier&#x27;</span>); <span class="comment">// 從 sessionStorage 中獲取之前保存的 code verifier</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 清除 sessionStorage 中的狀態和驗證碼</span></span><br><span class="line">  <span class="variable language_">sessionStorage</span>.<span class="title function_">removeItem</span>(<span class="string">&#x27;state&#x27;</span>);</span><br><span class="line">  <span class="variable language_">sessionStorage</span>.<span class="title function_">removeItem</span>(<span class="string">&#x27;code_verifier&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 檢查 state 和 code 的有效性</span></span><br><span class="line">  <span class="keyword">if</span> (!state || !code || !localState || !localCodeVerifier || (state !== localState)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid state or code&#x27;</span>); <span class="comment">// 如果不匹配則拋出錯誤</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 請求 token</span></span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> cognito.<span class="title function_">createToken</span>(&#123;</span><br><span class="line">    awsCognitoApiUrl,</span><br><span class="line">    <span class="attr">clientId</span>: awsCognitoClientId,</span><br><span class="line">    <span class="attr">redirectUri</span>: <span class="string">`<span class="subst">$&#123;<span class="variable language_">window</span>.location.origin&#125;</span>/auth/callback`</span>,</span><br><span class="line">    code,</span><br><span class="line">    <span class="attr">codeVerifier</span>: localCodeVerifier,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; access_token &#125; = <span class="keyword">await</span> res.<span class="title function_">json</span>(); <span class="comment">// 從響應中獲取 access token</span></span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(access_token); <span class="comment">// 在控制台中輸出 access token</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 為按鈕設置事件監聽器</span></span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;sign-in&#x27;</span>).<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, handleSignIn);</span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;sign-out&#x27;</span>).<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, handleSignOut);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果當前路徑是回調路徑，則處理回調</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">pathname</span> === <span class="string">&#x27;/auth/callback&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">handleCallback</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a target="_blank" rel="noopener" href="http://localhost:5173/">http://localhost:5173</a> 瀏覽。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/aws-cognito-auth-example">aws-cognito-auth-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cognito/latest/developerguide">Amazon Cognito</a></li>
+<li><a target="_blank" rel="noopener" href="https://advancedweb.hu/how-to-secure-the-cognito-login-flow-with-a-state-nonce-and-pkce/">How to secure the Cognito login flow with a state nonce and PKCE</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B7%A5%E5%85%B7%E5%87%BD%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">建立工具函式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">實作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&text=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&is_video=false&description=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在前端專案實作 Amazon Cognito 認證流程&body=Check out this article: https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&title=在前端專案實作 Amazon Cognito 認證流程"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/05/%E5%9C%A8%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C-Amazon-Cognito-%E8%AA%8D%E8%AD%89%E6%B5%81%E7%A8%8B/&name=在前端專案實作 Amazon Cognito 認證流程&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Articles</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
