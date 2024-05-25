@@ -8,20 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="做法首先，在 Cloudflare 建立一個帳號。 點選「Add a site」新增一個網站，輸入網站的網域名稱。 Cloudflare 會開始掃描此網站的所有 DNS 紀錄。 進到 GoDaddy 點選 DNS 管理，設置由 Cloudflare 提供的名稱伺服器：  xxx.ns.cloudflare.com yyy.ns.cloudflare.com  回到 Cloudflare 設定以下內">
+    <meta name="description" content="做法首先，在 Cloudflare 建立一個帳號。 點選「Add a site」新增一個網站，輸入網站的網域名稱。 Cloudflare 會開始掃描此網站的所有 DNS 紀錄。 DNS進到域名註冊服務商的後台，點選 DNS 管理，設置由 Cloudflare 提供的名稱伺服器：  xxx.ns.cloudflare.com yyy.ns.cloudflare.com  回到 Cloudflare">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Cloudflare 服務為網站建立 CDN 快取">
 <meta property="og:url" content="https://blog.epoch.tw/2022/06/%E4%BD%BF%E7%94%A8-Cloudflare-%E6%9C%8D%E5%8B%99%E7%82%BA%E7%B6%B2%E7%AB%99%E5%BB%BA%E7%AB%8B-CDN-%E5%BF%AB%E5%8F%96/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="做法首先，在 Cloudflare 建立一個帳號。 點選「Add a site」新增一個網站，輸入網站的網域名稱。 Cloudflare 會開始掃描此網站的所有 DNS 紀錄。 進到 GoDaddy 點選 DNS 管理，設置由 Cloudflare 提供的名稱伺服器：  xxx.ns.cloudflare.com yyy.ns.cloudflare.com  回到 Cloudflare 設定以下內">
+<meta property="og:description" content="做法首先，在 Cloudflare 建立一個帳號。 點選「Add a site」新增一個網站，輸入網站的網域名稱。 Cloudflare 會開始掃描此網站的所有 DNS 紀錄。 DNS進到域名註冊服務商的後台，點選 DNS 管理，設置由 Cloudflare 提供的名稱伺服器：  xxx.ns.cloudflare.com yyy.ns.cloudflare.com  回到 Cloudflare">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-23T15:42:39.000Z">
-<meta property="article:modified_time" content="2024-05-23T16:15:35.868Z">
+<meta property="article:modified_time" content="2024-05-25T15:42:42.370Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
+<meta property="article:tag" content="DNS">
 <meta property="article:tag" content="Linode">
 <meta property="article:tag" content="GoDaddy">
-<meta property="article:tag" content="DNS">
 <meta property="article:tag" content="Cloudflare">
 <meta property="article:tag" content="CDN">
 <meta name="twitter:card" content="summary">
@@ -128,7 +128,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-number">1.1.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Caching"><span class="toc-number">1.2.</span> <span class="toc-text">Caching</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AA%A2%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">檢查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BHIT"><span class="toc-number">2.1.</span> <span class="toc-text">​​HIT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BMISS"><span class="toc-number">2.2.</span> <span class="toc-text">​​MISS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BNONE-UNKNOWN"><span class="toc-number">2.3.</span> <span class="toc-text">​​NONE&#x2F;UNKNOWN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BEXPIRED"><span class="toc-number">2.4.</span> <span class="toc-text">​​EXPIRED</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BSTALE"><span class="toc-number">2.5.</span> <span class="toc-text">​​STALE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BBYPASS"><span class="toc-number">2.6.</span> <span class="toc-text">​​BYPASS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BREVALIDATED"><span class="toc-number">2.7.</span> <span class="toc-text">​​REVALIDATED</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BUPDATING"><span class="toc-number">2.8.</span> <span class="toc-text">​​UPDATING</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BDYNAMIC"><span class="toc-number">2.9.</span> <span class="toc-text">​​DYNAMIC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -187,17 +187,68 @@
     <h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>首先，在 <a target="_blank" rel="noopener" href="https://dash.cloudflare.com/">Cloudflare</a> 建立一個帳號。</p>
 <p>點選「Add a site」新增一個網站，輸入網站的網域名稱。</p>
 <p>Cloudflare 會開始掃描此網站的所有 DNS 紀錄。</p>
-<p>進到 GoDaddy 點選 DNS 管理，設置由 Cloudflare 提供的名稱伺服器：</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>進到域名註冊服務商的後台，點選 DNS 管理，設置由 Cloudflare 提供的名稱伺服器：</p>
 <ul>
 <li>xxx.ns.cloudflare.com</li>
 <li>yyy.ns.cloudflare.com</li>
 </ul>
-<p>回到 Cloudflare 設定以下內容：</p>
-<ul>
-<li>將 Automatic HTTPS Rewrites 選項打勾。</li>
-<li>將 Always Use HTTPS 選項打勾。</li>
-<li>將 Auto Minify 選項打勾。</li>
-<li>將 Brotli 選項打勾。</li>
+<p>回到 Cloudflare 設定 DNS 紀錄：</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Content</th>
+<th>Proxy Status</th>
+<th>TTL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>your-domain.com</td>
+<td>your-ip</td>
+<td>Proxied</td>
+<td>Auto</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>blog</td>
+<td>your-domain.com</td>
+<td>Proxied</td>
+<td>Auto</td>
+</tr>
+</tbody></table>
+<h3 id="Caching"><a href="#Caching" class="headerlink" title="Caching"></a>Caching</h3><p>前往「Cache Rules」頁面，建立規則後，按下「部署」按鈕。</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Operator</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hostname</td>
+<td>contains</td>
+<td>your-domain.com</td>
+</tr>
+</tbody></table>
+<p>運算式預覽如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(http.host contains <span class="string">&quot;your-domain.com&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="檢查"><a href="#檢查" class="headerlink" title="檢查"></a>檢查</h2><p>可以從 <code>CF-Cache-Status</code> 標頭檢查資源是否已快取。以下是所有快取回應狀態：</p>
+<h3 id="​​HIT"><a href="#​​HIT" class="headerlink" title="​​HIT"></a>​​HIT</h3><p>資源在 Cloudflare 的快取中找到。</p>
+<h3 id="​​MISS"><a href="#​​MISS" class="headerlink" title="​​MISS"></a>​​MISS</h3><p>資源未在 Cloudflare 的快取中找到，而是從原始網頁伺服器提供。</p>
+<h3 id="​​NONE-UNKNOWN"><a href="#​​NONE-UNKNOWN" class="headerlink" title="​​NONE&#x2F;UNKNOWN"></a>​​NONE&#x2F;UNKNOWN</h3><p>Cloudflare 生成了一個表示該資產不適合進行快取的回應。</p>
+<h3 id="​​EXPIRED"><a href="#​​EXPIRED" class="headerlink" title="​​EXPIRED"></a>​​EXPIRED</h3><p>資源在 Cloudflare 的快取中找到，但已過期，並從原始網頁伺服器提供。</p>
+<h3 id="​​STALE"><a href="#​​STALE" class="headerlink" title="​​STALE"></a>​​STALE</h3><p>資源從 Cloudflare 的快取中提供，但已過期。Cloudflare 無法聯繫原始來源以檢索更新的資源。</p>
+<h3 id="​​BYPASS"><a href="#​​BYPASS" class="headerlink" title="​​BYPASS"></a>​​BYPASS</h3><p>原始伺服器通過將 <code>Cache-Control</code> 標頭設置為 <code>no-cache</code>、<code>private</code> 或 <code>max-age=0</code> 指示 Cloudflare 繞過快取，即使 Cloudflare 最初希望對資產進行快取。</p>
+<h3 id="​​REVALIDATED"><a href="#​​REVALIDATED" class="headerlink" title="​​REVALIDATED"></a>​​REVALIDATED</h3><p>資源從 Cloudflare 的快取中提供，但已過期。資源已通過 <code>If-Modified-Since</code> 標頭或 <code>If-None-Match</code> 標頭重新驗證。</p>
+<h3 id="​​UPDATING"><a href="#​​UPDATING" class="headerlink" title="​​UPDATING"></a>​​UPDATING</h3><p>資源從 Cloudflare 的快取中提供，但已過期，但原始網頁伺服器正在更新資源。<code>UPDATING</code> 通常僅用於非常受歡迎的快取資源。</p>
+<h3 id="​​DYNAMIC"><a href="#​​DYNAMIC" class="headerlink" title="​​DYNAMIC"></a>​​DYNAMIC</h3><p>Cloudflare 不認為資產符合快取條件，且快取設置中並未明確指示 Cloudflare 對資產進行快取。於是從原始網頁伺服器請求了資產。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/cache/concepts/cache-responses/">CloudFlare Docs - Cloudflare cache responses</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.cloudflare.com/cache/how-to/cache-rules/create-dashboard/">CloudFlare Docs - Create a cache rule in the dashboard</a></li>
 </ul>
 
   </div>
@@ -235,7 +286,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-number">1.1.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Caching"><span class="toc-number">1.2.</span> <span class="toc-text">Caching</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AA%A2%E6%9F%A5"><span class="toc-number">2.</span> <span class="toc-text">檢查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BHIT"><span class="toc-number">2.1.</span> <span class="toc-text">​​HIT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BMISS"><span class="toc-number">2.2.</span> <span class="toc-text">​​MISS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BNONE-UNKNOWN"><span class="toc-number">2.3.</span> <span class="toc-text">​​NONE&#x2F;UNKNOWN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BEXPIRED"><span class="toc-number">2.4.</span> <span class="toc-text">​​EXPIRED</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BSTALE"><span class="toc-number">2.5.</span> <span class="toc-text">​​STALE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BBYPASS"><span class="toc-number">2.6.</span> <span class="toc-text">​​BYPASS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BREVALIDATED"><span class="toc-number">2.7.</span> <span class="toc-text">​​REVALIDATED</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BUPDATING"><span class="toc-number">2.8.</span> <span class="toc-text">​​UPDATING</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%8B%E2%80%8BDYNAMIC"><span class="toc-number">2.9.</span> <span class="toc-text">​​DYNAMIC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">3.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
