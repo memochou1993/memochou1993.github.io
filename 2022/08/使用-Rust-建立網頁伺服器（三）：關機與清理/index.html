@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang=zh>
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://blog.epoch.tw/2022/08/%E4%BD%BF%E7%94%A8-Rust-%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E9%97%9C%E6%A9%9F%E8%88%87%E6%B8%85%E7%90%86/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="前言本文為「The Rust Programming Language」語言指南的學習筆記。 做法使用執行緒池可以來同時回應多重請求，但警告顯示 workers、id 與 thread 欄位沒有被直接使用，這提醒目前尚未清理所有內容。當使用比較不優雅的 ctrl-c 方式來中斷主執行緒時，所有其他執行緒也會立即停止，不管它們是否正在處理請求。 現在要實作 Drop 特徵來對池中的每個執行緒呼叫 j">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale">
 <meta property="article:published_time" content="2022-08-14T13:00:37.000Z">
 <meta property="article:modified_time" content="2023-11-30T03:05:47.731Z">
 <meta property="article:author" content="Memo Chou">

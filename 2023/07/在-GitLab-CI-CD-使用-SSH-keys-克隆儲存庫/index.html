@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang=zh>
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://blog.epoch.tw/2023/07/%E5%9C%A8-GitLab-CI-CD-%E4%BD%BF%E7%94%A8-SSH-keys-%E5%85%8B%E9%9A%86%E5%84%B2%E5%AD%98%E5%BA%AB/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
 <meta property="og:description" content="做法首先建立一組 SSH 金鑰對。 1ssh-keygen -t rsa -b 4096 -C user@example.com -f ~&#x2F;.ssh  在當前專案的 CI&#x2F;CD 變數中，新增名為 SSH_PRIVATE_KEY 的環境變數，並且將值設定為 SSH 私鑰的內容。 在要被克隆的專案中，將 SSH 公鑰添加至該專案的 Deploy keys 中。 然後在當前專案新增 .gitl">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale">
 <meta property="article:published_time" content="2023-07-12T17:59:15.000Z">
 <meta property="article:modified_time" content="2023-11-30T03:05:47.751Z">
 <meta property="article:author" content="Memo Chou">
