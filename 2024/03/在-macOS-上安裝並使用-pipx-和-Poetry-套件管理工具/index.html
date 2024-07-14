@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言pipx 是用來安裝 CLI 和確保依賴隔離的工具；而 Poetry 則是用來管理專案的依賴套件，就像 npm 一樣。 做法安裝 pipx 指令。 12brew install pipxpipx ensurepath  安裝 poetry 指令。 1pipx install poetry  建立專案建立專案。 12mkdir my-projectcd my-project  初始化專案。 1p">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-03-24T08:04:00.000Z">
-<meta property="article:modified_time" content="2024-05-12T20:20:48.924Z">
+<meta property="article:modified_time" content="2024-07-14T08:54:29.069Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="Python">
@@ -198,11 +198,11 @@
 <p>初始化專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure>
 
-<p>安裝依賴套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add fastapi uvicorn</span><br></pre></td></tr></table></figure>
-
 <p>啟動虛擬環境。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add fastapi uvicorn</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>main.py</code> 檔。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">root</span>():</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World!&quot;</span>,</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
