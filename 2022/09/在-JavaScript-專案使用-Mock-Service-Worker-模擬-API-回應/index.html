@@ -88,6 +88,8 @@
             <li><a href="/search">Search</a></li>
           
         
+          
+        
       </ul>
     </span>
     <br/>
@@ -204,7 +206,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; setupWorker &#125; <span class="keyword">from</span> <span class="string">&#x27;msw&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; handlers &#125; <span class="keyword">from</span> <span class="string">&#x27;./handlers&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> worker = <span class="title function_">setupWorker</span>(...handlers);</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>main.js</code> 檔，在開發環境下引入 Worker 並啟動。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;development&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; worker &#125; = <span class="keyword">await</span> <span class="title function_">import</span>(<span class="string">&#x27;./mocks/browser&#x27;</span>);</span><br><span class="line">  worker.<span class="title function_">start</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/posts&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> r.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> r);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;development&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; worker &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&#x27;./mocks/browser&#x27;</span>);</span><br><span class="line">  worker.<span class="title function_">start</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/posts&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> r.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> r);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(res);</span><br></pre></td></tr></table></figure>
 
 <p>啟動服務。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
@@ -241,6 +243,8 @@
           <li><a href="/tags">Tags</a></li>
          
           <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
         
       </ul>
     </div>
@@ -293,6 +297,8 @@
           <li><a href="/tags">Tags</a></li>
          
           <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
         
       </ul>
     </nav>

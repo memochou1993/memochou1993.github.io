@@ -90,6 +90,8 @@
             <li><a href="/search">Search</a></li>
           
         
+          
+        
       </ul>
     </span>
     <br/>
@@ -126,7 +128,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSL-x2F-TLS"><span class="toc-number">2.</span> <span class="toc-text">SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flexible"><span class="toc-number">2.1.</span> <span class="toc-text">Flexible</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full"><span class="toc-number">2.2.</span> <span class="toc-text">Full</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-Strict"><span class="toc-number">2.3.</span> <span class="toc-text">Full (Strict)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%BE%AA%E7%92%B0%E5%95%8F%E9%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">重定向循環問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSL-TLS"><span class="toc-number">2.</span> <span class="toc-text">SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flexible"><span class="toc-number">2.1.</span> <span class="toc-text">Flexible</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full"><span class="toc-number">2.2.</span> <span class="toc-text">Full</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-Strict"><span class="toc-number">2.3.</span> <span class="toc-text">Full (Strict)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%BE%AA%E7%92%B0%E5%95%8F%E9%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">重定向循環問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -199,7 +201,7 @@
 <li>yyy.ns.cloudflare.com</li>
 </ul>
 <p>等待 DNS 傳播，可能需要 24 小時的時間。</p>
-<h2 id="SSL-x2F-TLS"><a href="#SSL-x2F-TLS" class="headerlink" title="SSL&#x2F;TLS"></a>SSL&#x2F;TLS</h2><h3 id="Flexible"><a href="#Flexible" class="headerlink" title="Flexible"></a>Flexible</h3><p>如果把加密模式設置為「彈性」，就只有瀏覽器和 Cloudflare 之間的流量會被加密，然後 Cloudflare 和原始伺服器之間的流量不被加密。</p>
+<h2 id="SSL-TLS"><a href="#SSL-TLS" class="headerlink" title="SSL&#x2F;TLS"></a>SSL&#x2F;TLS</h2><h3 id="Flexible"><a href="#Flexible" class="headerlink" title="Flexible"></a>Flexible</h3><p>如果把加密模式設置為「彈性」，就只有瀏覽器和 Cloudflare 之間的流量會被加密，然後 Cloudflare 和原始伺服器之間的流量不被加密。</p>
 <p>需要關閉 Caddy 自動重定向到 HTTPS 和建立 TLS 憑證的功能，允許 HTTP 請求不重定向到 HTTPS。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http://example.com &#123;</span><br><span class="line">    # 允許 HTTP 路由</span><br><span class="line">    root * /var/www/example</span><br><span class="line">    file_server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -243,12 +245,14 @@
           <li><a href="/tags">Tags</a></li>
          
           <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
         
       </ul>
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSL-x2F-TLS"><span class="toc-number">2.</span> <span class="toc-text">SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flexible"><span class="toc-number">2.1.</span> <span class="toc-text">Flexible</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full"><span class="toc-number">2.2.</span> <span class="toc-text">Full</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-Strict"><span class="toc-number">2.3.</span> <span class="toc-text">Full (Strict)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%BE%AA%E7%92%B0%E5%95%8F%E9%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">重定向循環問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSL-TLS"><span class="toc-number">2.</span> <span class="toc-text">SSL&#x2F;TLS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flexible"><span class="toc-number">2.1.</span> <span class="toc-text">Flexible</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full"><span class="toc-number">2.2.</span> <span class="toc-text">Full</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Full-Strict"><span class="toc-number">2.3.</span> <span class="toc-text">Full (Strict)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%BE%AA%E7%92%B0%E5%95%8F%E9%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">重定向循環問題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -295,6 +299,8 @@
           <li><a href="/tags">Tags</a></li>
          
           <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
         
       </ul>
     </nav>
