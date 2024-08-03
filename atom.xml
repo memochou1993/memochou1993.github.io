@@ -6,7 +6,7 @@
   <link href="https://blog.epoch.tw/atom.xml" rel="self"/>
   
   <link href="https://blog.epoch.tw/"/>
-  <updated>2024-08-03T18:49:02.307Z</updated>
+  <updated>2024-08-03T19:28:13.607Z</updated>
   <id>https://blog.epoch.tw/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 Vue 3.4 和 Express 4 實作「內容管理系統」應用程式（四）：建立後端路由</title>
+    <link href="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%BE%8C%E7%AB%AF%E8%B7%AF%E7%94%B1/"/>
+    <id>https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%BE%8C%E7%AB%AF%E8%B7%AF%E7%94%B1/</id>
+    <published>2024-08-01T15:43:44.000Z</published>
+    <updated>2024-08-03T19:28:13.607Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;本文是前端工作坊的教學文件，介紹如何使用 Vue 和 Express 實作「內容管理系統」應用程式，並搭配 Firebase 實現資料持久化</summary>
+      
+    
+    
+    
+    <category term="Programming" scheme="https://blog.epoch.tw/categories/Programming/"/>
+    
+    <category term="JavaScript" scheme="https://blog.epoch.tw/categories/Programming/JavaScript/"/>
+    
+    <category term="Vue" scheme="https://blog.epoch.tw/categories/Programming/JavaScript/Vue/"/>
+    
+    
+    <category term="Programming" scheme="https://blog.epoch.tw/tags/Programming/"/>
+    
+    <category term="JavaScript" scheme="https://blog.epoch.tw/tags/JavaScript/"/>
+    
+    <category term="Vue" scheme="https://blog.epoch.tw/tags/Vue/"/>
+    
+    <category term="Firebase" scheme="https://blog.epoch.tw/tags/Firebase/"/>
+    
+    <category term="Express" scheme="https://blog.epoch.tw/tags/Express/"/>
+    
+    <category term="CMS" scheme="https://blog.epoch.tw/tags/CMS/"/>
+    
+    <category term="Node" scheme="https://blog.epoch.tw/tags/Node/"/>
+    
+    <category term="Bootstrap" scheme="https://blog.epoch.tw/tags/Bootstrap/"/>
+    
+    <category term="Firestore" scheme="https://blog.epoch.tw/tags/Firestore/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 Vue 3.4 和 Express 4 實作「內容管理系統」應用程式（三）：建立前端路由</title>
@@ -63,7 +105,7 @@
     <link href="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88/"/>
     <id>https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88/</id>
     <published>2024-08-01T15:43:42.000Z</published>
-    <updated>2024-08-03T16:23:07.828Z</updated>
+    <updated>2024-08-03T19:25:00.702Z</updated>
     
     
       
@@ -1952,7 +1994,7 @@
     <link href="https://blog.epoch.tw/2023/11/%E4%BD%BF%E7%94%A8-CodeMirror-6-%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%B7%A8%E8%BC%AF%E5%99%A8/"/>
     <id>https://blog.epoch.tw/2023/11/%E4%BD%BF%E7%94%A8-CodeMirror-6-%E5%BB%BA%E7%AB%8B%E7%B6%B2%E9%A0%81%E7%A8%8B%E5%BC%8F%E7%A2%BC%E7%B7%A8%E8%BC%AF%E5%99%A8/</id>
     <published>2023-11-11T17:08:29.000Z</published>
-    <updated>2023-11-13T07:51:31.918Z</updated>
+    <updated>2024-08-03T19:28:11.041Z</updated>
     
     
       
@@ -10514,7 +10556,7 @@
     <link href="https://blog.epoch.tw/2021/12/%E4%BD%BF%E7%94%A8-Node-%E5%BB%BA%E7%AB%8B-WebSocket-%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
     <id>https://blog.epoch.tw/2021/12/%E4%BD%BF%E7%94%A8-Node-%E5%BB%BA%E7%AB%8B-WebSocket-%E4%BC%BA%E6%9C%8D%E5%99%A8/</id>
     <published>2021-12-11T11:52:31.000Z</published>
-    <updated>2023-11-13T07:51:31.917Z</updated>
+    <updated>2024-08-03T19:28:16.695Z</updated>
     
     
       
@@ -14735,7 +14777,7 @@
     <link href="https://blog.epoch.tw/2020/04/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%AE%89%E8%A3%9D-Caddy-2-0-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
     <id>https://blog.epoch.tw/2020/04/%E5%9C%A8-Ubuntu-%E4%B8%8A%E5%AE%89%E8%A3%9D-Caddy-2-0-%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/</id>
     <published>2020-04-17T05:26:31.000Z</published>
-    <updated>2023-11-13T08:10:30.280Z</updated>
+    <updated>2024-08-03T19:28:25.122Z</updated>
     
     
       
@@ -17655,7 +17697,7 @@
     <link href="https://blog.epoch.tw/2019/11/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-HTTP-%E4%BC%BA%E6%9C%8D%E5%99%A8/"/>
     <id>https://blog.epoch.tw/2019/11/%E4%BD%BF%E7%94%A8-Go-%E5%BB%BA%E7%AB%8B-HTTP-%E4%BC%BA%E6%9C%8D%E5%99%A8/</id>
     <published>2019-11-28T15:13:55.000Z</published>
-    <updated>2023-11-13T07:51:31.951Z</updated>
+    <updated>2024-08-03T19:28:32.109Z</updated>
     
     
       
