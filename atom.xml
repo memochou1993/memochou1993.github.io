@@ -6,7 +6,7 @@
   <link href="https://blog.epoch.tw/atom.xml" rel="self"/>
   
   <link href="https://blog.epoch.tw/"/>
-  <updated>2024-08-01T17:33:54.086Z</updated>
+  <updated>2024-08-03T18:49:02.307Z</updated>
   <id>https://blog.epoch.tw/</id>
   
   <author>
@@ -17,11 +17,95 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>使用 Vue 3.4 和 Express 4 實作「內容管理系統」應用程式</title>
-    <link href="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"/>
-    <id>https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/</id>
+    <title>使用 Vue 3.4 和 Express 4 實作「內容管理系統」應用程式（三）：建立前端路由</title>
+    <link href="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1%20copy/"/>
+    <id>https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1%20copy/</id>
+    <published>2024-08-01T15:43:43.000Z</published>
+    <updated>2024-08-03T18:49:02.307Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;本文是前端工作坊的教學文件，介紹如何使用 Vue 和 Express 實作「內容管理系統」應用程式，並搭配 Firebase 實現資料持久化</summary>
+      
+    
+    
+    
+    <category term="Programming" scheme="https://blog.epoch.tw/categories/Programming/"/>
+    
+    <category term="JavaScript" scheme="https://blog.epoch.tw/categories/Programming/JavaScript/"/>
+    
+    <category term="Vue" scheme="https://blog.epoch.tw/categories/Programming/JavaScript/Vue/"/>
+    
+    
+    <category term="Programming" scheme="https://blog.epoch.tw/tags/Programming/"/>
+    
+    <category term="JavaScript" scheme="https://blog.epoch.tw/tags/JavaScript/"/>
+    
+    <category term="Vue" scheme="https://blog.epoch.tw/tags/Vue/"/>
+    
+    <category term="Firebase" scheme="https://blog.epoch.tw/tags/Firebase/"/>
+    
+    <category term="Express" scheme="https://blog.epoch.tw/tags/Express/"/>
+    
+    <category term="CMS" scheme="https://blog.epoch.tw/tags/CMS/"/>
+    
+    <category term="Node" scheme="https://blog.epoch.tw/tags/Node/"/>
+    
+    <category term="Bootstrap" scheme="https://blog.epoch.tw/tags/Bootstrap/"/>
+    
+    <category term="Firestore" scheme="https://blog.epoch.tw/tags/Firestore/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 Vue 3.4 和 Express 4 實作「內容管理系統」應用程式（二）：建立後端專案</title>
+    <link href="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88/"/>
+    <id>https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88/</id>
+    <published>2024-08-01T15:43:42.000Z</published>
+    <updated>2024-08-03T16:23:07.828Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;本文是前端工作坊的教學文件，介紹如何使用 Vue 和 Express 實作「內容管理系統」應用程式，並搭配 Firebase 實現資料持久化</summary>
+      
+    
+    
+    
+    <category term="Programming" scheme="https://blog.epoch.tw/categories/Programming/"/>
+    
+    <category term="JavaScript" scheme="https://blog.epoch.tw/categories/Programming/JavaScript/"/>
+    
+    <category term="Vue" scheme="https://blog.epoch.tw/categories/Programming/JavaScript/Vue/"/>
+    
+    
+    <category term="Programming" scheme="https://blog.epoch.tw/tags/Programming/"/>
+    
+    <category term="JavaScript" scheme="https://blog.epoch.tw/tags/JavaScript/"/>
+    
+    <category term="Vue" scheme="https://blog.epoch.tw/tags/Vue/"/>
+    
+    <category term="Firebase" scheme="https://blog.epoch.tw/tags/Firebase/"/>
+    
+    <category term="Express" scheme="https://blog.epoch.tw/tags/Express/"/>
+    
+    <category term="CMS" scheme="https://blog.epoch.tw/tags/CMS/"/>
+    
+    <category term="Node" scheme="https://blog.epoch.tw/tags/Node/"/>
+    
+    <category term="Bootstrap" scheme="https://blog.epoch.tw/tags/Bootstrap/"/>
+    
+    <category term="Firestore" scheme="https://blog.epoch.tw/tags/Firestore/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用 Vue 3.4 和 Express 4 實作「內容管理系統」應用程式（一）：建立前端專案</title>
+    <link href="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88/"/>
+    <id>https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-4-%E5%92%8C-Express-4-%E5%AF%A6%E4%BD%9C%E3%80%8C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%89%8D%E7%AB%AF%E5%B0%88%E6%A1%88/</id>
     <published>2024-08-01T15:43:41.000Z</published>
-    <updated>2024-08-01T17:33:54.086Z</updated>
+    <updated>2024-08-03T18:41:35.887Z</updated>
     
     
       
