@@ -16,16 +16,16 @@
 <meta property="og:description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 認識 Node 執行環境 Ref: https:&#x2F;&#x2F;nodejs.org&#x2F;en  Node.js 是一個開放原始碼的 JavaScript 執行環境，讓開發者可以在伺服器端執行 JavaScript。範例如下： 1234567891011const http">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-08-01T15:43:42.000Z">
-<meta property="article:modified_time" content="2024-08-04T17:36:38.130Z">
+<meta property="article:modified_time" content="2024-08-08T15:05:44.281Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Bootstrap">
 <meta property="article:tag" content="Firebase">
 <meta property="article:tag" content="Express">
 <meta property="article:tag" content="CMS">
 <meta property="article:tag" content="Node">
-<meta property="article:tag" content="Bootstrap">
 <meta property="article:tag" content="Firestore">
 <meta name="twitter:card" content="summary">
     
@@ -234,7 +234,12 @@
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init @eslint/config@latest</span><br></pre></td></tr></table></figure>
 
-<p>修改生成的 <code>eslint.config.js</code> 檔，加上一些常用的檢查規則。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm init @eslint/config@latest</span><br><span class="line"></span><br><span class="line">✔ How would you like to use ESLint? · problems</span><br><span class="line">✔ What <span class="built_in">type</span> of modules does your project use? · commonjs</span><br><span class="line">✔ Which framework does your project use? · none</span><br><span class="line">✔ Does your project use TypeScript? · javascript</span><br><span class="line">✔ Where does your code run? · node</span><br></pre></td></tr></table></figure>
+
+<p>生成的 <code>eslint.config.mjs</code> 檔如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> globals <span class="keyword">from</span> <span class="string">&quot;globals&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> pluginJs <span class="keyword">from</span> <span class="string">&quot;@eslint/js&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [</span><br><span class="line">  &#123;<span class="attr">files</span>: [<span class="string">&quot;**/*.js&quot;</span>], <span class="attr">languageOptions</span>: &#123;<span class="attr">sourceType</span>: <span class="string">&quot;commonjs&quot;</span>&#125;&#125;,</span><br><span class="line">  &#123;<span class="attr">languageOptions</span>: &#123; <span class="attr">globals</span>: globals.<span class="property">node</span> &#125;&#125;,</span><br><span class="line">  pluginJs.<span class="property">configs</span>.<span class="property">recommended</span>,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>eslint.config.mjs</code> 檔，加上一些常用的檢查規則。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">rules</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;comma-dangle&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;always-multiline&#x27;</span>],</span><br><span class="line">      <span class="string">&#x27;eol-last&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;always&#x27;</span>],</span><br><span class="line">      <span class="string">&#x27;no-multiple-empty-lines&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, &#123; <span class="attr">max</span>: <span class="number">1</span>, <span class="attr">maxEOF</span>: <span class="number">0</span> &#125;],</span><br><span class="line">      <span class="string">&#x27;object-curly-spacing&#x27;</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;always&#x27;</span>],</span><br><span class="line">      <span class="attr">indent</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="number">2</span>],</span><br><span class="line">      <span class="attr">quotes</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;single&#x27;</span>],</span><br><span class="line">      <span class="attr">semi</span>: [<span class="string">&#x27;error&#x27;</span>, <span class="string">&#x27;always&#x27;</span>],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>package.json</code> 檔，加上 <code>lint</code> 命令腳本。</p>
