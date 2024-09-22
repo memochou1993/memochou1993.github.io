@@ -8,15 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言pipx 是用來安裝 CLI 和確保依賴隔離的工具；而 Poetry 則是用來管理專案的依賴套件，就像 npm 一樣。 做法安裝 pipx 指令。 12brew install pipxpipx ensurepath  安裝 poetry 指令。 1pipx install poetry  建立專案建立專案。 12mkdir my-projectcd my-project  初始化專案。 1p">
+    <meta name="description" content="前言pipx 是用來安裝 CLI 和確保依賴隔離的工具；而 Poetry 則是用來管理專案的依賴套件，就像 npm 一樣。 前置作業安裝 pipx 指令。 12brew install pipxpipx ensurepath  安裝 poetry 指令。 1pipx install poetry  建立專案建立專案。 12mkdir my-projectcd my-project  初始化專案。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 macOS 上安裝並使用 pipx 和 Poetry 套件管理工具">
 <meta property="og:url" content="https://blog.epoch.tw/2024/03/%E5%9C%A8-macOS-%E4%B8%8A%E5%AE%89%E8%A3%9D%E4%B8%A6%E4%BD%BF%E7%94%A8-pipx-%E5%92%8C-Poetry-%E5%A5%97%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言pipx 是用來安裝 CLI 和確保依賴隔離的工具；而 Poetry 則是用來管理專案的依賴套件，就像 npm 一樣。 做法安裝 pipx 指令。 12brew install pipxpipx ensurepath  安裝 poetry 指令。 1pipx install poetry  建立專案建立專案。 12mkdir my-projectcd my-project  初始化專案。 1p">
+<meta property="og:description" content="前言pipx 是用來安裝 CLI 和確保依賴隔離的工具；而 Poetry 則是用來管理專案的依賴套件，就像 npm 一樣。 前置作業安裝 pipx 指令。 12brew install pipxpipx ensurepath  安裝 poetry 指令。 1pipx install poetry  建立專案建立專案。 12mkdir my-projectcd my-project  初始化專案。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-03-24T08:04:00.000Z">
-<meta property="article:modified_time" content="2024-04-27T15:21:03.219Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.014Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="Python">
@@ -78,7 +78,7 @@
           
         
           
-            <li><a href="/archives">Articles</a></li>
+            <li><a href="/archives">Archives</a></li>
           
         
           
@@ -127,7 +127,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -186,7 +186,7 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>pipx 是用來安裝 CLI 和確保依賴隔離的工具；而 Poetry 則是用來管理專案的依賴套件，就像 npm 一樣。</p>
-<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>安裝 <code>pipx</code> 指令。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>安裝 <code>pipx</code> 指令。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install pipx</span><br><span class="line">pipx ensurepath</span><br></pre></td></tr></table></figure>
 
 <p>安裝 <code>poetry</code> 指令。</p>
@@ -198,17 +198,17 @@
 <p>初始化專案。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure>
 
-<p>安裝依賴套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add fastapi uvicorn</span><br></pre></td></tr></table></figure>
-
 <p>啟動虛擬環境。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add fastapi uvicorn</span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>main.py</code> 檔。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">root</span>():</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World!&quot;</span>,</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 <p>啟動網頁伺服器。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:app --reload --port 8001</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uvicorn main:app --reload --port 8000</span><br></pre></td></tr></table></figure>
 
 <h2 id="清理"><a href="#清理" class="headerlink" title="清理"></a>清理</h2><p>查看虛擬環境資訊。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> info</span><br></pre></td></tr></table></figure>
@@ -242,7 +242,7 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Articles</a></li>
+          <li><a href="/archives">Archives</a></li>
          
           <li><a href="/categories">Categories</a></li>
          
@@ -256,7 +256,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -296,7 +296,7 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Articles</a></li>
+          <li><a href="/archives">Archives</a></li>
          
           <li><a href="/categories">Categories</a></li>
          

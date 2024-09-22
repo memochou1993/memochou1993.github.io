@@ -16,14 +16,14 @@
 <meta property="og:description" content="做法建立工作資料夾。 12mkdir -p terraform-practice&#x2F;s3cd terraform-practice&#x2F;s3  使用 init 指令初始化工作資料夾，需要的供應商外掛（provider plugins）將會被下載下來。 1terraform init  在工作資料夾新增 main.tf 檔： 1234567891011121314151617181920terraform">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-02-17T15:14:29.000Z">
-<meta property="article:modified_time" content="2024-02-11T09:28:31.829Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.013Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
-<meta property="article:tag" content="Terraform">
-<meta property="article:tag" content="IaC">
 <meta property="article:tag" content="AWS">
+<meta property="article:tag" content="Terraform">
 <meta property="article:tag" content="S3">
 <meta property="article:tag" content="Storage Service">
+<meta property="article:tag" content="IaC">
 <meta name="twitter:card" content="summary">
     
     
@@ -79,7 +79,7 @@
           
         
           
-            <li><a href="/archives">Articles</a></li>
+            <li><a href="/archives">Archives</a></li>
           
         
           
@@ -191,7 +191,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform init</span><br></pre></td></tr></table></figure>
 
 <p>在工作資料夾新增 <code>main.tf</code> 檔：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">terraform &#123;</span><br><span class="line">  required_providers &#123;</span><br><span class="line">    aws = &#123;</span><br><span class="line">      source  = &quot;hashicorp/aws&quot;</span><br><span class="line">      version = &quot;4.1.0&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  required_version = &quot;&gt;= 1.1&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 指定為 AWS Provider</span><br><span class="line">provider &quot;aws&quot; &#123;</span><br><span class="line">  region  = &quot;ap-northeast-1&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 建立一個儲存貯體</span><br><span class="line">resource &quot;aws_s3_bucket&quot; &quot;xxx-playground-s3-test&quot; &#123;</span><br><span class="line">  bucket = &quot;xxx-playground-s3-test&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">terraform &#123;</span><br><span class="line">  required_providers &#123;</span><br><span class="line">    aws = &#123;</span><br><span class="line">      source  = &quot;hashicorp/aws&quot;</span><br><span class="line">      version = &quot;4.1.0&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  required_version = &quot;&gt;= 1.1&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 指定為 AWS Provider</span><br><span class="line">provider &quot;aws&quot; &#123;</span><br><span class="line">  region  = &quot;ap-northeast-1&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 建立一個儲存貯體</span><br><span class="line">resource &quot;aws_s3_bucket&quot; &quot;playground-s3-test&quot; &#123;</span><br><span class="line">  bucket = &quot;playground-s3-test&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>使用 <code>plan</code> 指令查看執行計畫。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws-vault <span class="built_in">exec</span> --backend=file playground-PowerUser -- terraform plan</span><br></pre></td></tr></table></figure>
@@ -227,7 +227,7 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Articles</a></li>
+          <li><a href="/archives">Archives</a></li>
          
           <li><a href="/categories">Categories</a></li>
          
@@ -281,7 +281,7 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Articles</a></li>
+          <li><a href="/archives">Archives</a></li>
          
           <li><a href="/categories">Categories</a></li>
          

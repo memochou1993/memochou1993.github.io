@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言Cron 表達式是用來描述定時任務執行時間的語法，常見於各種定時任務調度工具中。本文使用正則表達式來驗證 Cron 表達式。 做法首先，在 regex101 網站上測試正則表達式，以確保正確性。以下是用來驗證 Cron 表達式的正則表達式： 1^(\*|([0-5]?[0-9]|\*\&#x2F;[1-9][0-9]*|([0-5]?[0-9])(-([0-5]?[0-9]))?)(,([0-5]?[0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 JavaScript 專案使用正則表達式驗證 Cron 表達式">
+<meta property="og:url" content="https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言Cron 表達式是用來描述定時任務執行時間的語法，常見於各種定時任務調度工具中。本文使用正則表達式來驗證 Cron 表達式。 做法首先，在 regex101 網站上測試正則表達式，以確保正確性。以下是用來驗證 Cron 表達式的正則表達式： 1^(\*|([0-5]?[0-9]|\*\&#x2F;[1-9][0-9]*|([0-5]?[0-9])(-([0-5]?[0-9]))?)(,([0-5]?[0">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-06-23T12:48:30.000Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.016Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Regular Expression">
+<meta property="article:tag" content="Cron">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 JavaScript 專案使用正則表達式驗證 Cron 表達式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/06/%E5%9C%A8-Nuxt-3-11-%E5%BB%BA%E7%AB%8B%E6%B7%B1%E8%89%B2%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8F%9B%E5%99%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/07/%E4%BD%BF%E7%94%A8-PyTorch-%E5%A5%97%E4%BB%B6%E5%92%8C-ResNet-%E6%A8%A1%E5%9E%8B%E9%80%B2%E8%A1%8C%E5%9C%96%E5%83%8F%E5%88%86%E9%A1%9E/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&text=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&is_video=false&description=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 JavaScript 專案使用正則表達式驗證 Cron 表達式&body=Check out this article: https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&name=在 JavaScript 專案使用正則表達式驗證 Cron 表達式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 JavaScript 專案使用正則表達式驗證 Cron 表達式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-06-23T12:48:30.000Z" itemprop="datePublished">2024-06-23</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Cron/" rel="tag">Cron</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Regular-Expression/" rel="tag">Regular Expression</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Cron 表達式是用來描述定時任務執行時間的語法，常見於各種定時任務調度工具中。本文使用正則表達式來驗證 Cron 表達式。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>首先，在 <a target="_blank" rel="noopener" href="https://regex101.com/">regex101</a> 網站上測試正則表達式，以確保正確性。以下是用來驗證 Cron 表達式的正則表達式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(\*|([0-5]?[0-9]|\*\/[1-9][0-9]*|([0-5]?[0-9])(-([0-5]?[0-9]))?)(,([0-5]?[0-9]|\*\/[1-9][0-9]*|([0-5]?[0-9])(-([0-5]?[0-9]))?))*)\s+(\*|([0-1]?[0-9]|2[0-3]|\*\/[1-9][0-9]*|([0-1]?[0-9]|2[0-3])(-([0-1]?[0-9]|2[0-3]))?)(,([0-1]?[0-9]|2[0-3]|\*\/[1-9][0-9]*|([0-1]?[0-9]|2[0-3])(-([0-1]?[0-9]|2[0-3]))?))*)\s+(\*|([1-9]|[12][0-9]|3[01]|\*\/[1-9][0-9]*|([1-9]|[12][0-9]|3[01])(-([1-9]|[12][0-9]|3[01]))?)(,([1-9]|[12][0-9]|3[01]|\*\/[1-9][0-9]*|([1-9]|[12][0-9]|3[01])(-([1-9]|[12][0-9]|3[01]))?))*)\s+(\*|([1-9]|1[0-2]|\*\/[1-9][0-9]*|([1-9]|1[0-2])(-([1-9]|1[0-2]))?)(,([1-9]|1[0-2]|\*\/[1-9][0-9]*|([1-9]|1[0-2])(-([1-9]|1[0-2]))?))*)\s+(\*|([0-6]|\*\/[1-9][0-9]*|([0-6])(-([0-6]))?)(,([0-6]|\*\/[1-9][0-9]*|([0-6])(-([0-6]))?))*)$</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立 <code>validate-cron-expression.js</code> 檔，根據以上表達式實作一個驗證函數。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">validateCronExpression</span>(<span class="params">input</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> segment = <span class="string">&#x27;(\\*|(T|\\*\\/[1-9][0-9]*|(T)(-(T))?)(,(T|\\*\\/[1-9][0-9]*|(T)(-(T))?))*)&#x27;</span>;</span><br><span class="line">  <span class="keyword">const</span> minute = segment.<span class="title function_">replaceAll</span>(<span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;[0-5]?[0-9]&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> hour = segment.<span class="title function_">replaceAll</span>(<span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;[0-1]?[0-9]|2[0-3]&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> dayOfMonth = segment.<span class="title function_">replaceAll</span>(<span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;[1-9]|[12][0-9]|3[01]&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> month = segment.<span class="title function_">replaceAll</span>(<span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;[1-9]|1[0-2]&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> dayOfWeek = segment.<span class="title function_">replaceAll</span>(<span class="string">&#x27;T&#x27;</span>, <span class="string">&#x27;[0-6]&#x27;</span>);</span><br><span class="line">  <span class="keyword">const</span> cronRegex = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">`^<span class="subst">$&#123;minute&#125;</span>\\s+<span class="subst">$&#123;hour&#125;</span>\\s+<span class="subst">$&#123;dayOfMonth&#125;</span>\\s+<span class="subst">$&#123;month&#125;</span>\\s+<span class="subst">$&#123;dayOfWeek&#125;</span>$`</span>);</span><br><span class="line">  <span class="keyword">return</span> cronRegex.<span class="title function_">test</span>(input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立簡單的測試案例。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> testCases = [</span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;0 0 1 1 0&quot;</span>, <span class="attr">expected</span>: <span class="literal">true</span> &#125;, <span class="comment">// Valid: At midnight on the first of January, only on Sundays.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;* * * * *&quot;</span>, <span class="attr">expected</span>: <span class="literal">true</span> &#125;, <span class="comment">// Valid: Every minute of every hour of every day of the month, month, and week.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;*/15 0 1,15 * 1-5&quot;</span>, <span class="attr">expected</span>: <span class="literal">true</span> &#125;, <span class="comment">// Valid: Every 15 minutes, on the hour, on the 1st and 15th of every month, Monday through Friday.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;0 0 0 0 0&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;, <span class="comment">// Invalid: Day of month and month cannot be 0.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;60 0 1 1 0&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;, <span class="comment">// Invalid: Minute cannot be 60.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;0 24 1 1 0&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;, <span class="comment">// Invalid: Hour cannot be 24.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;0 0 32 1 0&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;, <span class="comment">// Invalid: Day of month cannot be 32.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;0 0 1 13 0&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;, <span class="comment">// Invalid: Month cannot be 13.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;0 0 1 1 7&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125;, <span class="comment">// Invalid: Day of week cannot be 7.</span></span><br><span class="line">    &#123; <span class="attr">input</span>: <span class="string">&quot;*/5 * * * 1-7&quot;</span>, <span class="attr">expected</span>: <span class="literal">false</span> &#125; <span class="comment">// Invalid: Day of week cannot be a range that includes 7.</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Function to test the validateCronExpression function</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">runTests</span>(<span class="params"></span>) &#123;</span><br><span class="line">    testCases.<span class="title function_">forEach</span>(<span class="function">(<span class="params">testCase, index</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="title function_">validateCronExpression</span>(testCase.<span class="property">input</span>);</span><br><span class="line">        <span class="keyword">const</span> passed = result === testCase.<span class="property">expected</span>;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Test Case <span class="subst">$&#123;index + <span class="number">1</span>&#125;</span>: <span class="subst">$&#123;passed ? <span class="string">&quot;Passed&quot;</span> : <span class="string">&quot;Failed&quot;</span>&#125;</span>`</span>);</span><br><span class="line">        <span class="keyword">if</span> (!passed) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`  Input: <span class="subst">$&#123;testCase.input&#125;</span>`</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`  Expected: <span class="subst">$&#123;testCase.expected&#125;</span>`</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`  Got: <span class="subst">$&#123;result&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Run the tests</span></span><br><span class="line"><span class="title function_">runTests</span>();</span><br></pre></td></tr></table></figure>
+
+<p>執行測試。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node validateCronExpression.js</span><br></pre></td></tr></table></figure>
+
+<p>測試結果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Test Case 1: Passed</span><br><span class="line">Test Case 2: Passed</span><br><span class="line">Test Case 3: Passed</span><br><span class="line">Test Case 4: Passed</span><br><span class="line">Test Case 5: Passed</span><br><span class="line">Test Case 6: Passed</span><br><span class="line">Test Case 7: Passed</span><br><span class="line">Test Case 8: Passed</span><br><span class="line">Test Case 9: Passed</span><br><span class="line">Test Case 10: Passed</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/memochou1993/f94a1059292244ce69015d969418c0dc">validate-cron-expression.js</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&text=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&is_video=false&description=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 JavaScript 專案使用正則表達式驗證 Cron 表達式&body=Check out this article: https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&title=在 JavaScript 專案使用正則表達式驗證 Cron 表達式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/06/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%89%87%E8%A1%A8%E9%81%94%E5%BC%8F%E9%A9%97%E8%AD%89-Cron-%E8%A1%A8%E9%81%94%E5%BC%8F/&name=在 JavaScript 專案使用正則表達式驗證 Cron 表達式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

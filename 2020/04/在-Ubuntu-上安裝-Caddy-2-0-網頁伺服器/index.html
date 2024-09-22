@@ -16,11 +16,11 @@
 <meta property="og:description" content="環境 Ubuntu 18.04 LTS  安裝下載 Caddy 的最新版本。 1wget https:&#x2F;&#x2F;github.com&#x2F;caddyserver&#x2F;caddy&#x2F;releases&#x2F;download&#x2F;v2.0.0-rc.3&#x2F;caddy_2.0.0-rc.3_linux_amd64.tar.gz  解壓縮。 1tar zxvf caddy_2.0.0-rc.3_linux_amd64.tar.gz">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-04-17T05:26:31.000Z">
-<meta property="article:modified_time" content="2023-11-30T03:05:47.678Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.011Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
-<meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Web Server">
+<meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Ubuntu">
 <meta property="article:tag" content="Caddy">
 <meta name="twitter:card" content="summary">
@@ -78,7 +78,7 @@
           
         
           
-            <li><a href="/archives">Articles</a></li>
+            <li><a href="/archives">Archives</a></li>
           
         
           
@@ -214,7 +214,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> -R caddy:caddy /var/log/caddy</span><br></pre></td></tr></table></figure>
 
 <h2 id="Caddyfile"><a href="#Caddyfile" class="headerlink" title="Caddyfile"></a>Caddyfile</h2><p>新增 <code>/etc/caddy</code> 資料夾，在裡面建立一個 <code>Caddyfile</code> 檔：</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">domain.com &#123;</span><br><span class="line">    respond &quot;Hello, world!&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">domain.com &#123;</span><br><span class="line">    respond &quot;Hello, World!&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="系統服務"><a href="#系統服務" class="headerlink" title="系統服務"></a>系統服務</h2><p>在 <code>/etc/systemd/system</code> 資料夾新增一個 <code>caddy.service</code> 檔：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Caddy</span><br><span class="line">Documentation=https://caddyserver.com/docs/</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=caddy</span><br><span class="line">Group=caddy</span><br><span class="line">ExecStart=/usr/bin/caddy run --environ --config /etc/caddy/Caddyfile</span><br><span class="line">ExecReload=/usr/bin/caddy reload --config /etc/caddy/Caddyfile</span><br><span class="line">TimeoutStopSec=5s</span><br><span class="line">LimitNOFILE=1048576</span><br><span class="line">LimitNPROC=512</span><br><span class="line">PrivateTmp=true</span><br><span class="line">ProtectSystem=full</span><br><span class="line">AmbientCapabilities=CAP_NET_BIND_SERVICE</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
@@ -345,7 +345,7 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Articles</a></li>
+          <li><a href="/archives">Archives</a></li>
          
           <li><a href="/categories">Categories</a></li>
          
@@ -399,7 +399,7 @@
          
           <li><a href="/">Home</a></li>
          
-          <li><a href="/archives">Articles</a></li>
+          <li><a href="/archives">Archives</a></li>
          
           <li><a href="/categories">Categories</a></li>
          

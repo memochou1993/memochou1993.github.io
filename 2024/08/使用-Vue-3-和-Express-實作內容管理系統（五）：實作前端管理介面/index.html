@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 開啟專案開啟前端專案。 12cd simple-cms-uicode .  設置路徑別名 Ref: https:&#x2F;&#x2F;github.com&#x2F;vuejs&#x2F;create-vue&#x2F;tree&#x2F;main&#x2F;template&#x2F;base  在開發過程中，為了避免使用相對路徑引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面">
+<meta property="og:url" content="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 開啟專案開啟前端專案。 12cd simple-cms-uicode .  設置路徑別名 Ref: https:&#x2F;&#x2F;github.com&#x2F;vuejs&#x2F;create-vue&#x2F;tree&#x2F;main&#x2F;template&#x2F;base  在開發過程中，為了避免使用相對路徑引">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-08-02T15:43:45.000Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.018Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Bootstrap">
+<meta property="article:tag" content="Firebase">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="CMS">
+<meta property="article:tag" content="Firestore">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%BE%8C%E7%AB%AF%E8%B7%AF%E7%94%B1/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E8%A1%A8%E5%96%AE%E9%A9%97%E8%AD%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&text=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&is_video=false&description=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面&body=Check out this article: https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&name=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%95%9F%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">開啟專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E7%BD%AE%E8%B7%AF%E5%BE%91%E5%88%A5%E5%90%8D"><span class="toc-number">3.</span> <span class="toc-text">設置路徑別名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%97%E8%A1%A8%E9%A0%81%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">建立列表頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%B0%E5%A2%9E%E9%A0%81%E9%9D%A2"><span class="toc-number">5.</span> <span class="toc-text">建立新增頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%B7%A8%E8%BC%AF%E9%A0%81%E9%9D%A2"><span class="toc-number">6.</span> <span class="toc-text">建立編輯頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92"><span class="toc-number">7.</span> <span class="toc-text">練習</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92%E4%B8%80%EF%BC%9A%E5%B0%87%E8%A1%A8%E5%96%AE%E7%8D%A8%E7%AB%8B%E6%88%90%E5%85%83%E4%BB%B6"><span class="toc-number">7.1.</span> <span class="toc-text">練習一：將表單獨立成元件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">8.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-08-02T15:43:45.000Z" itemprop="datePublished">2024-08-02</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Vue/">Vue</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a>, <a class="tag-link-link" href="/tags/CMS/" rel="tag">CMS</a>, <a class="tag-link-link" href="/tags/Express/" rel="tag">Express</a>, <a class="tag-link-link" href="/tags/Firebase/" rel="tag">Firebase</a>, <a class="tag-link-link" href="/tags/Firestore/" rel="tag">Firestore</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Node/" rel="tag">Node</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Vue/" rel="tag">Vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。</p>
+<h2 id="開啟專案"><a href="#開啟專案" class="headerlink" title="開啟專案"></a>開啟專案</h2><p>開啟前端專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> simple-cms-ui</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+
+<h2 id="設置路徑別名"><a href="#設置路徑別名" class="headerlink" title="設置路徑別名"></a>設置路徑別名</h2><blockquote>
+<p>Ref: <a target="_blank" rel="noopener" href="https://github.com/vuejs/create-vue/tree/main/template/base">https://github.com/vuejs/create-vue/tree/main/template/base</a></p>
+</blockquote>
+<p>在開發過程中，為了避免使用相對路徑引入元件時查找路徑的繁瑣，可以改成透過路徑別名來使用絕對路徑引入元件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">HomeView</span> <span class="keyword">from</span> <span class="string">&#x27;@/views/HomeView.vue&#x27;</span>;</span><br><span class="line"><span class="comment">// import HomeView from &#x27;../views/HomeView.vue&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>vite.config.js</code> 檔，在 <code>alias</code> 區塊新增 <code>@</code> 路徑別名，用來在引入檔案時表示根目錄。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; fileURLToPath, <span class="variable constant_">URL</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;node:url&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// https://vitejs.dev/config/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="title function_">vue</span>()],</span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;@&#x27;</span>: <span class="title function_">fileURLToPath</span>(<span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&#x27;./src&#x27;</span>, <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>)),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>jsconfig.json</code> 檔，讓 VS Code 支援路徑別名。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;paths&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;@/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;./src/*&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exclude&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;node_modules&quot;</span><span class="punctuation">,</span> <span class="string">&quot;dist&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>src/router/index.js</code> 檔，現在可以使用 <code>@</code> 路徑別名來表示根目錄，而不是使用相對路徑。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">HomeView</span> <span class="keyword">from</span> <span class="string">&#x27;@/views/HomeView.vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">HomeView</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">      <span class="comment">// route level code-splitting</span></span><br><span class="line">      <span class="comment">// this generates a separate chunk (About.[hash].js) for this route</span></span><br><span class="line">      <span class="comment">// which is lazy-loaded when the route is visited.</span></span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/AboutView.vue&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router;</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add alias path for root directory&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立列表頁面"><a href="#建立列表頁面" class="headerlink" title="建立列表頁面"></a>建立列表頁面</h2><p>在 <code>src/views</code> 資料夾，建立 <code>CustomerListView.vue</code> 檔，作為客戶管理的列表頁面，並使用假資料實作管理功能。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> customers = <span class="title function_">ref</span>([</span></span><br><span class="line"><span class="language-javascript">  &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&#x27;Bob&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#123; <span class="attr">id</span>: <span class="number">3</span>, <span class="attr">name</span>: <span class="string">&#x27;Charlie&#x27;</span> &#125;,</span></span><br><span class="line"><span class="language-javascript">]);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">createCustomer</span> = (<span class="params"></span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> name = <span class="title function_">prompt</span>(<span class="string">&#x27;Enter customer name&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">if</span> (!name) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> customer = &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">id</span>: customers.<span class="property">value</span>.<span class="property">length</span> + <span class="number">1</span>,</span></span><br><span class="line"><span class="language-javascript">    name,</span></span><br><span class="line"><span class="language-javascript">  &#125;;</span></span><br><span class="line"><span class="language-javascript">  customers.<span class="property">value</span>.<span class="title function_">push</span>(customer);</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">updateCustomer</span> = (<span class="params">id</span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> name = <span class="title function_">prompt</span>(<span class="string">&#x27;Enter customer name&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">if</span> (!name) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> customer = customers.<span class="property">value</span>.<span class="title function_">find</span>(<span class="function"><span class="params">customer</span> =&gt;</span> customer.<span class="property">id</span> === id);</span></span><br><span class="line"><span class="language-javascript">  customer.<span class="property">name</span> = name;</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">deleteCustomer</span> = (<span class="params">id</span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> index = customers.<span class="property">value</span>.<span class="title function_">findIndex</span>(<span class="function"><span class="params">customer</span> =&gt;</span> customer.<span class="property">id</span> === id);</span></span><br><span class="line"><span class="language-javascript">  customers.<span class="property">value</span>.<span class="title function_">splice</span>(index, <span class="number">1</span>);</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;d-flex justify-content-between align-items-end mb-3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;fs-2&quot;</span>&gt;</span></span><br><span class="line">      Customers</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;btn btn-primary btn-sm&quot;</span></span></span><br><span class="line"><span class="tag">        @<span class="attr">click</span>=<span class="string">&quot;createCustomer&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Create</span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;table table-striped table-bordered align-middle&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">th</span>&gt;</span></span><br><span class="line">          ID</span><br><span class="line">        <span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">th</span>&gt;</span></span><br><span class="line">          Name</span><br><span class="line">        <span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">th</span>&gt;</span></span><br><span class="line">          Actions</span><br><span class="line">        <span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tr</span></span></span><br><span class="line"><span class="tag">        <span class="attr">v-for</span>=<span class="string">&quot;customer in customers&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">:key</span>=<span class="string">&quot;customer.id&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">          &#123;&#123; customer.id &#125;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">          &#123;&#123; customer.name &#125;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">td</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;btn btn-warning btn-sm me-3&quot;</span></span></span><br><span class="line"><span class="tag">            @<span class="attr">click</span>=<span class="string">&quot;updateCustomer(customer.id)&quot;</span></span></span><br><span class="line"><span class="tag">          &gt;</span></span><br><span class="line">            Edit</span><br><span class="line">          <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;btn btn-danger btn-sm&quot;</span></span></span><br><span class="line"><span class="tag">            @<span class="attr">click</span>=<span class="string">&quot;deleteCustomer(customer.id)&quot;</span></span></span><br><span class="line"><span class="tag">          &gt;</span></span><br><span class="line">            Delete</span><br><span class="line">          <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>src/router/index.js</code> 檔，添加客戶管理的列表頁面的路由。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/customers&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;customer-list&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/CustomerListView.vue&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>src/components/AppHeader.vue</code> 檔，添加客戶管理的列表頁面的連結。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> links = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;Home&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;Customers&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;customer-list&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;About&#x27;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add customer list view&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立新增頁面"><a href="#建立新增頁面" class="headerlink" title="建立新增頁面"></a>建立新增頁面</h2><p>在 <code>src/views</code> 資料夾，建立 <code>CustomerCreateView.vue</code> 檔，作為客戶管理的新增頁面。實際功能需要等到後端 API 完成再實作。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">createCustomer</span> = (<span class="params"></span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// TODO</span></span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;d-flex justify-content-between align-items-end mb-3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;fs-2&quot;</span>&gt;</span></span><br><span class="line">      Create Customer</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;btn btn-danger btn-sm me-3&quot;</span></span></span><br><span class="line"><span class="tag">        @<span class="attr">click</span>=<span class="string">&quot;router.push(&#123; name: &#x27;customer-list&#x27; &#125;)&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Cancel</span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;btn btn-success btn-sm&quot;</span></span></span><br><span class="line"><span class="tag">        @<span class="attr">click</span>=<span class="string">&quot;createCustomer&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Save</span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;border p-3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mb-3&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span></span></span><br><span class="line"><span class="tag">        <span class="attr">for</span>=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;form-label&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Name</span><br><span class="line">      <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;text&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>src/router/index.js</code> 檔，添加客戶管理的新增頁面的路由。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/customers/create&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;customer-create&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/CustomerCreateView.vue&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>src/views/CustomerListView.vue</code> 檔，將 <code>createCustomer</code> 方法改成導向新增頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">createCustomer</span> = (<span class="params"></span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  router.<span class="title function_">push</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;customer-create&#x27;</span> &#125;);</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add customer create view&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立編輯頁面"><a href="#建立編輯頁面" class="headerlink" title="建立編輯頁面"></a>建立編輯頁面</h2><p>在 <code>src/views</code> 資料夾，建立 <code>CustomerEditView.vue</code> 檔，作為客戶管理的編輯頁面。實際功能需要等到後端 API 完成再實作。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">updateCustomer</span> = (<span class="params"></span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// TODO</span></span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;d-flex justify-content-between align-items-end mb-3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;fs-2&quot;</span>&gt;</span></span><br><span class="line">      Edit Customer</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;btn btn-danger btn-sm me-3&quot;</span></span></span><br><span class="line"><span class="tag">        @<span class="attr">click</span>=<span class="string">&quot;router.push(&#123; name: &#x27;customer-list&#x27; &#125;)&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Cancel</span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;btn btn-success btn-sm&quot;</span></span></span><br><span class="line"><span class="tag">        @<span class="attr">click</span>=<span class="string">&quot;updateCustomer&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Save</span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;border p-3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mb-3&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span></span></span><br><span class="line"><span class="tag">        <span class="attr">for</span>=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;form-label&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Name</span><br><span class="line">      <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;text&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>src/router/index.js</code> 檔，添加客戶管理的編輯頁面的路由。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/customers/:id/edit&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;customer-edit&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/views/CustomerEditView.vue&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>src/views/CustomerListView.vue</code> 檔，將 <code>updateCustomer</code> 方法改成導向編輯頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> <span class="title function_">updateCustomer</span> = (<span class="params">id</span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  router.<span class="title function_">push</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;customer-edit&#x27;</span>, <span class="attr">params</span>: &#123; id &#125; &#125;);</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add customer edit view&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="練習"><a href="#練習" class="headerlink" title="練習"></a>練習</h2><h3 id="練習一：將表單獨立成元件"><a href="#練習一：將表單獨立成元件" class="headerlink" title="練習一：將表單獨立成元件"></a>練習一：將表單獨立成元件</h3><p>在 <code>src/components</code> 資料夾，建立 <code>CustomerForm.vue</code> 檔，將原先在新增頁面或編輯頁面的表單內容移動到這裡。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;border p-3&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;mb-3&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">label</span></span></span><br><span class="line"><span class="tag">        <span class="attr">for</span>=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;form-label&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Name</span><br><span class="line">      <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;text&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>CustomerCreateView.vue</code> 頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> <span class="title class_">CustomerForm</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/CustomerForm.vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">CustomerForm</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>重構 <code>CustomerEditView.vue</code> 頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> <span class="title class_">CustomerForm</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/CustomerForm.vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="comment">// ...</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">CustomerForm</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Refactor views and add CustomerForm component&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/simple-cms-ui">simple-cms-ui</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/simple-cms-api">simple-cms-api</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%95%9F%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">開啟專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E7%BD%AE%E8%B7%AF%E5%BE%91%E5%88%A5%E5%90%8D"><span class="toc-number">3.</span> <span class="toc-text">設置路徑別名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%97%E8%A1%A8%E9%A0%81%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">建立列表頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%B0%E5%A2%9E%E9%A0%81%E9%9D%A2"><span class="toc-number">5.</span> <span class="toc-text">建立新增頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%B7%A8%E8%BC%AF%E9%A0%81%E9%9D%A2"><span class="toc-number">6.</span> <span class="toc-text">建立編輯頁面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92"><span class="toc-number">7.</span> <span class="toc-text">練習</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92%E4%B8%80%EF%BC%9A%E5%B0%87%E8%A1%A8%E5%96%AE%E7%8D%A8%E7%AB%8B%E6%88%90%E5%85%83%E4%BB%B6"><span class="toc-number">7.1.</span> <span class="toc-text">練習一：將表單獨立成元件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">8.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&text=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&is_video=false&description=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面&body=Check out this article: https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&title=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E4%BB%8B%E9%9D%A2/&name=使用 Vue 3 和 Express 實作內容管理系統（五）：實作前端管理介面&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

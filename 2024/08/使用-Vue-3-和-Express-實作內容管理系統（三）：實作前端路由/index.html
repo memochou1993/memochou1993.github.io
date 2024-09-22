@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 開啟專案開啟前端專案。 12cd simple-cms-uicode .  建立佈局修改 App.vue 檔。 1234567891011121314151617181920212223242526272829303132333435363738394041">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由">
+<meta property="og:url" content="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 開啟專案開啟前端專案。 12cd simple-cms-uicode .  建立佈局修改 App.vue 檔。 1234567891011121314151617181920212223242526272829303132333435363738394041">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-08-01T15:43:43.000Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.017Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Bootstrap">
+<meta property="article:tag" content="Firebase">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="CMS">
+<meta property="article:tag" content="Firestore">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BE%8C%E7%AB%AF%E5%B0%88%E6%A1%88/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%BE%8C%E7%AB%AF%E8%B7%AF%E7%94%B1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&text=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&is_video=false&description=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由&body=Check out this article: https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&name=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%95%9F%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">開啟專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BD%88%E5%B1%80"><span class="toc-number">3.</span> <span class="toc-text">建立佈局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B%E4%BD%88%E5%B1%80"><span class="toc-number">3.1.</span> <span class="toc-text">重構佈局</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E8%B7%AF%E7%94%B1"><span class="toc-number">4.</span> <span class="toc-text">實作路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98-Vue-Router-%E5%A5%97%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">認識 Vue Router 套件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">Hash 模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTML5-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.1.2.</span> <span class="toc-text">HTML5 模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B7%AF%E7%94%B1"><span class="toc-number">4.2.</span> <span class="toc-text">建立路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92"><span class="toc-number">5.</span> <span class="toc-text">練習</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92%E4%B8%80%EF%BC%9A%E5%B0%87%E5%81%B4%E9%82%8A%E6%AC%84%E7%9A%84%E9%80%A3%E7%B5%90%E6%94%B9%E6%88%90%E8%BF%B4%E5%9C%88"><span class="toc-number">5.1.</span> <span class="toc-text">練習一：將側邊欄的連結改成迴圈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">5.1.1.</span> <span class="toc-text">做法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92%E4%BA%8C%EF%BC%9A%E5%88%87%E6%8F%9B-active-%E6%A8%A3%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">練習二：切換 active 樣式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%9A%E6%B3%95-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">做法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-08-01T15:43:43.000Z" itemprop="datePublished">2024-08-01</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Vue/">Vue</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a>, <a class="tag-link-link" href="/tags/CMS/" rel="tag">CMS</a>, <a class="tag-link-link" href="/tags/Express/" rel="tag">Express</a>, <a class="tag-link-link" href="/tags/Firebase/" rel="tag">Firebase</a>, <a class="tag-link-link" href="/tags/Firestore/" rel="tag">Firestore</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Node/" rel="tag">Node</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Vue/" rel="tag">Vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。</p>
+<h2 id="開啟專案"><a href="#開啟專案" class="headerlink" title="開啟專案"></a>開啟專案</h2><p>開啟前端專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> simple-cms-ui</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立佈局"><a href="#建立佈局" class="headerlink" title="建立佈局"></a>建立佈局</h2><p>修改 <code>App.vue</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;./components/HelloWorld.vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;navbar navbar-dark bg-dark fixed-top&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container-fluid&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;navbar-brand&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">href</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        Simple CMS</span><br><span class="line">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;navbar-toggler&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-bs-toggle</span>=<span class="string">&quot;offcanvas&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">data-bs-target</span>=<span class="string">&quot;#offcanvasDarkNavbar&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">aria-controls</span>=<span class="string">&quot;offcanvasDarkNavbar&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">aria-label</span>=<span class="string">&quot;Toggle navigation&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;navbar-toggler-icon&quot;</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;offcanvasDarkNavbar&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;offcanvas offcanvas-end text-bg-dark&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tabindex</span>=<span class="string">&quot;-1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">aria-labelledby</span>=<span class="string">&quot;offcanvasDarkNavbarLabel&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;offcanvas-header&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">h5</span></span></span><br><span class="line"><span class="tag">            <span class="attr">id</span>=<span class="string">&quot;offcanvasDarkNavbarLabel&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;offcanvas-title&quot;</span></span></span><br><span class="line"><span class="tag">          &gt;</span></span><br><span class="line">            Simple CMS</span><br><span class="line">          <span class="tag">&lt;/<span class="name">h5</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">&quot;button&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;btn-close btn-close-white&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">data-bs-dismiss</span>=<span class="string">&quot;offcanvas&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">aria-label</span>=<span class="string">&quot;Close&quot;</span></span></span><br><span class="line"><span class="tag">          /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;offcanvas-body&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;navbar-nav justify-content-end flex-grow-1 pe-3&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">a</span></span></span><br><span class="line"><span class="tag">                <span class="attr">class</span>=<span class="string">&quot;nav-link active&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">href</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span></span><br><span class="line">                Home</span><br><span class="line">              <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">a</span></span></span><br><span class="line"><span class="tag">                <span class="attr">class</span>=<span class="string">&quot;nav-link&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">href</span>=<span class="string">&quot;/about&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span></span><br><span class="line">                About</span><br><span class="line">              <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span> <span class="attr">class</span>=<span class="string">&quot;container py-5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">msg</span>=<span class="string">&quot;Hello, World!&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span> <span class="attr">class</span>=<span class="string">&quot;footer py-2 bg-dark fixed-bottom text-center&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;text-light&quot;</span>&gt;</span></span><br><span class="line">      © &#123;&#123; new Date().getFullYear() &#125;&#125; Simple CMS</span><br><span class="line">    <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">main</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">margin-top</span>: <span class="number">56px</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">margin-bottom</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="重構佈局"><a href="#重構佈局" class="headerlink" title="重構佈局"></a>重構佈局</h3><p>建立 <code>AppHeader.vue</code> 檔，將相關程式碼移動到 <code>AppHeader</code> 元件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>AppFooter.vue</code> 檔，將相關程式碼移動到 <code>AppFooter</code> 元件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>App.vue</code> 檔，引入元件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> <span class="title class_">AppFooter</span> <span class="keyword">from</span> <span class="string">&#x27;./components/AppFooter.vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> <span class="title class_">AppHeader</span> <span class="keyword">from</span> <span class="string">&#x27;./components/AppHeader.vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;./components/HelloWorld.vue&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">AppHeader</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span> <span class="attr">class</span>=<span class="string">&quot;container py-5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">msg</span>=<span class="string">&quot;Hello, World!&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">AppFooter</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css"><span class="selector-tag">main</span> &#123;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">margin-top</span>: <span class="number">56px</span>;</span></span><br><span class="line"><span class="language-css">  <span class="attribute">margin-bottom</span>: <span class="number">40px</span>;</span></span><br><span class="line"><span class="language-css">&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add header and footer components&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="實作路由"><a href="#實作路由" class="headerlink" title="實作路由"></a>實作路由</h2><blockquote>
+<p>Ref: <a target="_blank" rel="noopener" href="https://router.vuejs.org/">https://router.vuejs.org/</a></p>
+</blockquote>
+<h3 id="認識-Vue-Router-套件"><a href="#認識-Vue-Router-套件" class="headerlink" title="認識 Vue Router 套件"></a>認識 Vue Router 套件</h3><p>客戶端路由的作用是在單頁應用程式（SPA）中將瀏覽器的 URL 和使用者看到的內容綁定起來。當使用者在應用程式中瀏覽不同頁面時，URL 會隨之更新，但頁面不需要從伺服器重新載入。</p>
+<p>Vue Router 基於 Vue 的元件系統構建，開發者可以透過設定路由來告訴 Vue Router 為每個 URL 路徑顯示哪些元件。</p>
+<h4 id="Hash-模式"><a href="#Hash-模式" class="headerlink" title="Hash 模式"></a>Hash 模式</h4><p>Hash 模式使用 <code>createWebHashHistory()</code> 創造：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>它在內部傳遞的實際 URL 之前使用了一個哈希字元（<code>#</code>），URL 看起來會有點特殊，例如：<a target="_blank" rel="noopener" href="http://localhost:5173/#/about">http://localhost:5173/#/about</a>。由於這部分 URL 從未被傳送到伺服器，所以它不需要在伺服器層面上進行任何特殊處理。不過，它在 SEO 中可能會有不好的影響。</p>
+<h4 id="HTML5-模式"><a href="#HTML5-模式" class="headerlink" title="HTML5 模式"></a>HTML5 模式</h4><p>HTML5 模式使用 <code>createWebHistory()</code> 創造：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>當使用這種歷史模式時，URL 會看起來很「正常」，例如：<a target="_blank" rel="noopener" href="http://localhost:5173/about">http://localhost:5173/about</a>。</p>
+<p>不過，由於此應用程式是一個單頁的客戶端應用，如果沒有適當的伺服器配置，使用者在瀏覽器中直接訪問，就會得到一個 404 錯誤。</p>
+<p>要解決這個問題，需要在伺服器上添加一個簡單的回退路由。如果 URL 不符合任何靜態資源，它應提供與應用程式中的 <code>index.html</code> 相同的頁面。</p>
+<h3 id="建立路由"><a href="#建立路由" class="headerlink" title="建立路由"></a>建立路由</h3><p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router@4</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>src/router</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> src/router</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>src/router</code> 資料夾，建立 <code>index.js</code> 檔，在這裡定義所有的路由與對應的頁面。因為是後台系統，不需要考慮對 SEO 的影響，因此這裡使用 Hash 模式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">HomeView</span> <span class="keyword">from</span> <span class="string">&#x27;../views/HomeView.vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">HomeView</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">      <span class="comment">// route level code-splitting</span></span><br><span class="line">      <span class="comment">// this generates a separate chunk (About.[hash].js) for this route</span></span><br><span class="line">      <span class="comment">// which is lazy-loaded when the route is visited.</span></span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;../views/AboutView.vue&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>src/views</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> src/views</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>src/views</code> 資料夾，建立 <code>HomeView.vue</code> 檔，作為「首頁」頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">//</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  Home</span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>src/views</code> 資料夾，建立 <code>AboutView.vue</code> 檔，作為「關於」頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="comment">//</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  About</span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.js</code> 檔，引入路由定義檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Popover</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;bootstrap&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./style.scss&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">createApp</span>(<span class="title class_">App</span>)</span><br><span class="line">  .<span class="title function_">use</span>(router)</span><br><span class="line">  .<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>App.vue</code> 檔，將 <code>HelloWorld</code> 元件替換為 <code>RouterView</code> 元件，來讓 Vue Router 渲染對應 URL 所指定的頁面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">AppHeader</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span> <span class="attr">class</span>=<span class="string">&quot;container py-5&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RouterView</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">AppFooter</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>AppHeader.vue</code> 檔，將常規的 <code>&lt;a&gt;</code> 標籤，替換為 <code>RouterLink</code> 元件，來讓 Vue Router 能夠在不重新載入頁面的情況下改變 URL。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;navbar-nav justify-content-end flex-grow-1 pe-3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RouterLink</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">&quot;nav-link active&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:to</span>=<span class="string">&quot;&#123; name: &#x27;home&#x27; &#125;&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">      Home</span><br><span class="line">    <span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RouterLink</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">&quot;nav-link&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:to</span>=<span class="string">&quot;&#123; name: &#x27;about&#x27; &#125;&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">      About</span><br><span class="line">    <span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ... --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add vue router&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="練習"><a href="#練習" class="headerlink" title="練習"></a>練習</h2><h3 id="練習一：將側邊欄的連結改成迴圈"><a href="#練習一：將側邊欄的連結改成迴圈" class="headerlink" title="練習一：將側邊欄的連結改成迴圈"></a>練習一：將側邊欄的連結改成迴圈</h3><p>讓側邊欄的連結改成迴圈的寫法，可以讓程式碼變得更簡潔，更容易維護。</p>
+<h4 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h4><p>修改 <code>AppHeader.vue</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> links = [</span></span><br><span class="line"><span class="language-javascript">  &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">title</span>: <span class="string">&#x27;Home&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">title</span>: <span class="string">&#x27;About&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">name</span>: <span class="string">&#x27;about&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">];</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;navbar navbar-dark bg-dark fixed-top&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container-fluid&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;offcanvasDarkNavbar&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;offcanvas offcanvas-end text-bg-dark&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tabindex</span>=<span class="string">&quot;-1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">aria-labelledby</span>=<span class="string">&quot;offcanvasDarkNavbarLabel&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;offcanvas-body&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;navbar-nav justify-content-end flex-grow-1 pe-3&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">template</span></span></span><br><span class="line"><span class="tag">              <span class="attr">v-for</span>=<span class="string">&quot;(link, i) in links&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">:key</span>=<span class="string">&quot;i&quot;</span></span></span><br><span class="line"><span class="tag">            &gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">li</span></span></span><br><span class="line"><span class="tag">                <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">router-link</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">class</span>=<span class="string">&quot;nav-link&quot;</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">:to</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">                    name: link.name,</span></span></span><br><span class="line"><span class="string"><span class="tag">                  &#125;&quot;</span></span></span><br><span class="line"><span class="tag">                &gt;</span></span><br><span class="line">                  &#123;&#123; link.title &#125;&#125;</span><br><span class="line">                <span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="練習二：切換-active-樣式"><a href="#練習二：切換-active-樣式" class="headerlink" title="練習二：切換 active 樣式"></a>練習二：切換 active 樣式</h3><p>當切換路由時，超連結的 <code>active</code> 也要跟著切換。</p>
+<h4 id="做法-1"><a href="#做法-1" class="headerlink" title="做法"></a>做法</h4><p>修改 <code>AppHeader.vue</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">import</span> &#123; useRoute &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> links = [</span></span><br><span class="line"><span class="language-javascript">  &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">title</span>: <span class="string">&#x27;Home&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">title</span>: <span class="string">&#x27;About&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">name</span>: <span class="string">&#x27;about&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">];</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;navbar navbar-dark bg-dark fixed-top&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container-fluid&quot;</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">&quot;offcanvasDarkNavbar&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">&quot;offcanvas offcanvas-end text-bg-dark&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tabindex</span>=<span class="string">&quot;-1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">aria-labelledby</span>=<span class="string">&quot;offcanvasDarkNavbarLabel&quot;</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;offcanvas-body&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;navbar-nav justify-content-end flex-grow-1 pe-3&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">template</span></span></span><br><span class="line"><span class="tag">              <span class="attr">v-for</span>=<span class="string">&quot;(link, i) in links&quot;</span></span></span><br><span class="line"><span class="tag">              <span class="attr">:key</span>=<span class="string">&quot;i&quot;</span></span></span><br><span class="line"><span class="tag">            &gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">li</span></span></span><br><span class="line"><span class="tag">                <span class="attr">class</span>=<span class="string">&quot;nav-item&quot;</span></span></span><br><span class="line"><span class="tag">              &gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">router-link</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">class</span>=<span class="string">&quot;nav-link&quot;</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">:class</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">                    &#x27;active&#x27;: link.name === route.name,</span></span></span><br><span class="line"><span class="string"><span class="tag">                  &#125;&quot;</span></span></span><br><span class="line"><span class="tag">                  <span class="attr">:to</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">                    name: link.name,</span></span></span><br><span class="line"><span class="string"><span class="tag">                  &#125;&quot;</span></span></span><br><span class="line"><span class="tag">                &gt;</span></span><br><span class="line">                  &#123;&#123; link.title &#125;&#125;</span><br><span class="line">                <span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Update links&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/simple-cms-ui">simple-cms-ui</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/simple-cms-api">simple-cms-api</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%95%9F%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">開啟專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BD%88%E5%B1%80"><span class="toc-number">3.</span> <span class="toc-text">建立佈局</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B%E4%BD%88%E5%B1%80"><span class="toc-number">3.1.</span> <span class="toc-text">重構佈局</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E8%B7%AF%E7%94%B1"><span class="toc-number">4.</span> <span class="toc-text">實作路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98-Vue-Router-%E5%A5%97%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">認識 Vue Router 套件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hash-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.1.1.</span> <span class="toc-text">Hash 模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTML5-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.1.2.</span> <span class="toc-text">HTML5 模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%B7%AF%E7%94%B1"><span class="toc-number">4.2.</span> <span class="toc-text">建立路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92"><span class="toc-number">5.</span> <span class="toc-text">練習</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92%E4%B8%80%EF%BC%9A%E5%B0%87%E5%81%B4%E9%82%8A%E6%AC%84%E7%9A%84%E9%80%A3%E7%B5%90%E6%94%B9%E6%88%90%E8%BF%B4%E5%9C%88"><span class="toc-number">5.1.</span> <span class="toc-text">練習一：將側邊欄的連結改成迴圈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">5.1.1.</span> <span class="toc-text">做法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B7%B4%E7%BF%92%E4%BA%8C%EF%BC%9A%E5%88%87%E6%8F%9B-active-%E6%A8%A3%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">練習二：切換 active 樣式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%9A%E6%B3%95-1"><span class="toc-number">5.2.1.</span> <span class="toc-text">做法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&text=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&is_video=false&description=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由&body=Check out this article: https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&title=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/&name=使用 Vue 3 和 Express 實作內容管理系統（三）：實作前端路由&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 前置作業建立 Firebase 專案首先，在 Firebase 建立一個專案。  名稱：simple-cms  建立應用程式在專案中，註冊一個應用程式。  平台：網頁 名稱：simple-cms  建立 Firestore 資料庫在 Cloud Firest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化">
+<meta property="og:url" content="https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。 前置作業建立 Firebase 專案首先，在 Firebase 建立一個專案。  名稱：simple-cms  建立應用程式在專案中，註冊一個應用程式。  平台：網頁 名稱：simple-cms  建立 Firestore 資料庫在 Cloud Firest">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-08-05T15:43:45.000Z">
+<meta property="article:modified_time" content="2024-09-22T08:34:54.249Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Bootstrap">
+<meta property="article:tag" content="Firebase">
+<meta property="article:tag" content="Express">
+<meta property="article:tag" content="CMS">
+<meta property="article:tag" content="Firestore">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%89%8D%E7%AB%AF%E8%A1%A8%E5%96%AE%E9%A9%97%E8%AD%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&text=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&is_video=false&description=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化&body=Check out this article: https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&name=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-Firebase-%E5%B0%88%E6%A1%88"><span class="toc-number">2.1.</span> <span class="toc-text">建立 Firebase 專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">建立應用程式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-Firestore-%E8%B3%87%E6%96%99%E5%BA%AB"><span class="toc-number">2.3.</span> <span class="toc-text">建立 Firestore 資料庫</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%9B%86%E5%90%88"><span class="toc-number">2.4.</span> <span class="toc-text">建立集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%87%91%E9%91%B0"><span class="toc-number">2.5.</span> <span class="toc-text">建立金鑰</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%95%9F%E5%B0%88%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">開啟專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%80%A3%E7%B7%9A"><span class="toc-number">4.</span> <span class="toc-text">建立連線</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B"><span class="toc-number">4.1.</span> <span class="toc-text">重構</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E7%8F%BE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">實現持久化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-CORS"><span class="toc-number">6.</span> <span class="toc-text">設定 CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98-CORS"><span class="toc-number">6.1.</span> <span class="toc-text">認識 CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%9F%E7%94%A8-CORS"><span class="toc-number">6.2.</span> <span class="toc-text">啟用 CORS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-08-05T15:43:45.000Z" itemprop="datePublished">2024-08-05</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Vue/">Vue</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Bootstrap/" rel="tag">Bootstrap</a>, <a class="tag-link-link" href="/tags/CMS/" rel="tag">CMS</a>, <a class="tag-link-link" href="/tags/Express/" rel="tag">Express</a>, <a class="tag-link-link" href="/tags/Firebase/" rel="tag">Firebase</a>, <a class="tag-link-link" href="/tags/Firestore/" rel="tag">Firestore</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Node/" rel="tag">Node</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Vue/" rel="tag">Vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文是前端工作坊的教學文件，介紹如何使用 Vue 3 和 Express 實作內容管理系統，並搭配 Firebase 實現持久化和認證。</p>
+<h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><h3 id="建立-Firebase-專案"><a href="#建立-Firebase-專案" class="headerlink" title="建立 Firebase 專案"></a>建立 Firebase 專案</h3><p>首先，在 <a target="_blank" rel="noopener" href="https://console.firebase.google.com/u/0/">Firebase</a> 建立一個專案。</p>
+<ul>
+<li>名稱：simple-cms</li>
+</ul>
+<h3 id="建立應用程式"><a href="#建立應用程式" class="headerlink" title="建立應用程式"></a>建立應用程式</h3><p>在專案中，註冊一個應用程式。</p>
+<ul>
+<li>平台：網頁</li>
+<li>名稱：simple-cms</li>
+</ul>
+<h3 id="建立-Firestore-資料庫"><a href="#建立-Firestore-資料庫" class="headerlink" title="建立 Firestore 資料庫"></a>建立 Firestore 資料庫</h3><p>在 <a target="_blank" rel="noopener" href="https://console.firebase.google.com/u/0/project/simple-cms-e9c56/firestore">Cloud Firestore</a> 頁面，建立一個資料庫。</p>
+<ul>
+<li>位置：Taiwan</li>
+<li>安全性規則：以正式版模式啟動</li>
+</ul>
+<h3 id="建立集合"><a href="#建立集合" class="headerlink" title="建立集合"></a>建立集合</h3><p>在資料庫中，建立一個集合。</p>
+<ul>
+<li>ID：customers</li>
+</ul>
+<h3 id="建立金鑰"><a href="#建立金鑰" class="headerlink" title="建立金鑰"></a>建立金鑰</h3><p>最後，為了讓後端程式存取資料庫，需要創建一個憑證。點選「專案設定」、「服務帳戶」，然後點選「產生新的私密金鑰」，將憑證下載到專案目錄中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> simple-cms-api</span><br><span class="line"><span class="built_in">mv</span> ~/Downloads/simple-cms-e9c56-firebase-adminsdk.json serviceAccountKey.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="開啟專案"><a href="#開啟專案" class="headerlink" title="開啟專案"></a>開啟專案</h2><p>開啟後端專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> simple-cms-api</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立連線"><a href="#建立連線" class="headerlink" title="建立連線"></a>建立連線</h2><blockquote>
+<p>Ref: <a target="_blank" rel="noopener" href="https://firebase.google.com/docs/firestore/quickstart?hl=zh-tw#node.js">https://firebase.google.com/docs/firestore/quickstart?hl=zh-tw#node.js</a></p>
+</blockquote>
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install firebase-admin</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>collection.js</code> 檔，初始化 Firebase 實例，並且新增一筆文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; cert, initializeApp &#125; <span class="keyword">from</span> <span class="string">&#x27;firebase-admin/app&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getFirestore &#125; <span class="keyword">from</span> <span class="string">&#x27;firebase-admin/firestore&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">initializeApp</span>(&#123;</span><br><span class="line">  <span class="attr">credential</span>: <span class="title function_">cert</span>(path.<span class="title function_">join</span>(<span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">dirname</span>, <span class="string">&#x27;serviceAccountKey.json&#x27;</span>)),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> db = <span class="title function_">getFirestore</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">run</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123; <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span> &#125;;</span><br><span class="line">    <span class="keyword">const</span> docRef = <span class="keyword">await</span> db.<span class="title function_">collection</span>(<span class="string">&#x27;customers&#x27;</span>).<span class="title function_">add</span>(data);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Document written with ID: &#x27;</span>, docRef.<span class="property">id</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error adding document: &#x27;</span>, e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title function_">run</span>();</span><br></pre></td></tr></table></figure>
+
+<p>執行腳本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node collection.js</span><br></pre></td></tr></table></figure>
+
+<p>輸出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Document written with ID:  aJsDiZhJYmoRX01dRpH8</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.gitignore</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/node_modules</span><br><span class="line">serviceAccountKey.json</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add firebase&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h3 id="重構"><a href="#重構" class="headerlink" title="重構"></a>重構</h3><p>將 <code>firebase.js</code> 檔重新命名為 <code>collection.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; cert, initializeApp &#125; <span class="keyword">from</span> <span class="string">&#x27;firebase-admin/app&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getFirestore &#125; <span class="keyword">from</span> <span class="string">&#x27;firebase-admin/firestore&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">pathname</span>: serviceAccountKeyPath &#125; = <span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&#x27;./serviceAccountKey.json&#x27;</span>, <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">initializeApp</span>(&#123;</span><br><span class="line">  <span class="attr">credential</span>: <span class="title function_">cert</span>(serviceAccountKeyPath),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Collection</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">collection</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> db = <span class="title function_">getFirestore</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">collection</span> = db.<span class="title function_">collection</span>(collection);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getItem</span>(<span class="params">path</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> snapshot = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">collection</span>.<span class="title function_">doc</span>(path).<span class="title function_">get</span>();</span><br><span class="line">    <span class="keyword">return</span> snapshot.<span class="title function_">data</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getItems</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> snapshot = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">collection</span>.<span class="title function_">get</span>();</span><br><span class="line">    <span class="keyword">const</span> items = snapshot.<span class="property">docs</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">doc</span>) =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">id</span>: doc.<span class="property">id</span>,</span><br><span class="line">      ...doc.<span class="title function_">data</span>(),</span><br><span class="line">    &#125;));</span><br><span class="line">    <span class="keyword">return</span> items;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">addItem</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> docRef = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">collection</span>.<span class="title function_">add</span>(value);</span><br><span class="line">    <span class="keyword">return</span> docRef.<span class="property">id</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">updateItem</span>(<span class="params">key, value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">collection</span>.<span class="title function_">doc</span>(key).<span class="title function_">set</span>(value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">removeItem</span>(<span class="params">key</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">collection</span>.<span class="title function_">doc</span>(key).<span class="title function_">delete</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getCount</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">collection</span>.<span class="title function_">count</span>().<span class="title function_">get</span>()).<span class="title function_">data</span>().<span class="property">count</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Collection</span>;</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Implement firebase collection&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="實現持久化"><a href="#實現持久化" class="headerlink" title="實現持久化"></a>實現持久化</h2><p>修改 <code>index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Collection</span> <span class="keyword">from</span> <span class="string">&#x27;./collection.js&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 啟用 JSON 解析</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 實例化集合</span></span><br><span class="line"><span class="keyword">const</span> collection = <span class="keyword">new</span> <span class="title class_">Collection</span>(<span class="string">&#x27;customers&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 測試端點</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/api&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">json</span>(&#123; <span class="attr">message</span>: <span class="string">&#x27;Hello, World!&#x27;</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得所有客戶端點</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/api/customers&#x27;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> customers = <span class="keyword">await</span> collection.<span class="title function_">getItems</span>();</span><br><span class="line">  res.<span class="title function_">json</span>(customers);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得單個客戶端點</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/api/customers/:id&#x27;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> id = req.<span class="property">params</span>.<span class="property">id</span>;</span><br><span class="line">  <span class="keyword">const</span> customer = <span class="keyword">await</span> collection.<span class="title function_">getItem</span>(id);</span><br><span class="line">  <span class="keyword">if</span> (!customer) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&#x27;Customer not found&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">json</span>(customer);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立客戶端點</span></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/api/customers&#x27;</span>, [</span><br><span class="line">  <span class="title function_">body</span>(<span class="string">&#x27;name&#x27;</span>).<span class="title function_">notEmpty</span>().<span class="title function_">withMessage</span>(<span class="string">&#x27;Name is required&#x27;</span>).<span class="title function_">isString</span>().<span class="title function_">withMessage</span>(<span class="string">&#x27;Name must be a string&#x27;</span>),</span><br><span class="line">], <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> errors = <span class="title function_">validationResult</span>(req);</span><br><span class="line">  <span class="keyword">if</span> (!errors.<span class="title function_">isEmpty</span>()) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(errors);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> customer = &#123;</span><br><span class="line">    <span class="attr">name</span>: req.<span class="property">body</span>.<span class="property">name</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> id = <span class="keyword">await</span> collection.<span class="title function_">addItem</span>(customer);</span><br><span class="line">  customer.<span class="property">id</span> = id;</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">201</span>).<span class="title function_">json</span>(customer);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新客戶端點</span></span><br><span class="line">app.<span class="title function_">put</span>(<span class="string">&#x27;/api/customers/:id&#x27;</span>, [</span><br><span class="line">  <span class="title function_">body</span>(<span class="string">&#x27;name&#x27;</span>).<span class="title function_">notEmpty</span>().<span class="title function_">withMessage</span>(<span class="string">&#x27;Name is required&#x27;</span>).<span class="title function_">isString</span>().<span class="title function_">withMessage</span>(<span class="string">&#x27;Name must be a string&#x27;</span>),</span><br><span class="line">], <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> errors = <span class="title function_">validationResult</span>(req);</span><br><span class="line">  <span class="keyword">if</span> (!errors.<span class="title function_">isEmpty</span>()) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">json</span>(errors);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> id = req.<span class="property">params</span>.<span class="property">id</span>;</span><br><span class="line">  <span class="keyword">const</span> customer = <span class="keyword">await</span> collection.<span class="title function_">getItem</span>(id);</span><br><span class="line">  <span class="keyword">if</span> (!customer) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&#x27;Customer not found&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  customer.<span class="property">name</span> = req.<span class="property">body</span>.<span class="property">name</span>;</span><br><span class="line">  <span class="keyword">await</span> collection.<span class="title function_">updateItem</span>(id, customer);</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">json</span>(customer);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 刪除客戶端點</span></span><br><span class="line">app.<span class="title function_">delete</span>(<span class="string">&#x27;/api/customers/:id&#x27;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> id = req.<span class="property">params</span>.<span class="property">id</span>;</span><br><span class="line">  <span class="keyword">const</span> customer = <span class="keyword">await</span> collection.<span class="title function_">getItem</span>(id);</span><br><span class="line">  <span class="keyword">if</span> (!customer) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">message</span>: <span class="string">&#x27;Customer not found&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> collection.<span class="title function_">removeItem</span>(id);</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">204</span>).<span class="title function_">send</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 啟動伺服器</span></span><br><span class="line">app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Example app listening on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Implement persistence&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定-CORS"><a href="#設定-CORS" class="headerlink" title="設定 CORS"></a>設定 CORS</h2><blockquote>
+<p>Ref: <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS">https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS</a></p>
+</blockquote>
+<h3 id="認識-CORS"><a href="#認識-CORS" class="headerlink" title="認識 CORS"></a>認識 CORS</h3><p>跨來源資源共享（CORS）是一種基於 HTTP 標頭的機制，允許伺服器指示瀏覽器允許從除其自身以外的任何來源（域名、協定或通訊埠）加載資源。CORS 還依賴於瀏覽器向承載跨來源資源的伺服器發出「預檢」請求，以檢查伺服器是否允許實際請求。在預檢請求中，瀏覽器會發送標頭，指示將在實際請求中使用的 HTTP 方法和標頭。</p>
+<h3 id="啟用-CORS"><a href="#啟用-CORS" class="headerlink" title="啟用 CORS"></a>啟用 CORS</h3><p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cors</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cors <span class="keyword">from</span> <span class="string">&#x27;cors&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加 CORS 中介層</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>());</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add cors&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/simple-cms-ui">simple-cms-ui</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/simple-cms-api">simple-cms-api</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">2.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-Firebase-%E5%B0%88%E6%A1%88"><span class="toc-number">2.1.</span> <span class="toc-text">建立 Firebase 專案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">建立應用程式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-Firestore-%E8%B3%87%E6%96%99%E5%BA%AB"><span class="toc-number">2.3.</span> <span class="toc-text">建立 Firestore 資料庫</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%9B%86%E5%90%88"><span class="toc-number">2.4.</span> <span class="toc-text">建立集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%87%91%E9%91%B0"><span class="toc-number">2.5.</span> <span class="toc-text">建立金鑰</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E5%95%9F%E5%B0%88%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">開啟專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E9%80%A3%E7%B7%9A"><span class="toc-number">4.</span> <span class="toc-text">建立連線</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B"><span class="toc-number">4.1.</span> <span class="toc-text">重構</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E7%8F%BE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">實現持久化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-CORS"><span class="toc-number">6.</span> <span class="toc-text">設定 CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98-CORS"><span class="toc-number">6.1.</span> <span class="toc-text">認識 CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%9F%E7%94%A8-CORS"><span class="toc-number">6.2.</span> <span class="toc-text">啟用 CORS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&text=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&is_video=false&description=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化&body=Check out this article: https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&title=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%AF%A6%E7%8F%BE%E5%BE%8C%E7%AB%AF%E6%8C%81%E4%B9%85%E5%8C%96/&name=使用 Vue 3 和 Express 實作內容管理系統（八）：實現後端持久化&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

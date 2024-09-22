@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="概述JavaScript 是一個單執行緒（single-threaded）的語言，這代表它一次只能執行一個任務。然而，在現代應用中，經常會需要處理多個非同步任務（asynchronous task），例如網路請求、計時器、用戶輸入等。為了在單執行緒中有效地管理這些非同步任務，JavaScript 採用了事件循環（event loop）機制，並結合了一種獨特的並行模型（concurrency mod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="認識 JavaScript 的並行模型與事件循環">
+<meta property="og:url" content="https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="概述JavaScript 是一個單執行緒（single-threaded）的語言，這代表它一次只能執行一個任務。然而，在現代應用中，經常會需要處理多個非同步任務（asynchronous task），例如網路請求、計時器、用戶輸入等。為了在單執行緒中有效地管理這些非同步任務，JavaScript 採用了事件循環（event loop）機制，並結合了一種獨特的並行模型（concurrency mod">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-08-10T06:30:38.000Z">
+<meta property="article:modified_time" content="2024-09-07T05:36:46.018Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>認識 JavaScript 的並行模型與事件循環</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/08/%E4%BD%BF%E7%94%A8-Vue-3-%E5%92%8C-Express-%E5%AF%A6%E4%BD%9C%E5%85%A7%E5%AE%B9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF%E6%94%94%E6%88%AA%E5%99%A8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/08/%E5%9C%A8-Git-%E4%B8%AD%E7%A6%81%E6%AD%A2%E5%B0%87%E6%9C%AC%E5%9C%B0%E7%9A%84%E7%89%B9%E5%AE%9A%E5%88%86%E6%94%AF%E6%8E%A8%E9%80%81%E5%88%B0%E9%81%A0%E7%AB%AF/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&text=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&is_video=false&description=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 JavaScript 的並行模型與事件循環&body=Check out this article: https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&name=認識 JavaScript 的並行模型與事件循環&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">並行模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8B%99"><span class="toc-number">3.</span> <span class="toc-text">微任務</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-%E7%9A%84%E5%9B%9E%E8%AA%BF%E5%87%BD%E6%95%B8"><span class="toc-number">3.1.</span> <span class="toc-text">Promise 的回調函數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MutationObserver-%E7%9A%84%E5%9B%9E%E8%AA%BF%E5%87%BD%E6%95%B8"><span class="toc-number">3.2.</span> <span class="toc-text">MutationObserver 的回調函數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#queueMicrotask"><span class="toc-number">3.3.</span> <span class="toc-text">queueMicrotask()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#async-%E5%87%BD%E6%95%B8%E7%9A%84%E5%9B%9E%E8%AA%BF"><span class="toc-number">3.4.</span> <span class="toc-text">async 函數的回調</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8B%99"><span class="toc-number">4.</span> <span class="toc-text">宏任務</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setTimeout"><span class="toc-number">4.1.</span> <span class="toc-text">setTimeout()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setInterval"><span class="toc-number">4.2.</span> <span class="toc-text">setInterval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-O-%E6%93%8D%E4%BD%9C"><span class="toc-number">4.3.</span> <span class="toc-text">I&#x2F;O 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setImmediate"><span class="toc-number">4.4.</span> <span class="toc-text">setImmediate()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requestAnimationFrame"><span class="toc-number">4.5.</span> <span class="toc-text">requestAnimationFrame()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0"><span class="toc-number">5.</span> <span class="toc-text">事件循環</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%93%AC%E7%AF%84%E4%BE%8B"><span class="toc-number">5.1.</span> <span class="toc-text">模擬範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        認識 JavaScript 的並行模型與事件循環
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-08-10T06:30:38.000Z" itemprop="datePublished">2024-08-10</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>JavaScript 是一個單執行緒（single-threaded）的語言，這代表它一次只能執行一個任務。然而，在現代應用中，經常會需要處理多個非同步任務（asynchronous task），例如網路請求、計時器、用戶輸入等。為了在單執行緒中有效地管理這些非同步任務，JavaScript 採用了事件循環（event loop）機制，並結合了一種獨特的並行模型（concurrency model）。</p>
+<ul>
+<li>單執行緒的挑戰與事件循環的解決方案：</li>
+</ul>
+<p>在單執行緒中，所有程式碼都在同一條執行緒中執行，這會導致同步任務（例如迴圈或大量計算）可能會阻塞後續的程式碼執行。事件循環通過將非同步任務推入任務隊列中，並在主執行堆棧空閒時逐一執行這些任務，從而避免了阻塞。</p>
+<ul>
+<li>並行模型的概念：</li>
+</ul>
+<p>雖然 JavaScript 是單執行緒的，但其並行模型允許在背景中並行處理多個任務。例如，網路請求、I&#x2F;O 操作等可以在主執行緒之外的其他執行緒中進行處理，而主執行緒仍能繼續執行其他程式碼。一旦這些非同步操作完成，對應的回調函數會被放入事件循環的任務隊列中，等待主執行緒有空時執行。</p>
+<ul>
+<li>宏任務與微任務的調度：</li>
+</ul>
+<p>事件循環中的任務分為宏任務（macro-tasks）和微任務（micro-tasks）。宏任務包括 <code>setTimeout</code>、<code>setInterval</code> 等非同步操作，而微任務則包括 <code>Promise</code> 的回調函數等。事件循環每一輪循環中，會先執行所有同步任務，接著處理微任務，最後才會執行宏任務。這種調度策略確保了微任務可以在宏任務之前完成，提高了整體響應速度。</p>
+<h2 id="並行模型"><a href="#並行模型" class="headerlink" title="並行模型"></a>並行模型</h2><p>並行模型是指在計算機系統中同時執行多個任務的能力。這些任務可以是獨立的或相互依賴的，並行模型可以在多核處理器、分佈式系統和網路應用程式中發揮重要作用。與串行模型相比，並行模型能更高效地利用計算資源，提高性能和響應速度。</p>
+<ul>
+<li>基於線程的模型（Thread-based model）：允許多個線程並行執行。適用於需要高效利用多核處理器的應用程序。例如：Java、C++、C# 和 Go 語言。</li>
+<li>基於事件的模型（Event-driven model）：使用事件循環來處理非同步任務，通常在單執行緒環境中運行。例如：JavaScript 和 Node 語言。</li>
+<li>基於訊息的模型（Message-passing model）：進程或線程之間通過訊息進行通信，而不是共享記憶體。這有助於避免競爭條件。例如：Erlang 語言。</li>
+<li>基於協程的模型（Coroutine-based model）：協程允許函數在執行中被掛起，並在稍後繼續執行，這樣可以實現非同步操作而無需線程管理的開銷。例如：Kotlin 語言。</li>
+<li>基於資料流的模型（Dataflow model）：使用資料流的概念，允許在資料可用時自動觸發計算。例如：Haskell 語言。</li>
+</ul>
+<h2 id="微任務"><a href="#微任務" class="headerlink" title="微任務"></a>微任務</h2><h3 id="Promise-的回調函數"><a href="#Promise-的回調函數" class="headerlink" title="Promise 的回調函數"></a>Promise 的回調函數</h3><p>當 <code>Promise</code> 被解決或拒絕時，相關的 <code>.then()</code>、<code>.catch()</code> 和 <code>.finally()</code> 回調函數會被視為微任務。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">resolve</span>().<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個微任務&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="MutationObserver-的回調函數"><a href="#MutationObserver-的回調函數" class="headerlink" title="MutationObserver 的回調函數"></a>MutationObserver 的回調函數</h3><p>當 DOM 變化時，<code>MutationObserver</code> 可以監聽這些變化，並在變化發生後執行回調。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">MutationObserver</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;DOM 變化了！&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">observer.<span class="title function_">observe</span>(<span class="variable language_">document</span>.<span class="property">body</span>, &#123; <span class="attr">childList</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="queueMicrotask"><a href="#queueMicrotask" class="headerlink" title="queueMicrotask()"></a>queueMicrotask()</h3><p><code>queueMicrotask()</code> 是一個用來添加微任務到微任務隊列中的方法，這些任務會在下一輪事件循環中執行。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個使用 queueMicrotask 的微任務&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="async-函數的回調"><a href="#async-函數的回調" class="headerlink" title="async 函數的回調"></a>async 函數的回調</h3><p>當使用 <code>async/await</code> 語法時，<code>await</code> 會在 <code>Promise</code> 被解析後執行，這些回調也會被視為微任務。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">example</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個 async 函數中的微任務&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">example</span>();</span><br></pre></td></tr></table></figure>
+
+<p>這些微任務的設計是為了確保能夠迅速響應非同步操作，並在事件循環中保持高效的性能。</p>
+<h2 id="宏任務"><a href="#宏任務" class="headerlink" title="宏任務"></a>宏任務</h2><h3 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a>setTimeout()</h3><p>使用 <code>setTimeout()</code> 設置的計時器回調會在指定的延遲時間後執行，這些回調會被視為宏任務。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個宏任務&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>); <span class="comment">// 1秒後執行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a>setInterval()</h3><p>使用 <code>setInterval()</code> 設置的計時器回調會在指定的時間間隔內重複執行，這些回調也是宏任務。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個重複執行的宏任務&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>); <span class="comment">// 每1秒執行一次</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="I-O-操作"><a href="#I-O-操作" class="headerlink" title="I&#x2F;O 操作"></a>I&#x2F;O 操作</h3><p>所有的 I&#x2F;O 操作（如文件讀取、網路請求等）通常被視為宏任務。在這些操作完成後，對應的回調會被加入宏任務隊列中。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://api.example.com/data&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> response.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;網絡請求的宏任務&#x27;</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="setImmediate"><a href="#setImmediate" class="headerlink" title="setImmediate()"></a>setImmediate()</h3><p><code>setImmediate()</code> 用於在當前事件循環的迴圈結束後執行一個回調。這是一種宏任務的形式。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">setImmediate</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個 Node.js 中的宏任務&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="requestAnimationFrame"><a href="#requestAnimationFrame" class="headerlink" title="requestAnimationFrame()"></a>requestAnimationFrame()</h3><p>雖然 <code>requestAnimationFrame()</code> 的目的是為了優化動畫效果，但它的回調函數也被視為宏任務，因為它們會在瀏覽器的下次重繪之前執行。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">requestAnimationFrame</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;這是一個動畫幀的宏任務&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>宏任務的特點是它們的執行時機是在當前事件循環中的所有同步任務和微任務完成之後。宏任務的設計是為了處理較為耗時的操作，確保主執行堆棧不會被阻塞，並且能夠保持應用的響應性。</p>
+<h2 id="事件循環"><a href="#事件循環" class="headerlink" title="事件循環"></a>事件循環</h2><p>事件循環是 JavaScript 中處理非同步操作的核心機制。它的主要目的是確保非阻塞的執行流程，並且使得非同步任務能夠在適當的時間點執行。</p>
+<p>事件循環的運作可以想像成一個持續運行的循環，主要工作流程經常被以以下方式實作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (queue.<span class="title function_">waitForMessage</span>()) &#123;</span><br><span class="line">  queue.<span class="title function_">processNextMessage</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在這個循環中，<code>queue.waitForMessage()</code> 方法負責檢查是否有新的訊息（例如回調函數）待處理。如果隊列中沒有任何訊息，這個方法將會等待新訊息的到來，從而避免了阻塞主執行堆棧。</p>
+<p>事件循環的運作步驟：</p>
+<ul>
+<li>執行同步任務：首先，主執行堆棧中的所有同步任務會被依次執行，直到堆棧清空。</li>
+<li>檢查微任務：一旦主執行堆棧清空，事件循環會先處理所有的微任務（例如 <code>Promise</code> 的回調函數）。這些微任務的優先級高於宏任務，因此會在宏任務之前執行。</li>
+<li>處理宏任務：接著，事件循環將處理隊列中的宏任務（例如 <code>setTimeout</code> 和 <code>setInterval</code> 的回調）。這些任務會根據它們的執行時間來決定何時執行。</li>
+<li>重複循環：完成上述步驟後，事件循環會再次回到第一步，持續監控和執行新的任務。</li>
+</ul>
+<p>事件循環的名稱來自於它的循環特性，這個循環持續運行，監控著事件的到來並處理這些事件。這樣的設計使得 JavaScript 能夠高效地處理大量的非同步操作，同時保持良好的性能。</p>
+<h3 id="模擬範例"><a href="#模擬範例" class="headerlink" title="模擬範例"></a>模擬範例</h3><p>以下創建一個自定義的 <code>mySetTimeout</code> 函數，並透過一個模擬的事件循環來執行回調函數。透過此模擬，來理解 JavaScript 如何在單執行緒環境中處理非同步操作，並了解並行模型與事件循環的互動。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 等待隊列</span></span><br><span class="line"><span class="keyword">let</span> queue = [];</span><br><span class="line"><span class="comment">// 模擬經過的時間</span></span><br><span class="line"><span class="keyword">let</span> timeElapsed = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 用來記錄 setInterval 的 ID</span></span><br><span class="line"><span class="keyword">let</span> intervalId;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模擬 setTimeout</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mySetTimeout</span>(<span class="params">callback, delay</span>) &#123;</span><br><span class="line">  <span class="comment">// 計算何時執行回調</span></span><br><span class="line">  <span class="keyword">const</span> executionTime = timeElapsed + delay;</span><br><span class="line">  <span class="comment">// 將回調推入等待隊列</span></span><br><span class="line">  queue.<span class="title function_">push</span>(&#123; callback, executionTime &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 模擬事件循環</span></span><br><span class="line">intervalId = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;timeElapsed:&#x27;</span>, timeElapsed);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 檢查隊列</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; queue.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (queue[i].<span class="property">executionTime</span> &lt;= timeElapsed) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; callback &#125; = queue[i];</span><br><span class="line">      <span class="title function_">callback</span>(); <span class="comment">// 執行回調</span></span><br><span class="line">      queue.<span class="title function_">splice</span>(i, <span class="number">1</span>); <span class="comment">// 從隊列中刪除已執行的回調</span></span><br><span class="line">      i--; <span class="comment">// 調整索引以便正確遍歷隊列</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 模擬時間的流逝</span></span><br><span class="line">  timeElapsed += <span class="number">100</span>; <span class="comment">// 每次增加 100 毫秒</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果所有回調都已執行，停止模擬事件循環</span></span><br><span class="line">  <span class="keyword">if</span> (queue.<span class="property">length</span> &lt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(intervalId);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">100</span>); <span class="comment">// 每 100 毫秒檢查一次隊列</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 開始模擬主執行堆棧，輸出開始訊息</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;this is the start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設置延遲 1000 毫秒</span></span><br><span class="line"><span class="title function_">mySetTimeout</span>(<span class="keyword">function</span> <span class="title function_">cb</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 當計時器到達 1000 毫秒時，這個回調函數將被加入事件循環隊列中</span></span><br><span class="line">  <span class="comment">// 在主執行堆棧中的所有同步任務完成後，事件循環會檢查隊列並執行這個回調</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;this is a msg from call back&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 輸出中間訊息</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;this is just a message&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設置延遲 0 毫秒</span></span><br><span class="line"><span class="title function_">mySetTimeout</span>(<span class="keyword">function</span> <span class="title function_">cb1</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 當計時器設置的延遲時間為 0 毫秒時，這個回調函數將被立即加入事件循環隊列中</span></span><br><span class="line">  <span class="comment">// 儘管延遲為 0，該回調仍然會在主執行堆棧中的所有同步任務完成後執行</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;this is a msg from call back1&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 輸出結束訊息</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;this is the end&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>執行腳本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+
+<p>輸出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">this is the start</span><br><span class="line">this is just a message</span><br><span class="line">this is the end</span><br><span class="line">timeElapsed: 0</span><br><span class="line">this is a msg from call back1</span><br><span class="line">timeElapsed: 100</span><br><span class="line">timeElapsed: 200</span><br><span class="line">timeElapsed: 300</span><br><span class="line">timeElapsed: 400</span><br><span class="line">timeElapsed: 500</span><br><span class="line">timeElapsed: 600</span><br><span class="line">timeElapsed: 700</span><br><span class="line">timeElapsed: 800</span><br><span class="line">timeElapsed: 900</span><br><span class="line">timeElapsed: 1000</span><br><span class="line">this is a msg from call back</span><br></pre></td></tr></table></figure>
+
+<p>在上面的程式碼中，首先定義了一個 queue 來存儲回調函數及其執行時間。接著，創建一個 <code>mySetTimeout</code> 函數，它會將回調函數推入 queue 中，並設定它們應該在未來某個時間點執行。</p>
+<p>接下來，模擬 JavaScript 的主執行堆棧，並在適當的時機調用 <code>mySetTimeout</code>，以便將回調函數推入 queue。最後，使用 <code>setInterval</code> 創建了一個模擬的事件循環，每 100 毫秒檢查一次 queue，並在合適的時間執行回調函數。</p>
+<p>這個範例模擬了 JavaScript 如何使用事件循環來管理非同步任務，並通過並行模型來處理多個非同步操作。值得注意的是，實際的事件循環運行時會更為精確。而且即使 <code>setTimeout</code> 的延遲時間設置為 0，回調函數也不會立即執行，而是會在當前執行堆棧清空後才會被執行。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Event_loop">並行模型和事件循環</a></li>
+<li><a target="_blank" rel="noopener" href="https://rurutseng.com/posts/event-loop/">深入理解 Event loop</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">並行模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8B%99"><span class="toc-number">3.</span> <span class="toc-text">微任務</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-%E7%9A%84%E5%9B%9E%E8%AA%BF%E5%87%BD%E6%95%B8"><span class="toc-number">3.1.</span> <span class="toc-text">Promise 的回調函數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MutationObserver-%E7%9A%84%E5%9B%9E%E8%AA%BF%E5%87%BD%E6%95%B8"><span class="toc-number">3.2.</span> <span class="toc-text">MutationObserver 的回調函數</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#queueMicrotask"><span class="toc-number">3.3.</span> <span class="toc-text">queueMicrotask()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#async-%E5%87%BD%E6%95%B8%E7%9A%84%E5%9B%9E%E8%AA%BF"><span class="toc-number">3.4.</span> <span class="toc-text">async 函數的回調</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8B%99"><span class="toc-number">4.</span> <span class="toc-text">宏任務</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setTimeout"><span class="toc-number">4.1.</span> <span class="toc-text">setTimeout()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setInterval"><span class="toc-number">4.2.</span> <span class="toc-text">setInterval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-O-%E6%93%8D%E4%BD%9C"><span class="toc-number">4.3.</span> <span class="toc-text">I&#x2F;O 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setImmediate"><span class="toc-number">4.4.</span> <span class="toc-text">setImmediate()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#requestAnimationFrame"><span class="toc-number">4.5.</span> <span class="toc-text">requestAnimationFrame()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0"><span class="toc-number">5.</span> <span class="toc-text">事件循環</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%93%AC%E7%AF%84%E4%BE%8B"><span class="toc-number">5.1.</span> <span class="toc-text">模擬範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&text=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&is_video=false&description=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=認識 JavaScript 的並行模型與事件循環&body=Check out this article: https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&title=認識 JavaScript 的並行模型與事件循環"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/08/%E8%AA%8D%E8%AD%98-JavaScript-%E7%9A%84%E4%B8%A6%E8%A1%8C%E6%A8%A1%E5%9E%8B%E8%88%87%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%92%B0/&name=認識 JavaScript 的並行模型與事件循環&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
