@@ -16,7 +16,7 @@
 <meta property="og:description" content="前置作業安裝 pipx 指令。 12brew install pipxpipx ensurepath  安裝 poetry 指令。 1pipx install poetry  建立專案建立專案。 12mkdir fastapi-examplecd fastapi-example  使用 Poetry 初始化專案。 1poetry init  啟動虛擬環境。 1poetry shell  安裝檢查工">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-10-16T15:49:59.000Z">
-<meta property="article:modified_time" content="2024-10-16T17:16:55.400Z">
+<meta property="article:modified_time" content="2024-10-16T17:21:00.804Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="Python">
@@ -123,7 +123,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E6%AA%A2%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">3.</span> <span class="toc-text">安裝檢查工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%AB%AF%E9%BB%9E"><span class="toc-number">4.1.</span> <span class="toc-text">建立端點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="toc-number">4.2.</span> <span class="toc-text">提交修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E7%AB%AF%E9%BB%9E"><span class="toc-number">5.</span> <span class="toc-text">測試端點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E6%AA%A2%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">3.</span> <span class="toc-text">安裝檢查工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%AB%AF%E9%BB%9E"><span class="toc-number">4.1.</span> <span class="toc-text">建立端點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="toc-number">4.2.</span> <span class="toc-text">提交修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E7%AB%AF%E9%BB%9E"><span class="toc-number">5.</span> <span class="toc-text">測試端點</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%AB%8B%E6%B1%82"><span class="toc-number">5.1.</span> <span class="toc-text">建立請求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#List-Items"><span class="toc-number">5.1.1.</span> <span class="toc-text">List Items</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Create-Item"><span class="toc-number">5.1.2.</span> <span class="toc-text">Create Item</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Get-Item"><span class="toc-number">5.1.3.</span> <span class="toc-text">Get Item</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Update-Item"><span class="toc-number">5.1.4.</span> <span class="toc-text">Update Item</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Delete-Item"><span class="toc-number">5.1.5.</span> <span class="toc-text">Delete Item</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -232,13 +232,30 @@
 <li>Location: <code>~/path-to-your-project/fastapi-example</code></li>
 <li>Name: <code>bruno</code></li>
 </ul>
-<p>建立端點：</p>
-<ul>
-<li>list-items: <code>GET</code> <a target="_blank" rel="noopener" href="http://localhost:8000/api/items%60">http://localhost:8000/api/items`</a></li>
-<li>create-item: <code>POST</code> <a target="_blank" rel="noopener" href="http://localhost:8000/api/items%60">http://localhost:8000/api/items`</a></li>
-<li>get-item: <code>GET</code> <a target="_blank" rel="noopener" href="http://localhost:8000/api/items/:id%60">http://localhost:8000/api/items/:id`</a></li>
-<li>update-item: <code>GET</code> <a target="_blank" rel="noopener" href="http://localhost:8000/api/items/:id%60">http://localhost:8000/api/items/:id`</a></li>
-<li>delete-item: <code>DELETE</code> <a target="_blank" rel="noopener" href="http://localhost:8000/api/items/:id%60">http://localhost:8000/api/items/:id`</a></li>
+<h3 id="建立請求"><a href="#建立請求" class="headerlink" title="建立請求"></a>建立請求</h3><h4 id="List-Items"><a href="#List-Items" class="headerlink" title="List Items"></a>List Items</h4><ul>
+<li>Name: <code>list-items</code></li>
+<li>Method: <code>GET</code></li>
+<li>URL: <a target="_blank" rel="noopener" href="http://localhost:8000/api/items">http://localhost:8000/api/items</a></li>
+</ul>
+<h4 id="Create-Item"><a href="#Create-Item" class="headerlink" title="Create Item"></a>Create Item</h4><ul>
+<li>Name: <code>create-item</code></li>
+<li>Method: <code>POST</code></li>
+<li>URL: <a target="_blank" rel="noopener" href="http://localhost:8000/api/items">http://localhost:8000/api/items</a></li>
+</ul>
+<h4 id="Get-Item"><a href="#Get-Item" class="headerlink" title="Get Item"></a>Get Item</h4><ul>
+<li>Name: <code>get-item</code></li>
+<li>Method: <code>GET</code></li>
+<li>URL: <a target="_blank" rel="noopener" href="http://localhost:8000/api/items/:id">http://localhost:8000/api/items/:id</a></li>
+</ul>
+<h4 id="Update-Item"><a href="#Update-Item" class="headerlink" title="Update Item"></a>Update Item</h4><ul>
+<li>Name: <code>update-item</code></li>
+<li>Method: <code>PUT</code></li>
+<li>URL: <a target="_blank" rel="noopener" href="http://localhost:8000/api/items/:id">http://localhost:8000/api/items/:id</a></li>
+</ul>
+<h4 id="Delete-Item"><a href="#Delete-Item" class="headerlink" title="Delete Item"></a>Delete Item</h4><ul>
+<li>Name: <code>delete-item</code></li>
+<li>Method: <code>DELETE</code></li>
+<li>URL: <a target="_blank" rel="noopener" href="http://localhost:8000/api/items/:id">http://localhost:8000/api/items/:id</a></li>
 </ul>
 <h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/fastapi-example">fastapi-example</a></li>
@@ -283,7 +300,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E6%AA%A2%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">3.</span> <span class="toc-text">安裝檢查工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%AB%AF%E9%BB%9E"><span class="toc-number">4.1.</span> <span class="toc-text">建立端點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="toc-number">4.2.</span> <span class="toc-text">提交修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E7%AB%AF%E9%BB%9E"><span class="toc-number">5.</span> <span class="toc-text">測試端點</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E6%AA%A2%E6%9F%A5%E5%B7%A5%E5%85%B7"><span class="toc-number">3.</span> <span class="toc-text">安裝檢查工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%AB%AF%E9%BB%9E"><span class="toc-number">4.1.</span> <span class="toc-text">建立端點</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BF%AE%E6%94%B9"><span class="toc-number">4.2.</span> <span class="toc-text">提交修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E7%AB%AF%E9%BB%9E"><span class="toc-number">5.</span> <span class="toc-text">測試端點</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%AB%8B%E6%B1%82"><span class="toc-number">5.1.</span> <span class="toc-text">建立請求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#List-Items"><span class="toc-number">5.1.1.</span> <span class="toc-text">List Items</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Create-Item"><span class="toc-number">5.1.2.</span> <span class="toc-text">Create Item</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Get-Item"><span class="toc-number">5.1.3.</span> <span class="toc-text">Get Item</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Update-Item"><span class="toc-number">5.1.4.</span> <span class="toc-text">Update Item</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Delete-Item"><span class="toc-number">5.1.5.</span> <span class="toc-text">Delete Item</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">7.</span> <span class="toc-text">參考資料</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
