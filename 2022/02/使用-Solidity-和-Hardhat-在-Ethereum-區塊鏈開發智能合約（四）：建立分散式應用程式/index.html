@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 本文採用的區塊鏈測試網路與範例文章不同，使用的是 rinkeby 測試網路。 建立專案將 hello-world-part-four-tutorial 範例專案克隆下來，並建立一個 React 前端專案。 123git clone https:&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文參考 Alchemy 的範例進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。 本文採用的區塊鏈測試網路與範例文章不同，使用的是 rinkeby 測試網路。 建立專案將 hello-world-part-four-tutorial 範例專案克隆下來，並建立一個 React 前端專案。 123git clone https:&#x2F;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-02-28T06:02:58.000Z">
+<meta property="article:modified_time" content="2024-05-12T20:20:48.909Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node">
+<meta property="article:tag" content="Blockchain">
+<meta property="article:tag" content="Ethereum">
+<meta property="article:tag" content="Alchemy">
+<meta property="article:tag" content="Solidity">
+<meta property="article:tag" content="Hardhat">
+<meta property="article:tag" content="Smart Contract">
+<meta property="article:tag" content="DApp">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%9C%A8-Etherscan-%E4%B8%8A%E6%8F%90%E4%BA%A4%E8%AA%8D%E8%AD%89/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/03/%E3%80%8ADocker%EF%BC%9A%E5%BE%9E%E5%85%A5%E9%96%80%E5%88%B0%E5%AF%A6%E8%B8%90%E3%80%8B%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%98%A0%E5%83%8F%E6%AA%94%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E5%80%89%E5%BA%AB/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&text=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&is_video=false&description=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式&body=Check out this article: https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&name=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%90%88%E7%B4%84%E5%AF%A6%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">建立合約實例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B0%E5%87%BA%E7%95%B6%E5%89%8D%E8%A8%8A%E6%81%AF"><span class="toc-number">4.</span> <span class="toc-text">印出當前訊息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%A3%E8%81%BD%E5%90%88%E7%B4%84%E4%BA%8B%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">監聽合約事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%A3%E6%8E%A5%E9%8C%A2%E5%8C%85"><span class="toc-number">6.</span> <span class="toc-text">連接錢包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%A3%E8%81%BD%E9%8C%A2%E5%8C%85%E7%8B%80%E6%85%8B"><span class="toc-number">7.</span> <span class="toc-text">監聽錢包狀態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BA%A4%E6%98%93"><span class="toc-number">8.</span> <span class="toc-text">建立交易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2022-02-28T06:02:58.000Z" itemprop="datePublished">2022-02-28</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/Blockchain/Ethereum/">Ethereum</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Alchemy/" rel="tag">Alchemy</a>, <a class="tag-link-link" href="/tags/Blockchain/" rel="tag">Blockchain</a>, <a class="tag-link-link" href="/tags/DApp/" rel="tag">DApp</a>, <a class="tag-link-link" href="/tags/Ethereum/" rel="tag">Ethereum</a>, <a class="tag-link-link" href="/tags/Hardhat/" rel="tag">Hardhat</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Node/" rel="tag">Node</a>, <a class="tag-link-link" href="/tags/Smart-Contract/" rel="tag">Smart Contract</a>, <a class="tag-link-link" href="/tags/Solidity/" rel="tag">Solidity</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文參考 Alchemy 的<a target="_blank" rel="noopener" href="https://docs.alchemy.com/alchemy/">範例</a>進行實作，Alchemy 是一個區塊鏈開發者平台，能夠讓開發者訪問以太坊區塊鏈上的 API 端點，並且可以讀寫交易。</p>
+<p>本文採用的區塊鏈測試網路與範例文章不同，使用的是 <code>rinkeby</code> 測試網路。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>將 <code>hello-world-part-four-tutorial</code> 範例專案克隆下來，並建立一個 React 前端專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/alchemyplatform/hello-world-part-four-tutorial.git</span><br><span class="line"><span class="built_in">cp</span> -R hello-world-part-four-tutorial/starter-files smart-contract-ui-example</span><br><span class="line"><span class="built_in">cd</span> smart-contract-ui-example</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>@alch/alchemy-web3</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @alch/alchemy-web3</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>dot-env</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install dotenv --save</span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a> 瀏覽。</p>
+<h2 id="建立合約實例"><a href="#建立合約實例" class="headerlink" title="建立合約實例"></a>建立合約實例</h2><p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REACT_APP_ALCHEMY_KEY=wss://eth-rinkeby.ws.alchemyapi.io/v2/your-api-key</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>src/util/interact.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;dotenv&quot;</span>).<span class="title function_">config</span>();</span><br><span class="line"><span class="keyword">const</span> alchemyKey = process.<span class="property">env</span>.<span class="property">REACT_APP_ALCHEMY_KEY</span>;</span><br><span class="line"><span class="keyword">const</span> &#123; createAlchemyWeb3 &#125; = <span class="built_in">require</span>(<span class="string">&quot;@alch/alchemy-web3&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> web3 = <span class="title function_">createAlchemyWeb3</span>(alchemyKey);</span><br><span class="line"></span><br><span class="line"><span class="comment">// export const helloWorldContract;</span></span><br></pre></td></tr></table></figure>
+
+<p>前往 <a target="_blank" rel="noopener" href="https://rinkeby.etherscan.io/address/0x6839691078Ef669589F65Fca9968f6430D509812#code">Etherscan</a> 將合約的 ABI 複製起來，更新 <code>contract-abi.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;internalType&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;initMsg&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;stateMutability&quot;</span><span class="punctuation">:</span><span class="string">&quot;nonpayable&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;constructor&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span><span class="punctuation">&#123;</span><span class="attr">&quot;anonymous&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span><span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;indexed&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span><span class="attr">&quot;internalType&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;oldStr&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span><span class="punctuation">&#123;</span><span class="attr">&quot;indexed&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span><span class="attr">&quot;internalType&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;newStr&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;UpdatedMessages&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;event&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span><span class="punctuation">&#123;</span><span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;message&quot;</span><span class="punctuation">,</span><span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;internalType&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;stateMutability&quot;</span><span class="punctuation">:</span><span class="string">&quot;view&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;function&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span><span class="punctuation">&#123;</span><span class="attr">&quot;inputs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">&#123;</span><span class="attr">&quot;internalType&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;newMsg&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;string&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span><span class="string">&quot;update&quot;</span><span class="punctuation">,</span><span class="attr">&quot;outputs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span><span class="attr">&quot;stateMutability&quot;</span><span class="punctuation">:</span><span class="string">&quot;nonpayable&quot;</span><span class="punctuation">,</span><span class="attr">&quot;type&quot;</span><span class="punctuation">:</span><span class="string">&quot;function&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>src/util/interact.js</code> 檔中引入 ABI 並建立合約實例。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> contractABI = <span class="built_in">require</span>(<span class="string">&quot;../contract-abi.json&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> contractAddress = <span class="string">&quot;0x6839691078Ef669589F65Fca9968f6430D509812&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> helloWorldContract = <span class="keyword">new</span> web3.<span class="property">eth</span>.<span class="title class_">Contract</span>(</span><br><span class="line">  contractABI,</span><br><span class="line">  contractAddress</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="印出當前訊息"><a href="#印出當前訊息" class="headerlink" title="印出當前訊息"></a>印出當前訊息</h2><p>實作 <code>src/util/interact.js</code> 檔中的 <code>loadCurrentMessage()</code> 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">loadCurrentMessage</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123; </span><br><span class="line">    <span class="keyword">const</span> message = <span class="keyword">await</span> helloWorldContract.<span class="property">methods</span>.<span class="title function_">message</span>().<span class="title function_">call</span>(); </span><br><span class="line">    <span class="keyword">return</span> message;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>src/HelloWorld.js</code> 檔中的 <code>useEffect</code> 方法，在一開始將當前的合約訊息印出來。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchMessage</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> message = <span class="keyword">await</span> <span class="title function_">loadCurrentMessage</span>();</span><br><span class="line">  <span class="title function_">setMessage</span>(message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">fetchMessage</span>();</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+
+<h2 id="監聽合約事件"><a href="#監聽合約事件" class="headerlink" title="監聽合約事件"></a>監聽合約事件</h2><p>實作 <code>src/HelloWorld.js</code> 檔中的 <code>addSmartContractListener()</code> 方法。當合約中的 <code>UpdatedMessages</code> 事件被觸發時，取得合約的最新訊息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addSmartContractListener</span>(<span class="params"></span>) &#123;</span><br><span class="line">  helloWorldContract.<span class="property">events</span>.<span class="title class_">UpdatedMessages</span>(&#123;&#125;, <span class="function">(<span class="params">error, data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (error) &#123;</span><br><span class="line">      <span class="title function_">setStatus</span>(<span class="string">`😥 <span class="subst">$&#123;error.message&#125;</span>`</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> [before, after] = data.<span class="property">returnValues</span>;</span><br><span class="line">      <span class="title function_">setMessage</span>(after);</span><br><span class="line">      <span class="title function_">setNewMessage</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">      <span class="title function_">setStatus</span>(<span class="string">&quot;🎉 Your message has been updated!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>src/HelloWorld.js</code> 檔中的 <code>useEffect</code> 方法，在一開始監聽合約事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">fetchMessage</span>();</span><br><span class="line">  <span class="title function_">addSmartContractListener</span>();</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+
+<h2 id="連接錢包"><a href="#連接錢包" class="headerlink" title="連接錢包"></a>連接錢包</h2><p>實作 <code>src/util/interact.js</code> 檔中的 <code>connectWallet()</code> 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">connectWallet</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">ethereum</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> addressArray = <span class="keyword">await</span> <span class="variable language_">window</span>.<span class="property">ethereum</span>.<span class="title function_">request</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&quot;eth_requestAccounts&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">const</span> obj = &#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="string">&quot;👆🏽 Write a message in the text-field above.&quot;</span>,</span><br><span class="line">        <span class="attr">address</span>: addressArray[<span class="number">0</span>],</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="keyword">return</span> obj;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">address</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">status</span>: <span class="string">`😥 <span class="subst">$&#123;err.message&#125;</span>`</span>,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">address</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="attr">status</span>: (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            &#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">            🦊&#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">href</span>=<span class="string">&#123;</span>`<span class="attr">https:</span>//<span class="attr">metamask.io</span>/<span class="attr">download.html</span>`&#125; <span class="attr">rel</span>=<span class="string">&quot;noreferrer&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              You must install Metamask, a virtual Ethereum wallet, in your</span></span><br><span class="line"><span class="language-xml">              browser.</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">      ),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>實作 <code>src/HelloWorld.js</code> 檔中的 <code>connectWalletPressed()</code> 方法。當按下連接錢包的按鈕時，連接錢包。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">connectWalletPressed</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> walletResponse = <span class="keyword">await</span> <span class="title function_">connectWallet</span>();</span><br><span class="line">  <span class="title function_">setStatus</span>(walletResponse.<span class="property">status</span>);</span><br><span class="line">  <span class="title function_">setWallet</span>(walletResponse.<span class="property">address</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>接著再實作 <code>src/util/interact.js</code> 檔中的 <code>getCurrentWalletConnected()</code> 方法，避免重新整理頁面後，錢包的連接狀態消失。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">getCurrentWalletConnected</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">ethereum</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> addressArray = <span class="keyword">await</span> <span class="variable language_">window</span>.<span class="property">ethereum</span>.<span class="title function_">request</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&quot;eth_accounts&quot;</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">if</span> (addressArray.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          <span class="attr">address</span>: addressArray[<span class="number">0</span>],</span><br><span class="line">          <span class="attr">status</span>: <span class="string">&quot;👆🏽 Write a message in the text-field above.&quot;</span>,</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          <span class="attr">address</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">          <span class="attr">status</span>: <span class="string">&quot;🦊 Connect to Metamask using the top right button.&quot;</span>,</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">address</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">status</span>: <span class="string">`😥 <span class="subst">$&#123;err.message&#125;</span>`</span>,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">address</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="attr">status</span>: (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            &#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">            🦊&#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">href</span>=<span class="string">&#123;</span>`<span class="attr">https:</span>//<span class="attr">metamask.io</span>/<span class="attr">download.html</span>`&#125; <span class="attr">rel</span>=<span class="string">&quot;noreferrer&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              You must install Metamask, a virtual Ethereum wallet, in your</span></span><br><span class="line"><span class="language-xml">              browser.</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">      ),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>src/HelloWorld.js</code> 檔中的 <code>useEffect</code> 方法，在一開始取得錢包資訊。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchWallet</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;address, status&#125; = <span class="keyword">await</span> <span class="title function_">getCurrentWalletConnected</span>();</span><br><span class="line">  <span class="title function_">setWallet</span>(address);</span><br><span class="line">  <span class="title function_">setStatus</span>(status); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">fetchMessage</span>();</span><br><span class="line">  <span class="title function_">addSmartContractListener</span>();</span><br><span class="line">  <span class="title function_">fetchWallet</span>();</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+
+<h2 id="監聽錢包狀態"><a href="#監聽錢包狀態" class="headerlink" title="監聽錢包狀態"></a>監聽錢包狀態</h2><p>實作 <code>src/HelloWorld.js</code> 檔中的 <code>addWalletListener()</code> 方法。當錢包斷開時，更新狀態。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addWalletListener</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">ethereum</span>) &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">ethereum</span>.<span class="title function_">on</span>(<span class="string">&quot;accountsChanged&quot;</span>, <span class="function">(<span class="params">accounts</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (accounts.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="title function_">setWallet</span>(accounts[<span class="number">0</span>]);</span><br><span class="line">        <span class="title function_">setStatus</span>(<span class="string">&quot;👆🏽 Write a message in the text-field above.&quot;</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="title function_">setWallet</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="title function_">setStatus</span>(<span class="string">&quot;🦊 Connect to Metamask using the top right button.&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">setStatus</span>(</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">        🦊&#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">href</span>=<span class="string">&#123;</span>`<span class="attr">https:</span>//<span class="attr">metamask.io</span>/<span class="attr">download.html</span>`&#125; <span class="attr">rel</span>=<span class="string">&quot;noreferrer&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          You must install Metamask, a virtual Ethereum wallet, in your</span></span><br><span class="line"><span class="language-xml">          browser.</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更新 <code>src/HelloWorld.js</code> 檔中的 <code>useEffect</code> 方法，在一開始監聽錢包狀態。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">fetchMessage</span>();</span><br><span class="line">  <span class="title function_">addSmartContractListener</span>();</span><br><span class="line">  <span class="title function_">fetchWallet</span>();</span><br><span class="line">  <span class="title function_">addWalletListener</span>(); </span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立交易"><a href="#建立交易" class="headerlink" title="建立交易"></a>建立交易</h2><p>實作 <code>src/util/interact.js</code> 檔中的 <code>updateMessage()</code> 方法。透過 Metamask 傳送交易請求。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">updateMessage</span> = <span class="keyword">async</span> (<span class="params">address, message</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable language_">window</span>.<span class="property">ethereum</span> || address === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;💡 Connect your Metamask wallet to update the message on the blockchain.&quot;</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (message.<span class="title function_">trim</span>() === <span class="string">&quot;&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;❌ Your message cannot be an empty string.&quot;</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 設置交易參數</span></span><br><span class="line">  <span class="keyword">const</span> transactionParameters = &#123;</span><br><span class="line">    <span class="attr">to</span>: contractAddress, <span class="comment">// 合約地址</span></span><br><span class="line">    <span class="attr">from</span>: address, <span class="comment">// 用戶錢包地址</span></span><br><span class="line">    <span class="attr">data</span>: helloWorldContract.<span class="property">methods</span>.<span class="title function_">update</span>(message).<span class="title function_">encodeABI</span>(),</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 建立交易</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> txHash = <span class="keyword">await</span> <span class="variable language_">window</span>.<span class="property">ethereum</span>.<span class="title function_">request</span>(&#123;</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&quot;eth_sendTransaction&quot;</span>,</span><br><span class="line">      <span class="attr">params</span>: [transactionParameters],</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">status</span>: (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          ✅&#123;&quot; &quot;&#125;</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">href</span>=<span class="string">&#123;</span>`<span class="attr">https:</span>//<span class="attr">rinkeby.etherscan.io</span>/<span class="attr">tx</span>/$&#123;<span class="attr">txHash</span>&#125;`&#125; <span class="attr">rel</span>=<span class="string">&quot;noreferrer&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            View the status of your transaction on Etherscan!</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">br</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">          ℹ️ Once the transaction is verified by the network, the message will</span></span><br><span class="line"><span class="language-xml">          be updated automatically.</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">      ),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">`😥 <span class="subst">$&#123;error.message&#125;</span>`</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>實作 <code>src/HelloWorld.js</code> 檔中的 <code>onUpdatePressed()</code> 方法。當按下更新訊息的按鈕時，更新訊息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">onUpdatePressed</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; status &#125; = <span class="keyword">await</span> <span class="title function_">updateMessage</span>(walletAddress, newMessage);</span><br><span class="line">  <span class="title function_">setStatus</span>(status);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>回到 UI 頁面，打上合約的新訊息，按下更新訊息的按鈕，並且完成交易。前往 <a target="_blank" rel="noopener" href="https://rinkeby.etherscan.io/address/0x6839691078Ef669589F65Fca9968f6430D509812">Etherscan</a> 查看，即可看到多了一筆交易。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/smart-contract-example">smart-contract-example</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/smart-contract-client-example">smart-contract-client-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.alchemy.com/alchemy/tutorials/hello-world-smart-contract/interacting-with-a-smart-contract">Alchemy - Interacting with a Smart Contract</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%90%88%E7%B4%84%E5%AF%A6%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">建立合約實例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B0%E5%87%BA%E7%95%B6%E5%89%8D%E8%A8%8A%E6%81%AF"><span class="toc-number">4.</span> <span class="toc-text">印出當前訊息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%A3%E8%81%BD%E5%90%88%E7%B4%84%E4%BA%8B%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">監聽合約事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%A3%E6%8E%A5%E9%8C%A2%E5%8C%85"><span class="toc-number">6.</span> <span class="toc-text">連接錢包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%A3%E8%81%BD%E9%8C%A2%E5%8C%85%E7%8B%80%E6%85%8B"><span class="toc-number">7.</span> <span class="toc-text">監聽錢包狀態</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BA%A4%E6%98%93"><span class="toc-number">8.</span> <span class="toc-text">建立交易</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">9.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">10.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&text=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&is_video=false&description=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式&body=Check out this article: https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2022/02/%E4%BD%BF%E7%94%A8-Solidity-%E5%92%8C-Hardhat-%E5%9C%A8-Ethereum-%E5%8D%80%E5%A1%8A%E9%8F%88%E9%96%8B%E7%99%BC%E6%99%BA%E8%83%BD%E5%90%88%E7%B4%84%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%95%A3%E5%BC%8F%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&name=使用 Solidity 和 Hardhat 在 Ethereum 區塊鏈開發智能合約（四）：建立分散式應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

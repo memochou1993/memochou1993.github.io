@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel&#x2F;scout 套件。 1composer require laravel&#x2F;scout  發布資源。 1php artisan vendor:publish --provider&#x3D;&quot;Laravel\Scout\ScoutServiceProvider">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Laravel 5.7 使用 Laravel-Scout 全文檢索">
+<meta property="og:url" content="https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="環境 Laradock  建立專案至 Algolia 註冊帳號，並建立專案。 1laravel new scout  步驟安裝 laravel&#x2F;scout 套件。 1composer require laravel&#x2F;scout  發布資源。 1php artisan vendor:publish --provider&#x3D;&quot;Laravel\Scout\ScoutServiceProvider">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-02-17T01:39:34.000Z">
+<meta property="article:modified_time" content="2023-11-13T08:14:22.974Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Full-Text Search">
+<meta property="article:tag" content="Scout">
+<meta property="article:tag" content="Algolia">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Laravel 5.7 使用 Laravel-Scout 全文檢索</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/%E3%80%8CA-tour-of-Go%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/02/%E3%80%8CA-tour-of-Go%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%B5%90%E6%A7%8B%E9%AB%94/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&text=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&is_video=false&description=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&name=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-number">3.</span> <span class="toc-text">步驟</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Laravel 5.7 使用 Laravel-Scout 全文檢索
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-02-17T01:39:34.000Z" itemprop="datePublished">2019-02-17</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/PHP/Laravel/">Laravel</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Algolia/" rel="tag">Algolia</a>, <a class="tag-link-link" href="/tags/Full-Text-Search/" rel="tag">Full-Text Search</a>, <a class="tag-link-link" href="/tags/Laravel/" rel="tag">Laravel</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Scout/" rel="tag">Scout</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ul>
+<li>Laradock</li>
+</ul>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>至 Algolia 註冊帳號，並建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new scout</span><br></pre></td></tr></table></figure>
+
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><p>安裝 <code>laravel/scout</code> 套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require laravel/scout</span><br></pre></td></tr></table></figure>
+
+<p>發布資源。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan vendor:publish --provider=<span class="string">&quot;Laravel\Scout\ScoutServiceProvider&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>安裝驅動套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require algolia/algoliasearch-client-php</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.env</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SCOUT_QUEUE＝true</span><br><span class="line">ALGOLIA_APP_ID=&lt;Application ID&gt;</span><br><span class="line">ALGOLIA_SECRET=&lt;Admin API Key&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在模型使用 <code>Searchable</code> 特徵機制。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title class_">App</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Laravel</span>\<span class="title">Scout</span>\<span class="title">Searchable</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Database</span>\<span class="title">Eloquent</span>\<span class="title">Model</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> <span class="keyword">extends</span> <span class="title">Model</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Searchable</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以在模型中使用 <code>shouldBeSearchable()</code> 方法，決定是否將資料加入至檢索索引。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Determine if the model should be searchable.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> bool</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">shouldBeSearchable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">isPublished</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一次導入模型的所有資料至檢索索引。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan scout:import <span class="string">&quot;App\Project&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新增一筆資料至檢索索引。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$project</span> = <span class="variable">$user</span>-&gt;<span class="title function_ invoke__">projects</span>()-&gt;<span class="title function_ invoke__">create</span>(<span class="variable">$request</span>-&gt;<span class="title function_ invoke__">all</span>());</span><br></pre></td></tr></table></figure>
+
+<p>使用全文檢索。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$projects</span> = <span class="title class_">App\Project</span>::<span class="title function_ invoke__">search</span>(<span class="string">&#x27;Test Project&#x27;</span>)-&gt;<span class="title function_ invoke__">get</span>();</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%92%B0%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%A9%9F"><span class="toc-number">3.</span> <span class="toc-text">步驟</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&text=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&is_video=false&description=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&body=Check out this article: https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&title=在 Laravel 5.7 使用 Laravel-Scout 全文檢索"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/02/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Laravel-Scout-%E5%85%A8%E6%96%87%E6%AA%A2%E7%B4%A2/&name=在 Laravel 5.7 使用 Laravel-Scout 全文檢索&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="安裝 iTerm 終端機首先安裝 Homebrew Cask。 1brew tap caskroom&#x2F;cask  安裝 iterm2 終端機。 1brew cask instal iterm2  下載主題下載命令列主題 iTerm2 Color Schemes，並且解壓縮。 1git clone https:&#x2F;&#x2F;github.com&#x2F;mbadolato&#x2F;iTerm2-Color-Schemes.g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題">
+<meta property="og:url" content="https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="安裝 iTerm 終端機首先安裝 Homebrew Cask。 1brew tap caskroom&#x2F;cask  安裝 iterm2 終端機。 1brew cask instal iterm2  下載主題下載命令列主題 iTerm2 Color Schemes，並且解壓縮。 1git clone https:&#x2F;&#x2F;github.com&#x2F;mbadolato&#x2F;iTerm2-Color-Schemes.g">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-01-25T17:03:50.000Z">
+<meta property="article:modified_time" content="2023-11-13T07:50:48.914Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="macOS">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="Zsh">
+<meta property="article:tag" content="Oh My Zsh">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/01/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Swoole-%E6%8F%90%E5%8D%87%E6%95%88%E8%83%BD/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/01/%E5%9C%A8-Laravel-5-7-%E4%BD%BF%E7%94%A8-Larastan-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E6%AA%A2%E6%9F%A5%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&text=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&is_video=false&description=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題&body=Check out this article: https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&name=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-iTerm-%E7%B5%82%E7%AB%AF%E6%A9%9F"><span class="toc-number">1.</span> <span class="toc-text">安裝 iTerm 終端機</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89%E4%B8%BB%E9%A1%8C"><span class="toc-number">2.</span> <span class="toc-text">下載主題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E5%AD%97%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">安裝字型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Zsh"><span class="toc-number">4.</span> <span class="toc-text">安裝 Zsh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Oh-My-Zsh"><span class="toc-number">5.</span> <span class="toc-text">安裝 Oh My Zsh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Powerlevel9k"><span class="toc-number">6.</span> <span class="toc-text">安裝 Powerlevel9k</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-VS-Code-%E7%B7%A8%E8%BC%AF%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">設定 VS Code 編輯器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%86%B1%E9%8D%B5"><span class="toc-number">8.</span> <span class="toc-text">熱鍵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-01-25T17:03:50.000Z" itemprop="datePublished">2019-01-26</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+                <a href="/categories/Others/Shell/">Shell</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Oh-My-Zsh/" rel="tag">Oh My Zsh</a>, <a class="tag-link-link" href="/tags/Shell/" rel="tag">Shell</a>, <a class="tag-link-link" href="/tags/Zsh/" rel="tag">Zsh</a>, <a class="tag-link-link" href="/tags/macOS/" rel="tag">macOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="安裝-iTerm-終端機"><a href="#安裝-iTerm-終端機" class="headerlink" title="安裝 iTerm 終端機"></a>安裝 iTerm 終端機</h2><p>首先安裝 Homebrew Cask。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew tap caskroom/cask</span><br></pre></td></tr></table></figure>
+
+<p>安裝 iterm2 終端機。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask instal iterm2</span><br></pre></td></tr></table></figure>
+
+<h2 id="下載主題"><a href="#下載主題" class="headerlink" title="下載主題"></a>下載主題</h2><p>下載命令列主題 <a target="_blank" rel="noopener" href="https://github.com/mbadolato/iTerm2-Color-Schemes">iTerm2 Color Schemes</a>，並且解壓縮。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/mbadolato/iTerm2-Color-Schemes.git</span><br></pre></td></tr></table></figure>
+
+<p>打開終端機的 <code>Preferences</code> 選項的 <code>Profiles</code> 的 <code>Colors</code>，匯入 <code>iTerm2-Color-Schemes-master/terminal</code> 資料夾中喜歡的主題，並且設為預設值。</p>
+<h2 id="安裝字型"><a href="#安裝字型" class="headerlink" title="安裝字型"></a>安裝字型</h2><p>安裝字型列表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew tap caskroom/fonts</span><br></pre></td></tr></table></figure>
+
+<p>安裝 <code>Source Code Pro Nerd Font Complete</code> 字型。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew cask install font-sourcecodepro-nerd-font</span><br></pre></td></tr></table></figure>
+
+<p>或使用以下指令搜尋其他字型。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew search nerd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指令 <code>brew cask search</code> 已廢棄。</li>
+</ul>
+<p>打開終端機的 <code>Preferences</code> 選項的 <code>Profiles</code> 的 <code>Text</code>，選擇字體。</p>
+<h2 id="安裝-Zsh"><a href="#安裝-Zsh" class="headerlink" title="安裝 Zsh"></a>安裝 Zsh</h2><p>安裝 Zsh 命令解釋器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install zsh</span><br></pre></td></tr></table></figure>
+
+<p>將 Zsh 設為預設的命令解釋器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s $(<span class="built_in">which</span> zsh)</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Oh-My-Zsh"><a href="#安裝-Oh-My-Zsh" class="headerlink" title="安裝 Oh My Zsh"></a>安裝 Oh My Zsh</h2><p>安裝 Zsh 的 <a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh">Oh My Zsh</a> 框架。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Powerlevel9k"><a href="#安裝-Powerlevel9k" class="headerlink" title="安裝 Powerlevel9k"></a>安裝 Powerlevel9k</h2><p>安裝 Oh My Zsh 的 <a target="_blank" rel="noopener" href="https://github.com/bhilburn/powerlevel9k">Powerlevel9k</a> 主題到 <code>~/.oh-my-zsh/custom/themes</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>~/.zshrc</code> 檔的環境變數：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># If you come from bash you might have to change your $PATH.</span><br><span class="line"># export PATH=$HOME/bin:/usr/local/bin:$PATH</span><br><span class="line">export PATH=$HOME/.composer/vendor/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>~/.zshrc</code> 檔的主題與樣式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;powerlevel9k/powerlevel9k&quot;</span><br><span class="line">POWERLEVEL9K_MODE=&quot;nerdfont-complete&quot;</span><br><span class="line">DEFAULT_USER=&quot;william&quot;</span><br><span class="line">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir dir_writable vcs newline)</span><br><span class="line">POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status ram)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ZSH_THEME</code> 參數設為 <code>powerlevel9k/powerlevel9k</code> 主題。</li>
+<li><code>POWERLEVEL9K_MODE</code> 參數設為 <code>nerdfont-complete</code> 完整字型。</li>
+<li><code>DEFAULT_USER</code> 參數設為使用者名稱。</li>
+<li><code>POWERLEVEL9K_LEFT_PROMPT_ELEMENTS</code> 設為命令列左端要出現的符號。</li>
+<li><code>POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS</code> 設為命令列右端要出現的符號。</li>
+</ul>
+<p>完成設定，執行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> <span class="variable">$SHELL</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="設定-VS-Code-編輯器"><a href="#設定-VS-Code-編輯器" class="headerlink" title="設定 VS Code 編輯器"></a>設定 VS Code 編輯器</h2><p>修改 <code>settings.json</code> 檔：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;terminal.integrated.fontFamily&quot;</span><span class="punctuation">:</span> <span class="string">&quot;SauceCodePro Nerd Font&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="熱鍵"><a href="#熱鍵" class="headerlink" title="熱鍵"></a>熱鍵</h2><p>在 iTerm 終端機使用 <code>option</code> 鍵與方向鍵跳過一個字詞的方法：</p>
+<ul>
+<li>打開 <code>Preferences</code> 選項 <code>Profiles</code> 的 <code>Keys</code> 列表。</li>
+<li>將選項 <code>Left Option Key</code> 設為 <code>Esc+</code>。</li>
+<li>錄製 <code>option+left</code> 的動作，將 <code>Action</code> 設為 <code>Send Escape Sequence</code>，並在 <code>Esc+</code> 輸入 <code>B</code>。</li>
+<li>錄製 <code>option+right</code> 的動作，將 <code>Action</code> 設為 <code>Send Escape Sequence</code>，並在 <code>Esc+</code> 輸入 <code>F</code>。</li>
+</ul>
+<p>其他指令：</p>
+<ul>
+<li>使用 <code>Ctrl + W</code> 以刪除前一個字詞。</li>
+<li>使用 <code>Ctrl + -</code> 以回復上一動作。</li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/statementdog-engineering/prettify-your-zsh-CMD-line-prompt-3ca2acc967f">超簡單！十分鐘打造漂亮又好用的 Zsh CMD Line 環境</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-iTerm-%E7%B5%82%E7%AB%AF%E6%A9%9F"><span class="toc-number">1.</span> <span class="toc-text">安裝 iTerm 終端機</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89%E4%B8%BB%E9%A1%8C"><span class="toc-number">2.</span> <span class="toc-text">下載主題</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E5%AD%97%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">安裝字型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Zsh"><span class="toc-number">4.</span> <span class="toc-text">安裝 Zsh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Oh-My-Zsh"><span class="toc-number">5.</span> <span class="toc-text">安裝 Oh My Zsh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Powerlevel9k"><span class="toc-number">6.</span> <span class="toc-text">安裝 Powerlevel9k</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-VS-Code-%E7%B7%A8%E8%BC%AF%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">設定 VS Code 編輯器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%86%B1%E9%8D%B5"><span class="toc-number">8.</span> <span class="toc-text">熱鍵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&text=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&is_video=false&description=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題&body=Check out this article: https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&title=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/01/%E5%9C%A8-MacOS-%E4%B8%8A%E5%AE%89%E8%A3%9D-Oh-My-Zsh-%E5%91%BD%E4%BB%A4%E5%88%97%E6%A1%86%E6%9E%B6/&name=在 macOS 上安裝 Oh My Zsh 命令列框架和 Powerlevel9k 主題&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2024 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
