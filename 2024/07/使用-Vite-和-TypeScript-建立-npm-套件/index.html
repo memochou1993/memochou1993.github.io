@@ -16,12 +16,12 @@
 <meta property="og:description" content="建立專案建立專案。 12345npm create vite✔ Project name: … vite-library-ts-example✔ Select a framework: › Vanilla✔ Select a variant: › TypeScript  建立 lib 資料夾，用來存放此套件相關的程式。 12cd vite-library-ts-examplemkdir lib">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-07-24T13:19:05.000Z">
-<meta property="article:modified_time" content="2024-09-22T12:05:26.368Z">
+<meta property="article:modified_time" content="2025-01-21T06:15:51.929Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="JavaScript">
-<meta property="article:tag" content="TypeScript">
 <meta property="article:tag" content="npm">
+<meta property="article:tag" content="TypeScript">
 <meta property="article:tag" content="Vite">
 <meta property="article:tag" content="Vitest">
 <meta name="twitter:card" content="summary">
@@ -193,10 +193,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vite-library-ts-example</span><br><span class="line"><span class="built_in">mkdir</span> lib</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>tsconfig.json</code> 檔。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;include&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src&quot;</span><span class="punctuation">,</span> <span class="string">&quot;lib&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">&quot;include&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;src&quot;</span><span class="punctuation">,</span> <span class="string">&quot;lib&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>安裝 TypeScript 相關套件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @types/node vite-plugin-dts -D</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @types/node -D</span><br></pre></td></tr></table></figure>
 
 <h2 id="安裝檢查工具"><a href="#安裝檢查工具" class="headerlink" title="安裝檢查工具"></a>安裝檢查工具</h2><p>安裝 ESLint 相關套件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i eslint @eslint/js typescript-eslint globals @types/eslint__js -D</span><br></pre></td></tr></table></figure>
@@ -231,7 +231,10 @@
 <p>執行測試。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="編譯"><a href="#編譯" class="headerlink" title="編譯"></a>編譯</h2><p>建立 <code>vite.config.ts</code> 檔。</p>
+<h2 id="編譯"><a href="#編譯" class="headerlink" title="編譯"></a>編譯</h2><p>安裝 <code>vite-plugin-dts</code> 套件，用來產生定義檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i vite-plugin-dts -D</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>vite.config.ts</code> 檔。</p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> dts <span class="keyword">from</span> <span class="string">&#x27;vite-plugin-dts&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="title function_">dts</span>(&#123; <span class="attr">include</span>: [<span class="string">&#x27;lib&#x27;</span>] &#125;),</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">build</span>: &#123;</span><br><span class="line">    <span class="attr">lib</span>: &#123;</span><br><span class="line">      <span class="attr">entry</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;lib/index.ts&#x27;</span>),</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;MyLib&#x27;</span>,</span><br><span class="line">      <span class="attr">fileName</span>: <span class="function">(<span class="params">format</span>) =&gt;</span> format === <span class="string">&#x27;es&#x27;</span> ? <span class="string">&#x27;index.js&#x27;</span> : <span class="string">`index.<span class="subst">$&#123;format&#125;</span>.js`</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">copyPublicDir</span>: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;~&#x27;</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;lib&#x27;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>建立 <code>tsconfig.build.json</code> 檔。</p>
@@ -341,7 +344,7 @@
     
     <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2024 Memo Chou
+    Copyright &copy; 2025 Memo Chou
   </div>
   <div class="footer-right">
     <nav>

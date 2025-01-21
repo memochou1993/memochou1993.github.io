@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。 建立專案建立專案。 12mkdir shortener-pythoncd shortener-python  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  將 .venv 資料夾排除在版本控制之外。 1echo &amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 FastAPI 實作「短網址產生器」應用程式">
+<meta property="og:url" content="https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。 建立專案建立專案。 12mkdir shortener-pythoncd shortener-python  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  將 .venv 資料夾排除在版本控制之外。 1echo &amp;qu">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-10-31T13:23:11.000Z">
+<meta property="article:modified_time" content="2025-01-21T06:15:51.931Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 FastAPI 實作「短網址產生器」應用程式</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/10/%E4%BD%BF%E7%94%A8%20TypeScript%20%E5%AF%A6%E4%BD%9C%E3%80%8Cstryle%E3%80%8D%E5%A5%97%E4%BB%B6/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/11/%E5%9C%A8-TypeScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Ajv-%E5%A5%97%E4%BB%B6%E5%AF%A6%E7%8F%BE-JSON-Schema-%E9%A9%97%E8%AD%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&text=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&is_video=false&description=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 FastAPI 實作「短網址產生器」應用程式&body=Check out this article: https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&name=使用 FastAPI 實作「短網址產生器」應用程式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">建立虛擬環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">初始化版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Ruff-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">安裝 Ruff 格式化工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-FastAPI-%E6%A1%86%E6%9E%B6"><span class="toc-number">6.</span> <span class="toc-text">安裝 FastAPI 框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-nanoid-%E5%A5%97%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">安裝 nanoid 套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E5%BE%8C%E7%AB%AF"><span class="toc-number">8.</span> <span class="toc-text">實作後端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B"><span class="toc-number">8.1.</span> <span class="toc-text">重構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89"><span class="toc-number">8.2.</span> <span class="toc-text">欄位驗證</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF"><span class="toc-number">9.</span> <span class="toc-text">實作前端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B-1"><span class="toc-number">9.1.</span> <span class="toc-text">重構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E5%8A%9F%E8%83%BD"><span class="toc-number">9.2.</span> <span class="toc-text">實作功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E7%8F%BE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">10.</span> <span class="toc-text">實現持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E4%BE%9D%E8%B3%B4%E5%A5%97%E4%BB%B6"><span class="toc-number">10.1.</span> <span class="toc-text">安裝依賴套件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E8%B3%87%E6%96%99%E5%BA%AB"><span class="toc-number">10.2.</span> <span class="toc-text">操作資料庫</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 FastAPI 實作「短網址產生器」應用程式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-10-31T13:23:11.000Z" itemprop="datePublished">2024-10-31</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/Python/FastAPI/">FastAPI</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/FastAPI/" rel="tag">FastAPI</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> shortener-python</span><br><span class="line"><span class="built_in">cd</span> shortener-python</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立虛擬環境"><a href="#建立虛擬環境" class="headerlink" title="建立虛擬環境"></a>建立虛擬環境</h2><p>建立虛擬環境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m venv .venv</span><br></pre></td></tr></table></figure>
+
+<p>啟動虛擬環境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<p>將 <code>.venv</code> 資料夾排除在版本控制之外。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*&quot;</span> &gt; .venv/.gitignore</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>main.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Hello, World!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化版本控制"><a href="#初始化版本控制" class="headerlink" title="初始化版本控制"></a>初始化版本控制</h2><p>初始化版本控制。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>將所有修改添加到暫存區。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>指定遠端儲存庫位址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:memochou1993/shortener-python.git</span><br></pre></td></tr></table></figure>
+
+<p>推送程式碼到遠端儲存庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Ruff-格式化工具"><a href="#安裝-Ruff-格式化工具" class="headerlink" title="安裝 Ruff 格式化工具"></a>安裝 Ruff 格式化工具</h2><p>新增 <code>requirements.txt</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>requirements.txt</code> 檔，添加 <code>ruff</code> 依賴套件。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruff</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>ruff.toml</code> 檔。</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">line-length</span> = <span class="number">120</span></span><br><span class="line"><span class="attr">indent-width</span> = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="section">[format]</span></span><br><span class="line"><span class="attr">quote-style</span> = <span class="string">&quot;double&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.vscode/settings.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;editor.formatOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;editor.codeActionsOnSave&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;source.fixAll&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;source.organizeImports&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;editor.defaultFormatter&quot;</span><span class="punctuation">:</span> <span class="string">&quot;charliermarsh.ruff&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add ruff dependency&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-FastAPI-框架"><a href="#安裝-FastAPI-框架" class="headerlink" title="安裝 FastAPI 框架"></a>安裝 FastAPI 框架</h2><p>修改 <code>requirements.txt</code> 檔，添加 <code>fastapi[standard]</code> 依賴套件。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ...</span><br><span class="line">fastapi[standard]</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;Hello&quot;</span>: <span class="string">&quot;World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啟動伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastapi dev main.py</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.gitignore</code> 檔，將 <code>__pycache__</code> 資料夾排除在版本控制之外。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__pycache__</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add fastapi dependency&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-nanoid-套件"><a href="#安裝-nanoid-套件" class="headerlink" title="安裝 nanoid 套件"></a>安裝 nanoid 套件</h2><p>修改 <code>requirements.txt</code> 檔，添加 <code>nanoid</code> 依賴套件。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ...</span><br><span class="line">nanoid</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> nanoid <span class="keyword">import</span> generate</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;code&quot;</span>: generate(size=<span class="number">8</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add nanoid dependency&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="實作後端"><a href="#實作後端" class="headerlink" title="實作後端"></a>實作後端</h2><p>修改 <code>main.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, HTTPException</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> RedirectResponse</span><br><span class="line"><span class="keyword">from</span> nanoid <span class="keyword">import</span> generate</span><br><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">links = <span class="built_in">dict</span>()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinkCreateRequest</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    link: <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinkCreateResponse</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    code: <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/api/links&quot;</span>, tags=[<span class="string">&quot;Link&quot;</span>], response_model=LinkCreateResponse</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_link</span>(<span class="params">body: LinkCreateRequest</span>):</span><br><span class="line">    code = generate(size=<span class="number">8</span>)</span><br><span class="line">    links[code] = body.link</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> LinkCreateResponse(code=code)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&#123;code&#125;&quot;</span>, tags=[<span class="string">&quot;Link&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">redirect</span>(<span class="params">code: <span class="built_in">str</span></span>):</span><br><span class="line">    link = links.get(code)</span><br><span class="line">    <span class="keyword">if</span> link <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">&quot;Link not found&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> RedirectResponse(url=link)</span><br></pre></td></tr></table></figure>
+
+<h3 id="重構"><a href="#重構" class="headerlink" title="重構"></a>重構</h3><p>建立 <code>schema/link.py</code> 檔，將請求與回應的結構存放在單獨的檔案。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinkCreateRequest</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    link: <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinkCreateResponse</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    code: <span class="built_in">str</span></span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>schema/__init__.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（空檔）</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.py</code> 檔，引入請求與回應的結構。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, HTTPException</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> RedirectResponse</span><br><span class="line"><span class="keyword">from</span> nanoid <span class="keyword">import</span> generate</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> schema.link <span class="keyword">import</span> LinkCreateRequest, LinkCreateResponse</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add link creation and redirection functionality&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="欄位驗證"><a href="#欄位驗證" class="headerlink" title="欄位驗證"></a>欄位驗證</h3><p>修改 <code>schema/link.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel, HttpUrl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinkCreateRequest</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    link: HttpUrl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinkCreateResponse</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    code: <span class="built_in">str</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add link validation&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="實作前端"><a href="#實作前端" class="headerlink" title="實作前端"></a>實作前端</h2><p>首先，修改 <code>main.py</code> 檔，試著新增一個會回傳 HTML 內容的端點。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span>, tags=[<span class="string">&quot;Static&quot;</span>], response_class=HTMLResponse</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;html&gt;</span></span><br><span class="line"><span class="string">        &lt;head&gt;</span></span><br><span class="line"><span class="string">            &lt;title&gt;URL Shortener&lt;/title&gt;</span></span><br><span class="line"><span class="string">        &lt;/head&gt;</span></span><br><span class="line"><span class="string">        &lt;body&gt;</span></span><br><span class="line"><span class="string">            &lt;h1&gt;Welcome to the URL Shortener&lt;/h1&gt;</span></span><br><span class="line"><span class="string">        &lt;/body&gt;</span></span><br><span class="line"><span class="string">    &lt;/html&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="重構-1"><a href="#重構-1" class="headerlink" title="重構"></a>重構</h3><p>新增一個獨立的 <code>static/index.html</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">title</span>&gt;</span>URL Shortener<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to the URL Shortener<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>main.py</code> 檔，改成讀取 <code>index.html</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span>, tags=[<span class="string">&quot;Static&quot;</span>], response_class=HTMLResponse</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(os.path.join(<span class="string">&quot;static&quot;</span>, <span class="string">&quot;index.html&quot;</span>), <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        <span class="keyword">return</span> HTMLResponse(content=file.read())</span><br></pre></td></tr></table></figure>
+
+<h3 id="實作功能"><a href="#實作功能" class="headerlink" title="實作功能"></a>實作功能</h3><p>修改 <code>static/index.html</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>URL Shortener<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">margin-bottom</span>: <span class="number">16px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">max-width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">400px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-id">#input</span>, <span class="selector-id">#output</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">margin-right</span>: <span class="number">8px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">overflow</span>: auto;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">button</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to the URL Shortener<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;input&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;shorten&quot;</span>&gt;</span>Shorten<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;output&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;copy&quot;</span> <span class="attr">hidden</span>&gt;</span>Copy<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> input = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#input&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> output = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#output&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> shortenButton = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#shorten&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> copyButton = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;#copy&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    shortenButton.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> () =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> link = input.<span class="property">value</span>;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">try</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/links&#x27;</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">headers</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span></span><br><span class="line"><span class="language-javascript">          &#125;,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; link &#125;)</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="title function_">json</span>();</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (!response.<span class="property">ok</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(data.<span class="property">detail</span>[<span class="number">0</span>].<span class="property">msg</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">const</span> url = <span class="string">`<span class="subst">$&#123;<span class="variable language_">window</span>.location.origin&#125;</span>/<span class="subst">$&#123;data.code&#125;</span>`</span>;</span></span><br><span class="line"><span class="language-javascript">        output.<span class="property">innerHTML</span> = <span class="string">`&lt;a href=&quot;<span class="subst">$&#123;url&#125;</span>&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;<span class="subst">$&#123;url&#125;</span>&lt;/a&gt;`</span>;</span></span><br><span class="line"><span class="language-javascript">        copyButton.<span class="property">hidden</span> = <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125; <span class="keyword">catch</span> (err) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span></span><br><span class="line"><span class="language-javascript">        output.<span class="property">textContent</span> = <span class="string">&#x27;An error occurred. Please try again.&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">        copyButton.<span class="property">hidden</span> = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    copyButton.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> url = output.<span class="title function_">querySelector</span>(<span class="string">&#x27;a&#x27;</span>).<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">      navigator.<span class="property">clipboard</span>.<span class="title function_">writeText</span>(url);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add static page&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="實現持久化"><a href="#實現持久化" class="headerlink" title="實現持久化"></a>實現持久化</h2><p>首先，到 <a target="_blank" rel="noopener" href="https://supabase.com/">Supabase</a> 建立一個新專案，並取得 API URL 和 API 金鑰。</p>
+<p>建立一個名為 <code>links</code> 的資料表，欄位設置如下：</p>
+<table>
+<thead>
+<tr>
+<th>Column Name</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>int8</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamptz</td>
+</tr>
+<tr>
+<td>code</td>
+<td>varchar</td>
+</tr>
+<tr>
+<td>link</td>
+<td>text</td>
+</tr>
+</tbody></table>
+<p>新增 <code>.env.example</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SUPABASE_API_URL=</span><br><span class="line">SUPABASE_API_KEY=</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SUPABASE_API_URL=your-supabase-api-url</span><br><span class="line">SUPABASE_API_KEY=your-supabase-api-key</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.gitignore</code> 檔，忽略 <code>.env</code> 檔。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">__pycache__</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝依賴套件"><a href="#安裝依賴套件" class="headerlink" title="安裝依賴套件"></a>安裝依賴套件</h3><p>修改 <code>requirements.txt</code> 檔，添加 <code>supabase</code> 和 <code>python-dotenv</code> 依賴套件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ...</span><br><span class="line">supabase</span><br><span class="line">python-dotenv</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="操作資料庫"><a href="#操作資料庫" class="headerlink" title="操作資料庫"></a>操作資料庫</h3><p>修改 <code>main.py</code> 檔，將資料儲存在 Supabase 資料庫中。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> supabase</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, HTTPException, status</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> HTMLResponse, RedirectResponse</span><br><span class="line"><span class="keyword">from</span> nanoid <span class="keyword">import</span> generate</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> schema.link <span class="keyword">import</span> LinkCreateRequest, LinkCreateResponse</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">supabase_client = supabase.create_client(</span><br><span class="line">    os.getenv(<span class="string">&quot;SUPABASE_API_URL&quot;</span>),</span><br><span class="line">    os.getenv(<span class="string">&quot;SUPABASE_API_KEY&quot;</span>),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span>, tags=[<span class="string">&quot;Static&quot;</span>], response_class=HTMLResponse</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(os.path.join(<span class="string">&quot;static&quot;</span>, <span class="string">&quot;index.html&quot;</span>), <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        <span class="keyword">return</span> HTMLResponse(content=file.read())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/api/links&quot;</span>, tags=[<span class="string">&quot;Link&quot;</span>], response_model=LinkCreateResponse</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_link</span>(<span class="params">body: LinkCreateRequest</span>):</span><br><span class="line">    code = generate(size=<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 儲存資料到資料庫</span></span><br><span class="line">    result = (</span><br><span class="line">        supabase_client.from_(<span class="string">&quot;links&quot;</span>)</span><br><span class="line">        .insert(</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;code&quot;</span>: code,</span><br><span class="line">                <span class="string">&quot;link&quot;</span>: <span class="built_in">str</span>(body.link),</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">        .execute()</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> LinkCreateResponse(**result.data[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&#123;code&#125;&quot;</span>, tags=[<span class="string">&quot;Link&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">redirect</span>(<span class="params">code: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="comment"># 從資料庫取得資料</span></span><br><span class="line">    result = supabase_client.from_(<span class="string">&quot;links&quot;</span>).select(<span class="string">&quot;*&quot;</span>).eq(<span class="string">&quot;code&quot;</span>, code).execute()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> result.data:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=<span class="string">&quot;Thread not found&quot;</span>)</span><br><span class="line"></span><br><span class="line">    url = result.data[<span class="number">0</span>][<span class="string">&quot;link&quot;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> RedirectResponse(url=url)</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add Supabase integration&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/">FastAPI</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ai/nanoid">ai&#x2F;nanoid</a></li>
+<li><a target="_blank" rel="noopener" href="https://zelark.github.io/nano-id-cc/">Nano ID Collision Calculator</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">建立虛擬環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">初始化版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Ruff-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">安裝 Ruff 格式化工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-FastAPI-%E6%A1%86%E6%9E%B6"><span class="toc-number">6.</span> <span class="toc-text">安裝 FastAPI 框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-nanoid-%E5%A5%97%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">安裝 nanoid 套件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E5%BE%8C%E7%AB%AF"><span class="toc-number">8.</span> <span class="toc-text">實作後端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B"><span class="toc-number">8.1.</span> <span class="toc-text">重構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%84%E4%BD%8D%E9%A9%97%E8%AD%89"><span class="toc-number">8.2.</span> <span class="toc-text">欄位驗證</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E5%89%8D%E7%AB%AF"><span class="toc-number">9.</span> <span class="toc-text">實作前端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A7%8B-1"><span class="toc-number">9.1.</span> <span class="toc-text">重構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E5%8A%9F%E8%83%BD"><span class="toc-number">9.2.</span> <span class="toc-text">實作功能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E7%8F%BE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">10.</span> <span class="toc-text">實現持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E4%BE%9D%E8%B3%B4%E5%A5%97%E4%BB%B6"><span class="toc-number">10.1.</span> <span class="toc-text">安裝依賴套件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E8%B3%87%E6%96%99%E5%BA%AB"><span class="toc-number">10.2.</span> <span class="toc-text">操作資料庫</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&text=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&is_video=false&description=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 FastAPI 實作「短網址產生器」應用程式&body=Check out this article: https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&title=使用 FastAPI 實作「短網址產生器」應用程式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/&name=使用 FastAPI 實作「短網址產生器」應用程式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

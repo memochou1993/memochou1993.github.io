@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言本文為「Node 入門」一文的學習筆記。 目標建立一個表單，可以輸入文字，並呈現出來。 做法新增 server.js 檔。 123456789101112131415161718192021222324252627282930const http &#x3D; require(&#x27;http&#x27;);const url &#x3D; require(&#x27;url&#x27;);const ser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Node.js 入門」學習筆記">
+<meta property="og:url" content="https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前言本文為「Node 入門」一文的學習筆記。 目標建立一個表單，可以輸入文字，並呈現出來。 做法新增 server.js 檔。 123456789101112131415161718192021222324252627282930const http &#x3D; require(&#x27;http&#x27;);const url &#x3D; require(&#x27;url&#x27;);const ser">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-05-21T04:22:50.000Z">
+<meta property="article:modified_time" content="2025-01-21T06:15:51.925Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node.js">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>「Node.js 入門」學習筆記</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/05/%E4%BD%BF%E7%94%A8-Ruby-on-Rails-5-2-%E5%BB%BA%E7%AB%8B-Web-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/05/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E7%8F%BE%E3%80%8C%E5%90%88%E7%90%86%E6%AF%94%E4%BE%8B%E6%BC%94%E7%AE%97%E6%B3%95%E3%80%8D/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&text=「Node.js 入門」學習筆記"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&is_video=false&description=「Node.js 入門」學習筆記"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Node.js 入門」學習筆記&body=Check out this article: https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&name=「Node.js 入門」學習筆記&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A8%99"><span class="toc-number">2.</span> <span class="toc-text">目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        「Node.js 入門」學習筆記
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-05-21T04:22:50.000Z" itemprop="datePublished">2019-05-21</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Node-js/">Node.js</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Node-js/" rel="tag">Node.js</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文為「<a target="_blank" rel="noopener" href="https://www.nodebeginner.org/index-zh-tw.html">Node 入門</a>」一文的學習筆記。</p>
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>建立一個表單，可以輸入文字，並呈現出來。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>新增 <code>server.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&#x27;url&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = &#123;</span><br><span class="line">  <span class="title function_">start</span>(<span class="params">route, handle</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">onRequest</span> = (<span class="params">request, response</span>) =&gt; &#123;</span><br><span class="line">      request.<span class="title function_">setEncoding</span>(<span class="string">&#x27;utf8&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 當前路由</span></span><br><span class="line">      <span class="keyword">const</span> &#123; path &#125; = url.<span class="title function_">parse</span>(request.<span class="property">url</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 監聽 data 事件</span></span><br><span class="line">      <span class="keyword">let</span> data = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">      request.<span class="title function_">addListener</span>(<span class="string">&#x27;data&#x27;</span>, <span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">        data += chunk;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 監聽 end 事件</span></span><br><span class="line">      request.<span class="title function_">addListener</span>(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 執行路由函式</span></span><br><span class="line">        <span class="title function_">route</span>(handle, path, response, data);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 啟動伺服器</span></span><br><span class="line">    http.<span class="title function_">createServer</span>(onRequest).<span class="title function_">listen</span>(<span class="number">8888</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">server</span> = server;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>router.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = &#123;</span><br><span class="line">  <span class="title function_">route</span>(<span class="params">handle, path, response, data</span>) &#123;</span><br><span class="line">    <span class="comment">// 如果路由存在，則執行閉包函式</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> handle[path] === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> handle[path](response, data);</span><br><span class="line">    &#125;</span><br><span class="line">    response.<span class="title function_">writeHead</span>(<span class="number">404</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain; charset=utf-8&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    response.<span class="title function_">write</span>(<span class="string">&#x27;Not Found&#x27;</span>);</span><br><span class="line">    response.<span class="title function_">end</span>();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">router</span> = router;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>requestHandlers.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">&#x27;querystring&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> requestHandlers = &#123;</span><br><span class="line">  <span class="title function_">start</span>(<span class="params">response, data</span>) &#123;</span><br><span class="line">    <span class="comment">// 印出表單</span></span><br><span class="line">    <span class="keyword">const</span> body =</span><br><span class="line">    <span class="string">&#x27;&lt;html&gt;&#x27;</span> +</span><br><span class="line">      <span class="string">&#x27;&lt;head&gt;&#x27;</span> +</span><br><span class="line">        <span class="string">&#x27;&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;&#x27;</span> +</span><br><span class="line">      <span class="string">&#x27;&lt;/head&gt;&#x27;</span> +</span><br><span class="line">      <span class="string">&#x27;&lt;body&gt;&#x27;</span> +</span><br><span class="line">        <span class="string">&#x27;&lt;form action=&quot;/upload&quot; method=&quot;POST&quot;&gt;&#x27;</span> +</span><br><span class="line">          <span class="string">&#x27;&lt;input type=&quot;text&quot; name=&quot;text&quot; /&gt;&#x27;</span> +</span><br><span class="line">          <span class="string">&#x27;&lt;input type=&quot;submit&quot; /&gt;&#x27;</span> +</span><br><span class="line">        <span class="string">&#x27;&lt;/form&gt;&#x27;</span> +</span><br><span class="line">      <span class="string">&#x27;&lt;/body&gt;&#x27;</span> +</span><br><span class="line">    <span class="string">&#x27;&lt;/html&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    response.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/html; charset=utf-8&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    response.<span class="title function_">write</span>(body);</span><br><span class="line">    response.<span class="title function_">end</span>();</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">upload</span>(<span class="params">response, data</span>) &#123;</span><br><span class="line">    <span class="comment">// 印出表單資料</span></span><br><span class="line">    response.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;text/plain; charset=utf-8&#x27;</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    response.<span class="title function_">write</span>(querystring.<span class="title function_">parse</span>(data).<span class="property">text</span>);</span><br><span class="line">    response.<span class="title function_">end</span>();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">requestHandlers</span> = requestHandlers;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; server &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./server&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; router &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./router&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; requestHandlers &#125; = <span class="built_in">require</span>(<span class="string">&#x27;./requestHandlers&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 對應路由的請求處理</span></span><br><span class="line"><span class="keyword">let</span> handle = &#123;</span><br><span class="line">  <span class="string">&#x27;/&#x27;</span>: requestHandlers.<span class="property">start</span>,</span><br><span class="line">  <span class="string">&#x27;/upload&#x27;</span>: requestHandlers.<span class="property">upload</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">start</span>(router.<span class="property">route</span>, handle);</span><br></pre></td></tr></table></figure>
+
+<p>啟動伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+
+<p>前往 <a target="_blank" rel="noopener" href="http://localhost:8888/">http://localhost:8888</a> 瀏覽。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A8%99"><span class="toc-number">2.</span> <span class="toc-text">目標</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9A%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">做法</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&text=「Node.js 入門」學習筆記"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&is_video=false&description=「Node.js 入門」學習筆記"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=「Node.js 入門」學習筆記&body=Check out this article: https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&title=「Node.js 入門」學習筆記"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2019/05/%E3%80%8CNode-js-%E5%85%A5%E9%96%80%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/&name=「Node.js 入門」學習筆記&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

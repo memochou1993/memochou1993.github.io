@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="建立專案建立專案。 12npm create vite@latest playwright-example -- --template vanillacd playwright-example  安裝安裝依賴套件。 1npm install -D @playwright&#x2F;test@latest  下載瀏覽器執行檔和相依套件。 1npx playwright install  概念導航大多數的測試，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 JavaScript 專案使用 Playwright 進行 UI 測試">
+<meta property="og:url" content="https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12npm create vite@latest playwright-example -- --template vanillacd playwright-example  安裝安裝依賴套件。 1npm install -D @playwright&#x2F;test@latest  下載瀏覽器執行檔和相依套件。 1npx playwright install  概念導航大多數的測試，">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-10-06T14:20:15.000Z">
+<meta property="article:modified_time" content="2025-01-21T06:15:51.931Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Testing">
+<meta property="article:tag" content="Playwright">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 JavaScript 專案使用 Playwright 進行 UI 測試</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2024/10/%E5%9C%A8-Vue-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-vue-draggable-plus-%E5%A5%97%E4%BB%B6%E5%AF%A6%E7%8F%BE%E6%8B%96%E6%94%BE%E5%8A%9F%E8%83%BD/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C-REST-API-%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&text=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&is_video=false&description=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 JavaScript 專案使用 Playwright 進行 UI 測試&body=Check out this article: https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&name=在 JavaScript 專案使用 Playwright 進行 UI 測試&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D"><span class="toc-number">2.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8E%E8%88%AA"><span class="toc-number">3.1.</span> <span class="toc-text">導航</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8B%95"><span class="toc-number">3.2.</span> <span class="toc-text">互動</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B7%E8%A8%80"><span class="toc-number">3.3.</span> <span class="toc-text">斷言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E9%9A%94%E9%9B%A2"><span class="toc-number">3.4.</span> <span class="toc-text">測試隔離</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E9%89%A4%E5%AD%90"><span class="toc-number">3.5.</span> <span class="toc-text">測試鉤子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%92%B0%E5%AF%AB%E6%B8%AC%E8%A9%A6"><span class="toc-number">4.</span> <span class="toc-text">撰寫測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E7%94%A2%E7%94%9F%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">測試產生器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">5.1.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E5%A0%B1%E5%91%8A"><span class="toc-number">6.</span> <span class="toc-text">測試報告</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 JavaScript 專案使用 Playwright 進行 UI 測試
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2024-10-06T14:20:15.000Z" itemprop="datePublished">2024-10-06</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Playwright/" rel="tag">Playwright</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Testing/" rel="tag">Testing</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm create vite@latest playwright-example -- --template vanilla</span><br><span class="line"><span class="built_in">cd</span> playwright-example</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -D @playwright/test@latest</span><br></pre></td></tr></table></figure>
+
+<p>下載瀏覽器執行檔和相依套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx playwright install</span><br></pre></td></tr></table></figure>
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="導航"><a href="#導航" class="headerlink" title="導航"></a>導航</h3><p>大多數的測試，會先導航到指定的 URL，就能開始與頁面元素進行互動。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;/&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="互動"><a href="#互動" class="headerlink" title="互動"></a>互動</h3><p>執行操作通常會從定位元素開始。Playwright 的定位器（locators）代表一種在任何時候找到頁面上元素的方式。例如，可以使用元素的文字內容、CSS 選擇器、屬性值或其相對位置等方式，精確地找到特定的按鈕、輸入框或標籤。Playwright 會等待元素可操作後才執行操作。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立一個定位器</span></span><br><span class="line"><span class="keyword">const</span> getStarted = page.<span class="title function_">getByRole</span>(<span class="string">&#x27;link&#x27;</span>, &#123; <span class="attr">name</span>: <span class="string">&#x27;Get started&#x27;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 點擊</span></span><br><span class="line"><span class="keyword">await</span> getStarted.<span class="title function_">click</span>();</span><br></pre></td></tr></table></figure>
+
+<p>常用的基本操作有：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>locator.check()</code></td>
+<td>勾選輸入框</td>
+</tr>
+<tr>
+<td><code>locator.click()</code></td>
+<td>點擊元素</td>
+</tr>
+<tr>
+<td><code>locator.uncheck()</code></td>
+<td>取消勾選輸入框</td>
+</tr>
+<tr>
+<td><code>locator.hover()</code></td>
+<td>懸停在元素上</td>
+</tr>
+<tr>
+<td><code>locator.fill()</code></td>
+<td>填寫表單輸入框</td>
+</tr>
+<tr>
+<td><code>locator.focus()</code></td>
+<td>焦點在元素上</td>
+</tr>
+<tr>
+<td><code>locator.press()</code></td>
+<td>按下單個鍵</td>
+</tr>
+<tr>
+<td><code>locator.setInputFiles()</code></td>
+<td>選擇要上傳的檔案</td>
+</tr>
+<tr>
+<td><code>locator.selectOption()</code></td>
+<td>在下拉式選單中選擇選項</td>
+</tr>
+</tbody></table>
+<h3 id="斷言"><a href="#斷言" class="headerlink" title="斷言"></a>斷言</h3><p>Playwright 有像是 <code>expect</code> 函數形式的測試斷言，以及許多通用匹配器，如 <code>toEqual</code>、<code>toContain</code>、<code>toBeTruthy</code>，可以用來斷言任何條件。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">expect</span>(success).<span class="title function_">toBeTruthy</span>();</span><br></pre></td></tr></table></figure>
+
+<p>Playwright 還包含非同步匹配器，它會等待直到滿足預期條件。例如，以下代碼會等待頁面獲取包含 <code>Playwright</code> 的標題。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> <span class="title function_">expect</span>(page).<span class="title function_">toHaveTitle</span>(<span class="regexp">/Playwright/</span>);</span><br></pre></td></tr></table></figure>
+
+<p>常用的非同步匹配器：</p>
+<table>
+<thead>
+<tr>
+<th>Assertion</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>expect(locator).toBeChecked()</code></td>
+<td>輸入框已被勾選</td>
+</tr>
+<tr>
+<td><code>expect(locator).toBeEnabled()</code></td>
+<td>控制項已被啟用</td>
+</tr>
+<tr>
+<td><code>expect(locator).toBeVisible()</code></td>
+<td>元素可見</td>
+</tr>
+<tr>
+<td><code>expect(locator).toContainText()</code></td>
+<td>元素包含文本</td>
+</tr>
+<tr>
+<td><code>expect(locator).toHaveAttribute()</code></td>
+<td>元素具有屬性</td>
+</tr>
+<tr>
+<td><code>expect(locator).toHaveCount()</code></td>
+<td>元素列表具有給定的長度</td>
+</tr>
+<tr>
+<td><code>expect(locator).toHaveText()</code></td>
+<td>元素匹配文本</td>
+</tr>
+<tr>
+<td><code>expect(locator).toHaveValue()</code></td>
+<td>輸入元素具有值</td>
+</tr>
+<tr>
+<td><code>expect(page).toHaveTitle()</code></td>
+<td>頁面具有標題</td>
+</tr>
+<tr>
+<td><code>expect(page).toHaveURL()</code></td>
+<td>頁面具有 URL</td>
+</tr>
+</tbody></table>
+<h3 id="測試隔離"><a href="#測試隔離" class="headerlink" title="測試隔離"></a>測試隔離</h3><p>Playwright 測試基於測試夾具（test fixtures）的概念，例如內建的 page fixture，它會被傳遞到測試中。由於瀏覽器上下文的存在，測試之間的頁面是隔離的，這等同於一個全新的瀏覽器設定檔案，每個測試都會獲得一個全新的環境，即使在單個瀏覽器中運行多個測試時也是如此。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; test &#125; <span class="keyword">from</span> <span class="string">&#x27;@playwright/test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;example test&#x27;</span>, <span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 此頁面屬於一個為此特定測試所建立的隔離的瀏覽器上下文</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;another test&#x27;</span>, <span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 此頁面是另一個與前一個不一樣且完全隔離的瀏覽器上下文</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="測試鉤子"><a href="#測試鉤子" class="headerlink" title="測試鉤子"></a>測試鉤子</h3><p>還可以使用各種測試鉤子（test hooks），例如使用 <code>test.describe</code> 來宣告一組測試，以及 <code>test.beforeEach</code> 和 <code>test.afterEach</code> 鉤子，可以在每個測試之前或之後執行，用於初始化和清理測試環境。而 <code>test.beforeAll</code> 和 <code>test.afterAll</code> 鉤子，則可以在整個測試組（suite）開始之前或結束之後執行一次，用來執行一次性設置或資源釋放。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; test, expect &#125; <span class="keyword">from</span> <span class="string">&#x27;@playwright/test&#x27;</span>;</span><br><span class="line"></span><br><span class="line">test.<span class="title function_">describe</span>(<span class="string">&#x27;navigation&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  test.<span class="title function_">beforeEach</span>(<span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 在每個測試之前轉到起始 URL</span></span><br><span class="line">    <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">test</span>(<span class="string">&#x27;main navigation&#x27;</span>, <span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 斷言使用 expect API</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">expect</span>(page).<span class="title function_">toHaveURL</span>(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如此一來，就可以在每個測試之前導航到特定的 URL，以確保每個測試都在一個已知的起始狀態下運行。</p>
+<h2 id="撰寫測試"><a href="#撰寫測試" class="headerlink" title="撰寫測試"></a>撰寫測試</h2><p>新增 <code>playwright.config.ts</code> 檔。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">PlaywrightTestConfig</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@playwright/test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">config</span>: <span class="title class_">PlaywrightTestConfig</span> = &#123;</span><br><span class="line">  <span class="attr">webServer</span>: &#123;</span><br><span class="line">    <span class="attr">command</span>: <span class="string">&#x27;npm run dev&#x27;</span>,</span><br><span class="line">    <span class="attr">port</span>: <span class="number">5173</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">use</span>: &#123;</span><br><span class="line">    <span class="attr">baseURL</span>: <span class="string">&#x27;http://localhost:5173&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">testDir</span>: <span class="string">&#x27;tests&#x27;</span>,</span><br><span class="line">  <span class="attr">testMatch</span>: <span class="regexp">/(.+\.)?(test|spec)\.[jt]s/</span>,</span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">30000</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> config;</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>tests/index.test.ts</code> 檔。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; expect, test &#125; <span class="keyword">from</span> <span class="string">&#x27;@playwright/test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;Page should have the correct title&#x27;</span>, <span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">expect</span>(page).<span class="title function_">toHaveTitle</span>(<span class="regexp">/Vite App/</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">expect</span>(<span class="keyword">await</span> page.<span class="title function_">locator</span>(<span class="string">&#x27;h1&#x27;</span>).<span class="title function_">textContent</span>()).<span class="title function_">toBe</span>(<span class="string">&#x27;Hello Vite!&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> counter = page.<span class="title function_">locator</span>(<span class="string">&#x27;#counter&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> counter.<span class="title function_">click</span>(&#123; <span class="attr">clickCount</span>: <span class="number">5</span> &#125;);</span><br><span class="line">  <span class="title function_">expect</span>(<span class="keyword">await</span> counter.<span class="title function_">textContent</span>()).<span class="title function_">toBe</span>(<span class="string">&#x27;count is 5&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>package.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="attr">&quot;preview&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite preview&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run test:integration&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test:integration&quot;</span><span class="punctuation">:</span> <span class="string">&quot;playwright test&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>執行測試。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p>執行測試，並使用 UI 模式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx playwright <span class="built_in">test</span> --ui</span><br></pre></td></tr></table></figure>
+
+<h2 id="測試產生器"><a href="#測試產生器" class="headerlink" title="測試產生器"></a>測試產生器</h2><p>Playwright 提供了一個非常強大的 <code>codegen</code> 功能，可以自動生成測試腳本。</p>
+<p>測試產生器提供以下功能：</p>
+<ul>
+<li>紀錄（Record）：產生器可以自動為每個測試步驟生成對應的測試程式碼。</li>
+<li>選擇定位器（Pick locator）：當測試需要與頁面上的特定元素進行交互時，需要選擇合適的定位器（locator）。產生器可以幫助選擇元素的最佳定位器。</li>
+<li>斷言可見性（Assert visibility）：用來確認元素在頁面上是否可見。</li>
+<li>斷言文本（Assert text）：用來驗證元素內部的文本內容是否符合預期。</li>
+<li>斷言值（Assert value）：用於驗證輸入框的 <code>value</code> 屬性。</li>
+</ul>
+<h3 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h3><p>啟動本地伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>啟動測試產生器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx playwright codegen http://localhost:5173</span><br></pre></td></tr></table></figure>
+
+<p>開始紀錄測試步驟，並產生測試程式碼。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; test, expect &#125; <span class="keyword">from</span> <span class="string">&#x27;@playwright/test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;test&#x27;</span>, <span class="keyword">async</span> (&#123; page &#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">goto</span>(<span class="string">&#x27;http://localhost:5173/&#x27;</span>);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">expect</span>(page.<span class="title function_">getByRole</span>(<span class="string">&#x27;heading&#x27;</span>, &#123; <span class="attr">name</span>: <span class="string">&#x27;Hello Vite!&#x27;</span> &#125;)).<span class="title function_">toBeVisible</span>();</span><br><span class="line">  <span class="keyword">await</span> page.<span class="title function_">getByRole</span>(<span class="string">&#x27;button&#x27;</span>, &#123; <span class="attr">name</span>: <span class="string">&#x27;count is&#x27;</span> &#125;).<span class="title function_">click</span>(&#123;</span><br><span class="line">    <span class="attr">clickCount</span>: <span class="number">5</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">expect</span>(page.<span class="title function_">locator</span>(<span class="string">&#x27;#counter&#x27;</span>)).<span class="title function_">toContainText</span>(<span class="string">&#x27;count is 5&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="測試報告"><a href="#測試報告" class="headerlink" title="測試報告"></a>測試報告</h2><p>執行測試，並產生 HTML 測試報告。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx playwright <span class="built_in">test</span> --reporter=html</span><br></pre></td></tr></table></figure>
+
+<p>顯示 HTML 測試報告。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx playwright show-report</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/playwright-example">playwright-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://playwright.dev/">Playwright</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D"><span class="toc-number">2.</span> <span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8E%E8%88%AA"><span class="toc-number">3.1.</span> <span class="toc-text">導航</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E5%8B%95"><span class="toc-number">3.2.</span> <span class="toc-text">互動</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B7%E8%A8%80"><span class="toc-number">3.3.</span> <span class="toc-text">斷言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E9%9A%94%E9%9B%A2"><span class="toc-number">3.4.</span> <span class="toc-text">測試隔離</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E9%89%A4%E5%AD%90"><span class="toc-number">3.5.</span> <span class="toc-text">測試鉤子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%92%B0%E5%AF%AB%E6%B8%AC%E8%A9%A6"><span class="toc-number">4.</span> <span class="toc-text">撰寫測試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E7%94%A2%E7%94%9F%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">測試產生器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">5.1.</span> <span class="toc-text">實作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%AC%E8%A9%A6%E5%A0%B1%E5%91%8A"><span class="toc-number">6.</span> <span class="toc-text">測試報告</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&text=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&is_video=false&description=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 JavaScript 專案使用 Playwright 進行 UI 測試&body=Check out this article: https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&title=在 JavaScript 專案使用 Playwright 進行 UI 測試"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2024/10/%E5%9C%A8-JavaScript-%E5%B0%88%E6%A1%88%E4%BD%BF%E7%94%A8-Playwright-%E9%80%B2%E8%A1%8C-UI-%E6%B8%AC%E8%A9%A6/&name=在 JavaScript 專案使用 Playwright 進行 UI 測試&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
