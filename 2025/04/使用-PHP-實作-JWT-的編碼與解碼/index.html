@@ -16,7 +16,7 @@
 <meta property="og:description" content="簡介JSON Web Token（JWT）是一種輕量級、基於 JSON 格式的開放標準（RFC 7519），常用於身份驗證與資訊交換。JWT 的特點是不需要在伺服器端儲存使用者狀態，它包含了一段被簽章過的資料，可讓接收端驗證其完整性與真實性。 結構JWT 結構分為三個部分：  Header（標頭）：定義簽章使用的演算法與類型。 Payload（內容）：實際的資料內容，例如使用者 ID、到期時間等。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-04-13T18:53:02.000Z">
-<meta property="article:modified_time" content="2025-04-13T19:34:15.770Z">
+<meta property="article:modified_time" content="2025-04-18T16:52:08.898Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="PHP">
@@ -97,6 +97,8 @@
         
         <li><a class="icon" href="/2025/04/%E4%BD%BF%E7%94%A8-Python-%E5%AF%A6%E4%BD%9C-Threads-API-OAuth-%E7%99%BB%E5%85%A5/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
+        
+        <li><a class="icon" href="/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-SMTP-%E6%9C%8D%E5%8B%99%E5%AF%84%E9%80%81%E9%9B%BB%E5%AD%90%E9%83%B5%E4%BB%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
@@ -204,7 +206,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vendor</span><br></pre></td></tr></table></figure>
 
 <p>初始化專案。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer init</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>composer.json</code> 檔。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;memochou1993/simple-jwt&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A simple JWT implementation.&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;project&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;php&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=7.2&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;autoload&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;psr-4&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;SimpleJWT\\&quot;</span><span class="punctuation">:</span> <span class="string">&quot;SimpleJWT/&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
