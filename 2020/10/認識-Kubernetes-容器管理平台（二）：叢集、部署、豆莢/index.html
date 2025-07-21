@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 macOS minikube  叢集Kubernetes 協調一個高可用的電腦叢集（Cluster），每個電腦作為獨立單元互相連接工作。Kubernetes 中的抽象允許容器化的應用被部署到叢集，而無需將它們綁定到某個特定的獨立電腦。為了使用這種新的部署模型，應用需要以將應用與單個主機分離的方式打包：它們需要被容器化。與過去的那種應用">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-10-31T08:58:11.000Z">
-<meta property="article:modified_time" content="2023-11-30T03:05:47.685Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.436Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
 <meta property="article:tag" content="Docker">
@@ -241,9 +241,9 @@
 <ul>
 <li>共享存儲。</li>
 <li>網路。</li>
-<li>有關每個容器如何運行的資訊，例如容器映像版本或要使用的特定端口。</li>
+<li>有關每個容器如何運行的資訊，例如容器映像版本或要使用的特定埠。</li>
 </ul>
-<p>Pod 為特定於應用程式的「邏輯主機」建模，並且可以包含相對高度耦合的不同應用容器。例如 Pod 可能既包含帶有 Node.js 應用的容器，也包含另一個不同的容器，用於提供 Node.js 網路伺服器要發布的資料。Pod 中的容器共享 IP 位址和端口，始終位於同一位置並且共同調度，並在同一個 Node 上的共享上下文中運行。</p>
+<p>Pod 為特定於應用程式的「邏輯主機」建模，並且可以包含相對高度耦合的不同應用容器。例如 Pod 可能既包含帶有 Node.js 應用的容器，也包含另一個不同的容器，用於提供 Node.js 網路伺服器要發布的資料。Pod 中的容器共享 IP 位址和埠，始終位於同一位置並且共同調度，並在同一個 Node 上的共享上下文中運行。</p>
 <p>Pod 是 Kubernetes 裡的最小單位，當我們在 Kubernetes 上創建 Deployment 時，該 Deployment 會在其中創建包含容器的 Pod（而不是直接創建容器）。每個 Pod 都與調度它的 Node 綁定，並保持在那裡，直到終止（根據重啟策略）或刪除。如果 Node 發生故障，則會在叢集中的其他可用 Node 上調度相同的 Pod。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">       10.10.10.1</span><br><span class="line">      (IP Address)</span><br><span class="line">|-----------------------|</span><br><span class="line">|          Pod          |</span><br><span class="line">|-----------------------|</span><br><span class="line">|      |--------|       |</span><br><span class="line">|      | volumn |       |</span><br><span class="line">|      |--------|       |</span><br><span class="line">| |-------------------| |</span><br><span class="line">| | containerized app | |</span><br><span class="line">| |-------------------| |</span><br><span class="line">|-----------------------|</span><br></pre></td></tr></table></figure>
 

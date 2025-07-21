@@ -8,15 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言由於本地開發時，需要讓外部金流服務商發送 webhook 到本地端，因此需要 ngrok 架設一個臨時伺服器，讓外網的應用程式可以存取內網的應用程式。 做法登入 ngrok，下載執行檔後解壓縮。 1unzip &#x2F;path&#x2F;to&#x2F;ngrok.zip  將執行檔加到環境變數，變添加令牌。 1.&#x2F;ngrok authtoken &lt;TOKEN&gt;  啟動一個臨時伺服器在 80 埠。 1.&#x2F;n">
+    <meta name="description" content="前言由於本地開發時，需要讓外部金流服務商發送 webhook 到本地端，因此需要 ngrok 架設一個臨時伺服器，讓外網的應用程式可以存取內網的應用程式。 做法登入 ngrok，下載執行檔後解壓縮。 1unzip &#x2F;path&#x2F;to&#x2F;ngrok.zip  將執行檔加到環境變數，變添加令牌。 1ngrok authtoken &lt;TOKEN&gt;  使用 ngrok 指令，啟動一個 HTTP 代">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 ngrok 架設臨時網頁伺服器">
 <meta property="og:url" content="https://blog.epoch.tw/2021/04/%E4%BD%BF%E7%94%A8-ngrok-%E6%9E%B6%E8%A8%AD%E8%87%A8%E6%99%82%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言由於本地開發時，需要讓外部金流服務商發送 webhook 到本地端，因此需要 ngrok 架設一個臨時伺服器，讓外網的應用程式可以存取內網的應用程式。 做法登入 ngrok，下載執行檔後解壓縮。 1unzip &#x2F;path&#x2F;to&#x2F;ngrok.zip  將執行檔加到環境變數，變添加令牌。 1.&#x2F;ngrok authtoken &lt;TOKEN&gt;  啟動一個臨時伺服器在 80 埠。 1.&#x2F;n">
+<meta property="og:description" content="前言由於本地開發時，需要讓外部金流服務商發送 webhook 到本地端，因此需要 ngrok 架設一個臨時伺服器，讓外網的應用程式可以存取內網的應用程式。 做法登入 ngrok，下載執行檔後解壓縮。 1unzip &#x2F;path&#x2F;to&#x2F;ngrok.zip  將執行檔加到環境變數，變添加令牌。 1ngrok authtoken &lt;TOKEN&gt;  使用 ngrok 指令，啟動一個 HTTP 代">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-04-23T15:03:12.000Z">
-<meta property="article:modified_time" content="2023-11-30T03:05:47.691Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.437Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
 <meta property="article:tag" content="Web Server">
@@ -186,10 +186,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip /path/to/ngrok.zip</span><br></pre></td></tr></table></figure>
 
 <p>將執行檔加到環境變數，變添加令牌。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok authtoken &lt;TOKEN&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok authtoken &lt;TOKEN&gt;</span><br></pre></td></tr></table></figure>
 
-<p>啟動一個臨時伺服器在 <code>80</code> 埠。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ngrok http 80</span><br></pre></td></tr></table></figure>
+<p>使用 <code>ngrok</code> 指令，啟動一個 HTTP 代理伺服器，將本地埠映射到外部網址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 80</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>

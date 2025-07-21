@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前置作業設定 Google Cloud 首先在 Google Cloud 頁面，建立一個專案。 設定 OAuth 同意畫面 建立 OAuth 用戶端 應用程式類型：網頁應用程式 已授權的 JavaScript 來源 http:&#x2F;&#x2F;localhost http:&#x2F;&#x2F;localhost:3000   已授權的重新導向 URI： http:&#x2F;&#x2F;localhost:3000&#x2F;auth&#x2F;callback">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Nuxt 3.13 使用 Supabase 實作 Google 登入">
+<meta property="og:url" content="https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業設定 Google Cloud 首先在 Google Cloud 頁面，建立一個專案。 設定 OAuth 同意畫面 建立 OAuth 用戶端 應用程式類型：網頁應用程式 已授權的 JavaScript 來源 http:&#x2F;&#x2F;localhost http:&#x2F;&#x2F;localhost:3000   已授權的重新導向 URI： http:&#x2F;&#x2F;localhost:3000&#x2F;auth&#x2F;callback">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-03-01T06:07:48.000Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.441Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Nuxt">
+<meta property="article:tag" content="OAuth">
+<meta property="article:tag" content="Google OAuth">
+<meta property="article:tag" content="Supabase">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>在 Nuxt 3.13 使用 Supabase 實作 Google 登入</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2025/02/%E5%B0%87-React-19-0-%E5%B0%88%E6%A1%88%E9%80%8F%E9%81%8E-GitHub-Actions-%E9%83%A8%E7%BD%B2%E8%87%B3-GitHub-Pages-%E6%9C%8D%E5%8B%99/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2025/03/%E4%BD%BF%E7%94%A8-Meta-%E9%96%8B%E7%99%BC%E8%80%85%E5%B9%B3%E5%8F%B0%E5%AD%98%E5%8F%96-Threads-API/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&text=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&is_video=false&description=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Nuxt 3.13 使用 Supabase 實作 Google 登入&body=Check out this article: https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&name=在 Nuxt 3.13 使用 Supabase 實作 Google 登入&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-Google-Cloud"><span class="toc-number">1.1.</span> <span class="toc-text">設定 Google Cloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-Supabase"><span class="toc-number">1.2.</span> <span class="toc-text">設定 Supabase</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E8%A3%BD%E5%8C%96%E7%99%BB%E5%85%A5%E6%8C%89%E9%88%95"><span class="toc-number">2.</span> <span class="toc-text">客製化登入按鈕</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98%E7%99%BB%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">認識登入方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-One-Tap-%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5"><span class="toc-number">3.1.</span> <span class="toc-text">Google One Tap 自動登入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Sign-In-%E6%A8%99%E6%BA%96%E7%99%BB%E5%85%A5"><span class="toc-number">3.2.</span> <span class="toc-text">Google Sign-In 標準登入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        在 Nuxt 3.13 使用 Supabase 實作 Google 登入
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2025-03-01T06:07:48.000Z" itemprop="datePublished">2025-03-01</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Nuxt/">Nuxt</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Google-OAuth/" rel="tag">Google OAuth</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Nuxt/" rel="tag">Nuxt</a>, <a class="tag-link-link" href="/tags/OAuth/" rel="tag">OAuth</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Supabase/" rel="tag">Supabase</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><h3 id="設定-Google-Cloud"><a href="#設定-Google-Cloud" class="headerlink" title="設定 Google Cloud"></a>設定 Google Cloud</h3><ul>
+<li>首先在 <a target="_blank" rel="noopener" href="https://console.cloud.google.com/projectcreate">Google Cloud</a> 頁面，建立一個專案。</li>
+<li>設定 OAuth 同意畫面</li>
+<li>建立 OAuth 用戶端<ul>
+<li>應用程式類型：網頁應用程式</li>
+<li>已授權的 JavaScript 來源<ul>
+<li><a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a></li>
+<li><a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a></li>
+</ul>
+</li>
+<li>已授權的重新導向 URI：<ul>
+<li><a target="_blank" rel="noopener" href="http://localhost:3000/auth/callback">http://localhost:3000/auth/callback</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="設定-Supabase"><a href="#設定-Supabase" class="headerlink" title="設定 Supabase"></a>設定 Supabase</h3><p>進到「Authentication」的「Sign In &#x2F; Up」，開啟「Enable Sign in with Google」選項。填入 Google OAuth 的「Client ID」。</p>
+<h2 id="客製化登入按鈕"><a href="#客製化登入按鈕" class="headerlink" title="客製化登入按鈕"></a>客製化登入按鈕</h2><p>前往 Google Identity 的 <a target="_blank" rel="noopener" href="https://developers.google.com/identity/gsi/web/tools/configurator">HTML Code Generator</a> 客製化登入按鈕：</p>
+<ul>
+<li>設定<ul>
+<li>Google 用戶端 ID：your-client-id</li>
+<li>回呼函式：<code>handleSignInWithGoogle</code></li>
+</ul>
+</li>
+<li>選取登入方式<ul>
+<li>啟用 OneTap<ul>
+<li>盡可能自動選取憑證</li>
+<li>如果使用者點選&#x2F;輕觸畫面外部，則取消提示</li>
+<li>啟用 在 ITP 瀏覽器中升級 One Tap 使用者體驗</li>
+</ul>
+</li>
+<li>啟用「使用 Google 帳戶登入」按鈕<ul>
+<li>語言：預設</li>
+<li>行為：在彈出式視窗中</li>
+</ul>
+</li>
+<li>選擇適合網站的按鈕樣式<ul>
+<li>新增額外寬度：200</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>按下「取得程式碼」按鈕，取得生成的程式碼如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;g_id_onload&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-client_id</span>=<span class="string">&quot;your-client-id&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-context</span>=<span class="string">&quot;signin&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-ux_mode</span>=<span class="string">&quot;popup&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-callback</span>=<span class="string">&quot;handleSignInWithGoogle&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-nonce</span>=<span class="string">&quot;&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-auto_select</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-itp_support</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;g_id_signin&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-type</span>=<span class="string">&quot;standard&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-shape</span>=<span class="string">&quot;rectangular&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-theme</span>=<span class="string">&quot;outline&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-text</span>=<span class="string">&quot;signin_with&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-size</span>=<span class="string">&quot;large&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-logo_alignment</span>=<span class="string">&quot;left&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">data-width</span>=<span class="string">&quot;200&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="認識登入方式"><a href="#認識登入方式" class="headerlink" title="認識登入方式"></a>認識登入方式</h2><h3 id="Google-One-Tap-自動登入"><a href="#Google-One-Tap-自動登入" class="headerlink" title="Google One Tap 自動登入"></a>Google One Tap 自動登入</h3><p><code>&lt;div id=&quot;g_id_onload&quot;&gt;&lt;/div&gt;</code> 元素是用來自動載入 Google One Tap 登入機制，適合希望用戶快速登入的應用場景。</p>
+<p>各屬性說明如下：</p>
+<table>
+<thead>
+<tr>
+<th>屬性名稱</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data-client_id</code></td>
+<td>Google OAuth 2.0 用戶端 ID</td>
+</tr>
+<tr>
+<td><code>data-context</code></td>
+<td>指定登入的情境，例如 <code>signin</code>（登入）或 <code>signup</code>（註冊）</td>
+</tr>
+<tr>
+<td><code>data-ux_mode</code></td>
+<td>指定 UX 模式，<code>popup</code> 會開啟彈出視窗，<code>redirect</code> 會重新導向頁面</td>
+</tr>
+<tr>
+<td><code>data-callback</code></td>
+<td>指定登入成功後的回呼函式名稱</td>
+</tr>
+<tr>
+<td><code>data-nonce</code></td>
+<td>用於防止重播攻擊的唯一值（可選）</td>
+</tr>
+<tr>
+<td><code>data-auto_select</code></td>
+<td>設為 <code>true</code> 時，Google 會嘗試自動選擇帳戶登入</td>
+</tr>
+<tr>
+<td><code>data-itp_support</code></td>
+<td>設為 <code>true</code> 時，啟用 Intelligent Tracking Prevention (ITP) 支援，以改善 Safari 上的登入體驗</td>
+</tr>
+</tbody></table>
+<h3 id="Google-Sign-In-標準登入"><a href="#Google-Sign-In-標準登入" class="headerlink" title="Google Sign-In 標準登入"></a>Google Sign-In 標準登入</h3><p><code>&lt;div class=&quot;g_id_signin&quot;&gt;&lt;/div&gt;</code> 元素是用來渲染標準的 Google 登入按鈕，用戶需要手動點擊按鈕後，才會跳出 Google 登入畫面。</p>
+<p>各屬性說明如下：</p>
+<table>
+<thead>
+<tr>
+<th>屬性名稱</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data-type</code></td>
+<td>指定按鈕類型，<code>standard</code> 為標準按鈕，<code>icon</code> 則為僅顯示圖示。</td>
+</tr>
+<tr>
+<td><code>data-shape</code></td>
+<td>按鈕形狀，<code>rectangular</code>（矩形）或 <code>pill</code>（圓角）。</td>
+</tr>
+<tr>
+<td><code>data-theme</code></td>
+<td>按鈕主題，<code>outline</code>（外框）或 <code>filled_blue</code>（填滿藍色）。</td>
+</tr>
+<tr>
+<td><code>data-text</code></td>
+<td>按鈕文字，例如 <code>signin_with</code>（使用 Google 登入）。</td>
+</tr>
+<tr>
+<td><code>data-size</code></td>
+<td>按鈕大小，可為 <code>small</code>、<code>medium</code>、<code>large</code>。</td>
+</tr>
+<tr>
+<td><code>data-logo_alignment</code></td>
+<td>Google 標誌對齊方式，<code>left</code>（靠左）或 <code>center</code>（置中）。</td>
+</tr>
+<tr>
+<td><code>data-width</code></td>
+<td>指定按鈕寬度（單位：像素）。</td>
+</tr>
+</tbody></table>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @supabase/supabase-js</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>.env</code> 檔，添加環境變數。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NUXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id</span><br><span class="line">NUXT_PUBLIC_SUPABASE_URL=your_supabase_url</span><br><span class="line">NUXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>nuxt.config.ts</code> 檔，加上環境變數。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineNuxtConfig</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">runtimeConfig</span>: &#123;</span><br><span class="line">    <span class="attr">public</span>: &#123;</span><br><span class="line">      <span class="attr">museApiUrl</span>: process.<span class="property">env</span>.<span class="property">NUXT_PUBLIC_MUSE_API_URL</span>,</span><br><span class="line">      <span class="attr">googleClientId</span>: process.<span class="property">env</span>.<span class="property">NUXT_PUBLIC_GOOGLE_CLIENT_ID</span>,</span><br><span class="line">      <span class="attr">supabaseUrl</span>: process.<span class="property">env</span>.<span class="property">NUXT_PUBLIC_SUPABASE_URL</span>,</span><br><span class="line">      <span class="attr">supabaseAnonKey</span>: process.<span class="property">env</span>.<span class="property">NUXT_PUBLIC_SUPABASE_ANON_KEY</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>utils/authUtils.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">authUtils</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">async</span> <span class="title function_">generateNonce</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> nonce = <span class="title function_">btoa</span>(<span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(...crypto.<span class="title function_">getRandomValues</span>(<span class="keyword">new</span> <span class="title class_">Uint8Array</span>(<span class="number">32</span>))));</span><br><span class="line">    <span class="keyword">const</span> encoder = <span class="keyword">new</span> <span class="title class_">TextEncoder</span>();</span><br><span class="line">    <span class="keyword">const</span> encodedNonce = encoder.<span class="title function_">encode</span>(nonce);</span><br><span class="line">    <span class="keyword">const</span> hashBuffer = <span class="keyword">await</span> crypto.<span class="property">subtle</span>.<span class="title function_">digest</span>(<span class="string">&#x27;SHA-256&#x27;</span>, encodedNonce);</span><br><span class="line">    <span class="keyword">const</span> hashArray = <span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="keyword">new</span> <span class="title class_">Uint8Array</span>(hashBuffer));</span><br><span class="line">    <span class="keyword">const</span> hashedNonce = hashArray.<span class="title function_">map</span>(<span class="function"><span class="params">b</span> =&gt;</span> b.<span class="title function_">toString</span>(<span class="number">16</span>).<span class="title function_">padStart</span>(<span class="number">2</span>, <span class="string">&#x27;0&#x27;</span>)).<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      nonce,</span><br><span class="line">      hashedNonce,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> authUtils;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>composables/useSupabase.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createClient &#125; <span class="keyword">from</span> <span class="string">&#x27;@supabase/supabase-js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useSupabase</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">useHead</span>(&#123; <span class="attr">script</span>: [&#123; <span class="attr">src</span>: <span class="string">&#x27;https://accounts.google.com/gsi/client&#x27;</span>, <span class="attr">async</span>: <span class="literal">true</span> &#125;] &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; supabaseUrl, supabaseAnonKey &#125; = <span class="title function_">useRuntimeConfig</span>().<span class="property">public</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> client = <span class="title function_">createClient</span>(supabaseUrl, supabaseAnonKey);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; generateNonce &#125; = authUtils;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">signInWithGoogle</span> = nonce =&gt; <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> client.<span class="property">auth</span>.<span class="title function_">signInWithIdToken</span>(&#123;</span><br><span class="line">      <span class="attr">provider</span>: <span class="string">&#x27;google&#x27;</span>,</span><br><span class="line">      <span class="attr">token</span>: response.<span class="property">credential</span>,</span><br><span class="line">      nonce,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    client,</span><br><span class="line">    generateNonce,</span><br><span class="line">    signInWithGoogle,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>components/AuthGoogleSignInButton.vue</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">width</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">type</span>: <span class="title class_">Number</span>,</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">default</span>: <span class="literal">undefined</span>,</span></span><br><span class="line"><span class="language-javascript">  &#125;,</span></span><br><span class="line"><span class="language-javascript">&#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> &#123; generateNonce, signInWithGoogle &#125; = <span class="title function_">useSupabase</span>();</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> authStore = <span class="title function_">useAuthStore</span>();</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> display = <span class="title function_">useDisplay</span>();</span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> snackbarStore = <span class="title function_">useSnackbarStore</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> &#123; googleClientId &#125; = <span class="title function_">useRuntimeConfig</span>().<span class="property">public</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> &#123; nonce, hashedNonce &#125; = <span class="keyword">await</span> <span class="title function_">generateNonce</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">const</span> loading = <span class="title function_">defineModel</span>(<span class="string">&#x27;loading&#x27;</span>, &#123;</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">type</span>: <span class="title class_">Boolean</span>,</span></span><br><span class="line"><span class="language-javascript">  <span class="attr">default</span>: <span class="literal">false</span>,</span></span><br><span class="line"><span class="language-javascript">&#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="variable language_">window</span>.<span class="property">handleSignInWithGoogle</span> = <span class="keyword">async</span> (response) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">  loading.<span class="property">value</span> = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">try</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> &#123; data, error &#125; = <span class="keyword">await</span> <span class="title function_">signInWithGoogle</span>(nonce)(response);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">if</span> (error) &#123;</span></span><br><span class="line"><span class="language-javascript">      snackbarStore.<span class="title function_">setError</span>(<span class="string">&#x27;登入失敗！&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> &#123; session &#125; = data;</span></span><br><span class="line"><span class="language-javascript">    authStore.<span class="title function_">setAccessToken</span>(session.<span class="property">access_token</span>);</span></span><br><span class="line"><span class="language-javascript">    authStore.<span class="title function_">setRefreshToken</span>(session.<span class="property">refresh_token</span>);</span></span><br><span class="line"><span class="language-javascript">    snackbarStore.<span class="title function_">setSuccess</span>(<span class="string">&#x27;登入成功！&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">await</span> <span class="title function_">navigateTo</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;index&#x27;</span> &#125;);</span></span><br><span class="line"><span class="language-javascript">  &#125; <span class="keyword">finally</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    loading.<span class="property">value</span> = <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">&#125;;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">v-sheet</span></span></span><br><span class="line"><span class="tag">    <span class="attr">color</span>=<span class="string">&quot;transparent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:min-height</span>=<span class="string">&quot;44&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">class</span>=<span class="string">&quot;d-flex align-center&quot;</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">      <span class="attr">id</span>=<span class="string">&quot;g_id_onload&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:data-client_id</span>=<span class="string">&quot;googleClientId&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:data-nonce</span>=<span class="string">&quot;hashedNonce&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-context</span>=<span class="string">&quot;signin&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-ux_mode</span>=<span class="string">&quot;popup&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-callback</span>=<span class="string">&quot;handleSignInWithGoogle&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-auto_select</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-itp_support</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-use_fedcm_for_prompt</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">&quot;g_id_signin&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-type</span>=<span class="string">&quot;standard&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-shape</span>=<span class="string">&quot;rectangular&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-theme</span>=<span class="string">&quot;outline&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-text</span>=<span class="string">&quot;signin_with&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-size</span>=<span class="string">&quot;large&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-logo_alignment</span>=<span class="string">&quot;left&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:data-width</span>=<span class="string">&quot;display.xs.value ? undefined : props.width&quot;</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">v-sheet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>pages/sign-in.vue</code> 檔，將元件引入並使用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">AuthGoogleSignInButton</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://supabase.com/docs/guides/auth/social-login/auth-google">Supabase - Login with Google</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-Google-Cloud"><span class="toc-number">1.1.</span> <span class="toc-text">設定 Google Cloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A-Supabase"><span class="toc-number">1.2.</span> <span class="toc-text">設定 Supabase</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E8%A3%BD%E5%8C%96%E7%99%BB%E5%85%A5%E6%8C%89%E9%88%95"><span class="toc-number">2.</span> <span class="toc-text">客製化登入按鈕</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AA%8D%E8%AD%98%E7%99%BB%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">認識登入方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-One-Tap-%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5"><span class="toc-number">3.1.</span> <span class="toc-text">Google One Tap 自動登入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Sign-In-%E6%A8%99%E6%BA%96%E7%99%BB%E5%85%A5"><span class="toc-number">3.2.</span> <span class="toc-text">Google Sign-In 標準登入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&text=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&is_video=false&description=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=在 Nuxt 3.13 使用 Supabase 實作 Google 登入&body=Check out this article: https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&title=在 Nuxt 3.13 使用 Supabase 實作 Google 登入"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Supabase-%E5%AF%A6%E4%BD%9C-Google-%E7%99%BB%E5%85%A5/&name=在 Nuxt 3.13 使用 Supabase 實作 Google 登入&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

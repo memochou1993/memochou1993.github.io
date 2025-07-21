@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前置作業首先，前往 Meta 開發者平台，建立一個應用程式。例如：  應用程式名稱：post-bot-auth 新增使用案例：「使用 Facebook 登入，驗證用戶並索取資料」 商家：「我還不想連結商家資產管理組合」  完成後，點選「建立應用程式」按鈕。 建立專案建立專案。 12mkdir facebook-auth-examplecd facebook-auth-example  初始化專案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 JavaScript 實作 Facebook 登入">
+<meta property="og:url" content="https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業首先，前往 Meta 開發者平台，建立一個應用程式。例如：  應用程式名稱：post-bot-auth 新增使用案例：「使用 Facebook 登入，驗證用戶並索取資料」 商家：「我還不想連結商家資產管理組合」  完成後，點選「建立應用程式」按鈕。 建立專案建立專案。 12mkdir facebook-auth-examplecd facebook-auth-example  初始化專案。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-03-08T13:51:22.000Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.441Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="OAuth">
+<meta property="article:tag" content="Facebook OAuth">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 JavaScript 實作 Facebook 登入</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2025/03/%E5%9C%A8-Nuxt-3-13-%E4%BD%BF%E7%94%A8-Google-Analytics-%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2025/03/%E5%90%91-Linode-%E6%8F%90%E4%BA%A4%E5%B7%A5%E5%96%AE%E8%A7%A3%E9%99%A4-587-%E5%9F%A0%E9%99%90%E5%88%B6%E4%BB%A5%E5%AF%84%E9%80%81%E9%9B%BB%E5%AD%90%E9%83%B5%E4%BB%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&text=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&is_video=false&description=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 JavaScript 實作 Facebook 登入&body=Check out this article: https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&name=使用 JavaScript 實作 Facebook 登入&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A"><span class="toc-number">3.</span> <span class="toc-text">設定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AA%A2%E6%9F%A5"><span class="toc-number">3.1.</span> <span class="toc-text">檢查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%96%80"><span class="toc-number">3.2.</span> <span class="toc-text">快速入門</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 JavaScript 實作 Facebook 登入
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2025-03-08T13:51:22.000Z" itemprop="datePublished">2025-03-08</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Facebook-OAuth/" rel="tag">Facebook OAuth</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/OAuth/" rel="tag">OAuth</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>首先，前往 <a target="_blank" rel="noopener" href="https://developers.facebook.com/apps">Meta 開發者平台</a>，建立一個應用程式。例如：</p>
+<ul>
+<li>應用程式名稱：<code>post-bot-auth</code></li>
+<li>新增使用案例：「使用 Facebook 登入，驗證用戶並索取資料」</li>
+<li>商家：「我還不想連結商家資產管理組合」</li>
+</ul>
+<p>完成後，點選「建立應用程式」按鈕。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> facebook-auth-example</span><br><span class="line"><span class="built_in">cd</span> facebook-auth-example</span><br></pre></td></tr></table></figure>
+
+<p>初始化專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D live-server</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.gitignore</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_modules/</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>package.json</code> 檔，添加一個 <code>dev</code> 啟動腳本。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;facebook-auth-example&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;live-server --port=3000&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;license&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ISC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;live-server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^1.2.2&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>啟動服務。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ngrok</code> 指令，啟動一個 HTTP 代理伺服器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 8080</span><br></pre></td></tr></table></figure>
+
+<h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><p>回到 Meta 開發者平台，在「使用案例」頁面，點選「自訂」按鈕。進到「自訂使用案例」頁面，點選「設定」按鈕。</p>
+<p>設置以下：</p>
+<ul>
+<li>有效的 OAuth 重新導向 URI：<a target="_blank" rel="noopener" href="https://random.ngrok-free.app/">https://random.ngrok-free.app</a></li>
+<li>JavaScript SDK 允許的網域：<a target="_blank" rel="noopener" href="https://random.ngrok-free.app/">https://random.ngrok-free.app</a></li>
+<li>使用 JavaScript SDK 登入：設為啟用</li>
+</ul>
+<h3 id="檢查"><a href="#檢查" class="headerlink" title="檢查"></a>檢查</h3><p>設置以下，點選「檢查 URI」按鈕。</p>
+<ul>
+<li>重新導向 URI 驗證程式：<a target="_blank" rel="noopener" href="https://random.ngrok-free.app/">https://random.ngrok-free.app</a></li>
+</ul>
+<p>如果成功，會顯示「此重新導向 URI 對此應用程式有效」。</p>
+<h3 id="快速入門"><a href="#快速入門" class="headerlink" title="快速入門"></a>快速入門</h3><p>點選「快速入門」頁籤，點選「網站」按鈕，查看如何設定 Facebook JavaScript SDK 到網站。</p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>新增 <code>index.html</code> 檔。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;info&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;login&quot;</span>&gt;</span>Login<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;logout&quot;</span> <span class="attr">hidden</span>&gt;</span>Logout<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">window</span>.<span class="property">fbAsyncInit</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable constant_">FB</span>.<span class="title function_">init</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">appId</span>: <span class="string">&quot;9368643076536346&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">cookie</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="language-javascript">          <span class="attr">version</span>: <span class="string">&quot;v22.0&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable constant_">FB</span>.<span class="property">AppEvents</span>.<span class="title function_">logPageView</span>();</span></span><br><span class="line"><span class="language-javascript">      &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      (<span class="keyword">function</span> (<span class="params">d, s, id</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> js,</span></span><br><span class="line"><span class="language-javascript">          fjs = d.<span class="title function_">getElementsByTagName</span>(s)[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (d.<span class="title function_">getElementById</span>(id)) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        js = d.<span class="title function_">createElement</span>(s);</span></span><br><span class="line"><span class="language-javascript">        js.<span class="property">id</span> = id;</span></span><br><span class="line"><span class="language-javascript">        js.<span class="property">src</span> = <span class="string">&quot;https://connect.facebook.net/en_US/sdk.js&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        fjs.<span class="property">parentNode</span>.<span class="title function_">insertBefore</span>(js, fjs);</span></span><br><span class="line"><span class="language-javascript">      &#125;)(<span class="variable language_">document</span>, <span class="string">&quot;script&quot;</span>, <span class="string">&quot;facebook-jssdk&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> loginElement = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;login&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> logoutElement = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;logout&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> infoElement = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;info&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      loginElement.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable constant_">FB</span>.<span class="title function_">login</span>(</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">if</span> (!response.<span class="property">authResponse</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">              <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;User cancelled login or did not fully authorize.&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">              <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="variable constant_">FB</span>.<span class="title function_">api</span>(<span class="string">&quot;/me&quot;</span>, <span class="keyword">function</span> (<span class="params">response</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">              infoElement.<span class="property">innerHTML</span> = <span class="string">`Good to see you, <span class="subst">$&#123;response.name&#125;</span>.`</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            logoutElement.<span class="property">hidden</span> = <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">            loginElement.<span class="property">hidden</span> = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125;,</span></span><br><span class="line"><span class="language-javascript">          &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">scope</span>: <span class="string">&quot;public_profile,email&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">        );</span></span><br><span class="line"><span class="language-javascript">      &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">      logoutElement.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable constant_">FB</span>.<span class="title function_">logout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          infoElement.<span class="property">innerHTML</span> = <span class="string">&quot;Goodbye!&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">          loginElement.<span class="property">hidden</span> = <span class="literal">false</span>;</span></span><br><span class="line"><span class="language-javascript">          logoutElement.<span class="property">hidden</span> = <span class="literal">true</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">      &#125;);</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>前往 <a target="_blank" rel="noopener" href="https://random.ngrok-free.app/">https://random.ngrok-free.app</a> 瀏覽。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/facebook-auth-example">facebook-auth-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developers.facebook.com/docs/facebook-login/web">Meta - Facebook 登入</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A"><span class="toc-number">3.</span> <span class="toc-text">設定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AA%A2%E6%9F%A5"><span class="toc-number">3.1.</span> <span class="toc-text">檢查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%96%80"><span class="toc-number">3.2.</span> <span class="toc-text">快速入門</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">4.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">5.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&text=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&is_video=false&description=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 JavaScript 實作 Facebook 登入&body=Check out this article: https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&title=使用 JavaScript 實作 Facebook 登入"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-JavaScript-%E5%AF%A6%E4%BD%9C-Facebook-%E7%99%BB%E5%85%A5/&name=使用 JavaScript 實作 Facebook 登入&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

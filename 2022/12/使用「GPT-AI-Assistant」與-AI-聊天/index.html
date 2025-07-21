@@ -16,16 +16,16 @@
 <meta property="og:description" content="介紹GPT AI Assistant 是基於 OpenAI API 與 LINE Messaging API 實作的應用程式，透過安裝步驟，可以使用 LINE 手機應用程式與專屬的 AI 助理聊天。 安裝步驟 登入 OpenAI 平台，或註冊一個新的帳號。 生成一個 OpenAI 的 API key。   登入 LINE 平台，或註冊一個新的帳號。 新增一個提供者（Provider），例如「My">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-12-20T15:19:54.000Z">
-<meta property="article:modified_time" content="2025-01-21T06:15:51.928Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.438Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="LINE">
+<meta property="article:tag" content="chatbot">
 <meta property="article:tag" content="GPT">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="OpenAI">
-<meta property="article:tag" content="LINE">
-<meta property="article:tag" content="chatbot">
 <meta name="twitter:card" content="summary">
     
     
@@ -190,7 +190,7 @@
   <div class="content" itemprop="articleBody">
     <h2 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h2><p>GPT AI Assistant 是基於 OpenAI API 與 LINE Messaging API 實作的應用程式，透過安裝步驟，可以使用 LINE 手機應用程式與專屬的 AI 助理聊天。</p>
 <h2 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h2><ul>
-<li>登入 <a target="_blank" rel="noopener" href="https://beta.openai.com/">OpenAI</a> 平台，或註冊一個新的帳號。<ul>
+<li>登入 <a target="_blank" rel="noopener" href="https://platform.openai.com/">OpenAI</a> 平台，或註冊一個新的帳號。<ul>
 <li>生成一個 OpenAI 的 <a href="/demo/openai-api-key.png">API key</a>。</li>
 </ul>
 </li>
@@ -257,7 +257,7 @@
 <p>在終端機使用以下指令，啟動一個本地伺服器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 
-<p>在另一個終端機使用以下指令，啟動一個代理伺服器。</p>
+<p>在另一個終端機，使用 <code>ngrok</code> 指令，啟動一個 HTTP 代理伺服器，將本地埠映射到外部網址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 3000</span><br></pre></td></tr></table></figure>
 
 <p>回到 <a target="_blank" rel="noopener" href="https://developers.line.biz/">LINE</a> 平台，修改「Webhook URL」，例如「<a target="_blank" rel="noopener" href="https://0000-0000-0000.jp.ngrok.io/webhook">https://0000-0000-0000.jp.ngrok.io/webhook</a>」，點選「Update」按鈕。</p>

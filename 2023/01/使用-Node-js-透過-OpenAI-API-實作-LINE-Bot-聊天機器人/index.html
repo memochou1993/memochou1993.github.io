@@ -16,16 +16,16 @@
 <meta property="og:description" content="前言ChatGPT 在 2022 年 11 月推出，是由 OpenAI 開發的一個人工智慧聊天機器人程式。而 OpenAI 提供了 GPT-3 模型的 API 讓開發者可以串接。雖然不是 ChatGPT 使用的 GPT-3.5 模型，但仍然很強大。 為了跟上這波風潮，藉此把 OpenAI 的 Completion API 串接到 LINE 應用程式上，讓使用者可以直接透過 LINE 與 AI 進行">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-01-06T14:41:52.000Z">
-<meta property="article:modified_time" content="2025-01-21T06:15:51.928Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.439Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="LINE">
+<meta property="article:tag" content="chatbot">
 <meta property="article:tag" content="GPT">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="OpenAI">
-<meta property="article:tag" content="LINE">
-<meta property="article:tag" content="chatbot">
 <meta name="twitter:card" content="summary">
     
     
@@ -190,7 +190,7 @@
   <div class="content" itemprop="articleBody">
     <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ChatGPT 在 2022 年 11 月推出，是由 OpenAI 開發的一個人工智慧聊天機器人程式。而 OpenAI 提供了 GPT-3 模型的 API 讓開發者可以串接。雖然不是 ChatGPT 使用的 GPT-3.5 模型，但仍然很強大。</p>
 <p>為了跟上這波風潮，藉此把 OpenAI 的 Completion API 串接到 LINE 應用程式上，讓使用者可以直接透過 LINE 與 AI 進行互動。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>可以先使用 <a target="_blank" rel="noopener" href="https://beta.openai.com/playground">Playground</a> 進行測試，大概知道 Completion API 的運作方式。也就是只要給 AI 提示詞，讓 AI 把文字補全即可。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>可以先使用 <a target="_blank" rel="noopener" href="https://platform.openai.com/playground/prompts">Playground</a> 進行測試，大概知道 Completion API 的運作方式。也就是只要給 AI 提示詞，讓 AI 把文字補全即可。</p>
 <p>例如，使用以下提示詞：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AI: 我是 AI 助理，我可以怎麼幫你？</span><br><span class="line">Human: 你好嗎？</span><br></pre></td></tr></table></figure>
 
@@ -278,7 +278,7 @@
 <p>在終端機使用以下指令，啟動一個本地伺服器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
 
-<p>在另一個終端機使用以下指令，啟動一個代理伺服器。</p>
+<p>在另一個終端機，使用 <code>ngrok</code> 指令，啟動一個 HTTP 代理伺服器，將本地埠映射到外部網址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ngrok http 3000</span><br></pre></td></tr></table></figure>
 
 <p>回到 <a target="_blank" rel="noopener" href="https://developers.line.biz/">LINE</a> 平台，修改「Webhook URL」，例如「<a target="_blank" rel="noopener" href="https://0000-0000-0000.jp.ngrok.io/webhook">https://0000-0000-0000.jp.ngrok.io/webhook</a>」，點選「Update」按鈕。</p>

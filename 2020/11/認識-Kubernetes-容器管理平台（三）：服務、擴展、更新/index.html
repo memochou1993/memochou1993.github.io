@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言本文為〈Kubernetes 官方文件〉的學習筆記。 環境 macOS minikube  服務Kubernetes Pod 是稍縱即逝的。Pod 實際上擁有生命週期。當一個工作 Node 死亡後，在 Node 上運行 Pod 也會消亡。ReplicaSet 會自動地創建新的 Pod 驅動叢集回到目標狀態，以保證應用程式正常運行。這些副本是可替換的；前端系統不應該關心後端副本，即使 Pod 丟">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-01T14:01:41.000Z">
-<meta property="article:modified_time" content="2023-11-30T03:05:47.686Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.437Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Deployment">
 <meta property="article:tag" content="Docker">
@@ -195,7 +195,7 @@
 <p>Service 也可以用在 ServiceSpec 標記 <code>type</code> 的方式暴露：</p>
 <ul>
 <li>ClusterIP：是預設的類型，在叢集的內部 IP 上公開 Service。此類型使得 Service 只能從叢集內訪問。</li>
-<li>NodePort：使用 NAT 在叢集中每個選定 Node 的相同端口上公開 Service。使用 <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code> 從叢集外部訪問 Service。是 ClusterIP 的超集。</li>
+<li>NodePort：使用 NAT 在叢集中每個選定 Node 的相同埠上公開 Service。使用 <code>&lt;NodeIP&gt;:&lt;NodePort&gt;</code> 從叢集外部訪問 Service。是 ClusterIP 的超集。</li>
 <li>LoadBalancer：在當前雲中創建一個外部負載平衡器（如果支援的話），並為 Service 分配一個固定的外部 IP。是 NodePort 的超集。</li>
 <li>ExternalName：通過返回帶有該名稱的 CNAME 記錄，使用任意名稱（由 spec 中的 externalName 制定）公開 Service。不使用代理。這種類型需要 kube-dns 的 v1.7 或更高版本。</li>
 </ul>

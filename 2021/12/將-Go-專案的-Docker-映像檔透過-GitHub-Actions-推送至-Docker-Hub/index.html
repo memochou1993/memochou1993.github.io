@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="建立專案建立專案。 12mkdir go-pipeline-examplecd go-pipeline-example  初始化 Go Modules。 1go mod init go-pipeline-example  新增 main.go 檔： 123456789101112131415package mainimport &quot;fmt&quot;var version &#x3D; &quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub">
+<meta property="og:url" content="https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="建立專案建立專案。 12mkdir go-pipeline-examplecd go-pipeline-example  初始化 Go Modules。 1go mod init go-pipeline-example  新增 main.go 檔： 123456789101112131415package mainimport &quot;fmt&quot;var version &#x3D; &quot;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-12-30T13:43:29.000Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.437Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Deployment">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta property="article:tag" content="GitHub Actions">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/12/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%BB%BF%E5%85%AD%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-Ingress-%E8%B3%87%E6%BA%90/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2022/01/%E3%80%8CKubernetes-%E5%AF%A6%E4%BD%9C%E6%89%8B%E5%86%8A%EF%BC%9A%E5%9F%BA%E7%A4%8E%E5%85%A5%E9%96%80%E7%AF%87%E3%80%8D%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%88%E5%BB%BF%E4%B8%83%EF%BC%89%EF%BC%9A%E8%AA%8D%E8%AD%98-CoreDNS-%E4%BC%BA%E6%9C%8D%E5%99%A8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&text=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&is_video=false&description=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub&body=Check out this article: https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&name=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%AD%98%E5%8F%96%E4%BB%A4%E7%89%8C"><span class="toc-number">2.</span> <span class="toc-text">建立存取令牌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">建立儲存庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">建立流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">5.</span> <span class="toc-text">建立映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E9%80%81%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">推送程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%A8%99%E7%B1%A4"><span class="toc-number">7.</span> <span class="toc-text">建立標籤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">8.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2021-12-30T13:43:29.000Z" itemprop="datePublished">2021-12-30</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/Go/Deployment/">Deployment</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/CI-CD/" rel="tag">CI/CD</a>, <a class="tag-link-link" href="/tags/Deployment/" rel="tag">Deployment</a>, <a class="tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>, <a class="tag-link-link" href="/tags/GitHub/" rel="tag">GitHub</a>, <a class="tag-link-link" href="/tags/GitHub-Actions/" rel="tag">GitHub Actions</a>, <a class="tag-link-link" href="/tags/Go/" rel="tag">Go</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> go-pipeline-example</span><br><span class="line"><span class="built_in">cd</span> go-pipeline-example</span><br></pre></td></tr></table></figure>
+
+<p>初始化 Go Modules。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod init go-pipeline-example</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>main.go</code> 檔：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> version = <span class="string">&quot;dev&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;Version: %s\n&quot;</span>, version)</span><br><span class="line"></span><br><span class="line">	fmt.Println(hello())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hello</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&quot;Hello World!&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>main.test.go</code> 檔：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;testing&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestHello</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	expected := <span class="string">&quot;Hello World!&quot;</span></span><br><span class="line"></span><br><span class="line">	actual := hello()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> expected != actual &#123;</span><br><span class="line">		t.Fatalf(<span class="string">&quot;expected: %s, actual: %s\n&quot;</span>, expected, actual)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>進行測試。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="建立存取令牌"><a href="#建立存取令牌" class="headerlink" title="建立存取令牌"></a>建立存取令牌</h2><p>登入 <a target="_blank" rel="noopener" href="https://hub.docker.com/settings/security">Docker Hub</a>，建立一個 Access Token，讓 GitHub Actions 推送映像檔。</p>
+<h2 id="建立儲存庫"><a href="#建立儲存庫" class="headerlink" title="建立儲存庫"></a>建立儲存庫</h2><p>建立專案的儲存庫，並建立 secrets，分別為：</p>
+<ul>
+<li><code>DOCKERHUB_USERNAME</code>：Docker Hub 的 Username</li>
+<li><code>DOCKERHUB_ACCESS_TOKEN</code>：Docker Hub 的 Access Token</li>
+</ul>
+<h2 id="建立流程"><a href="#建立流程" class="headerlink" title="建立流程"></a>建立流程</h2><p>建立 <code>.github/workflows</code> 資料夾，以及 <code>push.yaml</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p .github/workflows</span><br><span class="line"><span class="built_in">touch</span> .github/workflows/push.yaml</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>push.yaml</code> 檔中建立兩個工作，分別是 <code>test</code> 和 <code>deploy</code>。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">go-pipeline</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">test:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">if:</span> <span class="string">github.ref</span> <span class="string">==</span> <span class="string">&#x27;refs/heads/main&#x27;</span> <span class="string">||</span> <span class="string">startsWith(github.ref,</span> <span class="string">&#x27;refs/tags&#x27;</span><span class="string">)</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Run</span> <span class="string">unit</span> <span class="string">tests</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">go</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">needs:</span> <span class="string">test</span></span><br><span class="line">    <span class="attr">if:</span> <span class="string">startsWith(github.ref,</span> <span class="string">&#x27;refs/tags&#x27;</span><span class="string">)</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Extract</span> <span class="string">version</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">version_step</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          echo &quot;##[set-output name=version;]VERSION=$&#123;GITHUB_REF#$&quot;refs/tags/v&quot;&#125;&quot;</span></span><br><span class="line"><span class="string">          echo &quot;##[set-output name=version_tag;]$GITHUB_REPOSITORY:$&#123;GITHUB_REF#$&quot;refs/tags/v&quot;&#125;&quot;</span></span><br><span class="line"><span class="string">          echo &quot;##[set-output name=latest_tag;]$GITHUB_REPOSITORY:latest&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Print</span> <span class="string">version</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          echo $&#123;&#123;steps.version_step.outputs.version_tag&#125;&#125;</span></span><br><span class="line"><span class="string">          echo $&#123;&#123;steps.version_step.outputs.latest_tag&#125;&#125;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Set</span> <span class="string">up</span> <span class="string">QEMU</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">docker/setup-qemu-action@v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Set</span> <span class="string">up</span> <span class="string">Docker</span> <span class="string">Buildx</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">docker/setup-buildx-action@v1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Login</span> <span class="string">to</span> <span class="string">Docker</span> <span class="string">Hub</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">docker/login-action@v1</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">username:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DOCKERHUB_USERNAME</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">password:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DOCKERHUB_ACCESS_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Prepare</span> <span class="string">reg</span> <span class="string">names</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">read-docker-image-identifiers</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          echo VERSION_TAG=$(echo $&#123;&#123; steps.version_step.outputs.version_tag &#125;&#125; | tr &#x27;[:upper:]&#x27; &#x27;[:lower:]&#x27;) &gt;&gt; $GITHUB_ENV</span></span><br><span class="line"><span class="string">          echo LASTEST_TAG=$(echo $&#123;&#123; steps.version_step.outputs.latest_tag  &#125;&#125; | tr &#x27;[:upper:]&#x27; &#x27;[:lower:]&#x27;) &gt;&gt; $GITHUB_ENV</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">and</span> <span class="string">push</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">docker_build</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">docker/build-push-action@v2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">push:</span> <span class="literal">true</span></span><br><span class="line">          <span class="attr">tags:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $&#123;&#123;env.VERSION_TAG&#125;&#125;</span></span><br><span class="line"><span class="string">            $&#123;&#123;env.LASTEST_TAG&#125;&#125;</span></span><br><span class="line"><span class="string"></span>          <span class="attr">build-args:</span> <span class="string">|</span></span><br><span class="line">            <span class="string">$&#123;&#123;steps.version_step.outputs.version&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="建立映像檔"><a href="#建立映像檔" class="headerlink" title="建立映像檔"></a>建立映像檔</h2><p>建立 <code>Dockerfile</code> 檔：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> golang:latest as builder</span><br><span class="line"><span class="keyword">ARG</span> VERSION=dev</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /go/src/app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> main.go .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> go build -o main -ldflags=-X=main.version=<span class="variable">$&#123;VERSION&#125;</span> main.go </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> alpine:latest</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder /go/src/app/main /go/bin/main</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/go/bin:$&#123;PATH&#125;&quot;</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;main&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>建立映像檔，並將標籤取名為 <code>go-pipeline-example:dev</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t go-pipeline-example:dev .</span><br></pre></td></tr></table></figure>
+
+<p>執行映像檔並刪除容器。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> go-pipeline-example:dev</span><br></pre></td></tr></table></figure>
+
+<p>顯示結果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Version: dev</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+
+<p>指定版本為 <code>1.0.0</code>，並再次建立映像檔。由於 Dockerfile 中的 <code>go build</code> 腳本使用了 <code>-ldflags</code> 參數，因此可以把 <code>main.go</code> 檔中的 <code>version</code> 變數的值修改為 <code>1.0.0</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t go-pipeline-example:1.0.0 . --build-arg VERSION=1.0.0</span><br></pre></td></tr></table></figure>
+
+<p>列出映像檔列表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p>顯示結果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED              SIZE</span><br><span class="line">go-pipeline-example   1.0.0     1ea19c202291   32 seconds ago       7.37MB</span><br><span class="line">go-pipeline-example   dev       b91b05baed20   About a minute ago   7.37MB</span><br></pre></td></tr></table></figure>
+
+<h2 id="推送程式碼"><a href="#推送程式碼" class="headerlink" title="推送程式碼"></a>推送程式碼</h2><p>推送程式碼到專案儲存庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git branch -m main</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br><span class="line">git remote add origin git@github.com:memochou1993/go-pipeline-example.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立標籤"><a href="#建立標籤" class="headerlink" title="建立標籤"></a>建立標籤</h2><p>最後，添加標籤，並推送至專案儲存庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag v1.0.0</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<p>只要添加標籤，GitHub Actions 的 <code>deploy</code> 流程就會被觸發，並且將版本 <code>1.0.0</code> 的映像檔推送至 Docker Hub。</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/go-pipeline-example">go-pipeline-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://dev.to/gopher/build-ci-cd-pipelines-in-go-with-github-actions-and-dockers-1ko7">Build CI&#x2F;CD pipelines in Go with github actions and Docker</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%AD%98%E5%8F%96%E4%BB%A4%E7%89%8C"><span class="toc-number">2.</span> <span class="toc-text">建立存取令牌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%84%B2%E5%AD%98%E5%BA%AB"><span class="toc-number">3.</span> <span class="toc-text">建立儲存庫</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">建立流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%98%A0%E5%83%8F%E6%AA%94"><span class="toc-number">5.</span> <span class="toc-text">建立映像檔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E9%80%81%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">6.</span> <span class="toc-text">推送程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%A8%99%E7%B1%A4"><span class="toc-number">7.</span> <span class="toc-text">建立標籤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">8.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">9.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&text=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&is_video=false&description=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub&body=Check out this article: https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&title=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2021/12/%E5%B0%87-Go-%E5%B0%88%E6%A1%88%E7%9A%84-Docker-%E6%98%A0%E5%83%8F%E6%AA%94%E9%80%8F%E9%81%8E-GitHub-Actions-%E6%8E%A8%E9%80%81%E8%87%B3-Docker-Hub/&name=將 Go 專案的 Docker 映像檔透過 GitHub Actions 推送至 Docker Hub&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="簡介JSON Web Token（JWT）是一種輕量級、基於 JSON 格式的開放標準（RFC 7519），常用於身份驗證與資訊交換。JWT 的特點是不需要在伺服器端儲存使用者狀態，它包含了一段被簽章過的資料，可讓接收端驗證其完整性與真實性。 結構JWT 結構分為三個部分：  Header（標頭）：定義簽章使用的演算法與類型。 Payload（內容）：實際的資料內容，例如使用者 ID、到期時間等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 PHP 實作 JWT 的編碼與解碼">
+<meta property="og:url" content="https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="簡介JSON Web Token（JWT）是一種輕量級、基於 JSON 格式的開放標準（RFC 7519），常用於身份驗證與資訊交換。JWT 的特點是不需要在伺服器端儲存使用者狀態，它包含了一段被簽章過的資料，可讓接收端驗證其完整性與真實性。 結構JWT 結構分為三個部分：  Header（標頭）：定義簽章使用的演算法與類型。 Payload（內容）：實際的資料內容，例如使用者 ID、到期時間等。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-13T18:53:02.000Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.442Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="JWT">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 PHP 實作 JWT 的編碼與解碼</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2025/04/%E4%BD%BF%E7%94%A8-Python-%E5%AF%A6%E4%BD%9C-Threads-API-OAuth-%E7%99%BB%E5%85%A5/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E9%80%8F%E9%81%8E-SMTP-%E6%9C%8D%E5%8B%99%E5%AF%84%E9%80%81%E9%9B%BB%E5%AD%90%E9%83%B5%E4%BB%B6/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&text=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&is_video=false&description=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 PHP 實作 JWT 的編碼與解碼&body=Check out this article: https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&name=使用 PHP 實作 JWT 的編碼與解碼&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%90%E6%A7%8B"><span class="toc-number">1.1.</span> <span class="toc-text">結構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">安全性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 PHP 實作 JWT 的編碼與解碼
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2025-04-13T18:53:02.000Z" itemprop="datePublished">2025-04-14</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/PHP/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/JWT/" rel="tag">JWT</a>, <a class="tag-link-link" href="/tags/PHP/" rel="tag">PHP</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>JSON Web Token（JWT）是一種輕量級、基於 JSON 格式的開放標準（RFC 7519），常用於身份驗證與資訊交換。JWT 的特點是不需要在伺服器端儲存使用者狀態，它包含了一段被簽章過的資料，可讓接收端驗證其完整性與真實性。</p>
+<h3 id="結構"><a href="#結構" class="headerlink" title="結構"></a>結構</h3><p>JWT 結構分為三個部分：</p>
+<ul>
+<li>Header（標頭）：定義簽章使用的演算法與類型。</li>
+<li>Payload（內容）：實際的資料內容，例如使用者 ID、到期時間等。</li>
+<li>Signature（簽章）：用來驗證資料未被竄改。</li>
+</ul>
+<p>格式為：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="title class_">Base64UrlEncode</span>(header)&#125;.&#123;<span class="title class_">Base64UrlEncode</span>(payload)&#125;.&#123;<span class="title class_">Base64UrlEncode</span>(signature)&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>JWT（JSON Web Token）之所以具備安全性，主要基於以下兩個核心原理：</p>
+<ul>
+<li>資料完整性驗證（Integrity Verification）：JWT 使用 HMAC 或非對稱加密（如 RSA、ECDSA）對內容進行簽章，確保資料在傳輸過程中未被竄改。任何試圖修改 payload 的行為，都會導致簽章驗證失敗，進而無法解碼成功。</li>
+<li>不可逆簽章（Non-reversible Signature）：以 HMAC 為例，簽章是根據密鑰與資料內容計算出的雜湊值。即使攻擊者能看到 JWT，也無法從簽章反推出密鑰或偽造新的簽章，除非已知密鑰。</li>
+</ul>
+<p>簡言之，JWT 的安全性建立在加密雜湊函式（HMAC-SHA）或公開金鑰加密（如 RS256）所提供的資料完整性與密鑰保密性上。若搭配 HTTPS 傳輸協定，能有效避免中間人竊聽，達到足夠的傳輸與身份驗證安全性。</p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> php-jwt-example</span><br><span class="line"><span class="built_in">cd</span> php-jwt-example</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>.gitignore</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vendor</span><br></pre></td></tr></table></figure>
+
+<p>初始化專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer init</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>composer.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;memochou1993/simple-jwt&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A simple JWT implementation.&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;project&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;require&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;php&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=7.2&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;autoload&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;psr-4&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;SimpleJWT\\&quot;</span><span class="punctuation">:</span> <span class="string">&quot;SimpleJWT/&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>執行安裝指令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer install</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>SimpleJWT</code> 資料夾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> SimpleJWT</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>SimpleJWT</code> 資料夾，新增 <code>JWTException.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">SimpleJWT</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JWTException</span> <span class="keyword">extends</span> \<span class="title">Exception</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>SimpleJWT</code> 資料夾，新增 <code>JWTException.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title class_">SimpleJWT</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JWT</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 預設使用的加密演算法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$alg</span> = <span class="string">&#x27;HS256&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 支援的演算法對照表</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$supported_algs</span> = [</span><br><span class="line">        <span class="string">&#x27;HS256&#x27;</span> =&gt; <span class="string">&#x27;sha256&#x27;</span>,</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 將資料進行 Base64 URL 安全編碼</span></span><br><span class="line"><span class="comment">     * +、/ 會分別被替換成 -、_</span></span><br><span class="line"><span class="comment">     * = 號會被去除以符合 URL 傳遞需求</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">base64UrlEncode</span>(<span class="params"><span class="variable">$data</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">rtrim</span>(<span class="title function_ invoke__">strtr</span>(<span class="title function_ invoke__">base64_encode</span>(<span class="variable">$data</span>), <span class="string">&#x27;+/&#x27;</span>, <span class="string">&#x27;-_&#x27;</span>), <span class="string">&#x27;=&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 將 Base64 URL 編碼還原成原始資料</span></span><br><span class="line"><span class="comment">     * 為避免 padding 不足，需補上等號 (=)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">base64UrlDecode</span>(<span class="params"><span class="variable">$data</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$remainder</span> = <span class="title function_ invoke__">strlen</span>(<span class="variable">$data</span>) % <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$remainder</span>) &#123;</span><br><span class="line">            <span class="variable">$padlen</span> = <span class="number">4</span> - <span class="variable">$remainder</span>;</span><br><span class="line">            <span class="variable">$data</span> .= <span class="title function_ invoke__">str_repeat</span>(<span class="string">&#x27;=&#x27;</span>, <span class="variable">$padlen</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">base64_decode</span>(<span class="title function_ invoke__">strtr</span>(<span class="variable">$data</span>, <span class="string">&#x27;-_&#x27;</span>, <span class="string">&#x27;+/&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 編碼函式：根據 payload 和密鑰產出 JWT 字串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> array $payload 資料內容，如 user_id、exp</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $secret 加密密鑰</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> string JWT 字串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params"><span class="keyword">array</span> <span class="variable">$payload</span>, <span class="keyword">string</span> <span class="variable">$secret</span></span>): <span class="title">string</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 建立 JWT 標頭，指定演算法與類型</span></span><br><span class="line">        <span class="variable">$header</span> = [<span class="string">&#x27;alg&#x27;</span> =&gt; <span class="built_in">self</span>::<span class="variable">$alg</span>, <span class="string">&#x27;typ&#x27;</span> =&gt; <span class="string">&#x27;JWT&#x27;</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 編碼 header 與 payload 成 JSON，再做 Base64 URL 編碼</span></span><br><span class="line">        <span class="variable">$headerEncoded</span>  = <span class="built_in">self</span>::<span class="title function_ invoke__">base64UrlEncode</span>(<span class="title function_ invoke__">json_encode</span>(<span class="variable">$header</span>));</span><br><span class="line">        <span class="variable">$payloadEncoded</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">base64UrlEncode</span>(<span class="title function_ invoke__">json_encode</span>(<span class="variable">$payload</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用指定演算法進行 HMAC 簽章</span></span><br><span class="line">        <span class="variable">$signature</span> = <span class="title function_ invoke__">hash_hmac</span>(</span><br><span class="line">            <span class="built_in">self</span>::<span class="variable">$supported_algs</span>[<span class="built_in">self</span>::<span class="variable">$alg</span>],</span><br><span class="line">            <span class="string">&quot;<span class="subst">$headerEncoded</span>.<span class="subst">$payloadEncoded</span>&quot;</span>,</span><br><span class="line">            <span class="variable">$secret</span>,</span><br><span class="line">            <span class="literal">true</span> // 輸出為 raw <span class="keyword">binary</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 對簽章進行 Base64 URL 編碼</span></span><br><span class="line">        <span class="variable">$signatureEncoded</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">base64UrlEncode</span>(<span class="variable">$signature</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 合併成完整 JWT 字串</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;<span class="subst">$headerEncoded</span>.<span class="subst">$payloadEncoded</span>.<span class="subst">$signatureEncoded</span>&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解碼函式：根據 JWT 字串和密鑰進行驗證</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $jwt 輸入的 JWT 字串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string $secret 簽章密鑰</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> array 解碼後的 payload</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> JWTException 若驗證失敗</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">decode</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$jwt</span>, <span class="keyword">string</span> <span class="variable">$secret</span></span>): <span class="title">array</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 切割 JWT 為三段：header.payload.signature</span></span><br><span class="line">        <span class="variable">$parts</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&#x27;.&#x27;</span>, <span class="variable">$jwt</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(<span class="variable">$parts</span>) !== <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">JWTException</span>(<span class="string">&#x27;Invalid segment count.&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解構三段</span></span><br><span class="line">        [<span class="variable">$headerEncoded</span>, <span class="variable">$payloadEncoded</span>, <span class="variable">$signatureEncoded</span>] = <span class="variable">$parts</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解碼並轉回陣列</span></span><br><span class="line">        <span class="variable">$header</span>  = <span class="title function_ invoke__">json_decode</span>(<span class="built_in">self</span>::<span class="title function_ invoke__">base64UrlDecode</span>(<span class="variable">$headerEncoded</span>), <span class="literal">true</span>);</span><br><span class="line">        <span class="variable">$payload</span> = <span class="title function_ invoke__">json_decode</span>(<span class="built_in">self</span>::<span class="title function_ invoke__">base64UrlDecode</span>(<span class="variable">$payloadEncoded</span>), <span class="literal">true</span>);</span><br><span class="line">        <span class="variable">$signature</span> = <span class="built_in">self</span>::<span class="title function_ invoke__">base64UrlDecode</span>(<span class="variable">$signatureEncoded</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 檢查解碼是否成功</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable">$header</span> || !<span class="variable">$payload</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">JWTException</span>(<span class="string">&#x27;Invalid header or payload encoding.&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 檢查演算法是否合法</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$header</span>[<span class="string">&#x27;alg&#x27;</span>]) || !<span class="keyword">isset</span>(<span class="built_in">self</span>::<span class="variable">$supported_algs</span>[<span class="variable">$header</span>[<span class="string">&#x27;alg&#x27;</span>]])) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">JWTException</span>(<span class="string">&#x27;Unsupported algorithm.&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 計算預期的簽章</span></span><br><span class="line">        <span class="variable">$expected_signature</span> = <span class="title function_ invoke__">hash_hmac</span>(</span><br><span class="line">            <span class="built_in">self</span>::<span class="variable">$supported_algs</span>[<span class="variable">$header</span>[<span class="string">&#x27;alg&#x27;</span>]],</span><br><span class="line">            <span class="string">&quot;<span class="subst">$headerEncoded</span>.<span class="subst">$payloadEncoded</span>&quot;</span>,</span><br><span class="line">            <span class="variable">$secret</span>,</span><br><span class="line">            <span class="literal">true</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 hash_equals 防止時間攻擊</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_ invoke__">hash_equals</span>(<span class="variable">$expected_signature</span>, <span class="variable">$signature</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">JWTException</span>(<span class="string">&#x27;Invalid signature.&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 若有設置過期時間，進行時間驗證</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$payload</span>[<span class="string">&#x27;exp&#x27;</span>]) &amp;&amp; <span class="title function_ invoke__">time</span>() &gt; <span class="variable">$payload</span>[<span class="string">&#x27;exp&#x27;</span>]) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">JWTException</span>(<span class="string">&#x27;Expired token.&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回解碼後的 payload</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$payload</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>建立 <code>index.php</code> 檔。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">&#x27;vendor/autoload.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">SimpleJWT</span>\<span class="title">JWT</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">SimpleJWT</span>\<span class="title">JWTException</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * JWT 範例</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 可以使用以下指令，建立一個隨機的 256-bit 密鑰</span></span><br><span class="line"><span class="comment"> * php -r &quot;echo bin2hex(random_bytes(32)) . PHP_EOL;&quot;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable">$secret</span> = <span class="string">&#x27;my-256-bit-secret&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設定期限</span></span><br><span class="line"><span class="variable">$ttl</span> = <span class="number">3600</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設定 payload 資料內容</span></span><br><span class="line"><span class="variable">$payload</span> = [</span><br><span class="line">    <span class="string">&#x27;sub&#x27;</span> =&gt; <span class="number">123</span>,</span><br><span class="line">    <span class="string">&#x27;exp&#x27;</span> =&gt; <span class="title function_ invoke__">time</span>() + <span class="variable">$ttl</span>,</span><br><span class="line">    <span class="string">&#x27;iat&#x27;</span> =&gt; <span class="title function_ invoke__">time</span>(),</span><br><span class="line">    <span class="string">&#x27;role&#x27;</span> =&gt; <span class="string">&#x27;admin&#x27;</span>,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 編碼</span></span><br><span class="line"><span class="variable">$token</span> = JWT::<span class="title function_ invoke__">encode</span>(<span class="variable">$payload</span>, <span class="variable">$secret</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;JWT: &quot;</span> . <span class="variable">$token</span> . PHP_EOL;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解碼並驗證</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="variable">$decoded</span> = JWT::<span class="title function_ invoke__">decode</span>(<span class="variable">$token</span>, <span class="variable">$secret</span>);</span><br><span class="line">    <span class="title function_ invoke__">print_r</span>(<span class="variable">$decoded</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (JWTException <span class="variable">$e</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Error: &quot;</span> . <span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行程式。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php index.php</span><br></pre></td></tr></table></figure>
+
+<p>輸出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMywiZXhwIjoxNzQ0NTc1MTgxLCJpYXQiOjE3NDQ1NzE1ODEsInJvbGUiOiJhZG1pbiJ9.yXQlSVLIAlf7WBh2dmv9pv4VbNUDKyurkwtN-i1Tppw</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [sub] =&gt; 123</span><br><span class="line">    [exp] =&gt; 1744575181</span><br><span class="line">    [iat] =&gt; 1744571581</span><br><span class="line">    [role] =&gt; admin</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/jwt-php-example">jwt-php-example</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">簡介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%90%E6%A7%8B"><span class="toc-number">1.1.</span> <span class="toc-text">結構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">安全性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">實作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">4.</span> <span class="toc-text">程式碼</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&text=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&is_video=false&description=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 PHP 實作 JWT 的編碼與解碼&body=Check out this article: https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&title=使用 PHP 實作 JWT 的編碼與解碼"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/04/%E4%BD%BF%E7%94%A8-PHP-%E5%AF%A6%E4%BD%9C-JWT-%E7%9A%84%E7%B7%A8%E7%A2%BC%E8%88%87%E8%A7%A3%E7%A2%BC/&name=使用 PHP 實作 JWT 的編碼與解碼&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

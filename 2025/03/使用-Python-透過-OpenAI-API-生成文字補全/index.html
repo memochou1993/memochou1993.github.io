@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前置作業在 OpenAI 註冊一個帳號，並且在 API keys 頁面產生一個 API 金鑰。 建立專案建立專案。 12mkdir openai-cli-python-examplecd openai-cli-python-example  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  初始化版本控">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 Python 透過 OpenAI API 生成文字補全">
+<meta property="og:url" content="https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業在 OpenAI 註冊一個帳號，並且在 API keys 頁面產生一個 API 金鑰。 建立專案建立專案。 12mkdir openai-cli-python-examplecd openai-cli-python-example  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  初始化版本控">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-03-22T06:46:48.000Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.441Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="GPT">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="OpenAI">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 Python 透過 OpenAI API 生成文字補全</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2025/03/%E5%9C%A8-Nuxt-3-13-%E5%AF%A6%E4%BD%9C%E3%80%8C%E8%AA%9E%E9%9F%B3%E5%90%88%E6%88%90%E3%80%8D%E5%85%83%E4%BB%B6/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2025/04/%E4%BD%BF%E7%94%A8-Python-%E5%AF%A6%E4%BD%9C-Threads-API-OAuth-%E7%99%BB%E5%85%A5/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&text=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&is_video=false&description=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Python 透過 OpenAI API 生成文字補全&body=Check out this article: https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&name=使用 Python 透過 OpenAI API 生成文字補全&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">建立虛擬環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">初始化版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Ruff-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">安裝 Ruff 格式化工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8"><span class="toc-number">6.</span> <span class="toc-text">實作文字補全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 Python 透過 OpenAI API 生成文字補全
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2025-03-22T06:46:48.000Z" itemprop="datePublished">2025-03-22</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/Python/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AI/" rel="tag">AI</a>, <a class="tag-link-link" href="/tags/GPT/" rel="tag">GPT</a>, <a class="tag-link-link" href="/tags/OpenAI/" rel="tag">OpenAI</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>在 <a target="_blank" rel="noopener" href="https://openai.com/api/">OpenAI</a> 註冊一個帳號，並且在 <a target="_blank" rel="noopener" href="https://platform.openai.com/settings/organization/api-keys">API keys</a> 頁面產生一個 API 金鑰。</p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> openai-cli-python-example</span><br><span class="line"><span class="built_in">cd</span> openai-cli-python-example</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立虛擬環境"><a href="#建立虛擬環境" class="headerlink" title="建立虛擬環境"></a>建立虛擬環境</h2><p>建立虛擬環境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m venv .venv</span><br></pre></td></tr></table></figure>
+
+<p>啟動虛擬環境。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化版本控制"><a href="#初始化版本控制" class="headerlink" title="初始化版本控制"></a>初始化版本控制</h2><p>建立 <code>.gitignore</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.venv/</span><br><span class="line">__pycache__/</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+
+<p>初始化版本控制。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>將所有修改添加到暫存區。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">&quot;Initial commit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>指定遠端儲存庫位址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:memochou1993/openai-python-cli-example.git</span><br></pre></td></tr></table></figure>
+
+<p>推送程式碼到遠端儲存庫。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<h2 id="安裝-Ruff-格式化工具"><a href="#安裝-Ruff-格式化工具" class="headerlink" title="安裝 Ruff 格式化工具"></a>安裝 Ruff 格式化工具</h2><p>新增 <code>requirements.txt</code> 檔。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>requirements.txt</code> 檔，添加 <code>ruff</code> 依賴套件。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruff</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>ruff.toml</code> 檔。</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">line-length</span> = <span class="number">120</span></span><br><span class="line"><span class="attr">indent-width</span> = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="section">[format]</span></span><br><span class="line"><span class="attr">quote-style</span> = <span class="string">&quot;double&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.vscode/settings.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;editor.formatOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.codeActionsOnSave&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;source.fixAll&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;source.organizeImports&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.defaultFormatter&quot;</span><span class="punctuation">:</span> <span class="string">&quot;charliermarsh.ruff&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>提交修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add ruff dependency&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="實作文字補全"><a href="#實作文字補全" class="headerlink" title="實作文字補全"></a>實作文字補全</h2><p>修改 <code>requirements.txt</code> 檔，添加 <code>requests</code> 和 <code>dotenv</code> 依賴套件。</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ruff</span><br><span class="line">requests</span><br><span class="line">dotenv</span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.env.example</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPENAI_API_KEY=</span><br></pre></td></tr></table></figure>
+
+<p>新增 <code>.env</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPENAI_API_KEY=your-openai-api-key</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>main.py</code> 檔。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> dotenv <span class="keyword">import</span> load_dotenv</span><br><span class="line"></span><br><span class="line">load_dotenv()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_completion</span>(<span class="params">prompt: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Send a request to the OpenAI API and retrieve a response&quot;&quot;&quot;</span></span><br><span class="line">    api_key = os.getenv(<span class="string">&quot;OPENAI_API_KEY&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> api_key:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Error: Environment variable OPENAI_API_KEY is not set&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    url = <span class="string">&quot;https://api.openai.com/v1/completions&quot;</span></span><br><span class="line"></span><br><span class="line">    headers = &#123;<span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>, <span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;api_key&#125;</span>&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">&quot;model&quot;</span>: <span class="string">&quot;gpt-3.5-turbo-instruct&quot;</span>,</span><br><span class="line">        <span class="string">&quot;prompt&quot;</span>: prompt,</span><br><span class="line">        <span class="string">&quot;max_tokens&quot;</span>: <span class="number">100</span>,</span><br><span class="line">        <span class="string">&quot;temperature&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    response = requests.post(url, headers=headers, json=data)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;API Response:\n<span class="subst">&#123;response.text&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">&quot;CLI tool for OpenAI API requests&quot;</span>)</span><br><span class="line">    parser.add_argument(<span class="string">&quot;prompt&quot;</span>, <span class="built_in">type</span>=<span class="built_in">str</span>, <span class="built_in">help</span>=<span class="string">&quot;Prompt text to send to OpenAI API&quot;</span>)</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    get_completion(args.prompt)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>執行程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py 你好嗎？</span><br></pre></td></tr></table></figure>
+
+<p>響應如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">API Response:</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;id&quot;</span>: <span class="string">&quot;cmpl-BFKZqv3El4WEskkNr1vzDKGHjtk69&quot;</span>,</span><br><span class="line">  <span class="string">&quot;object&quot;</span>: <span class="string">&quot;text_completion&quot;</span>,</span><br><span class="line">  <span class="string">&quot;created&quot;</span>: 1742993718,</span><br><span class="line">  <span class="string">&quot;model&quot;</span>: <span class="string">&quot;gpt-3.5-turbo-instruct:20230824-v2&quot;</span>,</span><br><span class="line">  <span class="string">&quot;choices&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;text&quot;</span>: <span class="string">&quot;\n\n我是一個人工智能，沒有生理感受，所以並不需要好壞的。謝謝關心。&quot;</span>,</span><br><span class="line">      <span class="string">&quot;index&quot;</span>: 0,</span><br><span class="line">      <span class="string">&quot;logprobs&quot;</span>: null,</span><br><span class="line">      <span class="string">&quot;finish_reason&quot;</span>: <span class="string">&quot;stop&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="string">&quot;usage&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;prompt_tokens&quot;</span>: 6,</span><br><span class="line">    <span class="string">&quot;completion_tokens&quot;</span>: 42,</span><br><span class="line">    <span class="string">&quot;total_tokens&quot;</span>: 48</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/openai-cli-python-example">openai-cli-python-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://platform.openai.com/docs">OpenAI - Documentation</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">建立虛擬環境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">初始化版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-Ruff-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">5.</span> <span class="toc-text">安裝 Ruff 格式化工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8"><span class="toc-number">6.</span> <span class="toc-text">實作文字補全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">7.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">8.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&text=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&is_video=false&description=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 Python 透過 OpenAI API 生成文字補全&body=Check out this article: https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&title=使用 Python 透過 OpenAI API 生成文字補全"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/03/%E4%BD%BF%E7%94%A8-Python-%E9%80%8F%E9%81%8E-OpenAI-API-%E7%94%9F%E6%88%90%E6%96%87%E5%AD%97%E8%A3%9C%E5%85%A8/&name=使用 Python 透過 OpenAI API 生成文字補全&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+

@@ -8,15 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。 建立專案建立專案。 12mkdir shortener-pythoncd shortener-python  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  將 .venv 資料夾排除在版本控制之外。 1echo &amp;qu">
+    <meta name="description" content="前言本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。 建立專案建立專案。 12mkdir shortener-pythoncd shortener-python  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  建立 main.py 檔。 1print(&#x27;Hell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 FastAPI 實作「短網址產生器」應用程式">
 <meta property="og:url" content="https://blog.epoch.tw/2024/10/%E4%BD%BF%E7%94%A8-FastAPI-%E5%AF%A6%E4%BD%9C%E3%80%8C%E7%9F%AD%E7%B6%B2%E5%9D%80%E7%94%A2%E7%94%9F%E5%99%A8%E3%80%8D%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Memo&#39;s Blog">
-<meta property="og:description" content="前言本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。 建立專案建立專案。 12mkdir shortener-pythoncd shortener-python  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  將 .venv 資料夾排除在版本控制之外。 1echo &amp;qu">
+<meta property="og:description" content="前言本文為 Python 工作坊的基礎教材，以實作「短網址產生器」應用程式為例。 建立專案建立專案。 12mkdir shortener-pythoncd shortener-python  建立虛擬環境建立虛擬環境。 1python -m venv .venv  啟動虛擬環境。 1source .venv&#x2F;bin&#x2F;activate  建立 main.py 檔。 1print(&#x27;Hell">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-10-31T13:23:11.000Z">
-<meta property="article:modified_time" content="2025-01-21T06:15:51.931Z">
+<meta property="article:modified_time" content="2025-07-21T17:54:23.440Z">
 <meta property="article:author" content="Memo Chou">
 <meta property="article:tag" content="Programming">
 <meta property="article:tag" content="Python">
@@ -193,13 +193,13 @@
 <p>啟動虛擬環境。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br></pre></td></tr></table></figure>
 
-<p>將 <code>.venv</code> 資料夾排除在版本控制之外。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;*&quot;</span> &gt; .venv/.gitignore</span><br></pre></td></tr></table></figure>
-
 <p>建立 <code>main.py</code> 檔。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Hello, World!&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="初始化版本控制"><a href="#初始化版本控制" class="headerlink" title="初始化版本控制"></a>初始化版本控制</h2><p>初始化版本控制。</p>
+<h2 id="初始化版本控制"><a href="#初始化版本控制" class="headerlink" title="初始化版本控制"></a>初始化版本控制</h2><p>建立 <code>.gitignore</code> 檔。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.venv/</span><br><span class="line">__pycache__/</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+
+<p>初始化版本控制。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 
 <p>將所有修改添加到暫存區。</p>
@@ -227,7 +227,7 @@
 <figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">line-length</span> = <span class="number">120</span></span><br><span class="line"><span class="attr">indent-width</span> = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="section">[format]</span></span><br><span class="line"><span class="attr">quote-style</span> = <span class="string">&quot;double&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>新增 <code>.vscode/settings.json</code> 檔。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;editor.formatOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;editor.codeActionsOnSave&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;source.fixAll&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;source.organizeImports&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;editor.defaultFormatter&quot;</span><span class="punctuation">:</span> <span class="string">&quot;charliermarsh.ruff&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;editor.formatOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.codeActionsOnSave&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;source.fixAll&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;source.organizeImports&quot;</span><span class="punctuation">:</span> <span class="string">&quot;explicit&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.defaultFormatter&quot;</span><span class="punctuation">:</span> <span class="string">&quot;charliermarsh.ruff&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>提交修改。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add ruff dependency&quot;</span></span><br></pre></td></tr></table></figure>
@@ -243,9 +243,6 @@
 
 <p>啟動伺服器。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastapi dev main.py</span><br></pre></td></tr></table></figure>
-
-<p>新增 <code>.gitignore</code> 檔，將 <code>__pycache__</code> 資料夾排除在版本控制之外。</p>
-<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__pycache__</span><br></pre></td></tr></table></figure>
 
 <p>提交修改。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Add fastapi dependency&quot;</span></span><br></pre></td></tr></table></figure>
