@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta name="author" content="Memo Chou">
+    <meta name="description" content="Memo's Blog">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前置作業首先要取得一個存取 Google Sheets API 的金鑰。步驟如下：  前往 Google Cloud。 在控制台輸入「Google Sheets API」，並啟用。 點選「IAM 與管理」頁籤，點選「服務帳戶」頁籤，建立一個服務帳戶。 點選建立好的服務帳戶，點選「金鑰」頁籤，建立一個 JSON 格式的金鑰。 建立一個試算表，與服務帳戶共用。  建立專案建立專案。 12mkdir g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 JavaScript 透過 Google Sheets API 存取 Google 試算表">
+<meta property="og:url" content="https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/index.html">
+<meta property="og:site_name" content="Memo&#39;s Blog">
+<meta property="og:description" content="前置作業首先要取得一個存取 Google Sheets API 的金鑰。步驟如下：  前往 Google Cloud。 在控制台輸入「Google Sheets API」，並啟用。 點選「IAM 與管理」頁籤，點選「服務帳戶」頁籤，建立一個服務帳戶。 點選建立好的服務帳戶，點選「金鑰」頁籤，建立一個 JSON 格式的金鑰。 建立一個試算表，與服務帳戶共用。  建立專案建立專案。 12mkdir g">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-08-01T17:49:29.000Z">
+<meta property="article:modified_time" content="2025-09-15T19:23:04.672Z">
+<meta property="article:author" content="Memo Chou">
+<meta property="article:tag" content="Programming">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Google APIs">
+<meta property="article:tag" content="Google Sheets API">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 JavaScript 透過 Google Sheets API 存取 Google 試算表</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Raleway:wght@900&display=swap" rel="stylesheet">
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Memo's Blog" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        
+          
+            <li><a href="/">Home</a></li>
+          
+        
+          
+            <li><a href="/archives">Archives</a></li>
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="/search">Search</a></li>
+          
+        
+          
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2025/07/%E9%80%8F%E9%81%8E-CI-CD-%E5%B0%87-Playwright-%E6%B8%AC%E8%A9%A6%E7%B5%90%E6%9E%9C%E6%8E%A8%E9%80%81%E8%87%B3-Slack-%E9%A0%BB%E9%81%93/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2025/08/%E5%AF%A6%E4%BD%9C%E3%80%8CGoogle-Sheets-I18N-Syncer%E3%80%8D%E5%91%BD%E4%BB%A4%E5%88%97%E4%BB%8B%E9%9D%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <!-- <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li> -->
+      </ul>
+      <!-- <span id="i-next" class="info" style="display:none;"></span>
+      <span id="i-prev" class="info" style="display:none;"></span>
+      <span id="i-top" class="info" style="display:none;"></span>
+      <span id="i-share" class="info" style="display:none;"></span> -->
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&text=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&is_video=false&description=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表&body=Check out this article: https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&name=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post my2" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 JavaScript 透過 Google Sheets API 存取 Google 試算表
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">
+          <a href="/">
+          Memo's Blog
+          </a>
+        </span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2025-08-01T17:49:29.000Z" itemprop="datePublished">2025-08-02</time>
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        
+            
+        
+            
+        
+            
+                <a href="/categories/Programming/JavaScript/Others/">Others</a>
+            
+        
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Google-APIs/" rel="tag">Google APIs</a>, <a class="tag-link-link" href="/tags/Google-Sheets-API/" rel="tag">Google Sheets API</a>, <a class="tag-link-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>, <a class="tag-link-link" href="/tags/Programming/" rel="tag">Programming</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h2><p>首先要取得一個存取 Google Sheets API 的金鑰。步驟如下：</p>
+<ol>
+<li>前往 <a target="_blank" rel="noopener" href="https://cloud.google.com/">Google Cloud</a>。</li>
+<li>在控制台輸入「Google Sheets API」，並啟用。</li>
+<li>點選「IAM 與管理」頁籤，點選「服務帳戶」頁籤，建立一個服務帳戶。</li>
+<li>點選建立好的服務帳戶，點選「金鑰」頁籤，建立一個 JSON 格式的金鑰。</li>
+<li>建立一個試算表，與服務帳戶共用。</li>
+</ol>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>建立專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> google-sheets-api-example</span><br><span class="line"><span class="built_in">cd</span> google-sheets-api-example</span><br></pre></td></tr></table></figure>
+
+<p>初始化專案。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>package.json</code> 檔。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;module&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>安裝依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i googleapis</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>GoogleSheetsClient.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; google &#125; <span class="keyword">from</span> <span class="string">&#x27;googleapis&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * GoogleSheetsClient class</span></span><br><span class="line"><span class="comment"> * Handles operations with Google Sheets API</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoogleSheetsClient</span> &#123;</span><br><span class="line">  #spreadsheetId;</span><br><span class="line">  #credentialsPath;</span><br><span class="line">  #auth;</span><br><span class="line">  #sheets;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Constructor</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">Object</span>&#125; <span class="variable">params</span> - Constructor parameters</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; params.spreadsheetId - Google Spreadsheet ID</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; [params.credentialsPath=&#x27;./credentials.json&#x27;] - Path to credentials file</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">&#123;</span></span><br><span class="line"><span class="params">    spreadsheetId,</span></span><br><span class="line"><span class="params">    credentialsPath = <span class="string">&#x27;./credentials.json&#x27;</span>,</span></span><br><span class="line"><span class="params">  &#125;</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.#spreadsheetId = spreadsheetId;</span><br><span class="line">    <span class="variable language_">this</span>.#credentialsPath = credentialsPath;</span><br><span class="line">    <span class="variable language_">this</span>.#auth = <span class="literal">null</span>;</span><br><span class="line">    <span class="variable language_">this</span>.#sheets = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Initialize and authorize</span></span><br><span class="line"><span class="comment">   * Establishes connection with Google Sheets API</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">initialize</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> credentials = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(fs.<span class="title function_">readFileSync</span>(<span class="variable language_">this</span>.#credentialsPath, <span class="string">&#x27;utf8&#x27;</span>));</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">this</span>.#auth = <span class="keyword">new</span> google.<span class="property">auth</span>.<span class="title class_">GoogleAuth</span>(&#123;</span><br><span class="line">        credentials,</span><br><span class="line">        <span class="attr">scopes</span>: [<span class="string">&#x27;https://www.googleapis.com/auth/spreadsheets&#x27;</span>], <span class="comment">// Updated to allow write access</span></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">this</span>.#sheets = google.<span class="title function_">sheets</span>(&#123; <span class="attr">version</span>: <span class="string">&#x27;v4&#x27;</span>, <span class="attr">auth</span>: <span class="variable language_">this</span>.#auth &#125;);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Google Sheets API authorization successful&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Initialization error:&#x27;</span>, err);</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Ensures the specified directory exists</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">dir</span> - Directory path</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="title function_">ensureDirectoryExists</span>(<span class="params">dir</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(dir)) &#123;</span><br><span class="line">      fs.<span class="title function_">mkdirSync</span>(dir, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Directory created: <span class="subst">$&#123;dir&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Get list of all worksheets in the spreadsheet</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;Array&gt;</span>&#125; Array containing worksheet names and IDs</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getSheetList</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: &#123; sheets &#125; &#125; = <span class="keyword">await</span> <span class="variable language_">this</span>.#sheets.<span class="property">spreadsheets</span>.<span class="title function_">get</span>(&#123;</span><br><span class="line">        <span class="attr">spreadsheetId</span>: <span class="variable language_">this</span>.#spreadsheetId,</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> sheets.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123; properties: &#123; title, sheetId &#125; &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">        title,</span><br><span class="line">        sheetId,</span><br><span class="line">      &#125;));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error fetching worksheet list:&#x27;</span>, err);</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Get spreadsheet data for specified range</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">range</span> - Range to fetch, e.g. &#x27;Sheet1!A1:D10&#x27;</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;Array&gt;</span>&#125; Spreadsheet data array</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">getSheetData</span>(<span class="params">range</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: &#123; <span class="attr">values</span>: rows &#125; &#125; = <span class="keyword">await</span> <span class="variable language_">this</span>.#sheets.<span class="property">spreadsheets</span>.<span class="property">values</span>.<span class="title function_">get</span>(&#123;</span><br><span class="line">        <span class="attr">spreadsheetId</span>: <span class="variable language_">this</span>.#spreadsheetId,</span><br><span class="line">        range,</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (!rows?.<span class="property">length</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;No data found in specified range&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> [];</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> rows;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error fetching spreadsheet data:&#x27;</span>, err);</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Get all data from a specific worksheet</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">sheetName</span> - Worksheet name</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;Array&gt;</span>&#125; Worksheet data array</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  getEntireSheetData = <span class="function">(<span class="params">sheetName</span>) =&gt;</span> <span class="variable language_">this</span>.<span class="title function_">getSheetData</span>(<span class="string">`<span class="subst">$&#123;sheetName&#125;</span>!A:Z`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Update spreadsheet data for specified range</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">range</span> - Range to update, e.g. &#x27;Sheet1!A1:D10&#x27;</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">Array</span>&#125; <span class="variable">values</span> - 2D array of values to write</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;Object&gt;</span>&#125; Update result</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">updateSheetData</span>(<span class="params">range, values</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="variable language_">this</span>.#sheets.<span class="property">spreadsheets</span>.<span class="property">values</span>.<span class="title function_">update</span>(&#123;</span><br><span class="line">        <span class="attr">spreadsheetId</span>: <span class="variable language_">this</span>.#spreadsheetId,</span><br><span class="line">        range,</span><br><span class="line">        <span class="attr">valueInputOption</span>: <span class="string">&#x27;RAW&#x27;</span>, <span class="comment">// or &#x27;USER_ENTERED&#x27; for formula support</span></span><br><span class="line">        <span class="attr">resource</span>: &#123;</span><br><span class="line">          values,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Updated <span class="subst">$&#123;result.data.updatedCells&#125;</span> cells in range &quot;<span class="subst">$&#123;range&#125;</span>&quot;`</span>);</span><br><span class="line">      <span class="keyword">return</span> result.<span class="property">data</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error updating spreadsheet data:&#x27;</span>, err);</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Clear and then update sheet data (ensures consistent structure)</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">sheetName</span> - Sheet name</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> &#123;<span class="type">Array</span>&#125; <span class="variable">values</span> - 2D array of values to write</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span> &#123;<span class="type">Promise&lt;Object&gt;</span>&#125; Update result</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">clearAndUpdateSheet</span>(<span class="params">sheetName, values</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// First, clear the existing data</span></span><br><span class="line">      <span class="keyword">await</span> <span class="variable language_">this</span>.#sheets.<span class="property">spreadsheets</span>.<span class="property">values</span>.<span class="title function_">clear</span>(&#123;</span><br><span class="line">        <span class="attr">spreadsheetId</span>: <span class="variable language_">this</span>.#spreadsheetId,</span><br><span class="line">        <span class="attr">range</span>: <span class="string">`<span class="subst">$&#123;sheetName&#125;</span>!A:Z`</span>,</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Then write the new data</span></span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">updateSheetData</span>(<span class="string">`<span class="subst">$&#123;sheetName&#125;</span>!A1`</span>, values);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Error clearing and updating sheet &quot;<span class="subst">$&#123;sheetName&#125;</span>&quot;:`</span>, err);</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">GoogleSheetsClient</span>;</span><br></pre></td></tr></table></figure>
+
+<p>建立 <code>index.js</code> 檔。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">GoogleSheetsClient</span> <span class="keyword">from</span> <span class="string">&#x27;./GoogleSheetsClient.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  <span class="variable constant_">GOOGLE_SPREADSHEET_ID</span>,</span><br><span class="line">&#125; = process.<span class="property">env</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> <span class="title class_">GoogleSheetsClient</span>(&#123;</span><br><span class="line">  <span class="attr">spreadsheetId</span>: <span class="variable constant_">GOOGLE_SPREADSHEET_ID</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">client.<span class="title function_">initialize</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sheets = <span class="keyword">await</span> client.<span class="title function_">getSheetList</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Available sheets: <span class="subst">$&#123;sheets.map(sheet =&gt; sheet.title).join(<span class="string">&#x27;, &#x27;</span>)&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line">sheets.<span class="title function_">forEach</span>(<span class="keyword">async</span> (sheet) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> client.<span class="title function_">getEntireSheetData</span>(sheet.<span class="property">title</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Data from <span class="subst">$&#123;sheet.title&#125;</span>:`</span>, data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>執行程式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOGLE_SPREADSHEET_ID=your-spreadsheet-id node index.js</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/memochou1993/google-sheets-api-example">google-sheets-api-example</a></li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/sheets/api/guides/concepts">Google Sheets API</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="toc-number">1.</span> <span class="toc-text">前置作業</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">建立專案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="toc-number">3.</span> <span class="toc-text">程式碼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">4.</span> <span class="toc-text">參考資料</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&text=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&is_video=false&description=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表&body=Check out this article: https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&title=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.epoch.tw/2025/08/%E4%BD%BF%E7%94%A8-JavaScript-%E9%80%8F%E9%81%8E-Google-Sheets-API-%E5%AD%98%E5%8F%96-Google-%E8%A9%A6%E7%AE%97%E8%A1%A8/&name=使用 JavaScript 透過 Google Sheets API 存取 Google 試算表&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2025 Memo Chou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">Archives</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/search">Search</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MBP8ZTMCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8MBP8ZTMCR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'https-memochou1993-github-io-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- Mermaid chart -->
+
+    <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+
+<!-- Google AdSense -->
+
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1523667193708406" crossorigin="anonymous"></script>
+
